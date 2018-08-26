@@ -3,7 +3,7 @@
 ##
 sudo: required
 
-language: ruby
+language: generic
 
 services:
   - docker
@@ -12,8 +12,8 @@ script:
 - |
   baseDir="${pwd}"
   outputDir="${baseDir}/output"
-  mkdir -r "${outputDir}"
-  inputDir="${baseDir}/book"
+  mkdir -p "${outputDir}"
+  inputDir="${baseDir}/thomasWeise/atoia/book"
   docker run -v ${inputDir}:/input/ -v ${outputDir}:/output/ -t -i thomasweise/docker-bookbuilder book.md aitoa
   cd "${outputDir}"
   chown $USER *.*
