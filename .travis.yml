@@ -16,7 +16,11 @@ script:
   outputDir="${baseDir}/output"
   echo "Input directory is '$inputDir' and output directory is '$outputDir'."
   mkdir -p "${outputDir}"
-  docker run -v "${inputDir}/":/input/ -v "${outputDir}/":/output/ -t -i thomasweise/docker-bookbuilder book.md aitoa
+  docker run -v "${inputDir}/":/input/ \
+             -v "${outputDir}/":/output/ \
+             -e TRAVIS_COMMIT=$TRAVIS_COMMIT \
+             -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG \
+             -t -i thomasweise/docker-bookbuilder book.md aitoa
   cd "${outputDir}"
 
 deploy:
