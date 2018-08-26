@@ -10,10 +10,12 @@ services:
 
 script:
 - |
-  baseDir="${pwd}"
-  outputDir="${baseDir}/output"
-  mkdir -p "${outputDir}"
+  baseDir="$(pwd)"
+  echo "Base directors is '$baseDir'."
   inputDir="${baseDir}/thomasWeise/atoia/book"
-  docker run -v ${inputDir}:/input/ -v ${outputDir}:/output/ -t -i thomasweise/docker-bookbuilder book.md aitoa
+  outputDir="${baseDir}/output"
+  echo "Base input directory is '$inputDir' and output directory is '$outputDir'."
+  mkdir -p "${outputDir}"
+  docker run -v "${inputDir}/":/input/ -v "${outputDir}/":/output/ -t -i thomasweise/docker-bookbuilder book.md aitoa
   cd "${outputDir}"
   chown $USER *.*
