@@ -12,9 +12,9 @@ script:
 - |
   baseDir="$(pwd)"
   echo "Base directors is '$baseDir'."
-  inputDir="${baseDir}/thomasWeise/atoia/book"
+  inputDir="${baseDir}/book"
   outputDir="${baseDir}/output"
-  echo "Base input directory is '$inputDir' and output directory is '$outputDir'."
+  echo "Input directory is '$inputDir' and output directory is '$outputDir'."
   mkdir -p "${outputDir}"
   docker run -v "${inputDir}/":/input/ -v "${outputDir}/":/output/ -t -i thomasweise/docker-bookbuilder book.md aitoa
   cd "${outputDir}"
