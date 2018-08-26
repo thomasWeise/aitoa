@@ -4,7 +4,7 @@ After I wrote *Global Optimization Algorithms &ndash; Theory and Applications*&n
 Currently, this book is in a very early stage of development.
 It is work-in-progress, so expect many changes.
 
-This book is written using my automated book writing environment, which integrates [GitHub](http://www.github.com), [Travis CI](http://www.travis-ci.org), and [docker](http://www.docker.com)-[hub](http://hub.docker.com)
+This book is written using my automated book writing environment, which integrates [GitHub](http://www.github.com), [Travis CI](http://www.travis-ci.org), and [docker](http://www.docker.com)-[hub](http://hub.docker.com).
 Basically, I write the book in my repositors [aitoa](http://github.com/thomasWeise/aitoa) at GitHub.
 Here, you can also submit [issues](http://github.com/thomasWeise/aitoa/issues), which can be change requests, suggestions, discovered bugs or typos, or maybe inform me that something is unclear, so that I can improve the book.
 Whenever I make a change to the book, maybe resulting from your submitted issue, immediately when I commit the change, a Travis build will be invoked, which will result in new [pdf](http://thomasweise.github.io/aitoa/aitoa.pdf) and [epub](http://thomasweise.github.io/aitoa/aitoa.epub) versions.
@@ -18,3 +18,5 @@ Commit
 Date
   ~ \meta.time
 
+Author
+  ~ Prof. Dr. [Thomas Weise](http://iao.hfuu.edu.cn/team/director), Institute of Applied Optimization ([IAO](http://iao.hfuu.edu.cn)), Hefei University, Hefei, Province Anhui, China.

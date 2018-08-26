@@ -10,17 +10,17 @@ services:
 
 script:
 - |
-  baseDir="$(pwd)"
-  echo "Base directors is '$baseDir'."
-  inputDir="${baseDir}/book"
-  outputDir="${baseDir}/output"
-  echo "Input directory is '$inputDir' and output directory is '$outputDir'."
-  mkdir -p "${outputDir}"
+  baseDir="$(pwd)" &&\
+  echo "Base directors is '$baseDir'." &&\
+  inputDir="${baseDir}/book" &&\
+  outputDir="${baseDir}/output" &&\
+  echo "Input directory is '$inputDir' and output directory is '$outputDir'." &&\
+  mkdir -p "${outputDir}" &&\
   docker run -v "${inputDir}/":/input/ \
              -v "${outputDir}/":/output/ \
              -e TRAVIS_COMMIT=$TRAVIS_COMMIT \
              -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG \
-             -t -i thomasweise/docker-bookbuilder book.md aitoa
+             -t -i thomasweise/docker-bookbuilder book.md aitoa &&\
   cd "${outputDir}"
 
 deploy:
