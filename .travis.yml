@@ -18,4 +18,3 @@ script:
   mkdir -p "${outputDir}"
   docker run -v "${inputDir}/":/input/ -v "${outputDir}/":/output/ -t -i thomasweise/docker-bookbuilder book.md aitoa
   cd "${outputDir}"
-  chown $USER *.*
