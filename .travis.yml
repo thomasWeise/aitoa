@@ -18,3 +18,13 @@ script:
   mkdir -p "${outputDir}"
   docker run -v "${inputDir}/":/input/ -v "${outputDir}/":/output/ -t -i thomasweise/docker-bookbuilder book.md aitoa
   cd "${outputDir}"
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: false
+  on:
+    branch: master
+  target-branch: gh-pages
+  local-dir: output
