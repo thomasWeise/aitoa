@@ -1,0 +1,19 @@
+##
+## Build with Travis.CI
+##
+sudo: required
+
+language: ruby
+
+services:
+  - docker
+
+script:
+- |
+  baseDir="${pwd}"
+  outputDir="${baseDir}/output"
+  mkdir -r "${outputDir}"
+  inputDir="${baseDir}/book"
+  docker run -v ${inputDir}:/input/ -v ${outputDir}:/output/ -t -i thomasweise/docker-bookbuilder book.md aitoa
+  cd "${outputDir}"
+  chown $USER *.*

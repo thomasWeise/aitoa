@@ -1,0 +1,21 @@
+---
+title:  'An Introduction to Optimization Algorithms'
+
+author: Thomas Weise
+
+keywords: [Optimization, Metaheuristics, Local Search, Global Search]
+
+abstract: |
+  In this book, I try to give an introduction to optimization algorithms.
+
+lang: en-US
+
+bibliography: bibliography.bib
+csl: http://www.zotero.org/styles/association-for-computing-machinery
+link-citations: true
+
+documentclass: memoir
+fontfamily: mathpazo
+pagestyle: headings
+papersize: a4
+...
