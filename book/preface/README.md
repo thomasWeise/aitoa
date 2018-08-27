@@ -8,7 +8,8 @@ This book is written using my automated book writing environment, which integrat
 Basically, I write the book in my repositors [aitoa](http://github.com/thomasWeise/aitoa) at GitHub.
 There, you can also submit [issues](http://github.com/thomasWeise/aitoa/issues), which can be change requests, suggestions, discovered bugs or typos, or maybe inform me that something is unclear, so that I can improve the book.
 Whenever I make a change to the book, maybe resulting from your submitted issue, new versions will automatically be built.
-The process is described at [http://iao.hfuu.edu.cn/blogs/programming-blog/157](http://iao.hfuu.edu.cn/blogs/programming-blog/157).
+The build process is described at <http://iao.hfuu.edu.cn/blogs/157>.
+
 
 Repository
   ~ [http://github.com/thomasWeise/aitoa](http://github.com/thomasWeise/aitoa)
@@ -20,7 +21,15 @@ Date
   ~ \meta.time
 
 Author
-  ~ Prof. Dr. [Thomas Weise](http://iao.hfuu.edu.cn/team/director), Institute of Applied Optimization ([IAO](http://iao.hfuu.edu.cn)), Hefei University, Hefei, Province Anhui, China.
+  ~ [Thomas Weise](http://iao.hfuu.edu.cn/team/director)
   
 License
   ~ Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
+
+
+| Prof. Dr. [Thomas Weise](http://iao.hfuu.edu.cn/team/director)
+| Institute of Applied Optimization ([IAO](http://iao.hfuu.edu.cn))
+| Hefei University,
+| Hefei, Anhui, China.
+| Web: <http://iao.hfuu.edu.cn/team/director>
+| Email: <mailto:tweise@hfuu.edu.cn>, <mailto:tweise@ustc.edu.cn>
