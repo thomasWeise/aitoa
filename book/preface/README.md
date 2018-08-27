@@ -10,23 +10,15 @@ There, you can also submit [issues](http://github.com/thomasWeise/aitoa/issues),
 Whenever I make a change to the book, maybe resulting from your submitted issue, new versions will automatically be built.
 The build process is described at <http://iao.hfuu.edu.cn/blogs/157>.
 
-
-Repository
-  ~ [http://github.com/thomasWeise/aitoa](http://github.com/thomasWeise/aitoa)
+|
+| Repository: <http://github.com/thomasWeise/aitoa>
+| Commit: [\meta.commit](http://github.com/thomasWeise/aitoa/commit/\meta.commit)
+| Date: \meta.time
+| Author: [Thomas Weise](http://iao.hfuu.edu.cn/team/director)
   
-Commit
-  ~ [\meta.commit](http://github.com/thomasWeise/aitoa/commit/\meta.commit)
-  
-Date
-  ~ \meta.time
+This book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC BY-NC-SA 4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
 
-Author
-  ~ [Thomas Weise](http://iao.hfuu.edu.cn/team/director)
-  
-License
-  ~ Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
-
-
+|
 | Prof. Dr. [Thomas Weise](http://iao.hfuu.edu.cn/team/director)
 | Institute of Applied Optimization ([IAO](http://iao.hfuu.edu.cn))
 | Hefei University,
