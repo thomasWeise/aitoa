@@ -1,12 +1,20 @@
 ---
 title:  An Introduction to Optimization Algorithms
 
-author: Thomas Weise
+author: [Thomas Weise]
+
+data: "\meta.date"
+
+creator:
+- role: author
+- text: Thomas Weise
 
 keywords: [Optimization, Metaheuristics, Local Search, Global Search]
 
 abstract: |
   In this book, I try to give an introduction to optimization algorithms.
+
+rights: © 2018 Thomas Weise, CC BY-NC-SA 4.0
 
 lang: en-US
 
@@ -14,8 +22,8 @@ bibliography: bibliography.bib
 csl: http://www.zotero.org/styles/association-for-computing-machinery
 link-citations: true
 
-documentclass: memoir
+documentclass: scrbook
 fontfamily: mathpazo
-pagestyle: headings
 papersize: a4
+template.latex: eisvogel.latex
 ...
