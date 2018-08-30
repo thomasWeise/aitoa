@@ -4,3 +4,4 @@ Before we actually get into the matter of optimization, let us first consider a 
 Then we can think about what they have in common and how they can be solved.
 
 \relative.input{logistic_planning/README.md}
+\relative.input{jssp/README.md}
