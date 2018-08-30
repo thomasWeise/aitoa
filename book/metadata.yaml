@@ -5,10 +5,6 @@ author: [Thomas Weise]
 
 date: "\meta.date"
 
-creator:
-- role: author
-- text: Thomas Weise
-
 keywords: [Optimization, Metaheuristics, Local Search, Global Search]
 
 rights: © 2018 Thomas Weise, CC BY-NC-SA 4.0

@@ -14,7 +14,7 @@ The build process is described at <http://iao.hfuu.edu.cn/blogs/157>.
 | &nbsp;
 | Repository: <http://github.com/thomasWeise/aitoa>
 | Commit: [\meta.commit](http://github.com/thomasWeise/aitoa/commit/\meta.commit)
-| Date: \meta.time
+| Time and Date: \meta.time
 | Author: [Thomas Weise](http://iao.hfuu.edu.cn/team/director)
 | &nbsp;
 
@@ -29,3 +29,4 @@ This book is released under the Attribution-NonCommercial-ShareAlike 4.0 Interna
 | Hefei, Anhui, China.
 | Web: <http://iao.hfuu.edu.cn/team/director>
 | Email: <tweise@hfuu.edu.cn>, <tweise@ustc.edu.cn>
+
