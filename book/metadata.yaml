@@ -3,7 +3,7 @@ title:  An Introduction to Optimization Algorithms
 
 author: [Thomas Weise]
 
-data: "\meta.date"
+date: "\meta.date"
 
 creator:
 - role: author
