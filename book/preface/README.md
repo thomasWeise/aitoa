@@ -19,7 +19,7 @@ The build process is described at <http://iao.hfuu.edu.cn/blogs/157>.
 | &nbsp;
 
 
-This book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY-NC-SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
+This book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
 
 
 | &nbsp;
