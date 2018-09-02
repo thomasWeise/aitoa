@@ -1,7 +1,7 @@
 ### Route Planning for a Logistics Company
 
 Logistics always has been a very important application area of optimization.
-Therefore, let us there look into a typical real-world optimization task&nbsp;[@WPG2009SRWVRPWEA, @WPRGG2009EFTP].
+Therefore, let us there look into a typical real-world optimization task&nbsp;[@WPG2009SRWVRPWEA; @WPRGG2009EFTP].
 
 A logistics company needs to accept and fulfill delivery tasks from its clients.
 Let us assume that a client can order one or multiple containers to be delivered to her location within a certain time window.
