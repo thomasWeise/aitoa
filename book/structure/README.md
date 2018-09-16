@@ -16,4 +16,6 @@ Any optimization problem has at least the following components, which we will ex
 2. The data structure $\solutionSpace$ representing possible solutions to the problem.
 3. The objective function $\objf:\solutionSpace\mapsto\realNumbers$ which computes the cost of the candidate solutions $\solspel\in\solutionSpace$.
 
-We will explore all of these structural elements that make up an optimization problem in this chapter, based on a concrete example
+We will explore all of these structural elements that make up an optimization problem in this chapter, based on a concrete example.
+
+\relative.input{objective/README.md}
