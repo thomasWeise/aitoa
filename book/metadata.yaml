@@ -1,26 +1,45 @@
 ---
+# book metadata
 title:  An Introduction to Optimization Algorithms
-
 author: [Thomas Weise]
-
 date: "\meta.date"
-
 keywords: [Optimization, Metaheuristics, Local Search, Global Search]
-
 rights: © 2018 Thomas Weise, CC BY-NC-SA 4.0
-
 lang: en-US
 
+# reference to associated code repository
 codeRepo: http://github.com/thomasWeise/aitoa-code.git
 
+# bibliography metadata
 bibliography: bibliography.bib
 csl: http://www.zotero.org/styles/association-for-computing-machinery
 link-citations: true
 
+# LaTeX template metadata
 template.latex: eisvogel-book.latex
 titlepage: true
 titlepage-color: "9F2925"
 titlepage-text-color: "FFFFFF"
 titlepage-rule-color: "E67015"
 toc-own-page: true
+
+# pandoc-crossref setup
+cref: true
+chapters: true
+figPrefix:
+  - "Figure"
+  - "Figures"
+eqnPrefix:
+  - "Equation"
+  - "Equations"
+tblPrefix:
+  - "Table"
+  - "Tables"
+lstPrefix:
+  - "Listing"
+  - "Listings"
+secPrefix:
+  - "Section"
+  - "Sections"
+linkReferences: true
 ...
