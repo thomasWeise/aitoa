@@ -4,12 +4,14 @@ After I wrote *Global Optimization Algorithms &ndash; Theory and Applications*&n
 Currently, this book is in a very early stage of development.
 It is work-in-progress, so expect many changes.
 
-In this book, I am using a lot of concrete examples written in the programming language Java.
-These are published in a separate [repository](\repo.name) and also freely accessible.
+In this book, we are using a lot of concrete examples written in the programming language Java.
+These are published in the repository *[thomasWeise/aitoa-code](\repo.name)* on [GitHub](http://www.github.com) and also freely accessible.
+Often, we will just look at certain portions of the code.
+However, each source code listing is accompanied by a *(src)* link in the caption linking to the current full version of the file in the GitHub repository.
 
-This book is written using my automated book writing environment, which integrates [GitHub](http://www.github.com), [Travis CI](http://www.travis-ci.org), and [docker](http://www.docker.com)-[hub](http://hub.docker.com).
-Basically, I write the book in my repository *[aitoa](http://github.com/thomasWeise/aitoa)* at GitHub.
-There, you can also submit [issues](http://github.com/thomasWeise/aitoa/issues), which can be change requests, suggestions, discovered bugs or typos, or maybe inform me that something is unclear, so that I can improve the book.
+This book is written using my automated book writing environment, which integrates GitHub, [Travis CI](http://www.travis-ci.org), and [docker](http://www.docker.com)-[hub](http://hub.docker.com).
+The complete text of the book is actively written and available in the repository *[thomasWeise/aitoa](http://github.com/thomasWeise/aitoa)* on GitHub.
+There, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)*, which can be change requests, suggestions, discovered bugs or typos, or maybe inform me that something is unclear, so that I can improve the book.
 Whenever I make a change to the book, maybe resulting from your submitted issue, new versions will automatically be built.
 The build process is described at <http://iao.hfuu.edu.cn/157>.
 
