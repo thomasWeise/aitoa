@@ -15,6 +15,4 @@ In other words, if $\objf$ is the objective function of a minimization problem, 
 
 From the perspective of a programmer, an objective function implements the interface given in [@lst:IObjectiveFunction].
 
-```{#lst:IObjectiveFunction .java caption="A general interface for objective functions."}
-\repo.code{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{}
-```
+\repo.listing{lst:IObjectiveFunction}{A general interface for objective functions.}{java}{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{}
