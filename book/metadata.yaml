@@ -42,4 +42,5 @@ secPrefix:
   - "Section"
   - "Sections"
 linkReferences: true
+listings: true
 ...
