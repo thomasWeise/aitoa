@@ -1,4 +1,4 @@
-### Job Shop Scheduling Problem {#jsspExample}
+### Job Shop Scheduling Problem {#sec:jsspExample}
 
 Another typical optimization task arises in manufacturing, namely the assignment ("scheduling") of tasks ("jobs") to machines and execution times.
 In the basic *Job Shop Scheduling Problem* (JSSP)&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS], we have factory ("shop") with several machines.
