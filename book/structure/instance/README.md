@@ -3,7 +3,7 @@
 We often implicitly distinguish optimization problems (see \text.ref{optimizationProblemMathematical}) from *problem instances*.
 While an optimization problem is the general blueprint of the tasks, e.g., the goal of scheduling production jobs to machines, the problem instance is a concrete scenario of the task, e.g., a concrete lists of tasks, requirements, and machines.
 
-\text.block{definition}{instance}{A concrete instantiation of all information that are relevant from the perspective of solving an optimization problems is called a *problem instance*&nbsp;$\instance.}
+\text.block{definition}{instance}{A concrete instantiation of all information that are relevant from the perspective of solving an optimization problems is called a *problem instance*&nbsp;$\instance$.}
 
 A problem instance is related to an optimization problem like an object/instance to a class in an object-oriented programming language.
 
