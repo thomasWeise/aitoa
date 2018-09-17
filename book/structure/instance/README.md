@@ -13,3 +13,7 @@ There are&nbsp;$\elementOf{\instance}{n}\in\naturalNumbersO$ jobs that we need t
 Actually, we have a list&nbsp;$\elementOf{\instance}{jobs}$ of&nbsp;$\elementOf{\instance}{n}$ jobs, where each job&nbsp;$\arrayIndex{\elementOf{\instance}{jobs}}{p}$ (with $p\in1\dots \elementOf{\instance}{n}$), in turn, is a list of&nbsp;$\elementOf{\instance}{m}$ sub-jobs.
 Each sub-job&nbsp;$\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}$ (with $q\in1\dots \elementOf{\instance}{m}$) must be executed on a specific machine&nbsp;$\elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{machine}$ and therefore needs a specific time&nbsp;$\elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{time}$.
 This also models the situation where a certain job does not need to be executed on some of the machines, because we then can set the corresponding time simply to 0.
+
+Beasley&nbsp;[@B1990OLDTPBEM] manages the  [*OR&nbsp;Library*](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/jobshopinfo.html), a library of example instances for many optimization problems from the field of operations research.
+[Here](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/jobshop1.txt), concrete JSSP instances can be downloaded as text file.
+For the sake of simplicity, we created one additional, smaller instance to describe this format, as illustrated below:
