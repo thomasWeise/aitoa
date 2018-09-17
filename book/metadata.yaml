@@ -43,4 +43,5 @@ secPrefix:
   - "Sections"
 linkReferences: true
 listings: false
+codeBlockCaptions: true
 ...
