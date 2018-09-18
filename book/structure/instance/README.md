@@ -34,11 +34,11 @@ The next line is a short description or title of the instance.
 In the third line, the number&nbsp;$\elementOf{\instance}{n}$ of jobs is specified, followed by the number&nbsp;$\elementOf{\instance}{m}$ of machines.
 The actual IDs or indexes of machines and jobs are 0-based, similar to array indexes in Java.
 The JSSP instance definition is completed by $\elementOf{\instance}{n}$ lines of text, each of which specifying the sub-jobs of one job, for jobs $0$ to $\elementOf{\instance}{n}-1$.
-Here, each sub-job is a pair of two numbers, the ID of the machine that is to be used (blue), from the interval $0\dots$\elementOf{\instance}{m}-1$, followed by the number of time units the job will take on that machine.
+Here, each sub-job is a pair of two numbers, the ID of the machine that is to be used (blue), from the interval $0\dots\elementOf{\instance}{m}-1$, followed by the number of time units the job will take on that machine.
 The order of the sub-jobs defines exactly the order in which the job needs to be passed through the machines.
 Each machine can only process at most one job at a time.
 
-In our demo instance illustrated in [@fig:jssp_demo_instance], this means that we have&nbsp;$\elementOf{\instance}{n}=4$ jobs andv$\elementOf{\instance}{m}=5$ machines.
+In our demo instance illustrated in [@fig:jssp_demo_instance], this means that we have&nbsp;$\elementOf{\instance}{n}=4$ jobs and&nbsp;$\elementOf{\instance}{m}=5$ machines.
 Job&nbsp;0 first needs to be processed by machine 0 for 10 time units, it then goes to machine 1 for 20 time units, then to machine 2 for 20 time units, then to machine 3 for 40 time units, and finally to machine 4 for 10 time units.
 Job&nbsp;3 first needs to be processed by machine 4 for 50 time units, then by machine 3 for 30 time units, then by machine 2 for 15 time units, then by machine 0 for 20 time units, and finally by machine 1 for 15 time units.
 It would not be allowed to first send Job&nbsp;3 to any machine different from machine 4 and after being processed by machine 4, it must be processed by machine 3 &ndash; althoug it may be possible that it has to wait for some time, if machine 3 would currently be busy processing another job.
