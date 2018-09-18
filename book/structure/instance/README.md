@@ -23,13 +23,13 @@ This also allow us to represent the situation where a certain job does not need 
 
 #### Concrete Example
 
-Beasley&nbsp;[@B1990OLDTPBEM] manages the  [*OR&nbsp;Library*](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/jobshopinfo.html), a library of example instances for many optimization problems from the field of operations research.
+Beasley&nbsp;[@B1990OLDTPBEM] manages the  [*OR-Library*](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/jobshopinfo.html), a library of example instances for many optimization problems from the field of operations research.
 [Here](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/jobshop1.txt), concrete JSSP instances can be downloaded as text file.
 For the sake of simplicity, we created one additional, smaller instance to describe this format, as illustrated in [@fig:jssp_demo_instance].
 
-![The meaning of the text representing our demo instance of the JSSP, as an example of the format used in the OR Library.](\relative.path{demo_instance.svgz}){#fig:jssp_demo_instance}
+![The meaning of the text representing our demo instance of the JSSP, as an example of the format used in the OR-Library.](\relative.path{demo_instance.svgz}){#fig:jssp_demo_instance}
 
-In the simple text format used in OR&nbsp;Library, each problem instance $\instance$ is delimited by line of several `+` characters.
+In the simple text format used in OR-Library, each problem instance $\instance$ is delimited by line of several `+` characters.
 The next line is a short description or title of the instance.
 In the third line, the number&nbsp;$\elementOf{\instance}{n}$ of jobs is specified, followed by the number&nbsp;$\elementOf{\instance}{m}$ of machines.
 The actual IDs or indexes of machines and jobs are 0-based, similar to array indexes in Java.
@@ -47,7 +47,11 @@ This structure can be represented by the simple Java class given in [@lst:JSSPIn
 
 \repo.listing{lst:JSSPInstance}{Excerpt from a Java class for representing the data of a JSSP instance.}{java}{src/main/java/aitoa/examples/jssp/JSSPInstance.java}{}{relevant}
 
-The OR&nbsp;Library contains 82 JSSP instances of varying sizes specified as text files in the format discussed here.
+Here, the member variables `m` and `n` stand for the number&nbsp;$\elementOf{\instance}{m}$ of machines and the number&nbsp;$\elementOf{\instance}{n}$ of jobs, respectively.
+The two-dimensional array `jobs` directly receives the data from sub-job lines in the text files, i.e., each row stands for a job and contains machine IDs and processing times in an alternating sequence.
+The actual source file also contains additional code, e.g., for reading such data from the text file, which we have omitted here.
+
+The OR-Library contains 82 JSSP instances of varying sizes specified as text files in the format discussed here.
 We will try to solve them in this book as an example of optimization problems.
 In order to keep the example simple, we will focus on only four instances, namely
 
