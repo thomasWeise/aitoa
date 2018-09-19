@@ -22,8 +22,8 @@ titlepage-color: "9F2925"
 titlepage-text-color: "FFFFFF"
 titlepage-rule-color: "E67015"
 toc-own-page: true
-linkcolor: violet!50!black
-citecolor: green!50!black
+linkcolor: blue!50!black
+citecolor: blue!50!black
 urlcolor: blue!50!black
 toccolor: black
 
