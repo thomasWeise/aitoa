@@ -19,4 +19,5 @@ Any optimization problem has at least the following components, which we will ex
 We will explore all of these structural elements that make up an optimization problem in this chapter, based on a concrete example of the Job Shop Scheduling Problem (JSSP) from [@sec:jsspExample].
 
 \relative.input{instance/README.md}
+\relative.input{solutionSpace/README.md}
 \relative.input{objective/README.md}

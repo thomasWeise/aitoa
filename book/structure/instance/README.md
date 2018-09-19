@@ -27,14 +27,14 @@ Beasley&nbsp;[@B1990OLDTPBEM] manages the  [*OR-Library*](http://people.brunel.a
 [Here](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/jobshop1.txt), concrete JSSP instances can be downloaded as text file.
 For the sake of simplicity, we created one additional, smaller instance to describe this format, as illustrated in [@fig:jssp_demo_instance].
 
-![The meaning of the text representing our demo instance of the JSSP, as an example of the format used in the OR-Library.](\relative.path{demo_instance.svgz}){#fig:jssp_demo_instance}
+![The meaning of the text representing our demo instance of the JSSP, as an example of the format used in the OR-Library.](\relative.path{demo_instance.svgz}){#fig:jssp_demo_instance width=90%}
 
 In the simple text format used in OR-Library, each problem instance $\instance$ is delimited by line of several `+` characters.
 The next line is a short description or title of the instance.
 In the third line, the number&nbsp;$\elementOf{\instance}{n}$ of jobs is specified, followed by the number&nbsp;$\elementOf{\instance}{m}$ of machines.
 The actual IDs or indexes of machines and jobs are 0-based, similar to array indexes in Java.
 The JSSP instance definition is completed by $\elementOf{\instance}{n}$ lines of text, each of which specifying the sub-jobs of one job, for jobs $0$ to $\elementOf{\instance}{n}-1$.
-Here, each sub-job is a pair of two numbers, the ID of the machine that is to be used (blue), from the interval $0\dots\elementOf{\instance}{m}-1$, followed by the number of time units the job will take on that machine.
+Here, each sub-job is a pair of two numbers, the ID of the machine that is to be used (violet), from the interval $0\dots\elementOf{\instance}{m}-1$, followed by the number of time units the job will take on that machine.
 The order of the sub-jobs defines exactly the order in which the job needs to be passed through the machines.
 Each machine can only process at most one job at a time.
 
