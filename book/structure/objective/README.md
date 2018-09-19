@@ -1,5 +1,7 @@
 ## Objective Function
 
+### Definitions
+
 \text.block{definition}{objectiveFunction}{An *objective function* $\objf:\solutionSpace\mapsto\realNumbers$ rates the quality of a candidate solution $\solspel\in\solutionSpace$ from the solution space $\solutionSpace$ as real number.}
 
 \text.block{definition}{objectiveValue}{An *objective value* $\objf(\solspel)$ of the candidate solution $\solspel\in\solutionSpace$ is the value that the objective function $\objf$ takes on for $\solspel$.}
@@ -16,3 +18,19 @@ In other words, if $\objf$ is the objective function of a minimization problem, 
 From the perspective of a programmer, an objective function implements the interface given in [@lst:IObjectiveFunction].
 
 \repo.listing{lst:IObjectiveFunction}{A general interface for objective functions.}{java}{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{}
+
+### Example: Job Shop Scheduling
+
+As stated in [@sec:jsspExample], our goal is to complete the production jobs as soon as possible.
+This means that we want to minimize the makespan, the time when the last job finishes.
+Obviously, the smaller this value, the earlier we are done with all jobs, the better is the plan.
+As illustrated in [@fig:gantt_demo_with_makespan], the makespan is the time index of the right-most edge of any of the machine rows/schedules in the Gantt chart.
+
+![The makespan (purple), i.e., the time when the last job is completed, for the example candidate solution illustrated in [@fig:gantt_demo_without_makespan] for the demo instance from [@fig:jssp_demo_instance].](\relative.path{gantt_demo_with_makespan.svgz}){#fig:gantt_demo_with_makespan width=80%}
+
+Based on our candidate solution data structure from [@lst:JSSPCandidateSolution], we can easily compute the makespan.
+We simply have to look at the last number in each of the integer arrays stored in the member `schedule`, as it represents the end time of the last job processed by a machine.
+We then return the smallest of these numbers.
+We implement the interface `IObjectiveFunction` in class `JSSPMakespanObjectiveFunction` accordingly in [@lst:JSSPMakespanObjectiveFunction].
+
+\repo.listing{lst:JSSPMakespanObjectiveFunction}{Excerpt from a Java class computing the makespan resulting from a candidate solution to the JSSP.}{java}{src/main/java/aitoa/examples/jssp/JSSPMakespanObjectiveFunction.java}{}{relevant}
