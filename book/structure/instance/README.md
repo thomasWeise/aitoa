@@ -9,7 +9,7 @@ While an optimization problem is the general blueprint of the tasks, e.g., the g
 
 A problem instance is related to an optimization problem like an object/instance to a class in an object-oriented programming language.
 
-### Example: JSSP
+### Example: Job Shop Scheduling {#sec:jsspInstance}
 
 #### Mathematical Perspective
 
