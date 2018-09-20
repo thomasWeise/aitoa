@@ -10,7 +10,7 @@ But what are we looking for?
 
 \text.block{definition}{globalOptimumSO}{For every *global optimum*&nbsp;$\globalOptimum{\solspel}\in\solutionSpace$ of single-objective optimization problem with solution space&nbsp;$\solutionSpace$ and objective function&nbsp;$\objf:\solutionSpace\mapsto\realNumbers$ subject to minimization, it holds that $\objf(\solspel)\geq\objf(\globalOptimum{\solspel})\forall\solspel\in\solutionSpace$.}
 
-When solving an optimization problem, we hope to find at least one global optimum (there may be multiple).
+When solving an optimization problem, we hope to find at least one global optimum (there may be multiple), as stated in \text.ref{optimizationProblemMathematical}.
 However, often, this may not be possible.
 For example, sometimes we have no way to find out whether a solution is a global optimum or not.
 In such a case, we hope for finding a good *approximation* of the optimum, i.e., a solution which is very good with respect to the objective function.
