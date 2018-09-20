@@ -15,10 +15,10 @@ Maximization problems, i.e., there the candidate solution with the higher object
 Notice that maximization and minimization problems can be converted to each other by simply negating the objective function.
 In other words, if $\objf$ is the objective function of a minimization problem, we can solve the maximization problem with $-\objf$ and get the same result.
 
-From the perspective of a programmer, an objective function implements the generic interface given in [@lst:IObjectiveFunction].
+From the perspective of a programmer, an objective function implements the [generic](http://en.wikipedia.org/wiki/Generics_in_Java) interface given in [@lst:IObjectiveFunction].
 The `evaluate` function of this interface maps the solution space class `Y` to the subset of real numbers representable by the data type `double`.
 
-\repo.listing{lst:IObjectiveFunction}{A general interface for objective functions.}{java}{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{}
+\repo.listing{lst:IObjectiveFunction}{A generic interface for objective functions.}{java}{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{}
 
 ### Example: Job Shop Scheduling
 
