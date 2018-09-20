@@ -5,9 +5,9 @@
 Per \text.ref{optimizationProblemEconomical}, an optimization problem forces us to make a choice between different potential solutions.
 We call them *candidate solutions*.
 
-\text.block{definition}{candidateSolution}{A *candidate solution*&nbsp;$\sespel$ is one potential solution of an optimization problem.}
+\text.block{definition}{candidateSolution}{A *candidate solution*&nbsp;$\solspel$ is one potential solution of an optimization problem.}
 
-\text.block{definition}{solutionSpace}{The *solution space*&nbsp;$\solutionSpace$ of an optimization problem is the set of all of its candidate solutions&nbsp;$\sespel\in\solutionSpace$.}
+\text.block{definition}{solutionSpace}{The *solution space*&nbsp;$\solutionSpace$ of an optimization problem is the set of all of its candidate solutions&nbsp;$\solspel\in\solutionSpace$.}
 
 ### Example: Job Shop Scheduling
 

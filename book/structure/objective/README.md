@@ -15,7 +15,8 @@ Maximization problems, i.e., there the candidate solution with the higher object
 Notice that maximization and minimization problems can be converted to each other by simply negating the objective function.
 In other words, if $\objf$ is the objective function of a minimization problem, we can solve the maximization problem with $-\objf$ and get the same result.
 
-From the perspective of a programmer, an objective function implements the interface given in [@lst:IObjectiveFunction].
+From the perspective of a programmer, an objective function implements the generic interface given in [@lst:IObjectiveFunction].
+The `evaluate` function of this interface maps the solution space class `Y` to the subset of real numbers representable by the data type `double`.
 
 \repo.listing{lst:IObjectiveFunction}{A general interface for objective functions.}{java}{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{}
 
@@ -25,12 +26,16 @@ As stated in [@sec:jsspExample], our goal is to complete the production jobs as 
 This means that we want to minimize the makespan, the time when the last job finishes.
 Obviously, the smaller this value, the earlier we are done with all jobs, the better is the plan.
 As illustrated in [@fig:gantt_demo_with_makespan], the makespan is the time index of the right-most edge of any of the machine rows/schedules in the Gantt chart.
+In the figure, this happens to be the end time 230 of the last sub-job of job&nbsp;0, executed on machine&nbsp;4.
 
 ![The makespan (purple), i.e., the time when the last job is completed, for the example candidate solution illustrated in [@fig:gantt_demo_without_makespan] for the demo instance from [@fig:jssp_demo_instance].](\relative.path{gantt_demo_with_makespan.svgz}){#fig:gantt_demo_with_makespan width=80%}
 
-Based on our candidate solution data structure from [@lst:JSSPCandidateSolution], we can easily compute the makespan.
+Our objective function&nbsp;$\objf$ is thus equivalent to the makespan and subject to minimization.
+Based on our candidate solution data structure from [@lst:JSSPCandidateSolution], we can easily compute&nbsp;$\objf$.
 We simply have to look at the last number in each of the integer arrays stored in the member `schedule`, as it represents the end time of the last job processed by a machine.
 We then return the smallest of these numbers.
 We implement the interface `IObjectiveFunction` in class `JSSPMakespanObjectiveFunction` accordingly in [@lst:JSSPMakespanObjectiveFunction].
 
 \repo.listing{lst:JSSPMakespanObjectiveFunction}{Excerpt from a Java class computing the makespan resulting from a candidate solution to the JSSP.}{java}{src/main/java/aitoa/examples/jssp/JSSPMakespanObjectiveFunction.java}{}{relevant}
+
+With this objective function&nbsp;$\objf$, subject to minimization, we have defined that a Gantt chart&nbsp;$\solspel_1$ is better than another Gantt chart&nbsp;$\solspel_2$ if and only if $\objf(\solspel_1)<\objf(\solspel_2)$.
