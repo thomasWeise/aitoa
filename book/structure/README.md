@@ -21,3 +21,4 @@ We will explore all of these structural elements that make up an optimization pr
 \relative.input{instance/README.md}
 \relative.input{solutionSpace/README.md}
 \relative.input{objective/README.md}
+\relative.input{globalOptima/README.md}
