@@ -42,7 +42,9 @@ We could use a string of length $\elementOf{\instance}{m}*\elementOf{\instance}{
 Since we *know* the order of the sub-jobs per job as part of the problem instance data&nbsp;$\instance$, we do not need to encode it.
 This means that we just include each job's id $\elementOf{\instance}{m}=5$ times in the string.
 
-![Illustration of the first four steps of the representation mapping of an example point&nbsp;$\sespel\in\searchSpace$ in the integer string search space&nbsp;$\searchSpace$ to a candidate solution&nbsp;$\solspel\in\solutionSpace$ by using the instance data&nbsp;$\instance$ for the `demo` JSSP instance.](\relative.path{demo_mapping.svgz}){#fig:jssp_mapping_demo width=100%}
+
+![Illustration of the first four steps of the representation mapping of an example point in the search space to a candidate solution.](\relative.path{demo_mapping.svgz}){#fig:jssp_mapping_demo width=100%}
+
 
 A point&nbsp;$\sespel\in\searchSpace$ in the search space&nbsp;$\searchSpace$ for the `demo` JSSP instance would thus be an integer string of length 20.
 As example, we chose $\sespel=(0, 2, 1, 0, 3, 1, 0, 1, 2, 3, 2, 1, 1, 2, 3, 0, 2, 0, 3, 3)$ in [@fig:jssp_mapping_demo].
