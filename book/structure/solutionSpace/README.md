@@ -9,6 +9,9 @@ We call them *candidate solutions*.
 
 \text.block{definition}{solutionSpace}{The *solution space*&nbsp;$\solutionSpace$ of an optimization problem is the set of all of its candidate solutions&nbsp;$\solspel\in\solutionSpace$.}
 
+From the programmer's perspective, the solution space is a data structure, e.g., a `class` in Java.
+We want to return one instance of this data structure to the user when solving an optimization problem.
+
 ### Example: Job Shop Scheduling
 
 But what would be a candidate solution to a JSSP instance as defined in [@sec:jsspInstance]?

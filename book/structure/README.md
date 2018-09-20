@@ -16,9 +16,15 @@ Any optimization problem has at least the following components, which we will ex
 2. The data structure $\solutionSpace$ representing possible solutions to the problem.
 3. The objective function $\objf:\solutionSpace\mapsto\realNumbers$ which computes the cost of the candidate solutions $\solspel\in\solutionSpace$.
 
+Usually, in order to actually implement an optimization approach, there also will be
+
+1. A search space&nbsp;$\searchSpace$ which can more handily be processed by an optimization algorithm under the hood than&nbsp;$\solutionSpace$.
+2. A representation mapping $\repMap:\searchSpace\mapsto\solutionSpace$ which translates the points&nbsp;$\sespel$ of the search space&nbsp;$\searchSpace$ to candidate solutions&nbsp;$\solspel\in\solutionSpace$ in the solution space&nbsp;$\solutionSpace$.
+
 We will explore all of these structural elements that make up an optimization problem in this chapter, based on a concrete example of the Job Shop Scheduling Problem (JSSP) from [@sec:jsspExample].
 
 \relative.input{instance/README.md}
 \relative.input{solutionSpace/README.md}
 \relative.input{objective/README.md}
 \relative.input{globalOptima/README.md}
+\relative.input{searchSpace/README.md}
