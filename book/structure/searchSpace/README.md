@@ -101,7 +101,22 @@ $$ \left|\searchSpace\right| = \frac{\left(\elementOf{\instance}{m}*\elementOf{\
 
 | $\elementOf{\instance}{n}$ | $\elementOf{\instance}{m}$ | $\left|\searchSpace\right|$ |
 |--:|--:|--:|
-\relative.r{jsspSearchSpaceTable.R}
+2|1|2
+2|2|6
+2|3|20
+2|4|70
+3|1|6
+3|2|90
+3|3|1'680
+3|4|34'650
+4|1|24
+4|2|2'520
+4|3|369'600
+4|4|63'063'000
+5|1|120
+5|2|113'400
+5|3|168'168'000
+5|4|3.06*10^11^
 
 : The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number of jobs&nbsp;$\elementOf{\instance}{n}$ and the number of machines&nbsp;$\elementOf{\instance}{m}$ of an JSSP instance&nbsp;$\instance$. {#tbl:jsspSearchSpaceTable}
 
