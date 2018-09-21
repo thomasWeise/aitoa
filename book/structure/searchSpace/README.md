@@ -32,8 +32,6 @@ What we would like to have is a *search space*&nbsp;$\searchSpace$, which can re
 Furthermore, this space also contains a lot us uninteresting candidate solutions, as we can always add useless idle time to an existing Gantt chart and the resulting (longer) chart would still be a valid solution (although one which will definitely be inferior of what we had before).
 If we would design a compact and efficient search space&nbsp;$\searchSpace$ more suitable for our problem, the representation mapping&nbsp;$\repMap$ should thus probably not be surjective, as we then could leave unaccessible as many of the Gantt charts with unnecessary delays as possible.
 
-#### A Linear Representation
-
 One idea is to encode the two-dimensional array structure&nbsp;$\solutionSpace$ in a simple linear string of integer numbers&nbsp;$\searchSpace$.
 The corresponding representation mapping can best be described by an example.
 In the demo instance $\instance$, we have $\elementOf{\instance}{m}=5$ machines and $\elementOf{\instance}{n}=4$ jobs.
@@ -41,8 +39,6 @@ Each job has $\elementOf{\instance}{m}=5$  sub-jobs that must be distributed to 
 We could use a string of length $\elementOf{\instance}{m}*\elementOf{\instance}{n}=20$ denoting the priority of the sub-jobs.
 Since we *know* the order of the sub-jobs per job as part of the problem instance data&nbsp;$\instance$, we do not need to encode it.
 This means that we just include each job's id $\elementOf{\instance}{m}=5$ times in the string.
-
-#### The Representation Mapping on an Example
 
 ![Illustration of the first four steps of the representation mapping of an example point in the search space to a candidate solution.](\relative.path{demo_mapping.svgz}){#fig:jssp_mapping_demo width=99%}
 
@@ -91,8 +87,6 @@ In [@lst:JSSPRepresentationMapping], we illustrate how such a mapping can be imp
 It basically is a function translating an instance of `int[]` to `JSSPCandidateSolution`.
 This is done by keeping track of time that has passed for each machine and each job, as well as by remembering the next sub-job for each job and the position in the schedule of each machine.
 
-#### Features of the Linear Representation
-
 What did we gain by such a mapping?
 Well, we now have a very simple data structure&nbsp;$\searchSpace$ to represent our candidate solutions.
 We have very simple rules for validating a point&nbsp;$\sespel$ in the search space:
@@ -100,7 +94,10 @@ If it contains the numbers&nbsp;$0\dots \elementOf{\instance}{n}$ each exactly&n
 The corresponding candidate solution will never violate any constraint, as the mapping&nbsp;$\repMap$ will ensure that the order of the sub-jobs per job is always observed and each machine will process at most one job at a time.
 We now have a basis to indirectly create and modify candidate solutions by sampling points from the search space and moving to similar points, as we will see in the following chapters.
 
-#### The Size of the Search Space
+It can also be see that we could modify our representation mapping&nbsp;$\repMap$ to adapt to more complicated and constraint versions of the JSSP:
+If, for instance, it would take a job- and machine-dependent time requirement for carry a job from one machine to another, we could facilitate this by adding it to the next starting of the job.
+If there was a job-dependent setup time for each machine, which could be different if job&nbsp;1 follows job&nbsp;0 instead of job&nbsp;2, then this could be facilitated easily as well.
+Many such different problem flavors can now be reduced of investigating the same space&nbsp;$\searchSpace$ using the same optimization algorithms, just with different representation mappings&nbsp;$\repMap$ and/or objective functions&nbsp;$\objf$.
 
 By using&nbsp;$\searchSpace$, we furthermore get a very clear idea about the size and structure of set of possible solutions.
 Each element&nbsp;$\sespel\in\searchSpace$ is a [permutation of a multiset](http://en.wikipedia.org/wiki/Permutation#Permutations_of_multisets) where each of the&nbsp;$\elementOf{\instance}{n}$ elements occurs exactly&nbsp;$\elementOf{\instance}{m}$ times.
@@ -131,6 +128,6 @@ From the table, we can immediately see that the number of points in the search s
 For our `demo` JSSP instance with&nbsp;$\elementOf{\instance}{n}=4$ jobs and&nbsp;$\elementOf{\instance}{m}=5$ machines, we already have about 12 billion different points in the search space.
 Of course, there is some redundancy, as our mapping is not [injective](http://en.wikipedia.org/wiki/Injective_function):
 If we would exchange the first three numbers in the example string in [@fig:jssp_mapping_demo], we would obtain the same Gantt chart, as jobs&nbsp;0, 1, and&nbsp;2 start at different machines.
-Nevertheless, `demo` may already be among the largest instances that we could solve by simply exhaustively enumerating all possible solutions with the computers available today.
+Nevertheless, `demo` may already be among the largest instances that we could solve in reasonable time by simply exhaustively enumerating all possible solutions with the computers available today.
 For more "realistic" problem instances such as `la24` with 15 jobs and 10 machines we arrive already at 2.29*10^164^ different points in the search space &ndash; and this is the smallest one of the example benchmark instances we will look at.
 It is clear that finding the global optima of these instances cannot be done by testing all possible options and we will need something better.

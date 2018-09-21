@@ -22,6 +22,7 @@ Usually, in order to actually implement an optimization approach, there also wil
 2. A representation mapping $\repMap:\searchSpace\mapsto\solutionSpace$ which translates the points&nbsp;$\sespel$ of the search space&nbsp;$\searchSpace$ to candidate solutions&nbsp;$\solspel\in\solutionSpace$ in the solution space&nbsp;$\solutionSpace$.
 
 We will explore all of these structural elements that make up an optimization problem in this chapter, based on a concrete example of the Job Shop Scheduling Problem (JSSP) from [@sec:jsspExample].
+While the example should give a reasonable idea about how the general definitions can be applied in practice, for different optimization problems, all involved entities may be quite different and the example approach may not carry over to them.
 
 \relative.input{instance/README.md}
 \relative.input{solutionSpace/README.md}
