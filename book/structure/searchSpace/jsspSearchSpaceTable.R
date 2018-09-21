@@ -64,5 +64,3 @@ for(n in 1L:5L) {
     cat(n, "|", m, "|", set.size(n, m), "\n");
   }
 }
-
-}
