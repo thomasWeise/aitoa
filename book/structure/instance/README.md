@@ -23,7 +23,7 @@ Beasley&nbsp;[@B1990OLDTPBEM] manages the  [*OR-Library*](http://people.brunel.a
 [Here](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/jobshop1.txt), concrete JSSP instances can be downloaded as text file.
 For the sake of simplicity, we created one additional, smaller instance to describe this format, as illustrated in [@fig:jssp_demo_instance].
 
-![The meaning of the text representing our demo instance of the JSSP, as an example of the format used in the OR-Library.](\relative.path{demo_instance.svgz}){#fig:jssp_demo_instance width=90%}
+![The meaning of the text representing our `demo` instance of the JSSP, as an example of the format used in the OR-Library.](\relative.path{demo_instance.svgz}){#fig:jssp_demo_instance width=90%}
 
 In the simple text format used in OR-Library, each problem instance $\instance$ is delimited by line of several `+` characters.
 The next line is a short description or title of the instance.

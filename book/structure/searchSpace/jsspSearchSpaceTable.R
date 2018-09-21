@@ -18,8 +18,8 @@ set.size <- function(n, m) {
   return(make.int(factorial(m*n)/((factorial(m))^n)));
 }
 
-for(n in 2L:5L) {
-  for(m in 1L:4L) {
+for(n in 3L:5L) {
+  for(m in 2L:5L) {
     cat(n, "|", m, "|", set.size(n, m), "\n", collapse="", sep="");
   }
 }
