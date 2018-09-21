@@ -1,4 +1,4 @@
-## The Search Space and Representation Mapping
+## The Search Space and Representation Mapping {#sec:searchSpace}
 
 The solution space is the data structure that "makes sense" from the perspective of the user, the decision maker, who will be supplied with one instance of this structure (a candidate solution) at the end of the opimization procedure.
 But it not necessarily is the space that is most suitable for searching inside.

@@ -1,4 +1,4 @@
-## Problem Instance Data
+## Problem Instance Data {#sec:problemInstance}
 
 ### Definitions
 

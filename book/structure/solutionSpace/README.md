@@ -1,4 +1,4 @@
-## The Solution Space
+## The Solution Space {#sec:solutionSpace}
 
 ### Definitions
 

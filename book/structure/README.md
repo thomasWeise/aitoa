@@ -12,16 +12,16 @@ We can refine it to the more mathematical formulation given in \text.ref{optimiz
 
 Any optimization problem has at least the following components, which we will explore in detail in this chapter.
 
-1. The problem instance&nbsp;$\instance$ data, i.e., the concrete scenario that we will try to solve.
-2. The data structure $\solutionSpace$ representing possible solutions to the problem.
-3. The objective function $\objf:\solutionSpace\mapsto\realNumbers$ which computes the cost of the candidate solutions $\solspel\in\solutionSpace$.
+1. The problem instance&nbsp;$\instance$ data, i.e., the concrete scenario that we will try to solve ([@sec:problemInstance]).
+2. The data structure $\solutionSpace$ representing possible solutions to the problem ([@sec:solutionSpace]).
+3. The objective function $\objf:\solutionSpace\mapsto\realNumbers$ which computes the cost of the candidate solutions $\solspel\in\solutionSpace$ ([@sec:objectiveFunction]).
 
 Usually, in order to actually implement an optimization approach, there also will be
 
-1. A search space&nbsp;$\searchSpace$ which can more handily be processed by an optimization algorithm under the hood than&nbsp;$\solutionSpace$.
-2. A representation mapping $\repMap:\searchSpace\mapsto\solutionSpace$ which translates the points&nbsp;$\sespel$ of the search space&nbsp;$\searchSpace$ to candidate solutions&nbsp;$\solspel\in\solutionSpace$ in the solution space&nbsp;$\solutionSpace$.
+1. A search space&nbsp;$\searchSpace$ which can more handily be processed by an optimization algorithm under the hood than&nbsp;$\solutionSpace$ ([@sec:searchSpace]).
+2. A representation mapping $\repMap:\searchSpace\mapsto\solutionSpace$ which translates the points&nbsp;$\sespel$ of the search space&nbsp;$\searchSpace$ to candidate solutions&nbsp;$\solspel\in\solutionSpace$ in the solution space&nbsp;$\solutionSpace$ ([@sec:searchSpace]).
 
-We will explore all of these structural elements that make up an optimization problem in this chapter, based on a concrete example of the Job Shop Scheduling Problem (JSSP) from [@sec:jsspExample].
+We will explore these structural elements that make up an optimization problem in this chapter, based on a concrete example of the Job Shop Scheduling Problem (JSSP) from [@sec:jsspExample].
 While the example should give a reasonable idea about how the general definitions can be applied in practice, for different optimization problems, all involved entities may be quite different and the example approach may not carry over to them.
 
 \relative.input{instance/README.md}

@@ -1,4 +1,4 @@
-## Objective Function
+## Objective Function {#sec:objectiveFunction}
 
 ### Definitions
 
