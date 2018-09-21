@@ -98,3 +98,13 @@ Each element&nbsp;$\sespel\in\searchSpace$ is a [permutation of a multiset](http
 This means that the size of the search space can be computed as given in [@eq:jssp_search_space_size].
 
 $$ \left|\searchSpace\right| = \frac{\left(\elementOf{\instance}{m}*\elementOf{\instance}{n}\right)!}{ \left(\elementOf{\instance}{m}!\right)^{\elementOf{\instance}{n}} } $$ {#eq:jssp_search_space_size}
+
+| $\elementOf{\instance}{n}$ | $\elementOf{\instance}{m}$ | $\left|\searchSpace\right|$ |
+|--:|--:|--:|
+\relative.r{jsspSearchSpaceTable.R}
+
+: The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number of jobs&nbsp;$\elementOf{\instance}{n}$ and the number of machines&nbsp;$\elementOf{\instance}{m}$ of an JSSP instance&nbsp;$\instance$. {#tbl:jsspSearchSpaceTable}
+
+We give some example values for this search space size in [@tbl:jsspSearchSpaceTable].
+From the table, we can immediately see that the number of points in the search space grows very quickly with both the number of jobs&nbsp;$\elementOf{\instance}{n}$ and the number of machines&nbsp;$\elementOf{\instance}{m}$ of an JSSP instance&nbsp;$\instance$.
+Even if we can assume redundancy since some points may map to the same Gantt charts, the search space is huge even for relatively small problems.
