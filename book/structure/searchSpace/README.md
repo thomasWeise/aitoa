@@ -30,9 +30,7 @@ Yet, it is not that clear how we can efficiently create such solutions let alone
 What we would like to have is a *search space*&nbsp;$\searchSpace$, which can represent the possible candidate solutions of the problem in a more machine-tangible, algorithm-friendly way.
 
 Furthermore, this space also contains a lot us uninteresting candidate solutions, as we can always add useless idle time to an existing Gantt chart and the resulting (longer) chart would still be a valid solution (although one which will definitely be inferior of what we had before).
-If we would design a compact and efficient search space&nbsp;$\searchSpace$ more suitable for our problem, the representation mapping&nbsp;$\repMap$ should thus probably be injective but not surjective.
-If different points in the search space to different candidate Gantt charts, i.e., $\sespel_1,\sespel_2\in\searchSpace \land \sespel_1 \neq \sespel_2 \Rightarrow \repMap(\sespel_1) \neq \repMap(\sespel_2)$.
-At the same time, it should leave unaccessible as many of the Gantt charts with unnecessary delays as possible.
+If we would design a compact and efficient search space&nbsp;$\searchSpace$ more suitable for our problem, the representation mapping&nbsp;$\repMap$ should thus probably not be surjective, as we then could leave unaccessible as many of the Gantt charts with unnecessary delays as possible.
 
 One idea is to encode the two-dimensional structure&nbsp;$\solutionSpace$ in a simple one-dimensional string of integer numbers&nbsp;$\searchSpace$.
 The corresponding representation mapping can best be described by an example.
@@ -88,3 +86,15 @@ We continue this iterative processing until reaching the end of the string&nbsp;
 In [@lst:JSSPRepresentationMapping], we illustrate how such a mapping can be implemented.
 It basically is a function translating an instance of `int[]` to `JSSPCandidateSolution`.
 This is done by keeping track of time that has passed for each machine and each job, as well as by remembering the next sub-job for each job and the position in the schedule of each machine.
+
+What did we gain by such a mapping?
+Well, we now have a very simple data structure&nbsp;$\searchSpace$ to represent our candidate solutions.
+We have very simple rules for validating a point&nbsp;$\sespel$ in the search space:
+If it contains the numbers&nbsp;$0\dots \elementOf{\instance}{n}$ each exactly&nbsp;$\elementOf{\instance}{m}$ times, it represents a valid candidate solution.
+The corresponding candidate solution will never violate any constraint, as the mapping&nbsp;$\repMap$ will ensure that the order of the sub-jobs per job is always observed and each machine will process at most one job at a time.
+
+By using&nbsp;$\searchSpace$, we furthermore get a very clear idea about the size and structure of set of possible solutions.
+Each element&nbsp;$\sespel\in\searchSpace$ is a [permutation of a multiset](http://en.wikipedia.org/wiki/Permutation#Permutations_of_multisets) where each of the&nbsp;$\elementOf{\instance}{n}$ elements occurs exactly&nbsp;$\elementOf{\instance}{m}$ times.
+This means that the size of the search space can be computed as given in [@eq:jssp_search_space_size].
+
+$$ \left|\searchSpace\right| = \frac{\left(\elementOf{\instance}{m}*\elementOf{\instance}{n}\right)!}{ \left(\elementOf{\instance}{m}!\right)^{\elementOf{\instance}{n}} } $$ {#eq:jssp_search_space_size}
