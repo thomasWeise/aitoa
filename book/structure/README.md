@@ -1,4 +1,4 @@
-# The Structure of Optimization
+# The Structure of Optimization {#sec:structure}
 
 We have already seen a few examples of *optimization problems*.
 Let us condense their essence into definitions.
