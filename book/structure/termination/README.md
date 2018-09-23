@@ -13,7 +13,7 @@ Either when the time is up or when we found a reasonably-good solution.
 
 ### Definitions
 
-\text.block{definition}{terminationCriterion}{The *termination criterion*&nbsp;$\shouldTerminate:\mapsto\{true,false\}$ is a monotonous function of the state of the optimization process which becomes `true` if the optimization process should stop (and then remains `true`) and, until then, remains `false` as long as it can continue.}
+\text.block{definition}{terminationCriterion}{The *termination criterion*&nbsp;$\shouldTerminate\mapsto\{true,false\}$ is a monotonous function of the state of the optimization process which becomes `true` if the optimization process should stop (and then remains `true`) and, until then, remains `false` as long as it can continue.}
 
 \repo.listing{lst:ITerminationCriterion}{A general interface for termination criteria.}{java}{src/main/java/aitoa/structure/ITerminationCriterion.java}{}{}
 
