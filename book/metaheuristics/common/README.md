@@ -43,7 +43,7 @@ We define the interface `IBlackBoxProcess` from which an excerpt is given in [@l
 This interface allows us to
 
 - provide a random number generator to the algorithm,
-- wrap an objective function&nbsp;$\objF$ together with a representation mapping&nbsp;$\repMap$ to allow us to evaluate a point in the search space&nbsp;$\sespel\in\searchSpace$ in a single step, effectively performing&nbsp;$\objF(\repMap(\sespel))$,
+- wrap an objective function&nbsp;$\objf$ together with a representation mapping&nbsp;$\repMap$ to allow us to evaluate a point in the search space&nbsp;$\sespel\in\searchSpace$ in a single step, effectively performing&nbsp;$\objf(\repMap(\sespel))$,
 - keep track of the elapsed runtime and FEs by updating said information when necessary during the invocations of the "wrapped" objective
 - keep track of the best points in the search space and solution space so far as well as their associated objective value by updating them whenever the "wrapped" objective function discovers an improvement,
 - represent a termination criterion based on the above information (e.g., maximum FEs, maximum runtime, reaching a goal objective value), and
