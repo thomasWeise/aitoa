@@ -51,7 +51,7 @@ This interface allows us to
 
 In other words, when implementing a metaheuristic, we will provide it with an instance of this interface, which will, e.g., solve the issue from [@sec:rememberBest] automatically.
 
-In the interface class `IBlackBoxProcess`, we also provide static methods for instantiation.
+Along with the interface class `IBlackBoxProcess`, we also provide a [builder](http://en.wikipedia.org/wiki/Builder_pattern) for instantiation.
 The actual implementation then makes use of another simple interface that provides basic functionality of either the search or solution space given in [@lst:ISpace].
 
 \repo.listing{lst:ISpace}{A excerpt of the generic interface `ISpace` for representing basic functionality of search and solution spaces needed by [@lst:IBlackBoxProcess].}{java}{src/main/java/aitoa/structure/ISpace.java}{}{relevant}
