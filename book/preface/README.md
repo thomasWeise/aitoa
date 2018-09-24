@@ -4,10 +4,11 @@ After I wrote *Global Optimization Algorithms &ndash; Theory and Applications*&n
 Currently, this book is in a very early stage of development.
 It is work-in-progress, so expect many changes.
 
-In this book, we are using a lot of concrete examples written in the programming language Java.
+In this book, we are using a lot of concrete examples written in the programming language [Java](http://en.wikipedia.org/wiki/Java_(programming_language)).
 These are published in the repository *[thomasWeise/aitoa-code](\repo.name)* on [GitHub](http://www.github.com) and also freely accessible.
 Often, we will just look at certain portions of the code.
 However, each source code listing is accompanied by a *(src)* link in the caption linking to the current full version of the file in the GitHub repository.
+If you discover any error in any of the code examples, please [file an issue](http://github.com/\repoName/issues).
 
 This book is written using my automated book writing environment, which integrates GitHub, [Travis CI](http://www.travis-ci.org), and [docker](http://www.docker.com)-[hub](http://hub.docker.com).
 The complete text of the book is actively written and available in the repository *[thomasWeise/aitoa](http://github.com/thomasWeise/aitoa)* on GitHub.
