@@ -44,14 +44,23 @@ This interface allows us to
 
 - provide a random number generator to the algorithm,
 - wrap an objective function&nbsp;$\objf$ together with a representation mapping&nbsp;$\repMap$ to allow us to evaluate a point in the search space&nbsp;$\sespel\in\searchSpace$ in a single step, effectively performing&nbsp;$\objf(\repMap(\sespel))$,
-- keep track of the elapsed runtime and FEs by updating said information when necessary during the invocations of the "wrapped" objective
+- keep track of the elapsed runtime and FEs as well as when the last improvement was made by updating said information when necessary during the invocations of the "wrapped" objective
 - keep track of the best points in the search space and solution space so far as well as their associated objective value by updating them whenever the "wrapped" objective function discovers an improvement,
 - represent a termination criterion based on the above information (e.g., maximum FEs, maximum runtime, reaching a goal objective value), and
-- log the improvements that the algorithm makes to a file.
+- log the improvements that the algorithm makes to a file (which is why we need to call `close` when we are finished so that the file is closed).
 
 In other words, when implementing a metaheuristic, we will provide it with an instance of this interface, which will, e.g., solve the issue from [@sec:rememberBest] automatically.
 
 In the interface class `IBlackBoxProcess`, we also provide static methods for instantiation.
 The actual implementation then makes use of another simple interface that provides basic functionality of either the search or solution space given in [@lst:ISpace].
 
-\repo.listing{lst:ISpace}{A generic interface for representing basic functionality of search and solution spaces needed by [@lst:IBlackBoxProcess].}{java}{src/main/java/aitoa/structure/ISpace.java}{}{}
+\repo.listing{lst:ISpace}{A excerpt of the generic interface `ISpace` for representing basic functionality of search and solution spaces needed by [@lst:IBlackBoxProcess].}{java}{src/main/java/aitoa/structure/ISpace.java}{}{relevant}
+
+### Example: Job Shop Scheduling
+
+\repo.listing{lst:JSSPSearchSpace}{An excerpt of the implementation of the `ISpace` interface for the search space for the JSSP problem.}{java}{src/main/java/aitoa/examples/jssp/JSSPSearchSpace.java}{}{relevant}
+
+\repo.listing{lst:JSSPSolutionSpace}{An excerpt of the implementation of the `ISpace` interface for the solution space for the JSSP problem.}{java}{src/main/java/aitoa/examples/jssp/JSSPSolutionSpace.java}{}{relevant}
+
+What we need to provide for our JSSP example are implementations of the `ISpace` interface for both the search and the solution space, which are given in [@lst:JSSPSearchSpace] and [@lst:JSSPSolutionSpace], respectively.
+These implementations provide the methods that an `IBlackBoxProcess` implementation needs under the hood to, e.g., copy and store candidate solutions and points in the search space.
