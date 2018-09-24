@@ -6,3 +6,5 @@
 
 In this chapter, we will introduce several such algorithms and explore them, by using again the Job Shop Scheduling Problem (JSSP) from [@sec:jsspExample] as example.
 We will directly build upon the concepts that we have introduced in [@sec:structure].
+
+\relative.input{common/README.md}
