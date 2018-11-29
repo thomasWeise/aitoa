@@ -35,17 +35,17 @@ $$ T_{p,q} = \sum_{i\leq q} \elementOf{\arrayIndex{\arrayIndex{\elementOf{\insta
 A machine&nbsp;$v$ cannot be "finished" before all of the sub-jobs for it have been finished as well.
 This means that its completion time&nbsp;$T_v$ cannot be earlier than the maximum&nbsp;$T_v^a$ of all the completion times of the sub-jobs assigned to it.
 
-$$ T_v^a = \max{\left\{ T_{p,q} | \forall p, \elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{machine}=v \right\}} $$
+$$ T_v^a = \max{\left\{ T_{p,q} \;|\; \forall p, \elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{machine}=v \right\}} $$
 
 It can also not earlier than the overall sum&nbsp;$T_v^b$ over all of the time requirements of each of the sub-jobs assigned to it.
 
-$$ T_v^b = \sum{\left\{ \elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{time}  | \forall p, \elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{machine}=v  \right\}} $$
+$$ T_v^b = \sum{\left\{ \elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{time}  \;|\; \forall p, \elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{machine}=v  \right\}} $$
 
 The lower bound for the completion time for machine&nbsp;$v$ would then be the maximum of the two values&nbsp;$T_v^a$ and&nbsp;$T_v^b$.
 The makespan of the global optimum of a JSSP instance&nbsp;$\instance$ cannot be shorter than the  maximum of the times when the machines are finished.
 The lower bound&nbsp;$\lowerBound{\objf}$ for the best makespan on instance&nbsp;$\instance$ would then be the maximum over all the completion times of the machines, i.e.:
 
-$$ \lowerBound{\objf} = \max{\left\{  T_v^a, T_v^b | \forall v \in 1\dots \elementOf{\instance}{m} \right\}} $$
+$$ \lowerBound{\objf} = \max{\left\{  T_v^a, T_v^b \;|\; \forall v \in 1\dots \elementOf{\instance}{m} \right\}} $$
 
 We do not know whether a schedule exists that can achieve this, because this would mean that we have a schedule where no sub-job needs to wait even for a single time unit before commencing.
 This value is a lower bound, we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
