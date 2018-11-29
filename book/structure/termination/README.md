@@ -30,12 +30,12 @@ If we base the termination criterion on the consumed time, we have two basic cho
 Measuring and defining limits for the clock time has several advantages.
 In a practical scenario, this is the relevant dimension.
 The operator starts the optimization process and waits for the result &ndash; and there is a limit on how long she will accept to wait.
-The quantity makes physical sense, too.
+The quantity "time" makes physical sense, too.
 Many research works thus report their results together with consumed clock times.
 Finally, measuring the clock time contains all "internal" sources of delay in optimization, such as loading files, converting data structures, memory management, etc.
 
 From the scientific point of view, it also has disdavantages, though.
-First, it is strongly machine dependent.
+Foremost: It is strongly machine dependent.
 This has two implications:
 First, all results in this book reported based on clock time might be outdated when you read this text.
 Second, it will be virtually impossible to exactly replicate experimental the results, as one would need the exactly same software and hardware setup.
@@ -46,12 +46,13 @@ In scientific work, we often report the consumed *FEs*, the number of times we h
 This also usually equivalent to the number of candidate solutions that were generated, i.e., the number of times the representation mapping was applied.
 This is a machine-independent time measure which cannot be influenced by any outside effects.
 Using it also makes sense because in many domains, the objective function with the representation mapping are the most time-consuming elements of the optimization process.
-Hence, reducing the FEs needed to get a certain solution quality is a primary concern.
+FEs then are somehow equivalent to "algorithm steps," which are the basis for [theoretical runtime analysis](http://en.wikipedia.org/wiki/Analysis_of_algorithms).
+Hence, reducing the FEs needed to get a certain solution quality is a primary research concern.
 
 The downside of using FEs is that there is no well-defined relationship with the runtime.
 A big problem in scientific work is that different algorithms may require vastly different amounts of runtime for one FE.
 The search steps in a local search may have [algorithmic complexity](http://en.wikipedia.org/wiki/Analysis_of_algorithms#Orders_of_growth) of $\bigO{1}$ while those of an ant colony optimization approach may have $\bigO{n^2}$, where $n$ is the number of decision variables.
-Assuming that one step of the local search would take as long as one step of the ant colony optimization algorithm would thus be grossly unfair.
+Assuming that one step of the local search would take as long as one step of the ant colony optimization algorithm would then be grossly unfair.
 Also, FEs do not capture any complexity or time spent in book-keeping or mangament not related to the generation of candidate solutions.
 Still, they are one of the most important time measures in research.
 
@@ -61,8 +62,8 @@ The problem can be solved by using both time measures when evaluating the algori
 
 In our example domain, the JSSP, we can assume that the human operator will input the instance data&nbsp;$\instance$ into the computer.
 Then she may go drink a coffee and expect the results to be ready upon her return.
-A termination criterion granting four minutes of runtime seems to be reasonable to me here.
+A termination criterion granting three minutes of runtime seems to be reasonable to me here.
 
-Of course, there may also be other limits, e.g., whether a schedule can be completed in a single work day.
-We might let the algorithm run longer than four minutes until such a solution was discovered.
+Of course, there may also be other limits, e.g., whether a proposed schedule can be implemented/completed within the working hours of a single day.
+We might let the algorithm run longer than three minutes until such a solution was discovered.
 For our benchmark instances, however, this is not relevant and we can limit ourselves to the runtime-based termination criterion.
