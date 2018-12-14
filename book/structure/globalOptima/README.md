@@ -31,15 +31,27 @@ When facing a JSSP instance&nbsp;$\instance$, we do not know whether a given Gan
 There is no direct way in which we can compute it.
 But we can, at least, compute some *lower bound*&nbsp;$\lowerBound{\objf}$ for the best possible makespan.
 
-No schedule can complete faster then the longst job.
-We know that the makespan in a JSSP cannot be shorter than the latest "finishing time" of any machine&nbsp;$\jsspMachineIndex$ in the optimal schedule.
+A job&nbsp;$\jsspJobIndex$ needs at least as long to complete as the sum&nbsp;$\sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ over the processing times of all of its sub-jobs.
+It is clear that no schedule can complete faster then the longst job.
+Furthermore, we know that the makespan of the optimal schedule also cannot be shorter than the latest "finishing time" of any machine&nbsp;$\jsspMachineIndex$.
 This finishing time is at least as big as the sum&nbsp;$\jsspMachineRuntime{\jsspMachineIndex}$ of the runtimes of all the sub-jobs assigned to this machine.
-But it may also include a least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$, namely if the sub-jobs for machine&nbsp;$\jsspMachineIndex$ never come first in their job, as well as a least end idle time&nbsp;$\jsspMachineEndIdle{\jsspMachineIndex}$, if these sub-jobs never come last in their job.
+But it may also include a least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$, namely if the sub-jobs for machine&nbsp;$\jsspMachineIndex$ never come first in their job.
+Similarly, there is a least idle time&nbsp;$\jsspMachineEndIdle{\jsspMachineIndex}$ at the end if these sub-jobs never come last in their job.
 As lower bound for the fastest schedule that could theoretically exist, we therefore get:
 
-$$ \lowerBound{\objf} = \max\left\{\max_{\jsspJobIndex}\left\{ \sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\right\}, \max_{\jsspMachineIndex} \left\{ \jsspMachineStartIdle{\jsspMachineIndex}+\jsspMachineRuntime{\jsspMachineIndex} +\jsspMachineEndIdle{\jsspMachineIndex}\right\}\right\} $$ {#eq:jsspLowerBound}
+$$ \lowerBound{\objf} = \max\left\{\max_{\jsspJobIndex}\left\{ \sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\right\} \;,\; \max_{\jsspMachineIndex} \left\{ \jsspMachineStartIdle{\jsspMachineIndex}+\jsspMachineRuntime{\jsspMachineIndex} +\jsspMachineEndIdle{\jsspMachineIndex}\right\}\right\} $$ {#eq:jsspLowerBound}
 
 More details are given in [@sec:appendix:jssp:lowerBounds] and [@T199BFBSP].
 We do not know whether a schedule exists that can achieve this, because this would mean that we have a schedule where no sub-job is stalled by any sub-job of any other job.
 The value&nbsp;$\lowerBound{\objf}$ is a lower bound, we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
 If our algorithms produce solutions with a quality close to&nbsp;$\lowerBound{\objf}$, we know that are doing very well.
+
+![The globally optimal solution of the demo instance [@fig:jssp_demo_instance], whose makespan happens to be the same as the lower bound.](\relative.path{gantt_demo_optimal_bound.svgz}){#fig:gantt_demo_optimal_bound width=80%}
+
+[@fig:gantt_demo_optimal_bound] illustrates the globally optimal solution for our small demo JSSP instance defined in [@fig:jssp_demo_instance].
+Here we are lucky: The objective value of this solution happens to be the same as the lower bound for the makespan.
+The limiting machine is the one at index&nbsp;3.
+Regardless with which job we would start here, it would need to initially wait at least&nbsp;$\jsspMachineStartIdle{3}=30$ time units.
+Then, all the jobs together on the machine will consume&nbsp;$\jsspMachineRuntime{3}=150$ time units if we can execute them without further delay.
+Finally, it regardless with which job we finish on this machine, it will lead to a further waiting time of&nbsp;$\jsspMachineEndIdle{3}=10$ time units.
+This leads to a lower bound&nbsp;$\lowerBound{\objf}$ of&nbsp;180 and since we found the illustrated candidate solution with exactly this makespan, we have solved this (very easy) JSSP instance.

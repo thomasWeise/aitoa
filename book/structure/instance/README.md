@@ -15,12 +15,14 @@ So how can we characterize a JSSP instance&nbsp;$\instance$?
 In the most basic scenario&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP], our factory has&nbsp;$\jsspMachines\in\naturalNumbersO$ machines.
 Each machine can perform one job at a time or be idle.
 There are&nbsp;$\jsspJobs\in\naturalNumbersO$ jobs that we need to schedule to these machines.
-For the sake of simplicity and agreement between our notation here and the Java source code examples, we will index jobs and machines with zero-based indices, i.e., indexes from&nbsp;$0\dots(\jsspJobs-1)$ and&nbsp;$0\dots(\jsspMachines-1)$, respectively.
+For the sake of simplicity and agreement between our notation here, the Java source code, and the example instances that we will use, we reference jobs and machines with zero-based indices from&nbsp;$0\dots(\jsspJobs-1)$ and&nbsp;$0\dots(\jsspMachines-1)$, respectively.
 
-Each of these&nbsp;$\jsspJobs$ jobs is composed of&nbsp;$\jsspMachines$ sub-jobs, one for each machine.
+Each of the&nbsp;$\jsspJobs$ jobs is composed of&nbsp;$\jsspMachines$ sub-jobs, one for each machine.
 The sub-job&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ must be executed on machine&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}$ and there needs&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ time units for completion.
-This setup also allow us to represent the situation where a certain job&nbsp;$\jsspJobIndex$ does not need to be executed on a machine&nbsp;$\jsspMachineIndex'$, because we then can set the required time&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ to 0 for the sub-job&nbsp;$\jsspMachineIndex$ with&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}=\jsspMachineIndex'$.
+This setup also allows us to represent the situation where a certain job&nbsp;$\jsspJobIndex$ does not need to be executed on a machine&nbsp;$\jsspMachineIndex'$.
+We then can simply set the required time&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ to&nbsp;0 for the sub-job&nbsp;$\jsspMachineIndex$ with&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}=\jsspMachineIndex'$.
 
+Let us now look at some example instances for the JSSP.
 Beasley&nbsp;[@B1990OLDTPBEM] manages the  [*OR-Library*](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/jobshopinfo.html), a library of example instances for many optimization problems from the field of operations research.
 An even more [comprehensive set of JSSP instances](http://jobshop.jjvh.nl/) is provided by van Hoorn&nbsp;[@vH2015JSIAS; @vH2018TCSOBOBIOTJSSP].
 [Here](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/jobshop1.txt) and [here](http://jobshop.jjvh.nl/), the concrete JSSP instances which we will use can be downloaded as text file.
