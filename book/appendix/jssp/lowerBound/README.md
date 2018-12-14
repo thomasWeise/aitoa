@@ -13,7 +13,7 @@ This means there may be an initial idle period&nbsp$\jsspMachineStartIdle{\jsspM
 
 $$ \jsspMachineStartIdle{\jsspMachineIndex} \geq \min_{\forall \jsspJobIndex\in 0\dots(\jsspJobs-1)} \left\{ \sum_{\jsspMachineIndex''=0}^{\jsspMachineIndex-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex'}\text{~with~}\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex'}=\jsspMachineIndex \right\} $$
 
-Vice versa, there also is a minimum time&nbsp;$\jsspMachineEndIdle$ that the machine will stay idle after finishing all of its sub-jobs.
+Vice versa, there also is a minimum time&nbsp;$\jsspMachineEndIdle{\jsspMachineIndex}$ that the machine will stay idle after finishing all of its sub-jobs.
 
 $$ \jsspMachineEndIdle{\jsspMachineIndex} \geq \min_{\forall \jsspJobIndex\in 0\dots(\jsspJobs-1)} \left\{ \sum_{\jsspMachineIndex''=\jsspMachineIndex+1}^{\jsspJobs-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex'}\text{~with~}\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex'}=\jsspMachineIndex \right\} $$
 
