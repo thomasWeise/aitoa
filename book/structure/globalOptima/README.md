@@ -16,8 +16,12 @@ Often, we have no way to find out whether a solution is a global optimum or not.
 We therefore hope to find a good *approximation* of the optimum, i.e., a solution which is very good with respect to the objective function.
 
 In some cases, we be able to compute a *lower bound*&nbsp;$\lowerBound{\objf}$ for the objective value of an optimal solution, i.e., we know "It is not possible that any solution can have a quality better than $\lowerBound{\objf}$, but we do not know if a solution exists that has quality&nbsp;$\lowerBound{\objf}$."
+This is not useful for solving the problem, but it can tell us whether our method for solving the problem is good.
+For instance, if we have developed an algorithm for approximately solving a given problem and we *know* that the qualities we get are close to a the lower bound, then we know that our algorithm is good.
+We then know that improving the result quality of the algorithm may be hard, maybe even impossible, and probably not worthwhile.
+However, if we cannot produce solutions as good as the lower bound or even only solutions which are a bit far off, this does not necessarily mean that our algorithm is bad.
 
-### Example: Job Shop Scheduling
+### Example: Job Shop Scheduling {#sec:jssp:lowerBounds}
 
 We have already defined our solution space&nbsp;$\solutionSpace$ for the JSSP in [@lst:JSSPCandidateSolution] and the objective function&nbsp;$\objf$ in [@lst:IObjectiveFunction].
 A Gantt chart with the shortest possible makespan is then a global optimum.
@@ -27,27 +31,15 @@ When facing a JSSP instance&nbsp;$\instance$, we do not know whether a given Gan
 There is no direct way in which we can compute it.
 But we can, at least, compute some *lower bound*&nbsp;$\lowerBound{\objf}$ for the best possible makespan.
 
-For example, we know that our factory has&nbsp;$\elementOf{\instance}{m}$ machines and each of the&nbsp;$\elementOf{\instance}{n}$ jobs&nbsp;$p$ will have a sub-job&nbsp;$q$ to be executed at each of these machines.
-A sub-job&nbsp;$q$ of a given job&nbsp;$p$ can only begin once all other earlier sub-jobs (those with indices smaller than&nbsp;$q$) of the job have finished.
-Its completion time $T_{p,q}$ is thus the sum of their execution times plus its own execution time.
+No schedule can complete faster then the longst job.
+We know that the makespan in a JSSP cannot be shorter than the latest "finishing time" of any machine&nbsp;$\jsspMachineIndex$ in the optimal schedule.
+This finishing time is at least as big as the sum&nbsp;$\jsspMachineRuntime{\jsspMachineIndex}$ of the runtimes of all the sub-jobs assigned to this machine.
+But it may also include a least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$, namely if the sub-jobs for machine&nbsp;$\jsspMachineIndex$ never come first in their job, as well as a least end idle time&nbsp;$\jsspMachineEndIdle{\jsspMachineIndex}$, if these sub-jobs never come last in their job.
+As lower bound for the fastest schedule that could theoretically exist, we therefore get:
 
-$$ T_{p,q} = \sum_{i\leq q} \elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{i}}{time} $$
+$$ \lowerBound{\objf} = \max\left\{\max_{\jsspJobIndex}\left\{ \sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\right\}, \max_{\jsspMachineIndex} \left\{ \jsspMachineStartIdle{\jsspMachineIndex}+\jsspMachineRuntime{\jsspMachineIndex} +\jsspMachineEndIdle{\jsspMachineIndex}\right\}\right\} $$ {#eq:jsspLowerBound}
 
-A machine&nbsp;$v$ cannot be "finished" before all of the sub-jobs for it have been finished as well.
-This means that its completion time&nbsp;$T_v$ cannot be earlier than the maximum&nbsp;$T_v^a$ of all the completion times of the sub-jobs assigned to it.
-
-$$ T_v^a = \max{\left\{ T_{p,q} \;|\; \forall p, \elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{machine}=v \right\}} $$
-
-It can also not earlier than the overall sum&nbsp;$T_v^b$ over all of the time requirements of each of the sub-jobs assigned to it.
-
-$$ T_v^b = \sum{\left\{ \elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{time}  \;|\; \forall p, \elementOf{\arrayIndex{\arrayIndex{\elementOf{\instance}{jobs}}{p}}{q}}{machine}=v  \right\}} $$
-
-The lower bound for the completion time for machine&nbsp;$v$ would then be the maximum of the two values&nbsp;$T_v^a$ and&nbsp;$T_v^b$.
-The makespan of the global optimum of a JSSP instance&nbsp;$\instance$ cannot be shorter than the  maximum of the times when the machines are finished.
-The lower bound&nbsp;$\lowerBound{\objf}$ for the best makespan on instance&nbsp;$\instance$ would then be the maximum over all the completion times of the machines, i.e.:
-
-$$ \lowerBound{\objf} = \max{\left\{  T_v^a, T_v^b \;|\; \forall v \in 1\dots \elementOf{\instance}{m} \right\}} $$
-
-We do not know whether a schedule exists that can achieve this, because this would mean that we have a schedule where no sub-job needs to wait even for a single time unit before commencing.
-This value is a lower bound, we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
+More details are given in [@sec:appendix:jssp:lowerBounds] and [@T199BFBSP].
+We do not know whether a schedule exists that can achieve this, because this would mean that we have a schedule where no sub-job is stalled by any sub-job of any other job.
+The value&nbsp;$\lowerBound{\objf}$ is a lower bound, we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
 If our algorithms produce solutions with a quality close to&nbsp;$\lowerBound{\objf}$, we know that are doing very well.

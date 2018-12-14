@@ -6,3 +6,5 @@
 \relative.input{structure/README.md}
 \relative.input{metaheuristics/README.md}
 
+\relative.input{appendix/README.md}
+
