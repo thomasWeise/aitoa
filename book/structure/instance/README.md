@@ -33,7 +33,7 @@ The next line is a short description or title of the instance.
 In the third line, the number&nbsp;$\jsspJobs$ of jobs is specified, followed by the number&nbsp;$\jsspMachines$ of machines.
 The actual IDs or indexes of machines and jobs are 0-based, similar to array indexes in Java.
 The JSSP instance definition is completed by&nbsp;$\jsspJobs$ lines of text, each of which specifying the sub-jobs of one job&nbsp;$\jsspJobIndex\in0\dots(\jsspJobs-1)$.
-Each sub-job&nbsp;$\jsspMachineIndex$ is specified as a pair of two numbers, the ID&nbsp;$\jsspJobMachine{\jsspJobIndex}{\jsspMachineIndex}$ of the machine that is to be used (violet), from the interval&nbsp;$0\dots(\jsspMachines-1)$, followed by the number of time units&nbsp;$\jsspJobTime{\jsspJobIndex}{\jsspMachineIndex}$ the job will take on that machine.
+Each sub-job&nbsp;$\jsspMachineIndex$ is specified as a pair of two numbers, the ID&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}$ of the machine that is to be used (violet), from the interval&nbsp;$0\dots(\jsspMachines-1)$, followed by the number of time units&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ the job will take on that machine.
 The order of the sub-jobs defines exactly the order in which the job needs to be passed through the machines.
 Each machine can only process at most one job at a time.
 
