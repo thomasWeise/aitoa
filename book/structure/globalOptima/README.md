@@ -14,7 +14,8 @@ When solving an optimization problem, we hope to find at least one global optimu
 However, this may often not be possible or it will just take too long.
 Often, we have no way to find out whether a solution is a global optimum or not.
 We therefore hope to find a good *approximation* of the optimum, i.e., a solution which is very good with respect to the objective function.
-In some cases, we be able to compute a *lower bound*&nbsp;$\lowerBound{\objf}$ for the objective value of an optimal solution, i.e., we know "It is not possible that any solution can have a quality better than $b$, but we do not know if a solution exists that has quality&nbsp;$\lowerBound{\objf}$."
+
+In some cases, we be able to compute a *lower bound*&nbsp;$\lowerBound{\objf}$ for the objective value of an optimal solution, i.e., we know "It is not possible that any solution can have a quality better than $\lowerBound{\objf}$, but we do not know if a solution exists that has quality&nbsp;$\lowerBound{\objf}$."
 
 ### Example: Job Shop Scheduling
 

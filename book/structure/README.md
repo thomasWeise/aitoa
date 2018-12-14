@@ -12,13 +12,13 @@ We can refine it to the more mathematical formulation given in \text.ref{optimiz
 
 Any optimization problem has at least the following components, which we will explore in detail in this chapter.
 
-1. The problem instance&nbsp;$\instance$ data, i.e., the concrete scenario that we will try to solve ([@sec:problemInstance]).
+1. The problem instance data&nbsp;$\instance$, i.e., the concrete scenario that we will try to solve ([@sec:problemInstance]).
 2. The data structure $\solutionSpace$ representing possible solutions to the problem ([@sec:solutionSpace]).
-3. The objective function $\objf:\solutionSpace\mapsto\realNumbers$ which computes the cost of the candidate solutions $\solspel\in\solutionSpace$ ([@sec:objectiveFunction]).
+3. The objective function $\objf:\solutionSpace\mapsto\realNumbers$ which computes the quality of the candidate solutions $\solspel\in\solutionSpace$ ([@sec:objectiveFunction]).
 
 Usually, in order to actually implement an optimization approach, there also will be
 
-1. A search space&nbsp;$\searchSpace$ which can more handily be processed by an optimization algorithm under the hood than&nbsp;$\solutionSpace$ ([@sec:searchSpace]).
+1. A search space&nbsp;$\searchSpace$ which can more easily be processed by an optimization algorithm under the hood than&nbsp;$\solutionSpace$ ([@sec:searchSpace]).
 2. A representation mapping $\repMap:\searchSpace\mapsto\solutionSpace$ which translates the points&nbsp;$\sespel$ of the search space&nbsp;$\searchSpace$ to candidate solutions&nbsp;$\solspel\in\solutionSpace$ in the solution space&nbsp;$\solutionSpace$ ([@sec:searchSpace]).
 3. Search operators&nbsp;$\searchOp:\searchSpace^n\mapsto\searchSpace$, which allow for the iterative exploration of the search space&nbsp;$\searchSpace$ ([@sec:searchOperators]).
 4. A termination criterion&nbsp;$\shouldTerminate$ which tells the optimization algorithm when to stop ([@sec:terminationCriterion]).

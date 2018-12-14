@@ -1,5 +1,5 @@
 \relative.input{metadata.yaml}
-\relative.input{commands.sty}
+\relative.input{commands/commands.sty}
 
 \relative.input{preface/README.md}
 \relative.input{introduction/README.md}
