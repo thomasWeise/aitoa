@@ -12,7 +12,7 @@ A problem instance is related to an optimization problem in the same way an obje
 ### Example: Job Shop Scheduling {#sec:jsspInstance}
 
 So how can we characterize a JSSP instance&nbsp;$\instance$?
-In the most basic scenario&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @E199BFBSP], our factory has&nbsp;$\jsspMachines\in\naturelNumbersO$ machines.
+In the most basic scenario&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @E199BFBSP], our factory has&nbsp;$\jsspMachines\in\naturalNumbersO$ machines.
 Each machine can perform one job at a time or be idle.
 There are&nbsp;$\jsspJobs\in\naturalNumbersO$ jobs that we need to schedule to these machines.
 For the sake of simplicity and agreement between our notation here and the Java source code examples, we will index jobs and machines with zero-based indices, i.e., indexes from&nbsp;$0\dots(\jsspJobs-1)$ and&nbsp;$0\dots(\jsspMachines-1)$, respectively.
