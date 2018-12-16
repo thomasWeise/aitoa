@@ -35,7 +35,7 @@ If we would design a compact and efficient search space&nbsp;$\searchSpace$ more
 One idea is to encode the two-dimensional array structure&nbsp;$\solutionSpace$ in a simple linear string of integer numbers&nbsp;$\searchSpace$.
 The corresponding representation mapping can best be described by an example.
 In the demo instance, we have&nbsp;$\jsspMachines=5$ machines and&nbsp;$\jsspJobs=4$ jobs.
-Each job has&nbsp;$\jsspMacines=5$  sub-jobs that must be distributed to the machines.
+Each job has&nbsp;$\jsspMachines=5$  sub-jobs that must be distributed to the machines.
 We could use a string of length&nbsp;$\jsspMachines*\jsspJobs=20$ denoting the priority of the sub-jobs.
 Since we *know* the order of the sub-jobs per job as part of the problem instance data&nbsp;$\instance$, we do not need to encode it.
 This means that we just include each job's id&nbsp;$\jsspMachines=5$ times in the string.
