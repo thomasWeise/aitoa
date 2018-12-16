@@ -103,7 +103,7 @@ By using&nbsp;$\searchSpace$, we furthermore get a very clear idea about the siz
 Each element&nbsp;$\sespel\in\searchSpace$ is a [permutation of a multiset](http://en.wikipedia.org/wiki/Permutation#Permutations_of_multisets) where each of the&nbsp;$\jsspJobs$ elements occurs exactly&nbsp;$\jsspMachines$ times.
 This means that the size of the search space can be computed as given in [@eq:jssp_search_space_size].
 
-$$ \left|\searchSpace\right| = \frac{\left(\elementOf{\jsspMachines*\jsspJobs\right)!}{ \left(\jsspMachines!\right)^{\jsspJobs} } $$ {#eq:jssp_search_space_size}
+$$ \left|\searchSpace\right| = \frac{\left(\jsspMachines*\jsspJobs\right)!}{ \left(\jsspMachines!\right)^{\jsspJobs} } $$ {#eq:jssp_search_space_size}
 
 |name|$\jsspJobs$|$\jsspMachines$|$\left|\searchSpace\right|$|
 |:--|--:|--:|--:|
