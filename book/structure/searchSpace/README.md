@@ -120,10 +120,10 @@ $$ \left|\searchSpace\right| = \frac{\left(\jsspMachines*\jsspJobs\right)!}{ \le
 ||5|4|305'540'235'000
 ||5|5|623'360'743'125'120
 demo|4|5|11'732'745'024
-abz7|20|15|$\approx$1.432*10^372^
-la24|15|10|$\approx$2.293*10^164^
-yn4|20|20|$\approx$1.213*10^501^
-swv15|50|10|$\approx$1.254*10^806^
+abz7|20|15|&approx;1.432*10^372^
+la24|15|10|&approx;2.293*10^164^
+yn4|20|20|&approx;1.213*10^501^
+swv15|50|10|&approx;1.254*10^806^
 
 : The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. {#tbl:jsspSearchSpaceTable}
 
