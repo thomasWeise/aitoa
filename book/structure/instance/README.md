@@ -55,7 +55,7 @@ The *OR-Library* contains 82 JSSP instances of varying sizes specified as text f
 We will try to solve them in this book as an example of optimization problems.
 In order to keep the example simple, we will focus on only four instances, namely
 
-1. instance `abz7` by Adams et&nbsp;al.&nbsp;[@ABZ1988TSBPFJSS] with 15 jobs and 20 machines
+1. instance `abz7` by Adams et&nbsp;al.&nbsp;[@ABZ1988TSBPFJSS] with 20 jobs and 15 machines
 2. instance `la24` by Lawrence&nbsp;[@L1998RCPSAEIOHSTS] with 15 jobs and 10 machines,
 3. instance `yn4` by Yamada and Nakano&nbsp;[@YN1992AGAATLSJSI] with 20 jobs and 20 machines, and
 4. instance `swv15` by Storer et&nbsp;al.&nbsp;[@SWV1992NSSFSPWATJSS] with 50 jobs and 10 machines.

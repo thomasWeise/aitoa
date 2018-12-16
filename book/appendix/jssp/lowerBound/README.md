@@ -18,3 +18,6 @@ Vice versa, there also is a minimum time&nbsp;$\jsspMachineEndIdle{\jsspMachineI
 $$ \jsspMachineEndIdle{\jsspMachineIndex} \geq \min_{\forall \jsspJobIndex\in 0\dots(\jsspJobs-1)} \left\{ \sum_{\jsspMachineIndex''=\jsspMachineIndex+1}^{\jsspJobs-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex'}\text{~with~}\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex'}=\jsspMachineIndex \right\} $$
 
 With this, we now have all the necessary components of [@eq:jsspLowerBound].
+We now can put everything together in [@lst:JSSPMakespanLowerBound].
+
+\repo.listing{lst:JSSPMakespanLowerBound}{Excerpt from the function for computing the lower bound of the makespan of a JSSP instance.}{java}{src/main/java/aitoa/examples/jssp/JSSPMakespanObjectiveFunction.java}{}{lowerBound}

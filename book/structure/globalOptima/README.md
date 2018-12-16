@@ -45,12 +45,23 @@ More details are given in [@sec:appendix:jssp:lowerBounds] and [@T199BFBSP].
 We do not know whether a schedule exists that can achieve this, because this would mean that we have a schedule where no sub-job is stalled by any sub-job of any other job.
 The value&nbsp;$\lowerBound{\objf}$ is a lower bound, we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
 If our algorithms produce solutions with a quality close to&nbsp;$\lowerBound{\objf}$, we know that are doing very well.
+The lower bounds for the makespans of our example problems are illustrated in [@tbl:jsspLowerBoundsTable].
+
+| name | $\jsspJobs$ | $\jsspMachines$ | $\lowerBound{\objf}$|
+|:--|--:|--:|--:|
+demo|4|5|180
+abz7|20|15|638
+la24|15|10|872
+yn4|20|20|818
+swv15|50|10|2885
+
+: The lower bounds&nbsp;$\lowerBound{\objf}$ for the makespan of the optimal solutions for our example problems. {#tbl:jsspLowerBoundsTable}
 
 ![The globally optimal solution of the demo instance [@fig:jssp_demo_instance], whose makespan happens to be the same as the lower bound.](\relative.path{gantt_demo_optimal_bound.svgz}){#fig:gantt_demo_optimal_bound width=80%}
 
-[@fig:gantt_demo_optimal_bound] illustrates the globally optimal solution for our small demo JSSP instance defined in [@fig:jssp_demo_instance].
-Here we are lucky: The objective value of this solution happens to be the same as the lower bound for the makespan.
-The limiting machine is the one at index&nbsp;3.
+[@fig:gantt_demo_optimal_bound] illustrates the globally optimal solution for our small demo JSSP instance defined in [@fig:jssp_demo_instance] (we will get to how to find such a solution later).
+Here we were lucky: The objective value of this solution happens to be the same as the lower bound for the makespan.
+Upon closer inspection, the limiting machine is the one at index&nbsp;3.
 Regardless with which job we would start here, it would need to initially wait at least&nbsp;$\jsspMachineStartIdle{3}=30$ time units.
 Then, all the jobs together on the machine will consume&nbsp;$\jsspMachineRuntime{3}=150$ time units if we can execute them without further delay.
 Finally, it regardless with which job we finish on this machine, it will lead to a further waiting time of&nbsp;$\jsspMachineEndIdle{3}=10$ time units.
