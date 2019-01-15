@@ -6,15 +6,38 @@ Assume that we have a single objective function&nbsp;$\objf:\solutionSpace\mapst
 This objective function is our primary guide during the search.
 But what are we looking for?
 
+![Optimization is the search for superlatives.](\relative.path{optimization_superlatives.svgz}){#fig:optimization_superlatives width=60%}
+
 \text.block{definition}{globalOptimum}{If a candidate solution$\globalOptimum{\solspel}\in\solutionSpace$ is a *global optimum* for an optimization problem defined over the solution space&nbsp;$\solutionSpace$, then is no other candidate solution in&nbsp;$\solutionSpace$ which is better.}
 
 \text.block{definition}{globalOptimumSO}{For every *global optimum*&nbsp;$\globalOptimum{\solspel}\in\solutionSpace$ of single-objective optimization problem with solution space&nbsp;$\solutionSpace$ and objective function&nbsp;$\objf:\solutionSpace\mapsto\realNumbers$ subject to minimization, it holds that $\objf(\solspel) \geq \objf(\globalOptimum{\solspel}) \forall \solspel \in \solutionSpace$.}
 
+A global optimum is nothing else than a *superlative*.
+Optimization means searching for such superlatives, as illustrated in [@fig:optimization_superlatives].
+Whenever we are looking for the cheapest, fastest, strongest, best, biggest or smallest thing, then we have an optimization problem at hand.
+
+### Approxiation of the Optimum
+
 When solving an optimization problem, we hope to find at least one global optimum (there may be multiple), as stated in \text.ref{optimizationProblemMathematical}.
 However, this may often not be possible or it will just take too long.
-Often, we have no way to find out whether a solution is a global optimum or not.
-We therefore hope to find a good *approximation* of the optimum, i.e., a solution which is very good with respect to the objective function.
 
+![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim e^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible.](\relative.path{function_growth.svgz}){#fig:function_growth width=60%}
+
+Matter of fact, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the size of the problem in the worst case.
+Or, in other words, unless something [fundamentally changes](http://en.wikipedia.org/wiki/P_versus_NP_problem), there will be some problems which usually will take too long to solve.
+[@fig:function_growth] illustrates that finding the globally optimal solutions for problems with such exponential "time complexity" will quickly become infeasible, even for relatively problem instances.
+
+Unfortunately, our example problems are amongst this kind of problem.
+So what can we do?
+We trade-in the *guarantee* of finding the globally optimal solution for better runtime.
+We use algorithms from which we hope that they find a good *approximation* of the optimum, i.e., a solution which is very good with respect to the objective function.
+We may sometimes be lucky and even find the optimum, while in other cases, we may get a solution which is close enough.
+And we will get this within acceptable time limits.
+
+### Bounds of the Objective Function
+
+If we apply an approximation algorithm, then we do not have the guarantee that the solution we get is optimal.
+Actually, we often do not know if the solution we have is optimal or not.
 In some cases, we be able to compute a *lower bound*&nbsp;$\lowerBound{\objf}$ for the objective value of an optimal solution, i.e., we know "It is not possible that any solution can have a quality better than $\lowerBound{\objf}$, but we do not know if a solution exists that has quality&nbsp;$\lowerBound{\objf}$."
 This is not useful for solving the problem, but it can tell us whether our method for solving the problem is good.
 For instance, if we have developed an algorithm for approximately solving a given problem and we *know* that the qualities we get are close to a the lower bound, then we know that our algorithm is good.
@@ -31,7 +54,7 @@ When facing a JSSP instance&nbsp;$\instance$, we do not know whether a given Gan
 There is no direct way in which we can compute it.
 But we can, at least, compute some *lower bound*&nbsp;$\lowerBound{\objf}$ for the best possible makespan.
 
-A job&nbsp;$\jsspJobIndex$ needs at least as long to complete as the sum&nbsp;$\sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ over the processing times of all of its sub-jobs.
+For instance, we know that a job&nbsp;$\jsspJobIndex$ needs at least as long to complete as the sum&nbsp;$\sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ over the processing times of all of its sub-jobs.
 It is clear that no schedule can complete faster then the longst job.
 Furthermore, we know that the makespan of the optimal schedule also cannot be shorter than the latest "finishing time" of any machine&nbsp;$\jsspMachineIndex$.
 This finishing time is at least as big as the sum&nbsp;$\jsspMachineRuntime{\jsspMachineIndex}$ of the runtimes of all the sub-jobs assigned to this machine.
@@ -42,9 +65,12 @@ As lower bound for the fastest schedule that could theoretically exist, we there
 $$ \lowerBound{\objf} = \max\left\{\max_{\jsspJobIndex}\left\{ \sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\right\} \;,\; \max_{\jsspMachineIndex} \left\{ \jsspMachineStartIdle{\jsspMachineIndex}+\jsspMachineRuntime{\jsspMachineIndex} +\jsspMachineEndIdle{\jsspMachineIndex}\right\}\right\} $$ {#eq:jsspLowerBound}
 
 More details are given in [@sec:appendix:jssp:lowerBounds] and [@T199BFBSP].
-We do not know whether a schedule exists that can achieve this, because this would mean that we have a schedule where no sub-job is stalled by any sub-job of any other job.
-The value&nbsp;$\lowerBound{\objf}$ is a lower bound, we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
-If our algorithms produce solutions with a quality close to&nbsp;$\lowerBound{\objf}$, we know that are doing very well.
+
+Of course, we cannot know whether a schedule exists that can achieve this lower bound makespan.
+There simply may not be any way to arrange the jobs such that no sub-job stalls any other sub-job.
+This is why the value&nbsp;$\lowerBound{\objf}$ is a lower bound: we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
+
+However, if our algorithms produce solutions with a quality close to&nbsp;$\lowerBound{\objf}$, we know that are doing very well.
 The lower bounds for the makespans of our example problems are illustrated in [@tbl:jsspLowerBoundsTable].
 
 | name | $\jsspJobs$ | $\jsspMachines$ | $\lowerBound{\objf}$|

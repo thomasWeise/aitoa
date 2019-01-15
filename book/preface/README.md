@@ -4,6 +4,11 @@ After I wrote *Global Optimization Algorithms &ndash; Theory and Applications*&n
 Currently, this book is in a very early stage of development.
 It is work-in-progress, so expect many changes.
 
+This book is intented to be a learning-by-doing approach to optimization.
+Instead of using too much theoretical background when introducing the different algorithms, we will try to work our way from very simple algorithms to sophisticated methods by solving a very common optimization task.
+We will not try to introduce the algorithms from a theoretical perspective, instead we will discuss concepts and theoretical aspects when we encounter them.
+We sacrifice a formal and abstract structure with the goal to increase the accessibility of the ideas.
+
 In this book, we are using a lot of concrete examples written in the programming language [Java](http://en.wikipedia.org/wiki/Java_(programming_language)).
 These are published in the repository *[thomasWeise/aitoa-code](\repo.name)* on [GitHub](http://www.github.com) and also freely accessible.
 Often, we will just look at certain portions of the code.
@@ -12,18 +17,18 @@ If you discover any error in any of the code examples, please [file an issue](ht
 
 This book is written using my automated book writing environment, which integrates GitHub, [Travis CI](http://www.travis-ci.org), and [docker](http://www.docker.com)-[hub](http://hub.docker.com).
 The complete text of the book is actively written and available in the repository *[thomasWeise/aitoa](http://github.com/thomasWeise/aitoa)* on GitHub.
-There, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)*, which can be change requests, suggestions, discovered bugs or typos, or maybe inform me that something is unclear, so that I can improve the book.
+As said, there, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)*, which can be change requests, suggestions, discovered bugs or typos, or maybe inform me that something is unclear, so that I can improve the book.
 Whenever I make a change to the book, maybe resulting from your submitted issue, new versions will automatically be built.
 The build process is described at <http://iao.hfuu.edu.cn/157>.
 
 
 | &nbsp;
 | Repository: <http://github.com/thomasWeise/aitoa>
-| Commit: [\meta.commit](http://github.com/thomasWeise/aitoa/commit/\meta.commit)
+| This Commit: [\meta.commit](http://github.com/thomasWeise/aitoa/commit/\meta.commit)
 | Time and Date: \meta.time
 | Author: [Thomas Weise](http://iao.hfuu.edu.cn/team/director)
 | Example Source Repository: <\repo.name>
-| Example Source Commit: [\repo.commit](\repo.name/commit/\repo.commit)
+| This Example Source Commit: [\repo.commit](\repo.name/commit/\repo.commit)
 | &nbsp;
 
 

@@ -1,19 +1,19 @@
-### Route Planning for a Logistics Company
+## Example: Route Planning for a Logistics Company
 
-Logistics always has been a very important application area of optimization.
-Therefore, let us there look into a typical real-world optimization task&nbsp;[@WPG2009SRWVRPWEA; @WPRGG2009EFTP].
-
-A logistics company needs to accept and fulfill delivery tasks from its clients.
-Let us assume that a client can order one or multiple containers to be delivered to her location within a certain time window.
-She will then fill the containers with certain goods, which are then to be transported to a destination location, again within a certain time window.
+One example field of application for optimization is [logistics](http://en.wikipedia.org/wiki/Logistics).
+Let us look at a typical real-world scenario from this field&nbsp;[@WPG2009SRWVRPWEA; @WPRGG2009EFTP]: the situation of a logistics company that fulfills delivery tasks for its clients.
+A client can order one or multiple containers to be delivered to her location within a certain time window.
+She will then fill the containers with goods, which are then to be transported to a destination location, again within a certain time window.
 The logistics company may receive many such customer orders per day, maybe several hundreds to even thousands.
 The company may have multiple depots, where containers and trucks are stored.
-For each order, it needs to decide which container(s) to use and how to get them to the customer.
+For each order, it needs to decide which container(s) to use and how to get them to the customer, as sketched in [@fig:logistic_planning].
 The trucks it owns may have different capacities and can carry one or two containers.
 Besides using trucks, which can travel freely on the map, it may also be possible to utilize trains.
 Trains may have vastly different capacities and follow specific schedules and arrive and depart at fixed times to/from fixed locations.
 For each vehicle, different costs could occur.
 Containers may be exchanged between vehicles at locations such as parking lots, depots, or train stations.
+
+![Illustrative sketch of logistics problems: Orders require us to pick up some items at source locations within certain time windows and deliver them to their destination locations, again within certain time windows. We need to decide which containers and vehicles to use and over which routes we should channel the vehicles.](\relative.path{logistic_planning.svgz}){#fig:logistic_planning width=99%}
 
 The company could have the goals to fulfill all transportation requests *at the lowest cost*.
 Actually, it might seek to maximize its profit, which could even mean to outsource some tasks to other companies.
