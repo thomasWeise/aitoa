@@ -21,7 +21,7 @@ Whenever we are looking for the cheapest, fastest, strongest, best, biggest or s
 When solving an optimization problem, we hope to find at least one global optimum (there may be multiple), as stated in \text.ref{optimizationProblemMathematical}.
 However, this may often not be possible or it will just take too long.
 
-![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim e^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible.](\relative.path{function_growth.svgz}){#fig:function_growth width=60%}
+![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim e^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible.](\relative.path{function_growth.svgz}){#fig:function_growth width=99%}
 
 Matter of fact, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the size of the problem in the worst case.
 Or, in other words, unless something [fundamentally changes](http://en.wikipedia.org/wiki/P_versus_NP_problem), there will be some problems which usually will take too long to solve.

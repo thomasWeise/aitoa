@@ -27,7 +27,7 @@ That our search operator interfaces in [@lst:INullarySearchOperator;@lst:IUnaryS
 ### Black Box Optimization
 
 The concept of metaheuristics, the idea to attack a whole class of optimization problems with one basic algorithm design, can only be realized when following a *black-box* approach.
-If we want to have one algorithm that can be applied to all the examples given in [@sec:examplesOfOptimization], then this can best be done if we hide all details of the problems under the hood of the structural elements introduced in [@sec:structure].
+If we want to have one algorithm that can be applied to all the examples given in in the introduction, then this can best be done if we hide all details of the problems under the hood of the structural elements introduced in [@sec:structure].
 The metaheuristic does not care what the objective function&nbsp;$\objf$ does, it just cares that gives a rating of a candidate solution and that smaller ratings are better.
 The metaheuristic does not care what the search operators do, it only cares that it can use them to get to new candidate solutions.
 Matter of fact, the metaheuristic does not even care about candidate solutions and the solution space&nbsp;$\solutionSpace$ &ndash; it only works on and explores the search space&nbsp;$\searchSpace$.
