@@ -85,15 +85,15 @@ This is why the value&nbsp;$\lowerBound{\objf}$ is a lower bound: we know no sol
 However, if our algorithms produce solutions with a quality close to&nbsp;$\lowerBound{\objf}$, we know that are doing very well.
 The lower bounds for the makespans of our example problems are illustrated in [@tbl:jsspLowerBoundsTable].
 
-| name | $\jsspJobs$ | $\jsspMachines$ | $\lowerBound{\objf}$|
-|:--|--:|--:|--:|
-demo|4|5|180
-abz7|20|15|638
-la24|15|10|872
-yn4|20|20|818
-swv15|50|10|2885
+| name | $\jsspJobs$ | $\jsspMachines$ | $\lowerBound{\objf}$ from [@eq:jsspLowerBound] | $\lowerBound{\objf}^{\star}$ | source
+|:--|--:|--:|--:|--:|
+demo|4|5|180|180|[@eq:jsspLowerBound]
+abz7|20|15|638|656|[@MF1975OSWRTADDTMML; @VLS2015FDSFCBS; @VLS2015FDSFCBSDER; @vH2015JSIAS]
+la24|15|10|872|935|[@AC1991ACSOTJSSP; @vH2015JSIAS]
+yn4|20|20|818|929|[@VLS2015FDSFCBS; @VLS2015FDSFCBSDER; @vH2015JSIAS]
+swv15|50|10|2885|2885|[@eq:jsspLowerBound]
 
-: The lower bounds&nbsp;$\lowerBound{\objf}$ for the makespan of the optimal solutions for our example problems. {#tbl:jsspLowerBoundsTable}
+: The lower bounds&nbsp;$\lowerBound{\objf}$ for the makespan of the optimal solutions for our example problems. For the instances `abz7`, `la24`, and `yn4`, research literature provides better/higher lower bounds $\lowerBound{\objf}^{\star}$, for which we provide references in the last column. {#tbl:jsspLowerBoundsTable}
 
 ![The globally optimal solution of the demo instance [@fig:jssp_demo_instance], whose makespan happens to be the same as the lower bound.](\relative.path{gantt_demo_optimal_bound.svgz}){#fig:gantt_demo_optimal_bound width=80%}
 
