@@ -21,3 +21,5 @@ With this, we now have all the necessary components of [@eq:jsspLowerBound].
 We now can put everything together in [@lst:JSSPMakespanLowerBound].
 
 \repo.listing{lst:JSSPMakespanLowerBound}{Excerpt from the function for computing the lower bound of the makespan of a JSSP instance.}{java}{src/main/java/aitoa/examples/jssp/JSSPMakespanObjectiveFunction.java}{}{lowerBound}
+
+More information about lower bounds of the JSSP can be found in [@vH2015JSIAS; @MF1975OSWRTADDTMML; @VLS2015FDSFCBS; @VLS2015FDSFCBSDER; @AC1991ACSOTJSSP; @T199BFBSP].

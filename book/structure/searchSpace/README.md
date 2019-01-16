@@ -124,7 +124,7 @@ abz7|20|15|$\approx$ 1.432*10^372^
 yn4|20|20|$\approx$ 1.213*10^501^
 swv15|50|10|$\approx$ 1.254*10^806^
 
-: The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. {#tbl:jsspSearchSpaceTable}
+: The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth]) {#tbl:jsspSearchSpaceTable}
 
 We give some example values for this search space size in [@tbl:jsspSearchSpaceTable].
 From the table, we can immediately see that the number of points in the search space grows very quickly with both the number of jobs&nbsp;$\jsspJobs$ and the number of machines&nbsp;$\jsspMachines$ of an JSSP instance&nbsp;$\instance$.
