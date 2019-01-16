@@ -85,8 +85,8 @@ This is why the value&nbsp;$\lowerBound{\objf}$ is a lower bound: we know no sol
 However, if our algorithms produce solutions with a quality close to&nbsp;$\lowerBound{\objf}$, we know that are doing very well.
 The lower bounds for the makespans of our example problems are illustrated in [@tbl:jsspLowerBoundsTable].
 
-| name | $\jsspJobs$ | $\jsspMachines$ | $\lowerBound{\objf}$ from [@eq:jsspLowerBound] | $\lowerBound{\objf}^{\star}$ | source
-|:--|--:|--:|--:|--:|
+| name | $\jsspJobs$ | $\jsspMachines$ | $\lowerBound{\objf}$ | $\lowerBound{\objf}^{\star}$ | source
+|:--|--:|--:|--:|--:|:--|
 demo|4|5|180|180|[@eq:jsspLowerBound]
 abz7|20|15|638|656|[@MF1975OSWRTADDTMML; @VLS2015FDSFCBS; @VLS2015FDSFCBSDER; @vH2015JSIAS]
 la24|15|10|872|935|[@AC1991ACSOTJSSP; @vH2015JSIAS]
@@ -100,7 +100,19 @@ swv15|50|10|2885|2885|[@eq:jsspLowerBound]
 [@fig:gantt_demo_optimal_bound] illustrates the globally optimal solution for our small demo JSSP instance defined in [@fig:jssp_demo_instance] (we will get to how to find such a solution later).
 Here we were lucky: The objective value of this solution happens to be the same as the lower bound for the makespan.
 Upon closer inspection, the limiting machine is the one at index&nbsp;3.
+
+We will find this by again looking at [@fig:jssp_demo_instance].
 Regardless with which job we would start here, it would need to initially wait at least&nbsp;$\jsspMachineStartIdle{3}=30$ time units.
+The reason is that no first sub-job of any job starts at machine&nbsp;3.
+Job&nbsp;0 would get to machine&nbsp;3 the earliest after 50&nbsp;time units, job&nbsp;1 after&nbsp;30, job&nbsp;2 after&nbsp;62, and job&nbsp;3 after again 50&nbsp;time units.
+Also, no job in the `demo` instance finishes at machine&nbsp;3.
+Job&nbsp;0, for instance, needs to be processed by machine&nbsp;4 for 10&nbsp;time units after it has passed through machine&nbsp;3.
+Job&nbsp;1 requires 80&nbsp;more time units after finishing at machine&nbp;3, job&nbsp;2 also 10&nbsp;time units, and job&nbsp;3again&nbsp;50 time units.
+In other words, machine&nbsp;3 needs to wait at least 30&nbsp;time units before it can commence its work and will remain idle for at least 10&nbsp;time units after processing the last sub job.
+Inbetween, it will need to work for exactly&nbsp;140 time units, the total sum of the running time of all sub-jobs assigned to it.
+This means that no schedule can complete faster than $30+140+10=180$ time units.
+Thus, [@fig:gantt_demo_optimal_bound] illustrates the optimal solution for the `demo` instance.
+
 Then, all the jobs together on the machine will consume&nbsp;$\jsspMachineRuntime{3}=150$ time units if we can execute them without further delay.
 Finally, it regardless with which job we finish on this machine, it will lead to a further waiting time of&nbsp;$\jsspMachineEndIdle{3}=10$ time units.
 This leads to a lower bound&nbsp;$\lowerBound{\objf}$ of&nbsp;180 and since we found the illustrated candidate solution with exactly this makespan, we have solved this (very easy) JSSP instance.
