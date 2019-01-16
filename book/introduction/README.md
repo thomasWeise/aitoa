@@ -24,4 +24,3 @@ So let us start with two different example scenarios where optimization techniqu
 
 \relative.input{examples/logistic_planning/README.md}
 \relative.input{examples/jssp/README.md}
-

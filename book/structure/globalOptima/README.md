@@ -1,48 +1,60 @@
 ## Global Optima and Lower Quality Bounds
 
+We now know the three key-components of an optimization problem.
+We are looking for a candidate solution&nbsp;$\globalOptimum{\solspel}\in\solutionSpace$ that has the best objective value&nbsp;$\objf(\globalOptimum{\solspel})$ for a given problem instance&nbsp;$\instance$.
+But what is the meaning "best"?
+
 ### Definitions
 
 Assume that we have a single objective function&nbsp;$\objf:\solutionSpace\mapsto\realNumbers$ defined over a solution space&nbsp;$\solutionSpace$.
-This objective function is our primary guide during the search.
-But what are we looking for?
-
-![Optimization is the search for superlatives.](\relative.path{optimization_superlatives.svgz}){#fig:optimization_superlatives width=60%}
+This objective function is our primary guide during the search and we are looking for its global optima.
 
 \text.block{definition}{globalOptimum}{If a candidate solution$\globalOptimum{\solspel}\in\solutionSpace$ is a *global optimum* for an optimization problem defined over the solution space&nbsp;$\solutionSpace$, then is no other candidate solution in&nbsp;$\solutionSpace$ which is better.}
 
 \text.block{definition}{globalOptimumSO}{For every *global optimum*&nbsp;$\globalOptimum{\solspel}\in\solutionSpace$ of single-objective optimization problem with solution space&nbsp;$\solutionSpace$ and objective function&nbsp;$\objf:\solutionSpace\mapsto\realNumbers$ subject to minimization, it holds that $\objf(\solspel) \geq \objf(\globalOptimum{\solspel}) \forall \solspel \in \solutionSpace$.}
 
-A global optimum is nothing else than a *superlative*.
-Optimization means searching for such superlatives, as illustrated in [@fig:optimization_superlatives].
-Whenever we are looking for the cheapest, fastest, strongest, best, biggest or smallest thing, then we have an optimization problem at hand.
+The real-world meaning of a global optimum is nothing else than a *superlative*.
+If we solve a JSSP for a factory, our goal is the *shortest* makespan.
+If we try to pack the factory's products into containers, we look for the packing that needs the *least* amount of containers.
+Thus, optimization means searching for such superlatives, as illustrated in [@fig:optimization_superlatives].
+Vice versa, whenever we are looking for the cheapest, fastest, strongest, best, biggest or smallest "thing", then we have an optimization problem at hand.
+
+![Optimization is the search for superlatives.](\relative.path{optimization_superlatives.svgz}){#fig:optimization_superlatives width=60%}
 
 ### Approxiation of the Optimum
 
 When solving an optimization problem, we hope to find at least one global optimum (there may be multiple), as stated in \text.ref{optimizationProblemMathematical}.
-However, this may often not be possible or it will just take too long.
+However, this may often not be possible or it will just take too long!
 
 ![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim e^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible.](\relative.path{function_growth.svgz}){#fig:function_growth width=99%}
 
 Matter of fact, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the size of the problem in the worst case.
-Or, in other words, unless something [fundamentally changes](http://en.wikipedia.org/wiki/P_versus_NP_problem), there will be some problems which usually will take too long to solve.
+Or, in other words, unless something [fundamentally changes](http://en.wikipedia.org/wiki/P_versus_NP_problem)&nbsp;[@C1971TCOTPP], there will be some problems which usually will take too long to solve.
 [@fig:function_growth] illustrates that finding the globally optimal solutions for problems with such exponential "time complexity" will quickly become infeasible, even for relatively problem instances.
+It can be seen that just throwing more computing power at the problems will not solve fundamentally this issue.
+Our processing power is limited and parallelization can provide a linear speed-up, but this cannot mitigate the exponentially growing runtime requirements of many optimization problems.
 
 Unfortunately, our example problems are amongst this kind of problem.
 So what can we do?
-We trade-in the *guarantee* of finding the globally optimal solution for better runtime.
-We use algorithms from which we hope that they find a good *approximation* of the optimum, i.e., a solution which is very good with respect to the objective function.
+The exponential time requirement occurs if we make *guarantees* about the solution quality, especially about its optimality, over all possible scenarios.
+
+What we can do is that we can trade-in the *guarantee* of finding the globally optimal solution for lower runtime requirements.[^npruntimeother]
+We can use algorithms from which we hope that they find a good *approximation* of the optimum, i.e., a solution which is very good with respect to the objective function, but which do not *guarantee* that their result will be the best possible solution.
 We may sometimes be lucky and even find the optimum, while in other cases, we may get a solution which is close enough.
 And we will get this within acceptable time limits.
+
+[^npruntimeother]: Another choice would be to drop the "over all possible scenarios" aspect, by developing algorithms for specific, simpler versions of the optimization problem.
+Solving a JSSP where all sub-jobs have the same time requirement, for instance, may be much easier.
 
 ### Bounds of the Objective Function
 
 If we apply an approximation algorithm, then we do not have the guarantee that the solution we get is optimal.
-Actually, we often do not know if the solution we have is optimal or not.
-In some cases, we be able to compute a *lower bound*&nbsp;$\lowerBound{\objf}$ for the objective value of an optimal solution, i.e., we know "It is not possible that any solution can have a quality better than $\lowerBound{\objf}$, but we do not know if a solution exists that has quality&nbsp;$\lowerBound{\objf}$."
+We often do not even know if the best solution we currently have is optimal or not.
+In some cases, we be able to compute a *lower bound*&nbsp;$\lowerBound{\objf}$ for the objective value of an optimal solution, i.e., we know "It is not possible that any solution can have a quality better than $\lowerBound{\objf}$, but we may not know whether a solution actually exists that has quality&nbsp;$\lowerBound{\objf}$."
 This is not useful for solving the problem, but it can tell us whether our method for solving the problem is good.
-For instance, if we have developed an algorithm for approximately solving a given problem and we *know* that the qualities we get are close to a the lower bound, then we know that our algorithm is good.
+For instance, if we have developed an algorithm for approximately solving a given problem and we *know* that the qualities of the solutions we get are close to a the lower bound, then we know that our algorithm is good.
 We then know that improving the result quality of the algorithm may be hard, maybe even impossible, and probably not worthwhile.
-However, if we cannot produce solutions as good as the lower bound or even only solutions which are a bit far off, this does not necessarily mean that our algorithm is bad.
+However, if we cannot produce solutions as good as or close to the lower quality bound, this does not necessarily mean that our algorithm is bad.
 
 ### Example: Job Shop Scheduling {#sec:jssp:lowerBounds}
 
