@@ -9,24 +9,22 @@ Instead of using too much theoretical background when introducing the different 
 We will not try to introduce the algorithms from a theoretical perspective, instead we will discuss concepts and theoretical aspects when we encounter them.
 We sacrifice a formal and abstract structure with the goal to increase the accessibility of the ideas.
 
-
-Listing: How to reference this book using [BibTeX](http://en.wikipedia.org/wiki/BibTeX).
-
-```{.bibtex}
+```
 @book {aitoa,
-  author = {Thomas Weise},
-  title = {An Introduction to Optimization Algorithms},
-  year = {2018--\meta.year},
+  author    = {Thomas Weise},
+  title     = {An Introduction to Optimization Algorithms},
+  year      = {2018--\meta.year},
   publisher = {Institute of Applied Optimization ({IAO}),
                Faculty of Computer Science and Technology,
                Hefei University},
-  address = {Hefei, Anhui, China},
-  url = {http://thomasweise.github.io/aitoa/aitoa.pdf},
-  edition = {{\meta.date}},
-  note = {This book is regularly updated.
-          This is version {\meta.commit}
-          for source code version {\repo.commit}
-          from {\meta.time}.}.
+  address   = {Hefei, Anhui, China},
+  url       = {http://thomasweise.github.io/aitoa/aitoa.pdf},
+  edition   = {\meta.date},
+  note      = {This book is regularly updated and the current
+               book version is {\meta.commit}
+               based on source code version
+               {\repo.commit}
+               from {\meta.time}.}
 }
 ```
 
