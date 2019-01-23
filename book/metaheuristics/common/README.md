@@ -1,6 +1,6 @@
 ## Common Characteristics {#sec:metaheuristicsCommon}
 
-But before we delve into our first algorithms, let us first take a look on some things that all metaheuristics have in common.
+Before we delve into our first algorithms, let us first take a look on some things that all metaheuristics have in common.
 
 ### Anytime Algorithms
 

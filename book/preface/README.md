@@ -9,6 +9,27 @@ Instead of using too much theoretical background when introducing the different 
 We will not try to introduce the algorithms from a theoretical perspective, instead we will discuss concepts and theoretical aspects when we encounter them.
 We sacrifice a formal and abstract structure with the goal to increase the accessibility of the ideas.
 
+
+Listing: How to reference this book using [BibTeX](http://en.wikipedia.org/wiki/BibTeX).
+
+```{.bibtex}
+@book {aitoa,
+  author = {Thomas Weise},
+  title = {An Introduction to Optimization Algorithms},
+  year = {2018--\meta.year},
+  publisher = {Institute of Applied Optimization ({IAO}),
+               Faculty of Computer Science and Technology,
+               Hefei University},
+  address = {Hefei, Anhui, China},
+  url = {http://thomasweise.github.io/aitoa/aitoa.pdf},
+  edition = {{\meta.date}},
+  note = {This book is regularly updated.
+          This is version {\meta.commit}
+          for source code version {\repo.commit}
+          from {\meta.time}.}.
+}
+```
+
 In this book, we are using a lot of concrete examples written in the programming language [Java](http://en.wikipedia.org/wiki/Java_(programming_language)).
 These are published in the repository *[thomasWeise/aitoa-code](\repo.name)* on [GitHub](http://www.github.com) and also freely accessible.
 Often, we will just look at certain portions of the code.
