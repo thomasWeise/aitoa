@@ -29,5 +29,5 @@ They allow us to define proximity-based relationships over the search space, suc
 
 ### Example: Job Shop Scheduling
 
-We will step-by-step introduce the concepts of nullary, unary, and binary search operators in the sections of [@sec:metaheuristics] on Metaheuristics as they come.
+We will step-by-step introduce the concepts of nullary, unary, and binary search operators in the sections of [@sec:metaheuristics] on metaheuristics as they come.
 This makes more sense from a didactic perspective.

@@ -22,7 +22,7 @@ However, such solutions then can never be discovered.
 The [generic](http://en.wikipedia.org/wiki/Generics_in_Java) interface given in [@lst:IRepresentationMapping] provides a function `map` which maps one point&nbsp;`x` in the search space class&nbsp;`X` to a candidate solution instance&nbsp;`y` of the solution space class&nbsp;`Y`.
 It will overwrite whatever contents were stored in&nbsp;`y` in the process, i.e., we assume that `Y` is a class whose instances can be modified.
 
-### Example: Job Shop Scheduling
+### Example: Job Shop Scheduling {#sec:jsspSearchSpace}
 
 In our JSSP example, we have developed the class `JSSPCandidateSolution` given in [@lst:JSSPCandidateSolution] to represent the data of a Gantt chart (candidate solution).
 It can easily be interpreted by the user and we have defined a suitable objective function for it in [@lst:JSSPMakespanObjectiveFunction].
@@ -121,8 +121,8 @@ demo|4|5|11'732'745'024
 ||5|5|623'360'743'125'120
 la24|15|10|$\approx$ 2.293*10^164^
 abz7|20|15|$\approx$ 1.432*10^372^
-yn4|20|20|$\approx$ 1.213*10^501^
 swv15|50|10|$\approx$ 1.254*10^806^
+yn4|20|20|$\approx$ 1.213*10^501^
 
 : The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth]) {#tbl:jsspSearchSpaceTable}
 

@@ -24,7 +24,7 @@ Often, metaheuristics make randomized choices.
 In cases where it is not clear whether doing "A" or doing "B" is better, it makes sense to simply flip a coin and do "A" if it is heads and "B" if it is tails.
 That our search operator interfaces in [@lst:INullarySearchOperator;@lst:IUnarySearchOperator;@lst:IBinarySearchOperator] all accept a [pseudorandom number generator](http://en.wikipedia.org/wiki/Pseudorandom_number_generator) as parameter is one manifestation of this issue.
 
-### Black Box Optimization
+### Black Box Optimization {#sec:blackbox}
 
 The concept of metaheuristics, the idea to attack a whole class of optimization problems with one basic algorithm design, can only be realized when following a *black-box* approach.
 If we want to have one algorithm that can be applied to all the examples given in in the introduction, then this can best be done if we hide all details of the problems under the hood of the structural elements introduced in [@sec:structure].

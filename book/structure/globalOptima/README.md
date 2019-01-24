@@ -56,6 +56,9 @@ For instance, if we have developed an algorithm for approximately solving a give
 We then know that improving the result quality of the algorithm may be hard, maybe even impossible, and probably not worthwhile.
 However, if we cannot produce solutions as good as or close to the lower quality bound, this does not necessarily mean that our algorithm is bad.
 
+It should be noted that it is *not* necessary to know the bounds of objective values.
+Lower bounds are a *"nice to have"* feature allowing us to better understand the performance of our algorithms.
+
 ### Example: Job Shop Scheduling {#sec:jssp:lowerBounds}
 
 We have already defined our solution space&nbsp;$\solutionSpace$ for the JSSP in [@lst:JSSPCandidateSolution] and the objective function&nbsp;$\objf$ in [@lst:IObjectiveFunction].
@@ -90,8 +93,8 @@ The lower bounds for the makespans of our example problems are illustrated in [@
 demo|4|5|180|180|[@eq:jsspLowerBound]
 abz7|20|15|638|656|[@MF1975OSWRTADDTMML; @VLS2015FDSFCBS; @VLS2015FDSFCBSDER; @vH2015JSIAS]
 la24|15|10|872|935|[@AC1991ACSOTJSSP; @vH2015JSIAS]
-yn4|20|20|818|929|[@VLS2015FDSFCBS; @VLS2015FDSFCBSDER; @vH2015JSIAS]
 swv15|50|10|2885|2885|[@eq:jsspLowerBound]
+yn4|20|20|818|929|[@VLS2015FDSFCBS; @VLS2015FDSFCBSDER; @vH2015JSIAS]
 
 : The lower bounds&nbsp;$\lowerBound{\objf}$ for the makespan of the optimal solutions for our example problems. For the instances `abz7`, `la24`, and `yn4`, research literature provides better/higher lower bounds $\lowerBound{\objf}^{\star}$, for which we provide references in the last column. {#tbl:jsspLowerBoundsTable}
 

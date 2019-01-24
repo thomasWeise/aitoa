@@ -25,7 +25,7 @@ Any actual objective function would then be an implementation of that interface.
 
 \repo.listing{lst:IObjectiveFunction}{A generic interface for objective functions.}{java}{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{}
 
-### Example: Job Shop Scheduling
+### Example: Job Shop Scheduling {#sec:jsspObjectiveFunction}
 
 As stated in [@sec:jsspExample], our goal is to complete the production jobs as soon as possible.
 This means that we want to minimize the makespan, the time when the last job finishes.
