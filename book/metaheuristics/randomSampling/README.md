@@ -19,7 +19,7 @@ Recall that our representation ([@sec:jsspSearchSpace]) requires that each index
 In [@lst:JSSPNullaryOperator], we achieve this by first creating the sequence&nbsp;$(\jsspJobs-1,\jsspJobs-2,\dots,0)$ and then copy it&nbsp;$\jsspMachines$ times in the destination array `dest`.
 We then randomly shuffle `dest` by applying the [Fisher–Yates shuffle](http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle) algorithm [@FY1948STFBAAMR; @K1969SA], which simply brings the array into an entirely random order.
 
-\repo.listing{lst:JSSPNullaryOperator}{An excerpt of the implementation of the nullary search operation interface [@lst:INullarySearchOperator] for the JSSP, which will create one random point in the search space.}{java}{src/main/java/aitoa/examples/JSSPNullaryOperator.java}{}{relevant}
+\repo.listing{lst:JSSPNullaryOperator}{An excerpt of the implementation of the nullary search operation interface [@lst:INullarySearchOperator] for the JSSP, which will create one random point in the search space.}{java}{src/main/java/aitoa/examples/jssp/JSSPNullaryOperator.java}{}{relevant}
 
 By calling the `apply` method of our implemented operator, it will create one random point in the search space.
 We can then pass this point through the representation mapping that we already implemented in [@lst:JSSPRepresentationMapping] and have a Gantt diagram.
