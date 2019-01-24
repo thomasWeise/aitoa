@@ -5,10 +5,10 @@ We know
 
 - how a solution can internally be represented as "point"&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ ([@sec:searchSpace]),
 - how we can map such a point&nbsp;$\sespel\in\searchSpace$ to a candidate solution&nbsp;$\solspel$ in the solution space&nbsp;$\solutionSpace$ ([@sec:solutionSpace]) via the representation mapping&nbsp;$\repMap:\searchSpace\mapsto\solutionSpace$ ([@sec:searchSpace]), and
-- how to rate a candidate solution&nbsp;$\solspel\in\solutionSpace$ with the objective function&nbsp;$\ofel$ ([@sec:objectiveFunction]).
+- how to rate a candidate solution&nbsp;$\solspel\in\solutionSpace$ with the objective function&nbsp;$\objf$ ([@sec:objectiveFunction]).
 
 Basically, all what we need now is to somehow "create" a point&nbsp;$\sespel$ in the search space.
-We can then apply&nbsp;$\repMap(\sespel)$ and get a candidate solution&nbsp;$\solspel$ whose quality we can assess via&nbsp;$\ofel(\solspel)$.
+We can then apply&nbsp;$\repMap(\sespel)$ and get a candidate solution&nbsp;$\solspel$ whose quality we can assess via&nbsp;$\objf(\solspel)$.
 If we look at the problem as a black box ([@sec:blackbox]), i.e., don't really know what "makes a candidate solution good," then the best we can do is just create the solutions randomly.
 
 ### Ingredient: Nullary Search Operation for the JSSP
