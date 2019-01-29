@@ -51,7 +51,7 @@ Hence, reducing the FEs needed to get a certain solution quality is a primary re
 
 The downside of using FEs is that there is no well-defined relationship with the runtime.
 A big problem in scientific work is that different algorithms may require vastly different amounts of runtime for one FE.
-The search steps in a local search may have [algorithmic complexity](http://en.wikipedia.org/wiki/Analysis_of_algorithms#Orders_of_growth) of $\bigO{1}$ while those of an ant colony optimization approach may have $\bigO{n^2}$, where $n$ is the number of decision variables.
+The search steps in a local search may have [algorithmic complexity](http://en.wikipedia.org/wiki/Analysis_of_algorithms#Orders_of_growth) of&nbsp;$\bigO{1}$ while those of an ant colony optimization approach may have&nbsp;$\bigO{s^2}$, where&nbsp;$s$ is the number of decision variables.
 Assuming that one step of the local search would take as long as one step of the ant colony optimization algorithm would then be grossly unfair.
 Also, FEs do not capture any complexity or time spent in book-keeping or mangament not related to the generation of candidate solutions.
 Still, they are one of the most important time measures in research.
