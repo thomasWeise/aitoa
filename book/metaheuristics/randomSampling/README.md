@@ -96,10 +96,10 @@ Let us now compare the performance of this iterated random sampling with our ini
 
 : The results of the single random sample algorithm&nbsp;`1rs` and the random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation *sd* of the result quality, as well as the median time $med(t)$ until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:randomSamplingJSSP}
 
-![The Gantt charts of the median solutions obtained by the&nbsp;`rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_rs_med.svgz}){#fig:jssp_rs_med width=90%}
-
 [@tbl:randomSamplingJSSP] shows us that the iterated random sampling algorithm is better in virtually all relevant aspects than the single random sampling method.
 Its best, mean, and median result quality are siginificantly better.
 Since creating random points in the search space is so fast that we can sample many more than 101&nbsp;candidate solutions, even the median and mean result quality of the&nbsp;`rs` algorithm are better than the best quality obtainable with&nbsp;`1rs`.
 This also becomes visible when comparing [@fig:jssp_rs_med] with [@fig:jssp_1rs_med]: The spacing between the jobs on the machines has significantly reduced.
 Finally, the standard deviation of the results becomes lower as well, which means that this algorithm has a more reliable performance.
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_rs_med.svgz}){#fig:jssp_rs_med width=90%}
