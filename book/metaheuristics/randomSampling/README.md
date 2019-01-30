@@ -27,26 +27,32 @@ Easily we then obtain the quality, i.e., makespan, of this candidate solution as
 
 ### Single Random Sample
 
-\repo.listing{lst:SingleRandomSample}{An excerpt of the implementation of an algorithm which creates a single random candidate solution.}{java}{src/main/java/aitoa/algorithms/SingleRandomSample.java}{}{relevant}
+#### The Algorithm
 
 Now that we have all ingredients ready, we can test the idea.
-In [@lst:SingleRandomSample], we implement this algorithm `1rs` which creates exactly one random point in the search space.
-It then takes this point and passes it to the evaluation function of our black-box `process`, which will perform the representation mapping and compute the objective value.
+In [@lst:SingleRandomSample], we implement this algorithm `1rs` which creates exactly one random point&nbsp;$\sespel$ in the search space.
+It then takes this point and passes it to the evaluation function of our black-box `process`, which will perform the representation mapping&nbsp; $\solspel=\repMap(\sespel)$ and compute the objective value&nbsp;$\objf(\solspel)$.
+It makes sense to implement this function in such a way that it automatically remembers the best candidate solution it encountered.
+Then, we do not need to take care of this in our algorithm, which makes the implementation so short.
+
+\repo.listing{lst:SingleRandomSample}{An excerpt of the implementation of an algorithm which creates a single random candidate solution.}{java}{src/main/java/aitoa/algorithms/SingleRandomSample.java}{}{relevant}
+
+#### Results on the JSSP
 
 Of course, since the algorithm is *randomized*, it may give us a different result every time we run it.
 In order to understand what kind of solution qualities we can expect, we hence have to run it a couple of times and compute result statistics.
-We therefore execute our program 101 times and the results are summarized in [@tbl:singleRandomSampleJSSP].
+We therefore execute our program 101&nbsp;times and the results are summarized in [@tbl:singleRandomSampleJSSP].
 
-|$\instance$|$\lowerBound{\objf}$|best|mean|med|t(med)|sd|
+|$\instance$|$\lowerBound{\objf}$|best|mean|med|sd|med(t)|
 |:-:|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|1131|1334|1326|0s|106|
-|`la24`|935|1487|1842|1814|0s|165|
-|`swv15`|2885|5935|6600|6563|0s|346|
-|`yn4`|929|1754|2036|2039|0s|125|
+|`abz7`|656|1131|1334|1326|106|0s|
+|`la24`|935|1487|1842|1814|165|0s|
+|`swv15`|2885|5935|6600|6563|346|0s|
+|`yn4`|929|1754|2036|2039|125|0s|
 
-: The results of the single random sample algorithm `1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound{\objf}$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, as well as the median time *t(med)* needed to obtain a solution at least as good as *med* and the standard deviation *sd* of the result quality.  {#tbl:singleRandomSampleJSSP}
+: The results of the single random sample algorithm&nbsp;`1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound{\objf}$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, the standard deviation *sd* of the result quality, as well as the median time&nbsp;*med(t)* until a run was finished. {#tbl:singleRandomSampleJSSP}
 
-![The Gantt charts of the median solutions obtained by the `1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_1rs_med.svgz}){#fig:jssp_1rs_me width=98%}
+![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_1rs_med.svgz}){#fig:jssp_1rs_med width=90%}
 
 What we can find in [@tbl:singleRandomSampleJSSP] is that the makespan of best solution that any of the 101&nbsp;runs has delivered for each of the four JSSP instances is between 60% and 100% longer than the lower bound.
 The [arithmetic mean](http://en.wikipedia.org/wiki/Arithmetic_mean) and [median](http://en.wikipedia.org/wiki/Median) of the solution qualities are even between 10% and 20% worse.
@@ -63,3 +69,40 @@ Hence, almost all of our time budget remains unused.
 At the same time, we already know that that there is a 10-20% difference between the best and the median solution quality among the 101&nbsp;random solutions we created.
 The standard deviation&nbsp;$sd$ of the solution quality also is always above 100&nbsp;time units of makespan.
 So why don't we try to make use of this variance and the high speed of solution creation?
+
+### Random Sampling Algorithm
+
+#### The Algorithm
+
+The actual random sampling algorithm repeats creating random solutions until the computational budget is exhausted.
+In our corresponding Java implementation given in [@lst:RandomSampling], we therefore only needed to add a loop around the code from the single random sampling algorithm from [@lst:SingleRandomSample].
+
+\repo.listing{lst:RandomSampling}{An excerpt of the implementation of the random sampling algorithm which keeps createing random candidate solutions and remembering the best encountered on until the computational budget is exhausted.}{java}{src/main/java/aitoa/algorithms/RandomSampling.java}{}{relevant}
+
+#### Results on the JSSP
+
+Let us now compare the performance of this iterated random sampling with our initial method.
+
+|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|
+|:-:|--:|:-:|--:|--:|--:|--:|--:|
+|`abz7`|656|`1rs`|1131|1334|1326|106|**0**s|
+|||`rs`|**895**|**945**|**948**|**12**|77s|
+|---|---|---|---|---|---|---|---|
+|`la24`|935|`1rs`|1487|1842|1814|165|**0**s|
+|||`rs`|**1154**|**1206**|**1207**|**15**|81s|
+|---|---|---|---|---|---|---|---|
+|`swv15`|2885|`1rs`|5935|6600|6563|346|**0**s|
+|||`rs`|**4988**|**5165**|**5174**|**49**|85s|
+|---|---|---|---|---|---|---|---|
+|`yn4`|929|`1rs`|1754|2036|2039|125|**0**s|
+|||`rs`|**1459**|**1496**|**1498**|**15**|83s|
+
+: The results of the single random sample algorithm&nbsp;`1rs` and the random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation *sd* of the result quality, as well as the median time $med(t)$ until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:singleRandomSampleJSSP}
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_rs_med.svgz}){#fig:jssp_rs_med width=90%}
+
+[@tbl:singleRandomSampleJSSP] shows us that the iterated random sampling algorithm is better in virtually all relevant aspects than the single random sampling method.
+Its best, mean, and median result quality are siginificantly better.
+Since creating random points in the search space is so fast that we can sample many more than 101&nbsp;candidate solutions, even the median and mean result quality of the&nbsp;`rs` algorithm are better than the best quality obtainable with&nbsp;`1rs`.
+This also becomes visible when comparing [@fig:jssp_rs_med] with [@fig:jssp_1rs_med]: The spacing between the jobs on the machines has significantly reduced.
+Finally, the standard deviation of the results becomes lower as well, which means that this algorithm has a more reliable performance.
