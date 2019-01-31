@@ -43,14 +43,14 @@ Of course, since the algorithm is *randomized*, it may give us a different resul
 In order to understand what kind of solution qualities we can expect, we hence have to run it a couple of times and compute result statistics.
 We therefore execute our program 101&nbsp;times and the results are summarized in [@tbl:singleRandomSampleJSSP].
 
-|$\instance$|$\lowerBound{\objf}$|best|mean|med|sd|med(t)|
-|:-:|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|1131|1334|1326|106|0s|
-|`la24`|935|1487|1842|1814|165|0s|
-|`swv15`|2885|5935|6600|6563|346|0s|
-|`yn4`|929|1754|2036|2039|125|0s|
+|$\instance$|$\lowerBound{\objf}$|best|mean|med|sd|med(t)|med(FEs)|
+|:-:|--:|--:|--:|--:|--:|--:|--:
+|`abz7`|656|1131|1334|1326|106|0s|1|
+|`la24`|935|1487|1842|1814|165|0s|1|
+|`swv15`|2885|5935|6600|6563|346|0s|1|
+|`yn4`|929|1754|2036|2039|125|0s|1|
 
-: The results of the single random sample algorithm&nbsp;`1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound{\objf}$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, the standard deviation *sd* of the result quality, as well as the median time&nbsp;*med(t)* until a run was finished. {#tbl:singleRandomSampleJSSP}
+: The results of the single random sample algorithm&nbsp;`1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound{\objf}$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, the standard deviation *sd* of the result quality, as well as the median time&nbsp;*med(t)* and FEs&nbsp;*med(FEs)* until a run was finished. {#tbl:singleRandomSampleJSSP}
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_1rs_med.svgz}){#fig:jssp_1rs_med width=90%}
 
@@ -62,7 +62,8 @@ After all, we just create a single random solution.
 We can hardly assume that doing all jobs of a JSSP in a random order would even be good idea.
 
 But we also notice more.
-The time $t(med)$ that the top-50% of the runs need to get their result is approximately&nbsp;0s.
+The time&nbsp;*t(med)* that the top-50% of the runs need to get their result is approximately&nbsp;0s.
+The reason is that we only perform one single objective function evaluation per run, i.e., 1&nbsp;FE.
 Creating, mapping, and evaluating a solution can be very fast, actually within a few milliseconds.
 However, we had originally planned to use up to three minutes for optimization.
 Hence, almost all of our time budget remains unused.
@@ -101,22 +102,22 @@ Let us now compare the performance of this iterated random sampling with our ini
 [@tbl:randomSamplingJSSP] shows us that the iterated random sampling algorithm is better in virtually all relevant aspects than the single random sampling method.
 Its best, mean, and median result quality are siginificantly better.
 Since creating random points in the search space is so fast that we can sample many more than 101&nbsp;candidate solutions, even the median and mean result quality of the&nbsp;`rs` algorithm are better than the best quality obtainable with&nbsp;`1rs`.
-Matter of fact, each run of our&nbsp;`rs` algorithm can create and test several million candidate solutions within the three minute time window.
+Matter of fact, each run of our&nbsp;`rs` algorithm can create and test several million candidate solutions within the three minute time window, i.e., perform several million FEs.
 Furthermore, the standard deviation of the results becomes lower as well.
 This means that this algorithm has a more reliable performance, we are more likely to get results close to the mean or median performance when we use&nbs;`rs` compared to&nbsp;`1rs`.
 
-|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|
-|:-:|--:|:-:|--:|--:|--:|--:|--:|
-|`abz7`|656|`1rs`|1131|1334|1326|106|**0**s|
-|||`rs`|**895**|**945**|**948**|**12**|77s|
-|`la24`|935|`1rs`|1487|1842|1814|165|**0**s|
-|||`rs`|**1154**|**1206**|**1207**|**15**|81s|
-|`swv15`|2885|`1rs`|5935|6600|6563|346|**0**s|
-|||`rs`|**4988**|**5165**|**5174**|**49**|85s|
-|`yn4`|929|`1rs`|1754|2036|2039|125|**0**s|
-|||`rs`|**1459**|**1496**|**1498**|**15**|83s|
+|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|:-:|--:|:-:|--:|--:|--:|--:|--:|--:|
+|`abz7`|656|`1rs`|1131|1334|1326|106|**0**s|**1**|
+|||`rs`|**895**|**945**|**948**|**12**|77s|8246019|
+|`la24`|935|`1rs`|1487|1842|1814|165|**0**s|**1**|
+|||`rs`|**1154**|**1206**|**1207**|**15**|81s|17287329|
+|`swv15`|2885|`1rs`|5935|6600|6563|346|**0**s|**1**|
+|||`rs`|**4988**|**5165**|**5174**|**49**|85s|5525082|
+|`yn4`|929|`1rs`|1754|2036|2039|125|**0**s|**1**|
+|||`rs`|**1459**|**1496**|**1498**|**15**|83s|6549694|
 
-: The results of the single random sample algorithm&nbsp;`1rs` and the random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation *sd* of the result quality, as well as the median time $med(t)$ until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:randomSamplingJSSP}
+: The results of the single random sample algorithm&nbsp;`1rs` and the random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation *sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:randomSamplingJSSP}
 
 In [@fig:jssp_rs_med], we now again plot the solutions of median quality, i.e., those which are "in the middle" of the results, quality-wise.
 The improved performance becomes visible when comparing [@fig:jssp_rs_med] with [@fig:jssp_1rs_med].
