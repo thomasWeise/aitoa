@@ -6,7 +6,7 @@ A search step consists of creating an entirel new, entirely random candidate sol
 Every search step is thus independent of all prior steps.
 
 Local search algorithms offer an alternative.
-They remember the current best point&nbsp;$\bestSoFar{\sespel}$ in the search space&nbsp;$\searchSapce$.
+They remember the current best point&nbsp;$\bestSoFar{\sespel}$ in the search space&nbsp;$\searchSpace$.
 In every step, a local search algorithm investigates a point&nbsp;$\sespel$ similar to&nbsp;$\bestSoFar{\sespel}$.
 If it is better, it is accepted as a new best-so-far solution.
 Otherwise, it is discarted.
