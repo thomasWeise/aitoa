@@ -2,7 +2,7 @@
 
 Before we delve into our first algorithms, let us first take a look on some things that all metaheuristics have in common.
 
-### Anytime Algorithms
+### Anytime Algorithms {#sec:anytimeAlgorithm}
 
 \text.block{definition}{anytimeAlgorithm}{An *anytime algorithm* is an algorithm which can produce an approximate result during almost any time of its execution.}
 

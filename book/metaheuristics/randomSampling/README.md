@@ -52,11 +52,11 @@ We therefore execute our program 101&nbsp;times and the results are summarized i
 
 : The results of the single random sample algorithm&nbsp;`1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound{\objf}$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, the standard deviation *sd* of the result quality, as well as the median time&nbsp;*med(t)* and FEs&nbsp;*med(FEs)* until a run was finished. {#tbl:singleRandomSampleJSSP}
 
-![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_1rs_med.svgz}){#fig:jssp_1rs_med width=90%}
+![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_1rs_med.svgz}){#fig:jssp_gantt_1rs_med width=90%}
 
 What we can find in [@tbl:singleRandomSampleJSSP] is that the makespan of best solution that any of the 101&nbsp;runs has delivered for each of the four JSSP instances is between 60% and 100% longer than the lower bound.
 The [arithmetic mean](http://en.wikipedia.org/wiki/Arithmetic_mean) and [median](http://en.wikipedia.org/wiki/Median) of the solution qualities are even between 10% and 20% worse.
-In the Gantt charts of the median solutions depicted in [@fig:jssp_1rs_med], we can find big gaps between the sub-jobs.
+In the Gantt charts of the median solutions depicted in [@fig:jssp_gantt_1rs_med], we can find big gaps between the sub-jobs.
 This all is expected.
 After all, we just create a single random solution.
 We can hardly assume that doing all jobs of a JSSP in a random order would even be good idea.
@@ -119,10 +119,39 @@ This means that this algorithm has a more reliable performance, we are more like
 
 : The results of the single random sample algorithm&nbsp;`1rs` and the random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation *sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:randomSamplingJSSP}
 
-In [@fig:jssp_rs_med], we now again plot the solutions of median quality, i.e., those which are "in the middle" of the results, quality-wise.
-The improved performance becomes visible when comparing [@fig:jssp_rs_med] with [@fig:jssp_1rs_med].
+In [@fig:jssp_gantt_rs_med], we now again plot the solutions of median quality, i.e., those which are "in the middle" of the results, quality-wise.
+The improved performance becomes visible when comparing [@fig:jssp_gantt_rs_med] with [@fig:jssp_gantt_1rs_med].
 The spacing between the jobs on the machines has significantly reduced.
 Still, the schedules clearly have a lot of unused time, visible as white space between the sub-jobs on the machines.
 We are also still relatively far away from the lower bounds of the objective function, so there is lots of room for improvement.
 
-![The Gantt charts of the median solutions obtained by the&nbsp;`rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_rs_med.svgz}){#fig:jssp_rs_med width=90%}
+![The Gantt charts of the median solutions obtained by the&nbsp;`rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_rs_med.svgz}){#fig:jssp_gantt_rs_med width=90%}
+
+#### Progress over Time and the Law of Diminishing Returns
+
+![The progress of the&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_rs_log.svgz}){#fig:jssp_progress_rs_log width=90%}
+
+Another new feature of our&nbsp;`rs` algorithm is that it is truly an Anytime Algorithm ([@sec:anytimeAlgorithm]).
+It begins with an entirely random solution and tries to find better solutions as time goes by.
+Let us take a look at [@fig:jssp_progress_rs_log], which illustrates how the solution quality of the runs improves over time.
+At first glance, this figure looks quite nice.
+For each of the four problem instances we investigate, our algorithms steadily and nicely improve the solution quality.
+Each single line (one per run) keeps slowly going down, which means that the makespan (objective value) of its best-so-far solution decreases steadily.
+
+However, upon closer inspection, we notice that the time axes in the plots are logarithmically scaled.
+The first of the equally-spaces axis tick marks is at 1s, the second one at 10s, the third one at 100s, and so on.
+The progress curves plotted over these logarithmically scaled axes seem to progress more or less like straight linear lines, maybe even slower.
+A linear progress over a logarithmic time scale could mean, for instance, that we may make the same improvements in the time intervals $1s\dots 9s$, $10s\dots 99s$, $100s\dots 999s$, and so on.
+In other words: We are getting slower and slower.
+
+This is the first time we witness a manifestation of a very basic law in optimization.
+When trying to solve a problem, we need to invest resources, be it software development effort, research effort, computational budget, or expenditure for hardware, etc.
+If you invest a certain amount&nbsp;$a$ of one of these resources, you may be lucky to improve the solution quality that you can get by, say, $b$&nbsp;units.
+Investing&nbsp;$2a$ of the resources, however, will rarely lead to an improvement by $2b$&nbsp;units.
+Instead, the improvements will become smaller and smaller the more you invest.
+This is exactly the *[Law of Diminishing Returns](http://en.wikipedia.org/wiki/Diminishing_returns)*[@SN2001M] known from the field of economics.
+
+And this makes a lot of sense here.
+On one hand, the maximal possible improvement of the solution quality is bounded by the global optimum &ndash; once we have obtained it, we cannot improve the quality further, even if we invest infinitely much of an resource.
+On the other hand, in most practical problems, the amount of solutions that have a certain quality gets smaller and smaller, the closer said quality is to the optimal one.
+This is actually what we see in [@fig:jssp_progress_rs_log]: The chance of randomly guessing a solution of quality&nbsp;$F$ becomes the smaller the better (smaller)&nbsp;$F$ is.
