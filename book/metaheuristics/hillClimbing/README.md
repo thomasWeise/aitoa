@@ -220,3 +220,25 @@ From the progress diagrams plotted in [@fig:jssp_gantt_hcr_256_5_1swap_med], we 
 They should do that, because until they do their first restart, the are identical to `hc_1swap`.
 However, when `hc_1swap` has converged and stops making improvements, `hcr_256_1swap` and `hcr_256+5%_1swap` still continue to make progress.
 On all problem instances except `la24`, `hcr_256+5%_1swap` provides visible better end results compared to `hcr_256_1swap` as well, confirming the findings from [@tbl:hillClimbing1SwapRSJSSP].
+
+### Hill Climbing with a Different Unary Operator
+
+While our restart method could significantly improve the results of the hill climber, it could not solve the problem of "premature convergence" itself.
+
+\text.block{definition}{prematureConvergence}{An optimization process has prematurely converged if it has not yet discovered the global optimum but can no longer improve its approximation quality.&nbsp;[@WCT2012EOPABT; @WZCN2009WIOD]}
+
+This problem in our hill climber is caused by the unary operator.
+`1swap` will swap two jobs in an encoded solution.
+Since the solutions are encoded as integer arrays of length&nbsp;$\jsspMachines*\jsspJobs$, there are&nbsp;$\jsspMachines*\jsspJobs$ choices to pick the index of the first job to be swapped.
+Since we swap only with *different* jobs and each job appears&nbsp;$\jsspMachines$ times in the encoding, this leaves&nbsp;$\jsspMachines*(\jsspJobs-1)$ choices for the second swap index.
+In total, from any given point in the search space, `1swap` may reach&nbsp;$\jsspMachines*\jsspJobs*\jsspMachines*(\jsspJobs-1)=\jsspMachines^2 \jsspJobs^2-\jsspJobs$ different other points (some of which may still actually encode the same candidate solutions).
+These are only tiny fractions of the big search spaces (remember [@tbl:jsspSearchSpaceTable]?).
+
+Now we could define a new unary operator which can access a larger neighborhood.
+Here we first should think about the extreme cases.
+On the one hand, we have `1swap` which samples from a relatively small neighborhood.
+The other extreme could be to use our nullary operator as unary operator: It would return an entirely random point from the search space&nbsp;$\searchSpace$ and ignore its input.
+It would span&nbsp;$\searchSpace$ as its neighborhood and uniformly sample from it, effectively turning the hill climber into random sampling.
+From this thought experiment we know that unary operators which indiscriminately sample from large neighborhoods are not very good ideas, as they are "too random."
+They also make less use of the causality of the search space, as they make large steps and their produced outputs are very different from their inputs.
+What we would like is an operator that often creates outputs very similar to its input (like `1swap`), but also from time to time samples points a bit farther away in the search space.
