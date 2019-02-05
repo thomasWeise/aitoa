@@ -107,7 +107,7 @@ Furthermore, the standard deviation of the results becomes lower as well.
 This means that this algorithm has a more reliable performance, we are more likely to get results close to the mean or median performance when we use&nbs;`rs` compared to&nbsp;`1rs`.
 
 |$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
-|:-:|--:|:-:|--:|--:|--:|--:|--:|--:|
+|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
 |`abz7`|656|`1rs`|1131|1334|1326|106|**0**s|**1**|
 |||`rs`|**895**|**945**|**948**|**12**|77s|8246019|
 |`la24`|935|`1rs`|1487|1842|1814|165|**0**s|**1**|

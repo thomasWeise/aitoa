@@ -85,10 +85,10 @@ This algorithm is implemented in [@lst:HillClimber] and will refer to it as&nbsp
 #### Results on the JSSP
 
 We now apply our&nbsp;`hc` algorithm together with the `1swap` to the JSSP.
-We will refer to this setup as `hc_1swap` and present its results with those of&nbsp;`rs` in [@hillClimbing1SwapJSSP].
+We will refer to this setup as `hc_1swap` and present its results with those of&nbsp;`rs` in [@tbl:hillClimbing1SwapJSSP].
 
 |$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
-|:-:|--:|:-:|--:|--:|--:|--:|--:|--:|
+|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
 |`abz7`|656|`hc_1swap`|**717**|**800**|**798**|28|**0**s|16978|
 |||`rs`|895|945|948|**12**|77s|8246019|
 |`la24`|935|`hc_1swap`|**999**|**1095**|**1086**|56|**0**s|6612|
@@ -99,3 +99,23 @@ We will refer to this setup as `hc_1swap` and present its results with those of&
 |||`rs`|1459|1496|1498|**15**|83s|6549694|
 
 : The results of the hill climber `hc_1swap` in comparison with those of random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hillClimbing1SwapJSSP}
+
+The hill climber outperforms random sampling in almost all aspects.
+It produces better mean, median, and best solutions.
+Actually, its median and mean solutions are better than the best solutions discovered by&nbsp;`rs`.
+Furthermore, it finds its solutions much much faster.
+The time consumed until convergence is not more than one seconds and the number of consumed FEs to find the best solutions per run is between 7000 and 105'000, i.e., between one 50^th^ and one 2500^th^ of the number of FEs needed by&nbsp;`rs`.
+The Gantt charts of the median solutions illustrated in [@fig:jssp_gantt_hc_1swap_med] are also more compact than those in [@fig:jssp_gantt_rs_med].
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`hc_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hc_1swap_med.svgz}){#fig:jssp_gantt_hc_1swap_med width=84%}
+
+![The progress of the&nbsp;`hc_1swap` and&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_rs_hc_1swap_log.svgz}){#fig:jssp_progress_rs_hc_1swap_log width=84%}
+
+[@fig:jssp_progress_rs_hc_1swap_log] shows how both&nbsp;`hc_1swap` and&nbsp;`rs` progress over time.
+It should be noted that I designed the experiments in such a way that there were 101 different initial solutions and the runs of the hill climber and random sampling started *at the same points*.
+On the logarithmically scaled plots, this is almost invisible.
+The runs of the two different algorithms separate almost immediately.
+We already knew from [@tbl:hillClimbing1SwapJSSP] that&nbsp;`hc_1swap` converges very quickly.
+After initial phases with quick progress, it stops making any further progress.
+With the exception of instance&nbsp;`la24`, there is much space between the runs of&nbsp;`rs` and&nbsp;`hc_1swap`.
+We can also see again that there is more variance in the end results of&nbsp;`hc_1swap` compared to those of&nbsp;`rs`, as they are spread wider in the vertical direction.
