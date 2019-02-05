@@ -140,12 +140,12 @@ Of course, we will remember the **best ever encountered** candidate solution ove
 #### The Algorithm
 
 1. Set counter&nbsp;$C$ of unsuccessful search steps to&nbsp;$0$, initialize limit&nbsp;$L$ for the maximally allowed unsucessfuly search steps.
-2. Set the overall-best objective value&nbsp;$\bestSoFar{\bestSoFar{\obspel}}$ to infinity and the overall-best candidate solution&nbsp;$\bestSoFar{\bestSoFar{\solspel}}$ to `NULL`. 
+2. Set the overall-best objective value&nbsp;$\obspel_B$ to infinity and the overall-best candidate solution&nbsp;$\solspel_B$ to `NULL`. 
 3. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
 4. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
 5. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
 6. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
-7. If $\bestSoFar{\obspel}<\bestSoFar{\bestSoFar{\obspel}}$, then set&nbsp;$\bestSoFar{\bestSoFar{\obspel}}$ to&nbsp;$\bestSoFar{\obspel}$ and store&nbsp;$\bestSoFar{\bestSoFar{\solspel}}=\repMap{\sespel}$.
+7. If $\bestSoFar{\obspel}<\obspel_B$, then set&nbsp;$\obspel_B$ to&nbsp;$\bestSoFar{\obspel}$ and store&nbsp;$\solspel_B=\repMap{\sespel}$.
 8. Repeat until the termination criterion is met:
     a. Apply the unary search operator to&nbsp;$\bestSoFar{\sespel}$ to get the slightly modified copy&nbsp;$\sespel'$ of it.
     b. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
@@ -154,13 +154,13 @@ Of course, we will remember the **best ever encountered** candidate solution ove
         i. store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$,
         ii. $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and
         iii. set&nbsp;$C$ to&nbsp;$0$.
-        iv. If $\obspel'<\bestSoFar{\bestSoFar{\obspel}}$, then set&nbsp;$\bestSoFar{\bestSoFar{\obspel}}$ to&nbsp;$\obspel'$ and store&nbsp;$\bestSoFar{\bestSoFar{\solspel}}=\repMap{\sespel'}$.
+        iv. If $\obspel'<\obspel_B$, then set&nbsp;$\obspel_B$ to&nbsp;$\obspel'$ and store&nbsp;$\solspel_B=\repMap{\sespel'}$.
       otherwise
         i. increment&nbsp;$C$ by&nbsp;$1$
         ii. if $C\geq L$ then
             A. Maybe: increase&nbsp;$L$ (see later).
             B. Go back to step&nbsp;3.
-9. Return **best ever encountered**  objective value&nbsp;$\bestSoFar{\bestSoFar{\obspel}}$ and solution&nbsp;$\bestSoFar{\bestSoFar{\solspel}} to the user.
+9. Return **best ever encountered**  objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B to the user.
 
 \repo.listing{lst:HillClimberWithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts, which remembers the best-so-far solution and tries to find better solutions in its neighborhood but restarts if it seems to be trapped in a local optimum.}{java}{src/main/java/aitoa/algorithms/HillClimberWithRestarts.java}{}{relevant}
 
