@@ -155,7 +155,9 @@ Of course, we will remember the **best ever encountered** candidate solution ove
         ii. $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and
         iii. set&nbsp;$C$ to&nbsp;$0$.
         iv. If $\obspel'<\obspel_B$, then set&nbsp;$\obspel_B$ to&nbsp;$\obspel'$ and store&nbsp;$\solspel_B=\repMap{\sespel'}$.
-      otherwise
+        
+       otherwise
+      
         i. increment&nbsp;$C$ by&nbsp;$1$
         ii. if $C\geq L$ then
             A. Maybe: increase&nbsp;$L$ (see later).
