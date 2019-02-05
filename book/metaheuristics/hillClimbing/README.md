@@ -162,10 +162,61 @@ Of course, we will remember the **best ever encountered** candidate solution ove
         ii. if $C\geq L$ then
             A. Maybe: increase&nbsp;$L$ (see later).
             B. Go back to step&nbsp;3.
-9. Return **best ever encountered**  objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B to the user.
+9. Return **best ever encountered**  objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B$ to the user.
 
 \repo.listing{lst:HillClimberWithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts, which remembers the best-so-far solution and tries to find better solutions in its neighborhood but restarts if it seems to be trapped in a local optimum.}{java}{src/main/java/aitoa/algorithms/HillClimberWithRestarts.java}{}{relevant}
 
 Now this algorithm &ndash; implemented in [@lst:HillClimberWithRestarts] &ndash; is a bit more elaborate.
 Basically, we embedd the original hill climber into a loop.
 This hill climber will stop after a certain number of unsuccessful search steps, which then leads to a new round in the outer loop.
+The problem that we have is that we do not know which "certain number" is right.
+If we pick it too low, then the algorithm will restart before it actually converges to a local optimum.
+If we pick it too much, we waste runtime and do fewer restarts than what we could do.
+To deal with this dilemma, we can slowly increase the number of allowed unsuccessful search moves.
+
+#### Results on the JSSP
+
+In [@tbl:hillClimbing1SwapRSJSSP] we present the performance indicators of the two versions of our hill climber with restarts in comparison with the plain hill climber.
+We implement `hcr_256_1swap`, which begins at a new random point in the search space after&nbsp;$L=256$ applications of the unary operator to the same current-best solution did not yield any improvement.
+`hcr_256+5%_1swap` does the same, but increases&nbsp;$L$ by 5% after each restart, i.e., initially waits 256 steps, then $round(1.05*256)=267$ steps, then 280, and so on.
+Of course, the actual search procedure of both algorithms is still the same as the one of the plain hill climber `hc_1swap`.
+What we can expect is therefore mainly an utilization of the variance in the end results and the time "wasted" after `hc_1swap` has converged.
+
+|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
+|`abz7`|656|`hc_1swap`|**717**|800|798|28|**0**s|16978|
+|||`hcr_256_1swap`|738|765|766|**7**|82s|22881557|
+|||`hcr_256+5%_1swap`|723|**742**|**743**|7|21s|5681591|
+|`la24`|935|`hc_1swap`|999|1095|1086|56|**0**s|6612|
+|||`hcr_256_1swap`|975|1001|1002|**6**|91s|49588742|
+|||`hcr_256+5%_1swap`|**970**|**997**|**998**|9|6s|3470368|
+|`swv15`|2885|`hc_1swap`|3837|4108|4108|137|**1**s|104598|
+|||`hcr_256_1swap`|4069|4173|4177|**32**|92s|15351798|
+|||`hcr_256+5%_1swap`|**3701**|**3850**|**3857**|40|60s|9874102|
+|`yn4`|929|`hc_1swap`|1109|1222|1220|48|**0**s|31789|
+|||`hcr_256_1swap`|1153|1182|1184|**12**|90s|18843991|
+|||`hcr_256+5%_1swap`|**1095**|**1129**|**1130**|14|22s|4676669|
+
+: The results of the hill climber `hc_1swap` with restarts. `hcr_256_1swap` restarts after 256 unsuccessful search moves, `hcr_256+5%_1swap` does the same but increases the allowed number of unsuccessful moves by 5% after each restart. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hillClimbing1SwapRSJSSP}
+
+[@tbl:hillClimbing1SwapRSJSSP] shows us that the restarted algorithms offer improved median and mean results.
+The standard deviation of their end results is also reduced, so they have become more reliable.
+Also, their median time until they converge is now higher, which means that we make better use of our computational budget.
+The best solution from all 101 runs they discover does not necessarily improve, which makes sense because they are still essentially the same algorithms.
+Slowly increasing the time until restart turns out to be a good idea: `hcr_256+5%_1swap` outperforms `hcr_256_1swap` in almost all aspects.
+
+This could also mean that waiting 256 steps until a restart is not enough, of course.
+If this was an actual, practical application scenario we should experiment with more settings.
+For the sake of demonstrating the basic ideas in this book, however, we will not do that.
+
+![The Gantt charts of the median solutions obtained by the `hcr_256+5%_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hcr_256_5_1swap_med.svgz}){#fig:jssp_gantt_hcr_256_5_1swap_med width=84%}
+
+![The progress of the algorithms `rs`, `hc_1swap`, `hcr_256_1swap`, and `hcr_256+5%_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_rs_hc_hcr_1swap_log.svgz}){#fig:jssp_progress_rs_hc_hcr_1swap_log width=84%}
+
+The average solutions discovered by `hcr_256+5%_1swap`, illustrated in [@fig:jssp_gantt_hcr_256_5_1swap_med], again show less wasted time.
+The scheduled jobs again move a bit closer together.
+
+From the progress diagrams plotted in [@fig:jssp_gantt_hcr_256_5_1swap_med], we can see that the algorithm versions with restart initially behave exactly the same as the "normal" hill climber.
+They should do that, because until they do their first restart, the are identical to `hc_1swap`.
+However, when `hc_1swap` has converged and stops making improvements, `hcr_256_1swap` and `hcr_256+5%_1swap` still continue to make progress.
+On all problem instances except `la24`, `hcr_256+5%_1swap` provides visible better end results compared to `hcr_256_1swap` as well, confirming the findings from [@tbl:hillClimbing1SwapRSJSSP].
