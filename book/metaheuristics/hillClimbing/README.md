@@ -130,9 +130,7 @@ Now the situation is a bit different, however.
 It keeps creating modified copies of the current best solution, only that these happen to not be better.
 The algorithm has converged into a *local optimum*.
 
-\text.block{definition}{localOptimum}{A *local optimum* is a point&nbsp;$\localOptimum{\sespel}$ in the search space which maps to a better candidate solution than any other points in its neighborhood.}
-
-\text.block{definition}{neighborhood}{The set of all points&nbsp;$\sespel'$ in the search space&nbsp;$\searchSpace$ that can be reached by an unary search operator&nbsp;`op` by applying it to an existing point&nbsp;$\sespel\in\searchSpace$ is called the *neighborhood* of&nbsp;$\sespel$.}
+\text.block{definition}{localOptimum}{A *local optimum* is a point&nbsp;$\localOptimum{\sespel}$ in the search space which maps to a better candidate solution than any other points in its neighborhood (see \text.ref{neighborhood}).}
 
 Of course, our hill climber does not really know that it is trapped in a local optimum.
 However, we can guess it: If there has not been any improvement for many steps, then the current-best candidate solution is probably a local optimum.
