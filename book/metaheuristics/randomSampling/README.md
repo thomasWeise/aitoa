@@ -127,6 +127,8 @@ We are also still relatively far away from the lower bounds of the objective fun
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_rs_med.svgz}){#fig:jssp_gantt_rs_med width=84%}
 
+![The progress of the&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_rs_log.svgz}){#fig:jssp_progress_rs_log width=84%}
+
 #### Progress over Time and the Law of Diminishing Returns
 
 Another new feature of our&nbsp;`rs` algorithm is that it is truly an Anytime Algorithm ([@sec:anytimeAlgorithm]).
@@ -135,8 +137,6 @@ Let us take a look at [@fig:jssp_progress_rs_log], which illustrates how the sol
 At first glance, this figure looks quite nice.
 For each of the four problem instances we investigate, our algorithms steadily and nicely improve the solution quality.
 Each single line (one per run) keeps slowly going down, which means that the makespan (objective value) of its best-so-far solution decreases steadily.
-
-![The progress of the&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_rs_log.svgz}){#fig:jssp_progress_rs_log width=84%}
 
 However, upon closer inspection, we notice that the time axes in the plots are logarithmically scaled.
 The first of the equally-spaces axis tick marks is at 1s, the second one at 10s, the third one at 100s, and so on.
