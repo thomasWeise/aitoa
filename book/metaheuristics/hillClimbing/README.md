@@ -78,6 +78,24 @@ It proceeds as follows:
     d. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$.
 6. Return best-so-far objective value and best solution to the user.
 
-\repo.listing{lst:HillClimbing}{An excerpt of the implementation of the Hill Climbing algorithm, which remembers the best-so-far solution and tries to find better solutions in its neighborhood.}{java}{src/main/java/aitoa/algorithms/HillClimbing.java}{}{relevant}
+This algorithm is implemented in [@lst:HillClimber] and will refer to it as&nbsp;`hc`.
 
-This algorithm is implemented in [@lst:HillClimbing].
+\repo.listing{lst:HillClimber}{An excerpt of the implementation of the Hill Climbing algorithm, which remembers the best-so-far solution and tries to find better solutions in its neighborhood.}{java}{src/main/java/aitoa/algorithms/HillClimber.java}{}{relevant}
+
+#### Results on the JSSP
+
+We now apply our&nbsp;`hc` algorithm together with the `1swap` to the JSSP.
+We will refer to this setup as `hc_1swap` and present its results with those of&nbsp;`rs` in [@hillClimbing1SwapJSSP].
+
+|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|:-:|--:|:-:|--:|--:|--:|--:|--:|--:|
+|`abz7`|656|`hc_1swap`|**717**|**800**|**798**|28|**0**s|16978|
+|||`rs`|895|945|948|**12**|77s|8246019|
+|`la24`|935|`hc_1swap`|**999**|**1095**|**1086**|56|**0**s|6612|
+|||`rs`|1154|1206|1207|**15**|81s|17287329|
+|`swv15`|2885|`hc_1swap`|**3837**|**4108**|**4108**|137|**1**s|104598|
+|||`rs`|4988|5165|5174|**49**|85s|5525082|
+|`yn4`|929|`hc_1swap`|**1109**|**1222**|**1220**|48|**0**s|31789|
+|||`rs`|1459|1496|1498|**15**|83s|6549694|
+
+: The results of the hill climber `hc_1swap` in comparison with those of random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hillClimbing1SwapJSSP}

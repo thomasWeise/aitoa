@@ -117,7 +117,7 @@ This means that this algorithm has a more reliable performance, we are more like
 |`yn4`|929|`1rs`|1754|2036|2039|125|**0**s|**1**|
 |||`rs`|**1459**|**1496**|**1498**|**15**|83s|6549694|
 
-: The results of the single random sample algorithm&nbsp;`1rs` and the random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation *sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:randomSamplingJSSP}
+: The results of the single random sample algorithm&nbsp;`1rs` and the random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:randomSamplingJSSP}
 
 In [@fig:jssp_gantt_rs_med], we now again plot the solutions of median quality, i.e., those which are "in the middle" of the results, quality-wise.
 The improved performance becomes visible when comparing [@fig:jssp_gantt_rs_med] with [@fig:jssp_gantt_1rs_med].
