@@ -71,7 +71,7 @@ At the same time, we already know that that there is a 10-20% difference between
 The standard deviation&nbsp;$sd$ of the solution quality also is always above 100&nbsp;time units of makespan.
 So why don't we try to make use of this variance and the high speed of solution creation?
 
-### Random Sampling Algorithm
+### Random Sampling Algorithm  {#sec:randomSamplingAlgo}
 
 #### The Algorithm
 

@@ -69,12 +69,12 @@ It proceeds as follows:
 
 1. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
 2. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
-3. Compute objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
+3. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
 4. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
 5. Repeat until the termination criterion is met:
     a. Apply the unary search operator to&nbsp;$\bestSoFar{\sespel}$ to get the slightly modified copy&nbsp;$\sespel'$ of it.
     b. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
-    c. Compute objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
+    c. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
     d. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$.
 6. Return best-so-far objective value and best solution to the user.
 
@@ -119,3 +119,53 @@ We already knew from [@tbl:hillClimbing1SwapJSSP] that&nbsp;`hc_1swap` converges
 After initial phases with quick progress, it stops making any further progress.
 With the exception of instance&nbsp;`la24`, there is much space between the runs of&nbsp;`rs` and&nbsp;`hc_1swap`.
 We can also see again that there is more variance in the end results of&nbsp;`hc_1swap` compared to those of&nbsp;`rs`, as they are spread wider in the vertical direction.
+
+### Hill Climbing with Restarts
+
+We now are in the same situation as with the&nbsp;`1rs` algorithm:
+There is some variance between the results and most of the "action" takes place in a short time compared to our total computational budget (1s vs. 3min).
+Back in [@sec:randomSamplingAlgo] we made use of this situation by simply repeating&nbsp;`1rs` until the computational budget was exhausted, which we called the `rs`&nbsp;algorithm.
+Now the situation is a bit different, however.
+`1rs`&nbsp;creates exactly one solution and is finished, whereas our hill climber does not actually finish.
+It keeps creating modified copies of the current best solution, only that these happen to not be better.
+The algorithm has converged into a *local optimum*.
+
+\text.block{definition}{localOptimum}{A *local optimum* is a point&nbsp;$\localOptimum{\sespel}$ in the search space which maps to a better candidate solution than any other points in its neighborhood.}
+
+\text.block{definition}{neighborhood}{The set of all points&nbsp;$\sespel'$ in the search space&nbsp;$\searchSpace$ that can be reached by an unary search operator&nbsp;`op` by applying it to an existing point&nbsp;$\sespel\in\searchSpace$ is called the *neighborhood* of&nbsp;$\sespel$.}
+
+Of course, our hill climber does not really know that it is trapped in a local optimum.
+However, we can guess it: If there has not been any improvement for many steps, then the current-best candidate solution is probably a local optimum.
+If that happens, we just restart at a new random point in the search space.
+Of course, we will remember the **best ever encountered** candidate solution over all restarts and return it to the user in the end.
+
+#### The Algorithm
+
+1. Set counter&nbsp;$C$ of unsuccessful search steps to&nbsp;$0$, initialize limit&nbsp;$L$ for the maximally allowed unsucessfuly search steps.
+2. Set the overall-best objective value&nbsp;$\bestSoFar{\bestSoFar{\obspel}}$ to infinity and the overall-best candidate solution&nbsp;$\bestSoFar{\bestSoFar{\solspel}}$ to `NULL`. 
+3. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
+4. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
+5. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
+6. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
+7. If $\bestSoFar{\obspel}<\bestSoFar{\bestSoFar{\obspel}}$, then set&nbsp;$\bestSoFar{\bestSoFar{\obspel}}$ to&nbsp;$\bestSoFar{\obspel}$ and store&nbsp;$\bestSoFar{\bestSoFar{\solspel}}=\repMap{\sespel}$.
+8. Repeat until the termination criterion is met:
+    a. Apply the unary search operator to&nbsp;$\bestSoFar{\sespel}$ to get the slightly modified copy&nbsp;$\sespel'$ of it.
+    b. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
+    c. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
+    d. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then
+        i. store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$,
+        ii. $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and
+        iii. set&nbsp;$C$ to&nbsp;$0$.
+        iv. If $\obspel'<\bestSoFar{\bestSoFar{\obspel}}$, then set&nbsp;$\bestSoFar{\bestSoFar{\obspel}}$ to&nbsp;$\obspel'$ and store&nbsp;$\bestSoFar{\bestSoFar{\solspel}}=\repMap{\sespel'}$.
+      otherwise
+        i. increment&nbsp;$C$ by&nbsp;$1$
+        ii. if $C\geq L$ then
+            A. Maybe: increase&nbsp;$L$ (see later).
+            B. Go back to step&nbsp;3.
+9. Return **best ever encountered**  objective value&nbsp;$\bestSoFar{\bestSoFar{\obspel}}$ and solution&nbsp;$\bestSoFar{\bestSoFar{\solspel}} to the user.
+
+\repo.listing{lst:HillClimberWithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts, which remembers the best-so-far solution and tries to find better solutions in its neighborhood but restarts if it seems to be trapped in a local optimum.}{java}{src/main/java/aitoa/algorithms/HillClimberWithRestarts.java}{}{relevant}
+
+Now this algorithm &ndash; implemented in [@lst:HillClimberWithRestarts] &ndash; is a bit more elaborate.
+Basically, we embedd the original hill climber into a loop.
+This hill climber will stop after a certain number of unsuccessful search steps, which then leads to a new round in the outer loop.
