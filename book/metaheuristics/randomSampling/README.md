@@ -82,17 +82,17 @@ In our corresponding Java implementation given in [@lst:RandomSampling], we ther
 
 The algorithm can be described as follows:
 
-1. set best-so-far objective value to infinity
-2. create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$
-3. map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
-4. compute objective value by invoking the objective function&nbsp;$z=\objf(\solspel)$.
-5. if&nbsp;$z$ is better than best-so-far-objective value, then
-    a. set best-so-far objective value to&nbsp;$z$
-    b. store&nbsp;$\solspel$ in a special variable and remember it
-6. if termination criterion is not met, return to point 1.
-7. return best-so-far objective value and best solution to the user
+1. Set best-so-far objective value to infinity.
+2. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
+3. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
+4. Compute objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
+5. If&nbsp;$\obspel$ is better than best-so-far-objective value, then
+    a. Set best-so-far objective value to&nbsp;$\obspel$.
+    b. Store&nbsp;$\solspel$ in a special variable and remember it.
+6. If termination criterion is not met, return to point&nbsp;1.
+7. Return best-so-far objective value and best solution to the user.
 
-In actual program code, points&nbsp;3 to&nbsp;5 can actually be encapsulate by a wrapper around the objective function.
+In actual program code, points&nbsp;3 to&nbsp;5 can be encapsulate by a wrapper around the objective function.
 This reduces a lot of potential programming mistakes and makes the code much shorter.
 This is what we did with the implementations of the black-box process interface `IBlackBoxProcess` given in [@lst:IBlackBoxProcess].
 

@@ -1,11 +1,11 @@
 ## Hill Climbing
 
-Our first algorithm, random sampling, is not a very efficient.
+Our first algorithm, random sampling, was not very efficient.
 It does not make any use of the information it "sees" during the optimization process.
 A search step consists of creating an entirel new, entirely random candidate solution.
 Every search step is thus independent of all prior steps.
 
-Local search algorithms offer an alternative.
+[Local search algorithms](http://en.wikipedia.org/wiki/Local_search_(optimization))&nbsp;[@HS2005SLSFAA; @WGOEB] offer an alternative.
 They remember the current best point&nbsp;$\bestSoFar{\sespel}$ in the search space&nbsp;$\searchSpace$.
 In every step, a local search algorithm investigates a point&nbsp;$\sespel$ similar to&nbsp;$\bestSoFar{\sespel}$.
 If it is better, it is accepted as the new best-so-far solution.
@@ -33,7 +33,7 @@ Such a&nbsp;`1swap` operator can be implemented as follows:
 1. Make a copy&nbsp;$\sespel'$ of&nbsp;$\sespel$
 2. Pick a random index&nbsp;$i$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
 3. Pick a random index&nbsp;$j$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
-4. If the values at indexes&nbsp;$i$ and&nbsp;$j$ in&nbsp;$\sespel'$ are the same, then go back to 3. (Swapping the same values makes no sense, since then the value of&nbsp;$\sespel'$ and&nbsp;$\sespel$ would be the same at the end, so also their mappings&nbsp;$\repMap(\sespel)$ and&nbsp;$\repMap(\sespel')$ would be the same, i.e., we would actually not make a "move".)
+4. If the values at indexes&nbsp;$i$ and&nbsp;$j$ in&nbsp;$\sespel'$ are the same, then go back to point&nbsp;3. (Swapping the same values makes no sense, since then the value of&nbsp;$\sespel'$ and&nbsp;$\sespel$ would be the same at the end, so also their mappings&nbsp;$\repMap(\sespel)$ and&nbsp;$\repMap(\sespel')$ would be the same, i.e., we would actually not make a "move".)
 5. Swap the values at indexes&nbsp;$i$ and&nbsp;$j$ in&nbsp;$\sespel'$.
 
 We implement this operator in [@lst:JSSPUnaryOperator1Swap].
@@ -59,3 +59,25 @@ This will happen most of the time.
 As soon as we have a good solution, the solutions similar to it tend to be worse.
 However, if we would have been at&nbsp;$\sespel'$ instead, an application of `1swap` could well have resulted in&nbsp;$\sespel$.
 Often, the chance to find a really good solution by iteratively sampling the neighborhoods of good solutions is higher than trying to randomly guessing them (as `rs` does) &nbsp; even if most of our samples are worse.
+
+### Hill Climbing Algorithm
+
+#### The Algorithm
+
+Hill Climbing&nbsp;[@RN2002AI; @WGOEB] is the simplest implementation of local search.
+It proceeds as follows:
+
+1. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
+2. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
+3. Compute objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
+4. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
+5. Repeat until the termination criterion is met:
+    a. Apply the unary search operator to&nbsp;$\bestSoFar{\sespel}$ to get the slightly modified copy&nbsp;$\sespel'$ of it.
+    b. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
+    c. Compute objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
+    d. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$.
+6. Return best-so-far objective value and best solution to the user.
+
+\repo.listing{lst:HillClimbing}{An excerpt of the implementation of the Hill Climbing algorithm, which remembers the best-so-far solution and tries to find better solutions in its neighborhood.}{java}{src/main/java/aitoa/algorithms/HillClimbing.java}{}{relevant}
+
+This algorithm is implemented in [@lst:HillClimbing].
