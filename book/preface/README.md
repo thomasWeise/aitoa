@@ -31,6 +31,8 @@ We sacrifice a formal and abstract structure with the goal to increase the acces
 In this book, we are using a lot of concrete examples written in the programming language [Java](http://en.wikipedia.org/wiki/Java_(programming_language)).
 These are published in the repository *[thomasWeise/aitoa-code](\repo.name)* on [GitHub](http://www.github.com) and also freely accessible.
 Often, we will just look at certain portions of the code.
+These excerpts may just be parts of a class, where we omit methods or member variables, or even just snippets from functions.
+Sometimes we may omit even some portions of the snippet and just describe them in a comment.
 However, each source code listing is accompanied by a *(src)* link in the caption linking to the current full version of the file in the GitHub repository.
 If you discover any error in any of the code examples, please [file an issue](http://github.com/\repo.name/issues).
 

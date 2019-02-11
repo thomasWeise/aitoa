@@ -322,12 +322,14 @@ Let us now compare the end results that our hill climbers can achieve using eith
 
 When comparing two setups which only differ in the unary operator, we find that in most cases, `nswap` performs better when applied without restarts (`hc_*`) or with restarts after increasing periods of time (`hcr_256+5%_*`).
 Indeed, all the best results we have obtained so far stem from `nswap` setups and the setups with best mean and median performance use `nswap` as well.
+When being restarted, the standard deviations of their results are similar to those with `1swap`, meaning that these setups are similarly reliable.
 Interestingly, for instance `la24`, the makespan of the best discovered solution is now only 1% longer than the lower bound (945 vs. 935).
 For instance `swv15`, however, there is still a 20% gap.
 
-The reason why `hcr_256_1swap` tends to be better than `hcr_256_nswap` while `hcr_256+5%_nswap` outperforms `hcr_256+5%_1swap` may be that the `nswap` operator needs longer to converge because half of its steps are bigger than those of `1swap`.
-A clue why this may be true is that the setups with `nswap` tend to converge later, both in terms of runtime med(t) and med(FEs).
-When being restarted, the standard deviations of their results are similar to those with `1swap`, meaning that these setups are similarly reliable.
+As can be seen when comparing the hill climbers without restart, the `nswap` operator needs longer to converge because half of its steps are bigger than those of `1swap`.
+It utilizes the causality in the search space a bit less.
+This may be the reason why `hcr_256_1swap` tends to be better than `hcr_256_nswap` while `hcr_256+5%_nswap` outperforms `hcr_256+5%_1swap` &nbsp; the restarts happen too early for `nswap`.
+The setups with `nswap` tend to converge later, both in terms of runtime med(t) and med(FEs).
 
 [@fig:jssp_progress_hc_1swap_nswap_rs_log] illustrates the progress of the hill climbers with the `1swap` and `nswap` operators.
 While there is quite an improvement when comparing the non-restarting algorithms, the difference between `hcr_256+5%_1swap` and `hcr_256+5%_nswap` does not look that big.
