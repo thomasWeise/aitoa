@@ -255,10 +255,10 @@ We define the `nswap` operator for the JSSP as follows and implement it in [@lst
 3. Store the job-id at index&nbsp;$i$ in the variable&nbsp;$f$ for holding the very first job, i.e., set&nbsp;$f=\arrayIndex{\sespel'}{i}$.
 4. Set the job-id variable&nbsp;$l$ for holding the last-swapped-job to&nbsp;$\arrayIndex{\sespel'}{i}$ as well.
 5. Repeat
-    a. Decide whether we should continue the loop *after* the current iteration (`TRUE`) or not (`FALSE`) with uniform probability and remember this decision in variable&nbsp;$n$.
+    a. Decide whether we should continue the loop *after* the current iteration (`TRUE`) or not (`FALSE`) with equal probability and remember this decision in variable&nbsp;$n$.
     b. Pick a random index&nbsp;$j$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
     c. If $l=\arrayIndex{\sespel'}{j}$, go back to point&nbsp;b.
-    d. If $f=\arrayIndex{\sespel}{j}$ *and* we will not do another iteration ($n=FALSE$), go back to point&nbsp;b.
+    d. If $f=\arrayIndex{\sespel}{j}$ *and* we will *not* do another iteration ($n=FALSE$), go back to point&nbsp;b.
     e. Store the job-id at index&nbsp;$j$ in the variable&nbsp;$l$.
     f. Copy the job-id at index&nbsp;$j$ to index&nbsp;$i$, i.e., set&nbsp;$\arrayIndex{\sespel'}{i}=\arrayIndex{\sespel'}{j}$.
     g. Set&nbsp;$i=j$.
@@ -266,23 +266,24 @@ We define the `nswap` operator for the JSSP as follows and implement it in [@lst
 7. Store the first-swapped job-id&nbsp;$f$ in&nbsp;$\arrayIndex{\sespel'}{i}$.
 8. Return the now modified copy&nbsp;$\sespel'$ of&nbsp;$\sespel$.
     
-The idea of this operator is that we will perform at least one iteration of the loop (point&nbsp;5).
-If we would do exactly one iteration, then we would pick two indices&nbsp;$i$ and&nbsp;$j$, then we will pick two indices where different job-ids are stored, as&nbsp;$l$ must be different from&nbsp;$f$ (point&nbsp;c and&nbsp;d).
-We would then would swap the jobs at these indices (points&nbsp;f, g, and&nbsp;7).
-So in case of exactly one iteration of the main loop, this operator behaves exactly the same as&nbsp;`1swap`.
-This takes place with a probability of&nbsp;0.5 (point&nbsp;a).
+The idea of this operator is that we will perform at least one iteration of the loop (*point&nbsp;5*).
+If we would do exactly one iteration, then we would pick two indices&nbsp;$i$ and&nbsp;$j$, then we will pick two indices where different job-ids are stored, as&nbsp;$l$ must be different from&nbsp;$f$ (*point&nbsp;c* and&nbsp;*d*).
+We would then would swap the jobs at these indices (*points&nbsp;f*, *g*, and&nbsp;*7*).
+So in the case of exactly one iteration of the main loop, this operator behaves exactly the same as&nbsp;`1swap`.
+This takes place with a probability of&nbsp;0.5 (*point&nbsp;a*).
 
-If we do two iterations, i.e., pick `TRUE` the first time we arrive at point&nbsp;a and `FALSE` the second time, then we swap three job ids-instead.
-Let us say we picked indices&nbsp;$\alpha$ at point&nbsp;2, $\beta$ at point&nbsp;b, and $\gamma$ when arriving the second time at&nbsp;$b$.
+If we do two iterations, i.e., pick `TRUE` the first time we arrive at *point&nbsp;a* and `FALSE` the second time, then we swap three job ids-instead.
+Let us say we picked indices&nbsp;$\alpha$ at *point&nbsp;2*, $\beta$ at *point&nbsp;b*, and&nbsp;$\gamma$ when arriving the second time at&nbsp;*b*.
 We will store the job-id originally stored at index&nbsp;$\beta$ at index&nbsp;$\alpha$, the job originally stored at index&nbsp;$\gamma$ at index&nbsp;$\beta$, and the job-id from index&nbsp;$\gamma$ to index&nbsp;$\alpha$.
-Condition&nbsp;c prevents index&nbsp;$\beta$ from referencing the same job-id as index&nbsp;$\alpha$ and index&nbsp;$\gamma$ from referencing the same job-id as what was originally stored at index&nbsp;$\beta$.
-Condition&nbsp;d only kicks in the last iteration and prevents&nbsp;$\gamma$ from referencing the original job-id at&nbsp;$\alpha$.
+*Condition&nbsp;c* prevents index&nbsp;$\beta$ from referencing the same job-id as index&nbsp;$\alpha$ and index&nbsp;$\gamma$ from referencing the same job-id as what was originally stored at index&nbsp;$\beta$.
+*Condition&nbsp;d* only applies in the last iteration and prevents&nbsp;$\gamma$ from referencing the original job-id at&nbsp;$\alpha$.
 
 This three-job swap will take place with probability $0.5*0.5=0.25$.
 Similarly, a four-job-swap will happen with half of that probability, and so on.
-In other words, we have something like a [Bernoulli process](http://en.wikipedia.org/wiki/Bernoulli_process), where we decide whether or not to do another iteration by flipping a fair coin.
+In other words, we have something like a [Bernoulli process](http://en.wikipedia.org/wiki/Bernoulli_process), where we decide whether or not to do another iteration by flipping a fair coin, where each choice has probability&nbsp;0.5.
 The number of iterations will therefore be [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution) with an expectation of two job swaps.
-Of course, we only have&nbsp;$\jsspMachines$ different job-ids, so this is only an approximation, but generally, this operator will most often apply small changes and sometimes bigger steps.
+Of course, we only have&nbsp;$\jsspMachines$ different job-ids in a finite-length array&nbsp;$\sespel'$, so this is only an approximation.
+Generally, this operator will most often apply small changes and sometimes bigger steps.
 The bigger the search step, the less likely will it be produced.
 The operator therefore can make use of the *causality* while &ndash; at least theoreticaly &ndash; being able to escape from any local optimum.
 
@@ -321,7 +322,12 @@ Let us now compare the end results that our hill climbers can achieve using eith
 
 When comparing two setups which only differ in the unary operator, we find that in most cases, `nswap` performs better when applied without restarts (`hc_*`) or with restarts after increasing periods of time (`hcr_256+5%_*`).
 Indeed, all the best results we have obtained so far stem from `nswap` setups and the setups with best mean and median performance use `nswap` as well.
+Interestingly, for instance `la24`, the makespan of the best discovered solution is now only 1% longer than the lower bound (945 vs. 935).
+For instance `swv15`, however, there is still a 20% gap.
+
 The reason why `hcr_256_1swap` tends to be better than `hcr_256_nswap` while `hcr_256+5%_nswap` outperforms `hcr_256+5%_1swap` may be that the `nswap` operator needs longer to converge because half of its steps are bigger than those of `1swap`.
+A clue why this may be true is that the setups with `nswap` tend to converge later, both in terms of runtime med(t) and med(FEs).
+When being restarted, the standard deviations of their results are similar to those with `1swap`, meaning that these setups are similarly reliable.
 
 [@fig:jssp_progress_hc_1swap_nswap_rs_log] illustrates the progress of the hill climbers with the `1swap` and `nswap` operators.
 While there is quite an improvement when comparing the non-restarting algorithms, the difference between `hcr_256+5%_1swap` and `hcr_256+5%_nswap` does not look that big.
