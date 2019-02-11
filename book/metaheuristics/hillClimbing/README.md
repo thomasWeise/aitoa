@@ -35,6 +35,7 @@ Such a&nbsp;`1swap` operator can be implemented as follows:
 3. Pick a random index&nbsp;$j$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
 4. If the values at indexes&nbsp;$i$ and&nbsp;$j$ in&nbsp;$\sespel'$ are the same, then go back to point&nbsp;3. (Swapping the same values makes no sense, since then the value of&nbsp;$\sespel'$ and&nbsp;$\sespel$ would be the same at the end, so also their mappings&nbsp;$\repMap(\sespel)$ and&nbsp;$\repMap(\sespel')$ would be the same, i.e., we would actually not make a "move".)
 5. Swap the values at indexes&nbsp;$i$ and&nbsp;$j$ in&nbsp;$\sespel'$.
+6. Return the now modified copy&nbsp;$\sespel'$ of&nbsp;$\sespel$.
 
 We implement this operator in [@lst:JSSPUnaryOperator1Swap].
 Notice that the operator is randomized, i.e., appling it twice to the same point in the search space will likely yield different results.
@@ -242,3 +243,45 @@ It would span&nbsp;$\searchSpace$ as its neighborhood and uniformly sample from 
 From this thought experiment we know that unary operators which indiscriminately sample from large neighborhoods are not very good ideas, as they are "too random."
 They also make less use of the causality of the search space, as they make large steps and their produced outputs are very different from their inputs.
 What we would like is an operator that often creates outputs very similar to its input (like `1swap`), but also from time to time samples points a bit farther away in the search space.
+
+#### Second Unary Search Operator for the JSSP
+
+We define the `nswap` operator for the JSSP as follows and implement it in [@JSSPUnaryOperatorNSwap]:
+
+\repo.listing{lst:JSSPUnaryOperatorNSwap}{An excerpt of the `nswap` operator for the JSSP, an implementation of the unary search operation interface [@lst:IUnarySearchOperator]. `nswap` can swap an arbitrary number of jobs in our encoding, while favoring small search steps.}{java}{src/main/java/aitoa/examples/jssp/JSSPUnaryOperatorNSwap.java}{}{relevant}
+
+1. Make a copy&nbsp;$\sespel'$ of&nbsp;$\sespel$
+2. Pick a random index&nbsp;$i$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
+3. Store the job-id at index&nbsp;$i$ in the variable&nbsp;$f$ for holding the very first job, i.e., set&nbsp;$f=\arrayIndex{\sespel'}{i}$.
+4. Set the job-id variable&nbsp;$l$ for holding the last-swapped-job to&nbsp;$\arrayIndex{\sespel'}{i}$ as well.
+5. Repeat
+    a. Decide whether we should continue the loop *after* the current iteration (`TRUE`) or not (`FALSE`) with uniform probability and remember this decision in variable&nbsp;$n$.
+    b. Pick a random index&nbsp;$j$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
+    c. If $l=\arrayIndex{\sespel'}{j}$, go back to point&nbsp;b.
+    d. If $f=\arrayIndex{\sespel}{j}$ *and* we will not do another iteration ($n=FALSE$), go back to point&nbsp;b.
+    e. Store the job-id at index&nbsp;$j$ in the variable&nbsp;$l$.
+    f. Copy the job-id at index&nbsp;$j$ to index&nbsp;$i$, i.e., set&nbsp;$\arrayIndex{\sespel'}{i}=\arrayIndex{\sespel'}{j}$.
+    g. Set&nbsp;$i=j$.
+6. If we should do another iteration ($n=TRUE$), go back to point&nbsp;5.
+7. Store the first-swapped job-id&nbsp;$f$ in&nbsp;$\arrayIndex{\sespel'}{i}$.
+8. Return the now modified copy&nbsp;$\sespel'$ of&nbsp;$\sespel$.
+    
+The idea of this operator is that we will perform at least one iteration of the loop (point&nbsp;5).
+If we would do exactly one iteration, then we would pick two indices&nbsp;$i$ and&nbsp;$j$, then we will pick two indices where different job-ids are stored, as $l$ must be different from $f$ (point&nbsp;c and&nbsp;d).
+We would then would swap the jobs at these indices (points&nbsp;f, g, and&nbsp;7).
+So in case of exactly one iteration of the main loop, this operator behaves exactly the same as&nbsp;`1swap`.
+This takes place with a probability of&nbsp;0.5 (point&nbsp;a).
+
+If we do two iterations, i.e., pick `TRUE` the first time we arrive at point&nbsp;a and `FALSE` the second time, then we swap three job ids-instead.
+Let us say we picked indices&nbsp;$\alpha$ at point&nbsp;2, $\beta$ at point&nbsp;b, and $\gamma$ when arriving the second time at&nbsp;$b$.
+We will store the job-id originally stored at index&nbsp;$\beta$ at index&nbsp;$\alpha$, the job originally stored at index&nbsp;$\gamma$ at index&nbsp;$\beta$, and the job-id from index&nbsp;$\gamma$ to index&nbsp;$\alpha$.
+Condition&nbsp;c prevents index&nbsp;$\beta$ from referencing the same job-id as index&nbsp;$\alpha$ and index&nbsp;$\gamma$ from referencing the same job-id as what was originally stored at index&nbsp;$\beta$.
+Condition&nbsp;d only kicks in the last iteration and prevents&nbsp;$\gamma$ from referencing the original job-id at&nbsp;$\alpha$.
+
+This three-job swap will take place with probability $0.5*0.5=0.25$.
+Similarly, a four-job-swap will happen with half of that probability, and so on.
+In other words, we have something like a [Bernoulli process](http://en.wikipedia.org/wiki/Bernoulli_process), where we decide whether or not to do another iteration by flipping a fair coin.
+The number of iterations will therefore be [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution) with an expectation of two job swaps.
+Of course, we only have&nbsp;$\jsspMachines$ different job-ids, so this is only an approximation, but generally, this operator will most often apply small changes and sometimes bigger steps.
+The bigger the search step, the less likely will it be produced.
+The operator therefore can make use of the *causality* while &ndash; at least theoreticaly &ndash; being able to escape from any local optimum.
