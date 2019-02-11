@@ -30,7 +30,7 @@ The sequence in which these job IDs occur then defines the order in which the jo
 One idea to create a slightly modified copy of such a point&nbsp;$\sespel$ in the search space would be to simply swap two of the jobs in it.
 Such a&nbsp;`1swap` operator can be implemented as follows:
 
-1. Make a copy&nbsp;$\sespel'$ of&nbsp;$\sespel$
+1. Make a copy&nbsp;$\sespel'$ of the input point&nbsp;$\sespel$ from the search space.
 2. Pick a random index&nbsp;$i$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
 3. Pick a random index&nbsp;$j$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
 4. If the values at indexes&nbsp;$i$ and&nbsp;$j$ in&nbsp;$\sespel'$ are the same, then go back to point&nbsp;3. (Swapping the same values makes no sense, since then the value of&nbsp;$\sespel'$ and&nbsp;$\sespel$ would be the same at the end, so also their mappings&nbsp;$\repMap(\sespel)$ and&nbsp;$\repMap(\sespel')$ would be the same, i.e., we would actually not make a "move".)
@@ -246,11 +246,11 @@ What we would like is an operator that often creates outputs very similar to its
 
 #### Second Unary Search Operator for the JSSP
 
-We define the `nswap` operator for the JSSP as follows and implement it in [@JSSPUnaryOperatorNSwap]:
+We define the `nswap` operator for the JSSP as follows and implement it in [@lst:JSSPUnaryOperatorNSwap]:
 
 \repo.listing{lst:JSSPUnaryOperatorNSwap}{An excerpt of the `nswap` operator for the JSSP, an implementation of the unary search operation interface [@lst:IUnarySearchOperator]. `nswap` can swap an arbitrary number of jobs in our encoding, while favoring small search steps.}{java}{src/main/java/aitoa/examples/jssp/JSSPUnaryOperatorNSwap.java}{}{relevant}
 
-1. Make a copy&nbsp;$\sespel'$ of&nbsp;$\sespel$
+1. Make a copy&nbsp;$\sespel'$ of the input point&nbsp;$\sespel$ from the search space.
 2. Pick a random index&nbsp;$i$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
 3. Store the job-id at index&nbsp;$i$ in the variable&nbsp;$f$ for holding the very first job, i.e., set&nbsp;$f=\arrayIndex{\sespel'}{i}$.
 4. Set the job-id variable&nbsp;$l$ for holding the last-swapped-job to&nbsp;$\arrayIndex{\sespel'}{i}$ as well.
@@ -267,7 +267,7 @@ We define the `nswap` operator for the JSSP as follows and implement it in [@JSS
 8. Return the now modified copy&nbsp;$\sespel'$ of&nbsp;$\sespel$.
     
 The idea of this operator is that we will perform at least one iteration of the loop (point&nbsp;5).
-If we would do exactly one iteration, then we would pick two indices&nbsp;$i$ and&nbsp;$j$, then we will pick two indices where different job-ids are stored, as $l$ must be different from $f$ (point&nbsp;c and&nbsp;d).
+If we would do exactly one iteration, then we would pick two indices&nbsp;$i$ and&nbsp;$j$, then we will pick two indices where different job-ids are stored, as&nbsp;$l$ must be different from&nbsp;$f$ (point&nbsp;c and&nbsp;d).
 We would then would swap the jobs at these indices (points&nbsp;f, g, and&nbsp;7).
 So in case of exactly one iteration of the main loop, this operator behaves exactly the same as&nbsp;`1swap`.
 This takes place with a probability of&nbsp;0.5 (point&nbsp;a).
@@ -285,3 +285,54 @@ The number of iterations will therefore be [geometrically distributed](http://en
 Of course, we only have&nbsp;$\jsspMachines$ different job-ids, so this is only an approximation, but generally, this operator will most often apply small changes and sometimes bigger steps.
 The bigger the search step, the less likely will it be produced.
 The operator therefore can make use of the *causality* while &ndash; at least theoreticaly &ndash; being able to escape from any local optimum.
+
+#### Results on the JSSP
+
+Let us now compare the end results that our hill climbers can achieve using either the `1swap` or the new `nswap` operator after three minutes of runtime on my little laptop in [@tbl:hillClimbingNSwapRSJSSP].
+
+|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
+|`abz7`|656|`hc_1swap`|717|800|798|28|**0**s|16978|
+|||`hc_nswap`|724|757|757|17|30s|8145596|
+|||`hcr_256_1swap`|738|765|766|7|82s|22881557|
+|||`hcr_256_nswap`|756|774|774|**6**|101s|27375920|
+|||`hcr_256+5%_1swap`|723|742|743|7|21s|5681591|
+|||`hcr_256+5%_nswap`|**707**|**733**|**734**|7|64s|17293038|
+|`la24`|935|`hc_1swap`|999|1095|1086|56|**0**s|6612|
+|||`hc_nswap`|**945**|1017|1015|29|21s|11123744|
+|||`hcr_256_1swap`|975|1001|1002|**6**|91s|49588742|
+|||`hcr_256_nswap`|986|1008|1008|7|100s|52711888|
+|||`hcr_256+5%_1swap`|970|997|998|9|6s|3470368|
+|||`hcr_256+5%_nswap`|**945**|**981**|**984**|9|57s|29246097|
+|`swv15`|2885|`hc_1swap`|3837|4108|4108|137|**1**s|104598|
+|||`hc_nswap`|**3599**|3867|3859|113|70s|11559667|
+|||`hcr_256_1swap`|4069|4173|4177|32|92s|15351798|
+|||`hcr_256_nswap`|4118|4208|4214|**29**|95s|15746919|
+|||`hcr_256+5%_1swap`|3701|3850|3857|40|60s|9874102|
+|||`hcr_256+5%_nswap`|3645|**3804**|**3811**|44|91s|14907737|
+|`yn4`|929|`hc_1swap`|1109|1222|1220|48|**0**s|31789|
+|||`hc_nswap`|1087|1160|1156|33|63s|13111115|
+|||`hcr_256_1swap`|1153|1182|1184|12|90s|18843991|
+|||`hcr_256_nswap`|1163|1198|1199|**11**|91s|18700214|
+|||`hcr_256+5%_1swap`|1095|1129|1130|14|22s|4676669|
+|||`hcr_256+5%_nswap`|**1081**|**1117**|**1119**|14|55s|11299461|
+
+: The results of the hill climbers `hc_1swap` and `hc_nswap` with and without restarts. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hillClimbingNSwapRSJSSP}
+
+When comparing two setups which only differ in the unary operator, we find that in most cases, `nswap` performs better when applied without restarts (`hc_*`) or with restarts after increasing periods of time (`hcr_256+5%_*`).
+Indeed, all the best results we have obtained so far stem from `nswap` setups and the setups with best mean and median performance use `nswap` as well.
+The reason why `hcr_256_1swap` tends to be better than `hcr_256_nswap` while `hcr_256+5%_nswap` outperforms `hcr_256+5%_1swap` may be that the `nswap` operator needs longer to converge because half of its steps are bigger than those of `1swap`.
+
+[@fig:jssp_progress_hc_1swap_nswap_rs_log] illustrates the progress of the hill climbers with the `1swap` and `nswap` operators.
+While there is quite an improvement when comparing the non-restarting algorithms, the difference between `hcr_256+5%_1swap` and `hcr_256+5%_nswap` does not look that big.
+From [@tbl:hillClimbingNSwapRSJSSP] we know that the `nswap` operator here can squeeze out around 1% of solution quality.
+The Gantt charts of the median solutions obtained with `hcr_256+5%_nswap` setup, illustrated in [@fig:jssp_gantt_hcr_256_5_nswap_med], do thus look similar to those obtained with `hcr_256+5%_1swap` in [@fig:jssp_gantt_hcr_256_5_1swap_med], although there are some slight differences.
+Although 1% savings in makespan does not look much, but in a practical application, even a small improvement can mean a lot of benefit.
+
+Both restarts and the idea of allowing bigger search steps with small probability are intented to decrease the chance of premature convergence.
+We have seen that they work separately and in this case, we were lucky that they also work hand-in-hand.
+This is not necessarily always the case, in optimization sometimes two helpful measures combined may lead to worse results, as we can see when comparing `hcr_256_1swap` with `hcr_256_nswap`.
+
+![The progress of the hill climbers (without and with restarts) with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hc_1swap_nswap_rs_log.svgz}){#fig:jssp_progress_hc_1swap_nswap_rs_log width=84%}
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`hcr_256+5%_nswap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hcr_256_5_nswap_med.svgz}){#fig:jssp_gantt_hcr_256_5_nswap_med width=84%}
