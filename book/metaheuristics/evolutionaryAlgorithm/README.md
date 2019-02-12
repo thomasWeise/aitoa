@@ -33,7 +33,7 @@ The algorithm works as follows:
     iv. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\objspel}=\objf(\solspel)$.
 5. Return the candidate solution corresponding to the best record in&nbsp;$P$ to the user.
 
-\repo.listing{lst:EAwithoutCrossover}{An excerpt of the implementation of the Evolutionary Algorithm algorithm without crossover.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,aitoa-code}
+\repo.listing{lst:EAwithoutCrossover}{An excerpt of the implementation of the Evolutionary Algorithm algorithm without crossover.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,withoutcrossover}
 
 This algorithm is implemented in [@lst:EAwithoutCrossover].
 Basically, it starts out by creating&nbsp;$\mu+\lambda$ random candidate solutions.
