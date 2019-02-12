@@ -27,8 +27,14 @@ citecolor: blue!50!black
 urlcolor: blue!50!black
 toccolor: black
 
+# hold floating objects in the same section and sub-section
 header-includes:
-- \usepackage[section,above,below]{placeins}
+- |
+  ```{=latex}
+  \usepackage[section,above,below]{placeins}
+  \let\Oldsubsection\subsection
+  \renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+  ```
 
 # pandoc-crossref setup
 cref: true
