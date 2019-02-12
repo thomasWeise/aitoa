@@ -58,9 +58,9 @@ The actual implementation then makes use of another simple interface that provid
 
 ### Example: Job Shop Scheduling
 
+What we need to provide for our JSSP example are implementations of our `ISpace` interface for both the search and the solution space, which are given in [@lst:JSSPSearchSpace] and [@lst:JSSPSolutionSpace], respectively.
+These classes implement the methods that an `IBlackBoxProcess` implementation needs under the hood to, e.g., copy and store candidate solutions and points in the search space.
+
 \repo.listing{lst:JSSPSearchSpace}{An excerpt of the implementation of our `ISpace` interface for the search space for the JSSP problem.}{java}{src/main/java/aitoa/examples/jssp/JSSPSearchSpace.java}{}{relevant}
 
 \repo.listing{lst:JSSPSolutionSpace}{An excerpt of the implementation of the `ISpace` interface for the solution space for the JSSP problem.}{java}{src/main/java/aitoa/examples/jssp/JSSPSolutionSpace.java}{}{relevant}
-
-What we need to provide for our JSSP example are implementations of our `ISpace` interface for both the search and the solution space, which are given in [@lst:JSSPSearchSpace] and [@lst:JSSPSolutionSpace], respectively.
-These implementations provide the methods that an `IBlackBoxProcess` implementation needs under the hood to, e.g., copy and store candidate solutions and points in the search space.
