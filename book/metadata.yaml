@@ -27,6 +27,9 @@ citecolor: blue!50!black
 urlcolor: blue!50!black
 toccolor: black
 
+header-includes:
+- \usepackage[section,above,below]{placeins}
+
 # pandoc-crossref setup
 cref: true
 chapters: true

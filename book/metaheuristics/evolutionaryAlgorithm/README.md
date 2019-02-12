@@ -11,9 +11,9 @@ Now we will look at a third concept to prevent premature convergence: Instead of
 Today, there exists a wide variant of Evolutionary Algorithms (EAs)&nbsp;[@WGOEB; @BFM1997EA; @G1989GA; @DJ2006ECAUA; @M1996GADSEP].
 We will begin with a very simple, yet efficient variant: the $(\mu+\lambda)$&nbsp;EA.[^EA:no:recombination]
 This algorithm always remembers the best&nbsp;$\mu\in\naturalNumbersO$ points in the search space found so far.
-In each step, it derives&nbsp;$\lambda\in\naturalNumbersO$ new points from them (by applying the unary search operator[^EA:no:recombination]).
+In each step, it derives&nbsp;$\lambda\in\naturalNumbersO$ new points from them by applying the unary search operator.
+The algorithm works as follows:
 
 [^EA:no:recombination]: For now, we will discuss them in a form without recombination. Wait for the recombination operator until [@sec:evolutionaryAlgorithmWithRecombination].
-
 
 ### Evolutionary Algorithm with Recombination {#sec:evolutionaryAlgorithmWithRecombination}
