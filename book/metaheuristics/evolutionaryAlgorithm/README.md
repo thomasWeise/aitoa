@@ -100,10 +100,31 @@ The results are given in [@tbl:eaNoCrHCJSSP], together with those of our best hi
 
 : The results of the evolutionary algorithms without crossover in comparision to the best hill climber with restarts setup `hcr_256+5%_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:eaNoCrHCJSSP}
 
+[@tbl:eaNoCrHCJSSP] shows us that we can improve the best, mean, and median solution quality that we can get within three minutes of runtime by at least three percent when using our EA setups instead of the hill climber.
+The exception is case `la24`, where the hill climber already came close to the lower bound of the makespan.
+Here, the best solution encountered now has a makespan which is only 0.3% longer than what is theoretically possible.
+Nethertheless, we find quite a tangible improvement in case `swv15`.
+
+The bigger setting 4096 for&nbsp;$\mu$ and&nbsp;$\lambda$ tends to work better, except for instance&nbsp;`swv15`, where 2048 gives us better results.
+It is quite common in optimization that different problem instances may require different setups to achieve the best performance.
+The`nswap` operator again works better than `1swap`.
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`ea4096_nswap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_ea4096_nswap_med.svgz}){#fig:jssp_gantt_ea4096_nswap_med width=84%}
+
+![The progress of the&nbsp;`ea4096_nswap`, `ea2048_nswap`, and&nbsp;`hcr_256+5%_nswap` algorithms over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_ea_nocr_hc_log.svgz}){#fig:jssp_progress_ea_nocr_hc_log width=84%}
+
+The Gantt charts of the median solutions of `ea4096_nswap` are illustrated in [@fig:jssp_gantt_ea4096_nswap_med].
+More interesting are the progress diagrams of `ea4096_nswap`, `ea2048_nswap`, and&nbsp;`hcr_256+5%_nswap` in [@fig:jssp_progress_ea_nocr_hc_log].
+Here we find big visual differences between the way the EAs and hill climbers proceed.
+The EAs spend the first 100ms to discover some basins of attraction of local optima before speeding up.
+The larger the population, the longer it takes them until this happens.
+It is interesting to notice that the two problems where the EAs visually outperform the hill climber the most, `swv15` and `yn4`, are also those with the largest search spaces (see [@tbl:jsspSearchSpaceTable]).
+`la24`, however, which already can "almost be solved" by the hill climber and where there are the smallest differences in perfomance, is the smallest instance.
+The population used by the EA seemingly guards against premature convergence and allows it to keep progressing for a longer time.
 
 #### Exploration versus Exploitation
 
-Why and how does this EA work?
+Naturally, we may ask why the population is helpful in the search.
 First of all, we can consider it as a "generalized" version of the Hill Climber.
 If we would set&nbsp;$\mu=1$ and&nbsp;$\lambda=1$, then we would always remember the best solution we had so far and, in each generation, derive one new solution from it.
 This is the hill climber.
