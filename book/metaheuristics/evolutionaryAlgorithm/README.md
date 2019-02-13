@@ -262,9 +262,69 @@ For the non-zero crossover rates, we append $cr*100$ to the setup name, i.e., `e
 
 : The results of the Evolutionary Algorithms with crossover rates $0$, $0.05$, and $0.3$. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:eaCrHCJSSP}
 
-The results in [@tbl:eaCrHCJSSP] show that a moderate crossover rate of 0.05 can indeed improve our algorithm's performance a bit.
+The results in [@tbl:eaCrHCJSSP] show that a moderate crossover rate of 0.05 can indeed improve our algorithm's performance &ndash; a bit.
 Only for the JSSP instance `swv15`, setup `ea2048_nswap` without crossover remains best.
+
 By the way: It is very important to *always* test the $cr=0$ rate!
 Only by doing this, we can find whether our binary operator is designed properly.
 It is a common fallacy to assume that an operator which we have designed to combine good characteristics from different solutions *will actually do that*.
 If the algorithm setups with $cr=0$ would be better than those that use the binary operator, it is a clear indication that we are doing something wrong.
+So we need to carefully analyze whether the small improvements that our binary operator can provide are actually *significant*.
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`ea4096_nswap_5` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_ea4096_nswap_5_med.svgz}){#fig:jssp_gantt_ea4096_nswap_5_med width=84%}
+
+![The progress of the&nbsp;`ea4096_nswap` setup without binary operator compared to those of `ea4096_nswap_5` and&nbsp;`ea4096_nswap_30`, which apply the binary operator in 5% and 30% of thereproduction steps, over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_ea_cr_log.svgz}){#fig:jssp_progress_ea_cr_log width=84%}
+
+Indeed, if we look at the progress of the setups `ea4096_nswap`, `ea4096_nswap_5`, and `ea4096_nswap_30` over time (illustrated in [@fig:jssp_progress_ea_cr_log]), we find that they look quite similar.
+Also the shedules of median quality obtained by `ea4096_nswap_5` and plotted in [@fig:jssp_gantt_ea4096_nswap_5_med] do not look very different from those of `ea4096_nswap` shown in [@fig:jssp_gantt_ea4096_nswap_med].
+Of course, applying an operator only 5% of the time, which here seems to be the better choice, will probably not change the algorithm behavior very much.
+Furthermore, in instance `la24`, we are already very close to lower bound defining the best possible solution quality that can theoretically be reached.
+
+### Testing for Significance
+
+All in all, the changes in both [@tbl:eaCrHCJSSP] and [@fig:jssp_progress_ea_cr_log] achieved by introducing recombination in the EA seem to not be very big.
+This could either mean that they are an artifact of the randomness in the algorithm *or*, well, that there are improvements but they are small.
+
+In order to understand the first situation, consider the following thought experiment.
+Assume you have a completely unbiased, uniform source of true random real numbers from the interval $[0,1)$.
+You draw 500 such numbers, i.e., have a list&nbsp;$A$ containing 500 numbers, each from $[0,1)$.
+Now you repeat the experiment and get a list&nbsp;$B$.
+Since the numbers stem from a random source, we can expect that $A\neq B$.
+If we compute the medians&nbsp;$A$ and&nbsp;$B$, they are likely to be different as well.
+Actually, I just did exactly this in the `R` programming language and got `median(A)=0.5101432` and `median(B)=0.5329007`.
+Does this mean that the generator producing the numbers in&nbsp;$A$ creates somehow smaller numbers than the generator from which the numbers in&nbsp;$B$ stem?
+Obviously not, because we sampled the numbers from the same source.
+Also, every time I would repeat this experiment, I would get different results.
+
+Now, our EAs are randomized as well.
+On `yn4`, setup `ea4096_nswap_5` has a median end result quality of 1058, while `ea4096_nswap` (without binary operator) achieves 1067, a difference of 0.8%.
+If our binary operator would have no impact whatsoever, we could theoretically still this results or any other from [@tbl:eaCrHCJSSP], just because of the randomness in the algorithms.
+It is simply not possible to decide, without further investigation, whether results and algorithm behaviors that overlap as much as those in [@fig:jssp_progress_ea_cr_log] are actually different or not.
+The "further investigation" which allows us to make this decision is called [significance test](http://en.wikipedia.org/wiki/Statistical_hypothesis_testing).
+
+In short, a test as we use it here is a statistical procedure which starts with the assumption that the two lists&nbsp;$A$ and&nbsp;$B$ stem from the same source (called "distribution").
+It then tries to compute how likely it is, under this assumption, that we would see differences as big as those that we have in the data (e.g., the medians 1058 and 1067).
+The resulting probability is called&nbsp;$p$-value.
+If&nbsp;$p$ is very small, below a reasonable theshold&nbsp;$\alpha$, say $\alpha=2\%$, then this means that is very unlikely that we would see what we saw if&nbsp;$A$ and&nbsp;$B$ stem from the same distribution.
+In our case, a small&nbsp;$p$-value means that the observed differences in performance of the algorithm setups are probably "real".
+Of course, they could still be an artifact of the randomness, but the chance for that would be small (e.g., smaller than 2%).
+If&nbsp;$p$ is big, on the other hand, maybe around 30% or more, then we cannot be confident that our binary operator is useful, as claiming this would be wrong with a chance of at least&nbsp;30%.
+
+Since we know very little about the actual distribution of the end results of our algorithms, we apply a [non-parametric test](http://en.wikipedia.org/wiki/Nonparametric_statistics) to investigate whether the binary operator provides a significant improvement.
+In order to see whether two different setups also behave differently, we compare their two sets of 101 end results each.
+For this purpose, the Wilcoxon rank sum test with continuity correction (also called [Mann-Whitney U test](http://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test))&nbsp;[@B1972CCSURS; @SC1988NSFTBS; @HW1973NSM; @MW1947OATOWOOTRVISLTTO] is suitable.[^MannWhitneyUNotHere]
+We now compare the end results of the two setups `ea4096_nswap` and `ea4096_nswap_5`:
+
+[^MannWhitneyUNotHere]: Discussing how this test works exactly goes beyond the scope of this book. You can find it implemented in many tools, e.g., as function `wilcox.test` in the `R` programming language, where you can simply feed it with two lists of numbers and it returns the $p$-value.
+
+| &nbsp;
+| On instance `abz7`, we obtain 0.0016 as $p$-value.
+| On instance `la24`, we obtain 0.3275 as $p$-value.
+| On instance `swv15`, we obtain 0.8757 as $p$-value.
+| On instance `yn4`, we obtain 0.0002 as $p$-value.
+
+We obtain two very small $p$-values (on `abz7` and `yn4`), indicating that our binary operator `sequence` leads to real, significant improvements on these instances.
+The $p$-values bigger than 0.3 on the other two instances indicate that it does not make an actual difference there.
+
+In summary, although it was not as beneficial as one would have hoped, using the binary operator can be considered as helpful in our case.
+Of course, we just tested *one* binary operator on only *four* problem instances &ndash; in any application scenario, we would do more experiments with more settings.
