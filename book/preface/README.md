@@ -19,12 +19,7 @@ We sacrifice a formal and abstract structure with the goal to increase the acces
                Hefei University},
   address   = {Hefei, Anhui, China},
   url       = {http://thomasweise.github.io/aitoa/aitoa.pdf},
-  edition   = {\meta.date},
-  note      = {This book is regularly updated and the current
-               book version is {\meta.commit}
-               based on source code version
-               {\repo.commit}
-               from {\meta.time}.}
+  edition   = {\meta.date}
 }
 ```
 
