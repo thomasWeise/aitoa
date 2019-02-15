@@ -29,8 +29,10 @@ It can easily be interpreted by the user and we have defined a suitable objectiv
 Yet, it is not that clear how we can efficiently create such solutions let alone how to *search* in the space of Gantt charts.
 What we would like to have is a *search space*&nbsp;$\searchSpace$, which can represent the possible candidate solutions of the problem in a more machine-tangible, algorithm-friendly way.
 
-Furthermore, this space also contains a lot us uninteresting candidate solutions, as we can always add useless idle time to an existing Gantt chart and the resulting (longer) chart would still be a valid solution (although one which will definitely be inferior of what we had before).
+Furthermore, this space also contains a lot of uninteresting candidate solutions, as we can always add useless idle time to an existing Gantt chart and the resulting (longer) chart would still be a valid solution (although one which will definitely be inferior of what we had before).
 If we would design a compact and efficient search space&nbsp;$\searchSpace$ more suitable for our problem, the representation mapping&nbsp;$\repMap$ should thus probably not be surjective, as we then could leave unaccessible as many of the Gantt charts with unnecessary delays as possible.
+
+#### Idea: 1-dimensional Encoding
 
 One idea is to encode the two-dimensional array structure&nbsp;$\solutionSpace$ in a simple linear string of integer numbers&nbsp;$\searchSpace$.
 The corresponding representation mapping can best be described by an example.
@@ -87,49 +89,56 @@ In [@lst:JSSPRepresentationMapping], we illustrate how such a mapping can be imp
 It basically is a function translating an instance of `int[]` to `JSSPCandidateSolution`.
 This is done by keeping track of time that has passed for each machine and each job, as well as by remembering the next sub-job for each job and the position in the schedule of each machine.
 
+#### Advantages of a very simple Encoding
+
 What did we gain by such a mapping?
-Well, we now have a very simple data structure&nbsp;$\searchSpace$ to represent our candidate solutions.
+
+We now have a very simple data structure&nbsp;$\searchSpace$ to represent our candidate solutions.
 We have very simple rules for validating a point&nbsp;$\sespel$ in the search space:
 If it contains the numbers&nbsp;$0\dots (\jsspJobs-1)$ each exactly&nbsp;$\jsspMachines$ times, it represents a valid candidate solution.
-The corresponding candidate solution will never violate any constraint, as the mapping&nbsp;$\repMap$ will ensure that the order of the sub-jobs per job is always observed and each machine will process at most one job at a time.
-We now have a basis to indirectly create and modify candidate solutions by sampling points from the search space and moving to similar points, as we will see in the following chapters.
+The candidate solution corresponding to a valid point from the search space will always be valid, as the mapping&nbsp;$\repMap$ will ensure that the order of the sub-jobs per job is always observed and each machine will process at most one job at a time.
 
 It can also be see that we could modify our representation mapping&nbsp;$\repMap$ to adapt to more complicated and constraint versions of the JSSP:
-If, for instance, it would take a job- and machine-dependent time requirement for carry a job from one machine to another, we could facilitate this by adding it to the next starting of the job.
+If, for instance, it would take a job- and machine-dependent time requirement for carrying a job from one machine to another, we could facilitate this by adding it to the next starting of the job.
 If there was a job-dependent setup time for each machine, which could be different if job&nbsp;1 follows job&nbsp;0 instead of job&nbsp;2, then this could be facilitated easily as well.
+If our sub-jobs would be assigned to "machine types" instead of "machines" and there could be more than one machine per machine type, then the representation mapping could assign the sub-jobs to the next machine of their type which becomes idle.
 Many such different problem flavors can now be reduced of investigating the same space&nbsp;$\searchSpace$ using the same optimization algorithms, just with different representation mappings&nbsp;$\repMap$ and/or objective functions&nbsp;$\objf$.
+Additionally, it became very easy to indirectly create and modify candidate solutions by sampling points from the search space and moving to similar points, as we will see in the following chapters.
 
-By using&nbsp;$\searchSpace$, we furthermore get a very clear idea about the size and structure of set of possible solutions.
+#### Size of the Search Space
+
+It is rather easy to compute the size&nbsp;$\left|\searchSpace\right|$ of our proposed &nbsp;$\searchSpace$.
+We do not need to make any assumptions regarding "no useless waiting time", as in [@sec:solutionSpace:size], since this is not possible by default.
 Each element&nbsp;$\sespel\in\searchSpace$ is a [permutation of a multiset](http://en.wikipedia.org/wiki/Permutation#Permutations_of_multisets) where each of the&nbsp;$\jsspJobs$ elements occurs exactly&nbsp;$\jsspMachines$ times.
 This means that the size of the search space can be computed as given in [@eq:jssp_search_space_size].
 
 $$ \left|\searchSpace\right| = \frac{\left(\jsspMachines*\jsspJobs\right)!}{ \left(\jsspMachines!\right)^{\jsspJobs} } $$ {#eq:jssp_search_space_size}
 
-|name|$\jsspJobs$|$\jsspMachines$|$\left|\searchSpace\right|$|
+|name|$\jsspJobs$|$\jsspMachines$|$\\left|\\solutionSpace\\right|$|$\left|\searchSpace\right|$|
 |:--|--:|--:|--:|
-||3|2|90
-||3|3|1'680
-||3|4|34'650
-||3|5|756'756
-||4|2|2'520
-||4|3|369'600
-||4|4|63'063'000
-demo|4|5|11'732'745'024
-||5|2|113'400
-||5|3|168'168'000
-||5|4|305'540'235'000
-||5|5|623'360'743'125'120
-la24|15|10|$\approx$ 2.293*10^164^
-abz7|20|15|$\approx$ 1.432*10^372^
-swv15|50|10|$\approx$ 1.254*10^806^
-yn4|20|20|$\approx$ 1.213*10^501^
+||3|2|36|90
+||3|3|216|1'680
+||3|4|1'296|34'650
+||3|5|7'776|756'756
+||4|2|576|2'520
+||4|3|13'824|369'600
+||4|4|331'776|63'063'000
+||5|2|14'400|113'400
+||5|3|1'728'000|168'168'000
+||5|4|207'360'000|305'540'235'000
+||5|5|24'883'200'000|623'360'743'125'120
+demo|4|5|7'962'624|11'732'745'024
+la24|15|10|$\approx$ 1.462*10^121^|$\approx$ 2.293*10^164^
+abz7|20|15|$\approx$ 6.193*10^275^|$\approx$ 1.432*10^372^
+yn4|20|20|$\approx$ 5.278*10^367^|$\approx$ 1.213*10^501^
+swv15|50|10|$\approx$ 6.772*10^644^|$\approx$ 1.254*10^806^
 
-: The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth]) {#tbl:jsspSearchSpaceTable}
+: The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth] and with the size&nbsp;$\\left|\\solutionSpace\\right|$ of the solution space) {#tbl:jsspSearchSpaceTable}
 
 We give some example values for this search space size in [@tbl:jsspSearchSpaceTable].
 From the table, we can immediately see that the number of points in the search space grows very quickly with both the number of jobs&nbsp;$\jsspJobs$ and the number of machines&nbsp;$\jsspMachines$ of an JSSP instance&nbsp;$\instance$.
 
-For our `demo` JSSP instance with&nbsp;$\jsspJobs=4$ jobs and&nbsp;$\jsspMachines=5$ machines, we already have about 12 billion different points in the search space.
+For our `demo` JSSP instance with&nbsp;$\jsspJobs=4$ jobs and&nbsp;$\jsspMachines=5$ machines, we already have about 12&nbsp;billion different points in the search space and 7&nbsp;million possible, non-wasteful candidate solutions.
 Of course, there is some redundancy, as our mapping is not [injective](http://en.wikipedia.org/wiki/Injective_function):
 If we would exchange the first three numbers in the example string in [@fig:jssp_mapping_demo], we would obtain the same Gantt chart, as jobs&nbsp;0, 1, and&nbsp;2 start at different machines.
 Nevertheless, `demo` may already be among the largest instances that we could solve in reasonable time by simply exhaustively enumerating all possible solutions with the computers available today.

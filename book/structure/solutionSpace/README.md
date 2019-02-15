@@ -20,6 +20,8 @@ What would be a candidate solution to a JSSP instance as defined in [@sec:jsspIn
 Recall from [@sec:jsspExample] that our goal is to complete the jobs, i.e., the production tasks, as soon as possible.
 Hence, a candidate solution should tell us what to do, i.e., how to process the jobs on the machines.
 
+#### Idea: Gantt Chart
+
 This is basically what a [Gantt chart](http://en.wikipedia.org/wiki/Gantt_chart) is about, as illustrated in [@fig:gantt_demo_without_makespan].
 A Gantt chart defines what each of our&nbsp;$\jsspMachines$ machines has to do at each point in time.
 The sub-jobs of each job are assigned to time windows on their corresponding machines.
@@ -49,3 +51,41 @@ Such an array stores three numbers for each of the&nbsp;$\jsspJobs$ sub-jobs to 
 Of course, we would not strictly need a class for that, as we could as well use the integer array `int[][]` directly.
 Also the third number, i.e., the end time, is not strictly necessary, as it can be computed based on the instance data as $start+\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex'}$ for job&nbsp;$\jsspJobIndex$ on machine&nbsp;$\jsspMachineIndex$ after searching&nbsp;$\jsspMachineIndex'$ such that $\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex'}=\jsspMachineIndex$.
 But the presented structure is handy and easier to understand.
+
+#### Size of the Solution Space {#sec:solutionSpace:size}
+
+It is not directly clear how many Gantt charts exist.
+If we allow arbitrary useless waiting times between jobs, then we could create arbitrarily many different valid Gantt charts for any problem instance.
+Let us therefore assume that no time is wasted uselessly.
+
+In this case, there exist exactly&nbsp;$\jsspJobs!=\prod_{\jsspJobIndex=1}^{\jsspJobs} \jsspJobIndex$ possible ways to arrange of&nbsp;$\jsspJobs$ on *each* of the&nbsp;$\jsspMachines$ machines.
+$\jsspJobs!$, called the [factorial](http://en.wikipedia.org/wiki/Factorial) of&nbsp;$\jsspJobs$, is the number of different [permutations](http://en.wikipedia.org/wiki/Permutation) (or orderings) of&nbsp;$\jsspJobs$ objects.
+If we have three jobs $a$, $b$, and $c$, then there are $3!=1*2*3=6$ possible permutations, namely $(a,b,c)$, $(a,c,b)$, $(b,a,c)$, $(b, c, a)$, $(c, a, b)$, and $(c, b, a)$.
+If we have three jobs and one machine, this is the number of possible different Gantt charts that do not waste time.
+
+If we would have&nbsp;$\jsspJobs=3$ jobs and&nbsp;$\jsspMachines=2$ machines, we then would have $(3!)^2=36$ possible Gantt charts, as for each of the&nbsp;6 possible sequence of jobs on the first machines, there would be&nbsp;6 possible arrangements on the second machine.
+For&nbsp;$\jsspMachines=2$ machines, it is then $(\jsspJobs!)^3$, and so on.
+In the general case, we obtain [@eq:jssp_solution_space_size] for the size&nbsp;$\left|\solutionSpace\right|$ of the solution space&nbsp;$\solutionSpace$.
+
+$$ \left|\solutionSpace\right| = (\jsspJobs!)^{\jsspMachines} $$ {#eq:jssp_solution_space_size}
+
+|name|$\jsspJobs$|$\jsspMachines$|$\left|\solutionSpace\right|$|
+|:--|--:|--:|--:|
+||3|2|36
+||3|3|216
+||3|4|1'296
+||3|5|7'776
+||4|2|576
+||4|3|13'824
+||4|4|331'776
+||5|2|14'400
+||5|3|1'728'000
+||5|4|207'360'000
+||5|5|24'883'200'000
+demo|4|5|7'962'624
+la24|15|10|$\approx$ 1.462*10^121^
+abz7|20|15|$\approx$ 6.193*10^275^
+yn4|20|20|$\approx$ 5.278*10^367^
+swv15|50|10|$\approx$ 6.772*10^644^
+
+: The size&nbsp;$\left|\solutionSpace\right|$ of the solution space&nbsp;$\solutionSpace$ (without schedules that stall uselessly) for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (later compare also with [@fig:function_growth]) {#tbl:jsspSolutionSpaceTable}
