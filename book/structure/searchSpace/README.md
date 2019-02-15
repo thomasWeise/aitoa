@@ -29,9 +29,6 @@ It can easily be interpreted by the user and we have defined a suitable objectiv
 Yet, it is not that clear how we can efficiently create such solutions let alone how to *search* in the space of Gantt charts.
 What we would like to have is a *search space*&nbsp;$\searchSpace$, which can represent the possible candidate solutions of the problem in a more machine-tangible, algorithm-friendly way.
 
-Furthermore, this space also contains a lot of uninteresting candidate solutions, as we can always add useless idle time to an existing Gantt chart and the resulting (longer) chart would still be a valid solution (although one which will definitely be inferior of what we had before).
-If we would design a compact and efficient search space&nbsp;$\searchSpace$ more suitable for our problem, the representation mapping&nbsp;$\repMap$ should thus probably not be surjective, as we then could leave unaccessible as many of the Gantt charts with unnecessary delays as possible.
-
 #### Idea: 1-dimensional Encoding
 
 One idea is to encode the two-dimensional array structure&nbsp;$\solutionSpace$ in a simple linear string of integer numbers&nbsp;$\searchSpace$.
@@ -115,7 +112,7 @@ This means that the size of the search space can be computed as given in [@eq:js
 $$ \left|\searchSpace\right| = \frac{\left(\jsspMachines*\jsspJobs\right)!}{ \left(\jsspMachines!\right)^{\jsspJobs} } $$ {#eq:jssp_search_space_size}
 
 |name|$\jsspJobs$|$\jsspMachines$|$\left|\solutionSpace\right|$|$\left|\searchSpace\right|$|
-|:--|--:|--:|--:|
+|:--|--:|--:|--:|--:|
 ||3|2|36|90
 ||3|3|216|1'680
 ||3|4|1'296|34'650
@@ -127,20 +124,21 @@ $$ \left|\searchSpace\right| = \frac{\left(\jsspMachines*\jsspJobs\right)!}{ \le
 ||5|3|1'728'000|168'168'000
 ||5|4|207'360'000|305'540'235'000
 ||5|5|24'883'200'000|623'360'743'125'120
-demo|4|5|7'962'624|11'732'745'024
-la24|15|10|$\approx$ 1.462*10^121^|$\approx$ 2.293*10^164^
-abz7|20|15|$\approx$ 6.193*10^275^|$\approx$ 1.432*10^372^
-yn4|20|20|$\approx$ 5.278*10^367^|$\approx$ 1.213*10^501^
-swv15|50|10|$\approx$ 6.772*10^644^|$\approx$ 1.254*10^806^
+`demo`|4|5|7'962'624|11'732'745'024
+`la24`|15|10|$\approx$ 1.462*10^121^|$\approx$ 2.293*10^164^
+`abz7`|20|15|$\approx$ 6.193*10^275^|$\approx$ 1.432*10^372^
+`yn4`|20|20|$\approx$ 5.278*10^367^|$\approx$ 1.213*10^501^
+`swv15`|50|10|$\approx$ 6.772*10^644^|$\approx$ 1.254*10^806^
 
 : The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth] and with the size&nbsp;$\left|\solutionSpace\right|$ of the solution space) {#tbl:jsspSearchSpaceTable}
 
-We give some example values for this search space size in [@tbl:jsspSearchSpaceTable].
-From the table, we can immediately see that the number of points in the search space grows very quickly with both the number of jobs&nbsp;$\jsspJobs$ and the number of machines&nbsp;$\jsspMachines$ of an JSSP instance&nbsp;$\instance$.
+We give some example values for this search space size&nbsp;$\left|\searchSpace\right|$ in [@tbl:jsspSearchSpaceTable].
+From the table, we can immediately see that the number of points in the search space, too, grows very quickly with both the number of jobs&nbsp;$\jsspJobs$ and the number of machines&nbsp;$\jsspMachines$ of an JSSP instance&nbsp;$\instance$.
 
 For our `demo` JSSP instance with&nbsp;$\jsspJobs=4$ jobs and&nbsp;$\jsspMachines=5$ machines, we already have about 12&nbsp;billion different points in the search space and 7&nbsp;million possible, non-wasteful candidate solutions.
-Of course, there is some redundancy, as our mapping is not [injective](http://en.wikipedia.org/wiki/Injective_function):
+From the table we also see that there is some redundancy in our mapping, $\repMap$&nbsp;here is not [injective](http://en.wikipedia.org/wiki/Injective_function):
 If we would exchange the first three numbers in the example string in [@fig:jssp_mapping_demo], we would obtain the same Gantt chart, as jobs&nbsp;0, 1, and&nbsp;2 start at different machines.
-Nevertheless, `demo` may already be among the largest instances that we could solve in reasonable time by simply exhaustively enumerating all possible solutions with the computers available today.
-For more "realistic" problem instances such as `la24` with 15 jobs and 10 machines we arrive already at 2.3*10^164^ different points in the search space &ndash; and this is the smallest one of the example benchmark instances we will look at.
-It is clear that finding the global optima of these instances cannot be done by testing all possible options and we will need something better.
+Actually, in practice we should avoid redundancy in the search space, as it will slow down our algorithm&nbsp;[@KW2002OTUOREIMBES].
+However, here we will stick with our proposed mapping because it is very simple and allows me to relatively easily introduce and discuss many different approaches, algorithms, and sub-algorithms.[^betterMapping]
+
+[^betterMapping]: Of course, we could represent a solution as&nbsp;$\jsspMachines$ separate arrays, each with a permutation of the&nbsp;$\jsspJobs$ job-ids. This would render the following discussions and algorithms a little bit more complicated, while the goal of the book is to be readable and easy to understand.

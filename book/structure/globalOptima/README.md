@@ -26,15 +26,17 @@ Vice versa, whenever we are looking for the cheapest, fastest, strongest, best, 
 When solving an optimization problem, we hope to find at least one global optimum (there may be multiple), as stated in \text.ref{optimizationProblemMathematical}.
 However, this may often not be possible or it will just take too long!
 
-![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim 2^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible. (compare with [@tbl:jsspSearchSpaceTable])](\relative.path{function_growth.svgz}){#fig:function_growth width=99%}
+![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim 2^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible. (compare with [@tbl:jsspSolutionSpaceTable] and [@tbl:jsspSearchSpaceTable])](\relative.path{function_growth.svgz}){#fig:function_growth width=99%}
 
 Matter of fact, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the size of the problem in the worst case.
 Or, in other words, unless something [fundamentally changes](http://en.wikipedia.org/wiki/P_versus_NP_problem)&nbsp;[@C1971TCOTPP], there will be some problems which usually will take too long to solve.
-[@fig:function_growth] illustrates that finding the globally optimal solutions for problems with such exponential "time complexity" will quickly become infeasible, even for relatively problem instances.
-It can be seen that just throwing more computing power at the problems will not solve fundamentally this issue.
-Our processing power is limited and parallelization can provide a linear speed-up, but this cannot mitigate the exponentially growing runtime requirements of many optimization problems.
+[@fig:function_growth] illustrates that finding the globally optimal solutions for problems with such exponential "time complexity" will quickly become infeasible, even for relatively small problem instances.
+Just throwing more computing power at the problems will not solve this fundamental issue.
+Our processing power is limited and parallelization can provide a linear speed-up at best.
+This cannot mitigate the exponentially growing runtime requirements of many optimization problems.
 
 Unfortunately, our example problems are amongst this kind of problem.
+(We also already know that even small instances of the JSSP can have millions or billions of possible candidate solutions, see [@tbl:jsspSolutionSpaceTable].)
 So what can we do?
 The exponential time requirement occurs if we make *guarantees* about the solution quality, especially about its optimality, over all possible scenarios.
 

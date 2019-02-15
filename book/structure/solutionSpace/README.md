@@ -56,7 +56,7 @@ But the presented structure is handy and easier to understand.
 
 It is not directly clear how many Gantt charts exist.
 If we allow arbitrary useless waiting times between jobs, then we could create arbitrarily many different valid Gantt charts for any problem instance.
-Let us therefore assume that no time is wasted uselessly.
+Let us therefore assume that no time is wasted by waiting unnecessarily.
 
 In this case, there exist exactly&nbsp;$\jsspJobs!=\prod_{\jsspJobIndex=1}^{\jsspJobs} \jsspJobIndex$ possible ways to arrange of&nbsp;$\jsspJobs$ on *each* of the&nbsp;$\jsspMachines$ machines.
 $\jsspJobs!$, called the [factorial](http://en.wikipedia.org/wiki/Factorial) of&nbsp;$\jsspJobs$, is the number of different [permutations](http://en.wikipedia.org/wiki/Permutation) (or orderings) of&nbsp;$\jsspJobs$ objects.
@@ -82,10 +82,15 @@ $$ \left|\solutionSpace\right| = (\jsspJobs!)^{\jsspMachines} $$ {#eq:jssp_solut
 ||5|3|1'728'000
 ||5|4|207'360'000
 ||5|5|24'883'200'000
-demo|4|5|7'962'624
-la24|15|10|$\approx$ 1.462*10^121^
-abz7|20|15|$\approx$ 6.193*10^275^
-yn4|20|20|$\approx$ 5.278*10^367^
-swv15|50|10|$\approx$ 6.772*10^644^
+`demo`|4|5|7'962'624
+`la24`|15|10|$\approx$ 1.462*10^121^
+`abz7`|20|15|$\approx$ 6.193*10^275^
+`yn4`|20|20|$\approx$ 5.278*10^367^
+`swv15`|50|10|$\approx$ 6.772*10^644^
 
 : The size&nbsp;$\left|\solutionSpace\right|$ of the solution space&nbsp;$\solutionSpace$ (without schedules that stall uselessly) for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (later compare also with [@fig:function_growth]) {#tbl:jsspSolutionSpaceTable}
+
+We illustrate some examples for the number&nbsp;$\left|\solutionSpace\right|$ of schedules which do not waste time useless in comparison to the problem size in [@tbl:jsspSolutionSpaceTable].
+Here we find that even small problems with $\jsspMachines=5$ machines and $\jsspJobs=5$ jobs already have billions of possible solutions.
+The four more realistic problem instances which we will try to solve here already have more solutions that what we could ever enumerate, list, or store with any conceivable hardware or computer.
+As we cannot simply test all possible solutions and pick the best one, we will need some more sophisticated algorithms to solve these problems &ndash; and this is what we will discuss in the following.
