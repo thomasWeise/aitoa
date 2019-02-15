@@ -114,7 +114,7 @@ This means that the size of the search space can be computed as given in [@eq:js
 
 $$ \left|\searchSpace\right| = \frac{\left(\jsspMachines*\jsspJobs\right)!}{ \left(\jsspMachines!\right)^{\jsspJobs} } $$ {#eq:jssp_search_space_size}
 
-|name|$\jsspJobs$|$\jsspMachines$|$\\left|\\solutionSpace\\right|$|$\left|\searchSpace\right|$|
+|name|$\jsspJobs$|$\jsspMachines$|$\left|\solutionSpace\right|$|$\left|\searchSpace\right|$|
 |:--|--:|--:|--:|
 ||3|2|36|90
 ||3|3|216|1'680
@@ -133,7 +133,7 @@ abz7|20|15|$\approx$ 6.193*10^275^|$\approx$ 1.432*10^372^
 yn4|20|20|$\approx$ 5.278*10^367^|$\approx$ 1.213*10^501^
 swv15|50|10|$\approx$ 6.772*10^644^|$\approx$ 1.254*10^806^
 
-: The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth] and with the size&nbsp;$\\left|\\solutionSpace\\right|$ of the solution space) {#tbl:jsspSearchSpaceTable}
+: The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth] and with the size&nbsp;$\left|\solutionSpace\right|$ of the solution space) {#tbl:jsspSearchSpaceTable}
 
 We give some example values for this search space size in [@tbl:jsspSearchSpaceTable].
 From the table, we can immediately see that the number of points in the search space grows very quickly with both the number of jobs&nbsp;$\jsspJobs$ and the number of machines&nbsp;$\jsspMachines$ of an JSSP instance&nbsp;$\instance$.
