@@ -96,7 +96,7 @@ An optimization algorithm which might sometimes return infeasible solutions will
 
 #### Summary 
 
-|name|$\jsspJobs$|$\jsspMachines$|$\lowerBound(\#\textnormal{feasible})$|$\left|\solutionSpace\right|$|
+|name|$\jsspJobs$|$\jsspMachines$|$\min(\#\textnormal{feasible})$|$\left|\solutionSpace\right|$|
 |:--|--:|--:|--:|--:|
 ||2|2|3|4
 ||2|3|4|8
@@ -121,13 +121,16 @@ swv15|50|10||$\approx$&nbsp;6.772*10^644^
 
 : The size&nbsp;$\left|\solutionSpace\right|$ of the solution space&nbsp;$\solutionSpace$ (without schedules that stall uselessly) for selected values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (later compare also with [@fig:function_growth]) {#tbl:jsspSolutionSpaceTable}
 
-We illustrate some examples for the number&nbsp;$\left|\solutionSpace\right|$ of schedules which do not waste time uselessly for differente values of&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$ in [@tbl:jsspSolutionSpaceTable].
-It is not so easy to find a formula for the lower bound&nbsp;$\lowerBound(\#\textnormal{feasible})$ of the number&nbsp;$\#\textnormal{feasible}$ of feasible Gantt charts based on&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$.
-We therefore provided the corresponding numbers for a few selected instances only.
+We illustrate some examples for the number&nbsp;$\left|\solutionSpace\right|$ of schedules which do not waste time uselessly for different values of&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$ in [@tbl:jsspSolutionSpaceTable].
 
 We find that even small problems with $\jsspMachines=5$ machines and $\jsspJobs=5$ jobs already have billions of possible solutions.
 The four more realistic problem instances which we will try to solve here already have more solutions that what we could ever enumerate, list, or store with any conceivable hardware or computer.
 As we cannot simply test all possible solutions and pick the best one, we will need some more sophisticated algorithms to solve these problems.
 This is what we will discuss in the following.
-Also, if we are unlucky, most of the possible Gantt charts might be infeasible, as&nbsp;$\lowerBound(\#\textnormal{feasible})$ can be much smaller than&nbsp;$\left|\solutionSpace\right|$.
+
+The number&nbsp;$\#\textnormal{feasible}$ of possible *feasible* Gantt charts can be different, depending on the problem instance.
+For one setting of&nbsp;$\jsspMachines$ and&nbsp;$\jsspJobs$, we are interested in the minimum&nbsp;$\min(\#\textnormal{feasible})$ of this number, i.e., the *smallest value* that&nbsp;$\#\textnormal{feasible}$ can take on over all possible instances with $\jsspJobs$&nbsp;jobs and $\jsspMachines$&nbsp;machines.
+It is not so easy to find a formula for this minimum, so we won't do this here.
+Instead, in [@tbl:jsspSolutionSpaceTable], we provided the corresponding numbers for a few selected instances.
+We find that, if we are unlucky, most of the possible Gantt charts for a problem instance might be infeasible, as&nbsp;$\min(\#\textnormal{feasible})$ can be much smaller than&nbsp;$\left|\solutionSpace\right|$.
 
