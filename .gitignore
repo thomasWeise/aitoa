@@ -42,3 +42,6 @@ aitoa.Rproj
 .Rhistory
 .RData
 .Ruserdata
+
+# Java/Eclipse stuff
+.project

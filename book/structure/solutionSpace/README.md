@@ -2,7 +2,7 @@
 
 ### Definitions
 
-As stated in \text.ref{optimizationProblemEconomical}, an optimization problem asks us to make a choice between different potential solutions.
+As stated in \text.ref{optimizationProblemEconomical}, an optimization problem asks us to make a choice between different possible solutions.
 We call them *candidate solutions*.
 
 \text.block{definition}{candidateSolution}{A *candidate solution*&nbsp;$\solspel$ is one potential solution of an optimization problem.}
@@ -10,9 +10,10 @@ We call them *candidate solutions*.
 \text.block{definition}{solutionSpace}{The *solution space*&nbsp;$\solutionSpace$ of an optimization problem is the set of all of its candidate solutions&nbsp;$\solspel\in\solutionSpace$.}
 
 Basically, the input of an optimization algorithm is the problem instance&nbsp;$\instance$ and the output would be (at least) one candidate solution&nbsp;$\solspel\in\solutionSpace$.
-This candidate solution is choice proposed by the optimization process.
+This candidate solution is the choice that the optimization process proposes to the human operator.
+It therefore holds all the data that the human operator needs to take action, in a for that the human operator can understand, interpret, and execute.
 From the programmer's perspective, the solution space is again a data structure, e.g., a `class` in Java.
-We want to return one instance of this data structure to the user when solving an optimization problem.
+We want to return one instantiation of this data structure to the user when solving an optimization problem.
 
 ### Example: Job Shop Scheduling
 
@@ -30,7 +31,7 @@ The sub-jobs of each job are assigned to time windows on their corresponding mac
 
 The Gantt chart contains one row for each machine.
 It is to be read from left to right, where the x-axis represents the time units that have passed since the beginning of the job processing.
-Each colored bar in the row of a given machine stands for a job and denots the time window during which the job is processed.
+Each colored bar in the row of a given machine stands for a job and denotes the time window during which the job is processed.
 The bar representing sub-job&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ is painted in the row of machine&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}$ and its length equals the time requirement&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$.
 
 The chart given in [@fig:gantt_demo_without_makespan], for instance, defines that job&nbsp;0 starts at time unit&nbsp;0 on machine&nbsp;0 and is processed there for ten time units.
@@ -51,17 +52,20 @@ Such an array stores three numbers for each of the&nbsp;$\jsspJobs$ sub-jobs to 
 Of course, we would not strictly need a class for that, as we could as well use the integer array `int[][]` directly.
 Also the third number, i.e., the end time, is not strictly necessary, as it can be computed based on the instance data as $start+\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex'}$ for job&nbsp;$\jsspJobIndex$ on machine&nbsp;$\jsspMachineIndex$ after searching&nbsp;$\jsspMachineIndex'$ such that $\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex'}=\jsspMachineIndex$.
 But the presented structure is handy and easier to understand.
+It allows the human operator to directly take action, to directly tell each machine or worker what to do and when to do it, without needing to look up any additional information from the problem instance.
 
 #### Size of the Solution Space {#sec:solutionSpace:size}
 
-It is not directly clear how many Gantt charts exist.
+We choose the set of all Gantt charts for $\jsspMachines$&nbsp;machines and $\jsspJobs$&nbsp;jobs as our solution space&nbsp;$\solutionSpace$.
+Now it is not directly clear how many such Gantt charts exist, i.e., how big&nbsp;$\solutionSpace$ is.
 If we allow arbitrary useless waiting times between jobs, then we could create arbitrarily many different valid Gantt charts for any problem instance.
 Let us therefore assume that no time is wasted by waiting unnecessarily.
 
-In this case, there are&nbsp;$\jsspJobs!=\prod_{\jsspJobIndex=1}^{\jsspJobs} \jsspJobIndex$ possible ways to arrange of&nbsp;$\jsspJobs$ on *each* of the&nbsp;$\jsspMachines$ machines.
+There are&nbsp;$\jsspJobs!=\prod_{\jsspJobIndex=1}^{\jsspJobs} \jsspJobIndex$ possible ways to arrange $\jsspJobs$&nbsp;jobs on one machine.
 $\jsspJobs!$, called the [factorial](http://en.wikipedia.org/wiki/Factorial) of&nbsp;$\jsspJobs$, is the number of different [permutations](http://en.wikipedia.org/wiki/Permutation) (or orderings) of&nbsp;$\jsspJobs$ objects.
 If we have three jobs $a$, $b$, and $c$, then there are $3!=1*2*3=6$ possible permutations, namely $(a,b,c)$, $(a,c,b)$, $(b,a,c)$, $(b, c, a)$, $(c, a, b)$, and $(c, b, a)$.
-If we have three jobs and one machine, this is the number of possible different Gantt charts that do not waste time.
+Each permutation would equal one possible sequence in which we can process the jobs on *one* machine.
+If we have three jobs and one machine, then six is the number of possible different Gantt charts that do not waste time.
 
 If we would have&nbsp;$\jsspJobs=3$ jobs and&nbsp;$\jsspMachines=2$ machines, we then would have $(3!)^2=36$ possible Gantt charts, as for each of the&nbsp;6 possible sequence of jobs on the first machines, there would be&nbsp;6 possible arrangements on the second machine.
 For&nbsp;$\jsspMachines=2$ machines, it is then $(\jsspJobs!)^3$, and so on.
@@ -75,16 +79,22 @@ However, the fact that we can generate $(\jsspJobs!)^{\jsspMachines}$ possible G
 
 Imagine a JSSP with&nbsp;$\jsspJobs=2$ jobs and&nbsp;$\jsspMachines=2$ machines.
 There are&nbsp;$(2!)^2=(1*2)^2=4$ possible Gantt charts.
-Assume that the first job needs to first be processed by machine&nbsp;0 and then by machine&nbsp;1, while the second job first noods to go to machine&nbsp;1 and then to machine&nbsp;0.
+Assume that the first job needs to first be processed by machine&nbsp;0 and then by machine&nbsp;1, while the second job first needs to go to machine&nbsp;1 and then to machine&nbsp;0.
 A Gantt chart which assigns the first job first to machine&nbsp;1 and the second job first to machine&nbsp;$0$ cannot be executed in practice, i.e., is *infeasible*.
 It contains a [deadlock](http://en.wikipedia.org/wiki/Deadlock).
 Hence, there are only three out of four possible Gantt charts that work for this problem instance.
 For a problem instance where all jobs need to pass through all machines in the same sequence, however, all possible Gantt charts will work.
+The number of actually feasible Gantt charts in&nbsp;$\solutionSpace$ is different for different problem instances.
 
 \text.block{definition}{feasibility}{A candidate solution&nbsp;$\solspel\in\solutionSpace$ is *feasible* if it fulfills all conditions and constraints to applicable in practice.}
 
-The number of actually feasible Gantt charts in&nbsp;$\solutionSpace$ is different for different problem instances.
-When solving a JSSP, we obviously only want to find feasible solutions.
+\text.block{definition}{infeasibility}{A candidate solution&nbsp;$\solspel\in\solutionSpace$ is *infeasible* if it is *not feasible*, i.e., if it cannot be applied in practice.}
+
+This is very annoying.
+The potential existence of infeasible solutions means that we cannot just pick a good element from&nbsp;$\solutionSpace$ (according to whatever *good* means), we also must be sure that it is actually *feasible*.
+An optimization algorithm which might sometimes return infeasible solutions will not be acceptable. 
+
+#### Summary 
 
 |name|$\jsspJobs$|$\jsspMachines$|$\lowerBound(\#\textnormal{feasible})$|$\left|\solutionSpace\right|$|
 |:--|--:|--:|--:|--:|
@@ -111,12 +121,13 @@ swv15|50|10||$\approx$&nbsp;6.772*10^644^
 
 : The size&nbsp;$\left|\solutionSpace\right|$ of the solution space&nbsp;$\solutionSpace$ (without schedules that stall uselessly) for selected values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (later compare also with [@fig:function_growth]) {#tbl:jsspSolutionSpaceTable}
 
-We illustrate some examples for the number&nbsp;$\left|\solutionSpace\right|$ of schedules which do not waste time useless in comparison to the problem size parameters&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$ in [@tbl:jsspSolutionSpaceTable].
+We illustrate some examples for the number&nbsp;$\left|\solutionSpace\right|$ of schedules which do not waste time uselessly for differente values of&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$ in [@tbl:jsspSolutionSpaceTable].
 It is not so easy to find a formula for the lower bound&nbsp;$\lowerBound(\#\textnormal{feasible})$ of the number&nbsp;$\#\textnormal{feasible}$ of feasible Gantt charts based on&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$.
-It is not important here either, so we just provide it for some smaller, selected instances in&nbsp;[@tbl:jsspSolutionSpaceTable].
+We therefore provided the corresponding numbers for a few selected instances only.
 
 We find that even small problems with $\jsspMachines=5$ machines and $\jsspJobs=5$ jobs already have billions of possible solutions.
 The four more realistic problem instances which we will try to solve here already have more solutions that what we could ever enumerate, list, or store with any conceivable hardware or computer.
-As we cannot simply test all possible solutions and pick the best one, we will need some more sophisticated algorithms to solve these problems &ndash; and this is what we will discuss in the following.
+As we cannot simply test all possible solutions and pick the best one, we will need some more sophisticated algorithms to solve these problems.
+This is what we will discuss in the following.
 Also, if we are unlucky, most of the possible Gantt charts might be infeasible, as&nbsp;$\lowerBound(\#\textnormal{feasible})$ can be much smaller than&nbsp;$\left|\solutionSpace\right|$.
 

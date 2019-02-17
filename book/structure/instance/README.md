@@ -7,29 +7,50 @@ While an optimization problem is the general blueprint of the tasks, e.g., the g
 
 \text.block{definition}{instance}{A concrete instantiation of all information that are relevant from the perspective of solving an optimization problems is called a *problem instance*&nbsp;$\instance$.}
 
-A problem instance is related to an optimization problem in the same way an object/instance is related to its class in an object-oriented programming language like Java.
+A problem instance is related to an optimization problem in the same way an object/instance is related to its `class` in an object-oriented programming language like Java or a `struct` in&nbsp;C.
+The `class` defines which member variables exists and what their valid ranges are.
+An instance of the class is a piece of memory which holds concrete values for each member variable.
 
 ### Example: Job Shop Scheduling {#sec:jsspInstance}
 
+#### JSSP Instance Structure
+
 So how can we characterize a JSSP instance&nbsp;$\instance$?
-In the most basic scenario&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP], our factory has&nbsp;$\jsspMachines\in\naturalNumbersO$ machines.
-Each machine can perform one job at a time or be idle.
+In the most basic scenario&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP], our factory has&nbsp;$\jsspMachines\in\naturalNumbersO$ machines.^[Where&nbsp;$\naturalNumbersO$ stands for the natural numbers greater than&nbsp;0, i.e., 1, 2, 3, &hellip;]
+At each point in time, a machine can either work on exactly one job or do nothing (be idle).
 There are&nbsp;$\jsspJobs\in\naturalNumbersO$ jobs that we need to schedule to these machines.
 For the sake of simplicity and for agreement between our notation here, the Java source code, and the example instances that we will use, we reference jobs and machines with zero-based indices from&nbsp;$0\dots(\jsspJobs-1)$ and&nbsp;$0\dots(\jsspMachines-1)$, respectively.
 
 Each of the&nbsp;$\jsspJobs$ jobs is composed of&nbsp;$\jsspMachines$ sub-jobs, one for each machine.
-The sub-job&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ must be executed on machine&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}$ and doing so needs&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ time units for completion.
+The sub-job&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ must be executed on machine $\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}\in 0\dots(\jsspMachines-1)$ and doing so needs&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\in\naturalNumbersZ$ time units for completion.^[$\naturalNumbersZ$ stands for the natural numbers including zero, i.e., 0, 1, 2, &hellip;]
 This setup also allows us to represent the situation where a certain job&nbsp;$\jsspJobIndex$ does not need to be executed on a machine&nbsp;$\jsspMachineIndex'$.
 We then can simply set the required time&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ to&nbsp;0 for the sub-job&nbsp;$\jsspMachineIndex$ with&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}=\jsspMachineIndex'$.
 The scenario also allows us to represent problems such as those illustrated in [@fig:manufacturing], where all jobs need to be processed by exactly the same machines in exactly the same sequence.
 In this case&nbsp;$\jsspSubJobMachine{\jsspJobIndex_1}{\jsspMachineIndex}=\jsspSubJobMachine{\jsspJobIndex_2}{\jsspMachineIndex}$ would hold for all jobs&nbsp;$\jsspJobIndex_1$ and&nbsp;$\jsspJobIndex_2$ and all sub-job indices&nbsp;$\jsspMachineIndex$.
 In other words, the JSSP described here already encompasses a wide variety of real-world production situations.
 
-Let us now look at some example instances for the JSSP.
-Beasley&nbsp;[@B1990OLDTPBEM] manages the  [*OR-Library*](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/jobshopinfo.html), a library of example instances for many optimization problems from the field of operations research.
-An even more [comprehensive set of JSSP instances](http://jobshop.jjvh.nl/) is provided by van&nbsp;Hoorn&nbsp;[@vH2015JSIAS; @vH2018TCSOBOBIOTJSSP].
-[Here](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/jobshop1.txt) and [here](http://jobshop.jjvh.nl/), the concrete JSSP instances which we will use can be downloaded as text file.
-For the sake of simplicity, we created one additional, smaller instance to describe this format, as illustrated in [@fig:jssp_demo_instance].
+#### Sources for JSSP Instances
+
+In order to practically play around with optimization algorithms, we need some concrete instances of the JSSP.
+Luckily, the optimization community provides "benchmark instances" for many different optimization problems.
+Such common, well-known instances are important, because they allow researchers to compare their algorithms.
+Therefore, Beasley&nbsp;[@B1990OLDTPBEM] manages the  [*OR-Library*](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/jobshopinfo.html), a collection of example instances for many optimization problems from the field of operations research (including the JSSP).
+An even more comprehensive [set of JSSP instances](http://jobshop.jjvh.nl/) is provided by van&nbsp;Hoorn&nbsp;[@vH2015JSIAS; @vH2018TCSOBOBIOTJSSP], where also state-of-the-art results are listed.
+
+We will try to solve real JSSP instances which are contained in both of these collections.
+They will serve as illustrative example of how to approach optimization problems.
+In order to keep the example and analysis simple, we will focus on only four instances, namely
+
+1. instance `abz7` by Adams et&nbsp;al.&nbsp;[@ABZ1988TSBPFJSS] with 20&nbsp;jobs and 15&nbsp;machines
+2. instance `la24` by Lawrence&nbsp;[@L1998RCPSAEIOHSTS] with 15&nbsp;jobs and 10&nbsp;machines,
+3. instance `swv15` by Storer et&nbsp;al.&nbsp;[@SWV1992NSSFSPWATJSS] with 50&nbsp;jobs and 10&nbsp;machines, and
+4. instance `yn4` by Yamada and Nakano&nbsp;[@YN1992AGAATLSJSI] with 20&nbsp;jobs and 20&nbsp;machines.
+
+These instances are contained in text files available at <http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/jobshop1.txt> and <http://jobshop.jjvh.nl/>.
+
+#### File Format and `demo` Instance
+
+For the sake of simplicity, we created one additional, smaller instance to describe the format of these files, as illustrated in [@fig:jssp_demo_instance].
 
 ![The meaning of the text representing our `demo` instance of the JSSP, as an example of the format used in the OR-Library.](\relative.path{demo_instance.svgz}){#fig:jssp_demo_instance width=90%}
 
@@ -50,19 +71,11 @@ Job&nbsp;3 first needs to be processed by machine&nbsp;4 for 50&nbsp;time units,
 It would not be allowed to first send Job&nbsp;3 to any machine different from machine&nbsp;4 and after being processed by machine&nbsp;4, it must be processed by machine&nbsp;3 &ndash; althoug it may be possible that it has to wait for some time, if machine&nbsp;3 would already be busy processing another job.
 In the ideal case, job&nbsp;3 could be completed after 130&nbsp;time units.
 
+#### A Java Class for JSSP Instances
+
 This structure of a JSSP instance can be represented by the simple Java class given in [@lst:JSSPInstance].
 
 \repo.listing{lst:JSSPInstance}{Excerpt from a Java class for representing the data of a JSSP instance.}{java}{src/main/java/aitoa/examples/jssp/JSSPInstance.java}{}{relevant}
 
-Here, the two-dimensional array `jobs` directly receives the data from sub-job lines in the text files, i.e., each row stands for a job and contains machine IDs and processing times in an alternating sequence.
+Here, the two-dimensional array&nbsp;`jobs` directly receives the data from sub-job lines in the text files, i.e., each row stands for a job and contains machine IDs and processing times in an alternating sequence.
 The actual source file of the class `JSSPInstance` accompanying our book also contains additional code, e.g., for reading such data from the text file, which we have omitted here as it is unimportant for the understanding of the scenario.
-
-The *OR-Library* contains 82&nbsp;JSSP instances of varying sizes specified as text files in the format discussed here.
-Even more instances can be found on [van&nbsp;Hoorn's website](http://jobshop.jjvh.nl/).
-We will try to solve them in this book as an illustrative example of how to approach optimization problems.
-In order to keep the example simple, we will focus on only four instances, namely
-
-1. instance `abz7` by Adams et&nbsp;al.&nbsp;[@ABZ1988TSBPFJSS] with 20&nbsp;jobs and 15&nbsp;machines
-2. instance `la24` by Lawrence&nbsp;[@L1998RCPSAEIOHSTS] with 15&nbsp;jobs and 10&nbsp;machines,
-3. instance `swv15` by Storer et&nbsp;al.&nbsp;[@SWV1992NSSFSPWATJSS] with 50&nbsp;jobs and 10&nbsp;machines, and
-4. instance `yn4` by Yamada and Nakano&nbsp;[@YN1992AGAATLSJSI] with 20&nbsp;jobs and 20&nbsp;machines.

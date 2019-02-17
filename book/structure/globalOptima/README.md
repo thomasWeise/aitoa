@@ -87,7 +87,7 @@ Of course, we cannot know whether a schedule exists that can achieve this lower 
 There simply may not be any way to arrange the jobs such that no sub-job stalls any other sub-job.
 This is why the value&nbsp;$\lowerBound(\objf)$ is a lower bound: we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
 
-However, if our algorithms produce solutions with a quality close to&nbsp;$\lowerBound(\objf)$, we know that are doing very well.
+However, if our algorithms produce solutions with a quality close to&nbsp;$\lowerBound(\objf)$, we know that we are doing well.
 The lower bounds for the makespans of our example problems are illustrated in [@tbl:jsspLowerBoundsTable].
 
 |name|$\jsspJobs$|$\jsspMachines$|$\lowerBound(\objf)$|$\lowerBound(\objf)^{\star}$|source for&nbsp;$\lowerBound(\objf)^{\star}$
@@ -114,7 +114,7 @@ Also, no job in the `demo` instance finishes at machine&nbsp;3.
 Job&nbsp;0, for instance, needs to be processed by machine&nbsp;4 for 10&nbsp;time units after it has passed through machine&nbsp;3.
 Job&nbsp;1 requires 80&nbsp;more time units after finishing at machine&nbp;3, job&nbsp;2 also 10&nbsp;time units, and job&nbsp;3again&nbsp;50 time units.
 In other words, machine&nbsp;3 needs to wait at least 30&nbsp;time units before it can commence its work and will remain idle for at least 10&nbsp;time units after processing the last sub job.
-Inbetween, it will need to work for exactly&nbsp;140 time units, the total sum of the running time of all sub-jobs assigned to it.
+In between, it will need to work for exactly&nbsp;140 time units, the total sum of the running time of all sub-jobs assigned to it.
 This means that no schedule can complete faster than $30+140+10=180$ time units.
 Thus, [@fig:gantt_demo_optimal_bound] illustrates the optimal solution for the `demo` instance.
 
