@@ -109,7 +109,7 @@ abz7|20|15||$\approx$&nbsp;6.193*10^275^
 yn4|20|20||$\approx$&nbsp;5.278*10^367^
 swv15|50|10||$\approx$&nbsp;6.772*10^644^
 
-: The size&nbsp;$\left|\solutionSpace\right|$ of the solution space&nbsp;$\solutionSpace$ (without schedules that stall uselessly) for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (later compare also with [@fig:function_growth]) {#tbl:jsspSolutionSpaceTable}
+: The size&nbsp;$\left|\solutionSpace\right|$ of the solution space&nbsp;$\solutionSpace$ (without schedules that stall uselessly) for selected values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (later compare also with [@fig:function_growth]) {#tbl:jsspSolutionSpaceTable}
 
 We illustrate some examples for the number&nbsp;$\left|\solutionSpace\right|$ of schedules which do not waste time useless in comparison to the problem size parameters&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$ in [@tbl:jsspSolutionSpaceTable].
 It is not so easy to find a formula for the lower bound&nbsp;$\lowerBound(\#\textnormal{feasible})$ of the number&nbsp;$\#\textnormal{feasible}$ of feasible Gantt charts based on&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$.

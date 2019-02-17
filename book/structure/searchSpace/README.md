@@ -115,26 +115,26 @@ This means that the size of the search space can be computed as given in [@eq:js
 
 $$ \left|\searchSpace\right| = \frac{\left(\jsspMachines*\jsspJobs\right)!}{ \left(\jsspMachines!\right)^{\jsspJobs} } $$ {#eq:jssp_search_space_size}
 
-|name|$\jsspJobs$|$\jsspMachines$|$\lowerBound(\#\textnormal{feasible})$|$\left|\solutionSpace\right|$|$\left|\searchSpace\right|$|
-|:--|--:|--:|--:|--:|--:|
-||3|2|22|36|90
-||3|3|63|216|1'680
-||3|4|147|1'296|34'650
-||3|5|317|7'776|756'756
-||4|2|244|576|2'520
-||4|3|1'630|13'824|369'600
-||4|4||331'776|63'063'000
-||5|2|4'548|14'400|113'400
-||5|3|91'461|1'728'000|168'168'000
-||5|4||207'360'000|305'540'235'000
-||5|5||24'883'200'000|623'360'743'125'120
+|name|$\jsspJobs$|$\jsspMachines$|$\left|\solutionSpace\right|$|$\left|\searchSpace\right|$|
+|:--|--:|--:|--:|--:|
+||3|2|36|90
+||3|3|216|1'680
+||3|4|1'296|34'650
+||3|5|7'776|756'756
+||4|2|576|2'520
+||4|3|13'824|369'600
+||4|4|331'776|63'063'000
+||5|2|14'400|113'400
+||5|3|1'728'000|168'168'000
+||5|4|207'360'000|305'540'235'000
+||5|5|24'883'200'000|623'360'743'125'120
 demo|4|5||7'962'624|11'732'745'024
 la24|15|10||$\approx$&nbsp;1.462*10^121^|$\approx$&nbsp;2.293*10^164^
 abz7|20|15||$\approx$&nbsp;6.193*10^275^|$\approx$&nbsp;1.432*10^372^
 yn4|20|20||$\approx$&nbsp;5.278*10^367^|$\approx$&nbsp;1.213*10^501^
 swv15|50|10||$\approx$&nbsp;6.772*10^644^|$\approx$&nbsp;1.254*10^806^
 
-: The sizes&nbsp;$\left|\searchSpace\right|$ and&nbsp;$\left|\solutionSpace\right|$ of the search and solution spaces, as well as the lower bound&nbsp;$\lowerBound(\#\textnormal{feasible})$ of the number of feasible solutions for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth] and with the size&nbsp;$\left|\solutionSpace\right|$ of the solution space) {#tbl:jsspSearchSpaceTable}
+: The sizes&nbsp;$\left|\searchSpace\right|$ and&nbsp;$\left|\solutionSpace\right|$ of the search and solution spaces for selected values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth] and with the size&nbsp;$\left|\solutionSpace\right|$ of the solution space) {#tbl:jsspSearchSpaceTable}
 
 We give some example values for this search space size&nbsp;$\left|\searchSpace\right|$ in [@tbl:jsspSearchSpaceTable].
 From the table, we can immediately see that the number of points in the search space, too, grows very quickly with both the number of jobs&nbsp;$\jsspJobs$ and the number of machines&nbsp;$\jsspMachines$ of an JSSP instance&nbsp;$\instance$.
