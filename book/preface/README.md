@@ -5,7 +5,7 @@ Currently, this book is in a very early stage of development.
 It is work-in-progress, so expect many changes.
 
 This book is intended to be accessible and easy to read.
-In my old book*&nbsp;[@WGOEB], I tried to focus mainly on the abstract algorithms and sometimes described what problems we can solve with them.
+In my old book&nbsp;[@WGOEB], I tried to focus mainly on the abstract algorithms and sometimes described what problems we can solve with them.
 This, however, may not give the reader a good intuition about how the algorithms work in practice, what things to look for when solving a problem, or how we can get from a simple, working, proof-of-concept approach to an efficient solution for a given problem.
 So in this book, we follow more of a "learning-by-doing" approach, by trying to solve one practical optimization problem as example theme throughout the book.
 All algorithms are directly implemented and applied to that problem after we introduce them.
