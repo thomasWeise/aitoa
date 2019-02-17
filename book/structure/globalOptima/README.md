@@ -90,7 +90,7 @@ This is why the value&nbsp;$\lowerBound(\objf)$ is a lower bound: we know no sol
 However, if our algorithms produce solutions with a quality close to&nbsp;$\lowerBound(\objf)$, we know that are doing very well.
 The lower bounds for the makespans of our example problems are illustrated in [@tbl:jsspLowerBoundsTable].
 
-|name|$\jsspJobs$|$\jsspMachines$|$\lowerBound(\objf)$|$\lowerBound(\objf)^{\star}$|source for&nbsp;$\lowerBound{\objf}^{\star}$
+|name|$\jsspJobs$|$\jsspMachines$|$\lowerBound(\objf)$|$\lowerBound(\objf)^{\star}$|source for&nbsp;$\lowerBound(\objf)^{\star}$
 |:--|--:|--:|--:|--:|:--|
 `demo`|4|5|180|180|[@eq:jsspLowerBound]
 `abz7`|20|15|638|656|[@MF1975OSWRTADDTMML; @VLS2015FDSFCBS; @VLS2015FDSFCBSDER; @vH2015JSIAS]
