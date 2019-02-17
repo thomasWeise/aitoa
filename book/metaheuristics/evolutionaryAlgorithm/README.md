@@ -76,7 +76,7 @@ We will call the corresponding setups `ea2048` and `ea4096`, respectively.
 As unary search operators, we test again `1swap` and `nswap`.
 The results are given in [@tbl:eaNoCrHCJSSP], together with those of our best hill climber with restarts `hcr_256+5%_nswap`.
 
-|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
 |`abz7`|656|`hcr_256+5%_nswap`|707|733|734|**7**|64s|17293038|
 |||`ea2048_1swap`|695|719|718|13|**11**s|2581614|
@@ -233,7 +233,7 @@ As crossover rates&nbsp;$cr$, we use&nbsp;0, 0.05, and&nbsp;0.3.
 A crossover rate of&nbsp;0 is exactly equivalent to not applying the binary operator at all, that is, to our EAs from [@sec:evolutionaryAlgorithmWithoutRecombination].
 For the non-zero crossover rates, we append $cr*100$ to the setup name, i.e., `ea2048_nswap_30` stands for an $(2048+2048)$&nbsp;EA with the `nswap` unary operator which applies the binary `sequence` operator at a crossover rate (=probability) of 0.3.
 
-|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
 |`abz7`|656|`ea2048_nswap`|694|714|714|12|**18**s|4271587|
 |||`ea2048_nswap_5`|691|710|709|9|19s|4105841|

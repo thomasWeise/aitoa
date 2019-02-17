@@ -93,10 +93,14 @@ What did we gain by such a mapping?
 We now have a very simple data structure&nbsp;$\searchSpace$ to represent our candidate solutions.
 We have very simple rules for validating a point&nbsp;$\sespel$ in the search space:
 If it contains the numbers&nbsp;$0\dots (\jsspJobs-1)$ each exactly&nbsp;$\jsspMachines$ times, it represents a valid candidate solution.
-The candidate solution corresponding to a valid point from the search space will always be valid, as the mapping&nbsp;$\repMap$ will ensure that the order of the sub-jobs per job is always observed and each machine will process at most one job at a time.
 
-It can also be see that we could modify our representation mapping&nbsp;$\repMap$ to adapt to more complicated and constraint versions of the JSSP:
-If, for instance, it would take a job- and machine-dependent time requirement for carrying a job from one machine to another, we could facilitate this by adding it to the next starting of the job.
+An even more salient advantage may be that the candidate solution corresponding to a valid point from the search space will always be *feasible*.
+The mapping&nbsp;$\repMap$ will ensure that the order of the sub-jobs per job is always observed.
+Each machine will process at most one job at a time.
+And we do not need to worry about the issue of deadlocks mentioned in [@sec:solutionSpace:feasibility] either.
+
+We could also modify our representation mapping&nbsp;$\repMap$ to adapt to more complicated and constraint versions of the JSSP if need be:
+For example, imagine that it would take a job- and machine-dependent time requirement for carrying a job from one machine to another, then we could facilitate this by changing&nbsp;$\repMap$ so that it adds this time to the starting time of the job.
 If there was a job-dependent setup time for each machine, which could be different if job&nbsp;1 follows job&nbsp;0 instead of job&nbsp;2, then this could be facilitated easily as well.
 If our sub-jobs would be assigned to "machine types" instead of "machines" and there could be more than one machine per machine type, then the representation mapping could assign the sub-jobs to the next machine of their type which becomes idle.
 Many such different problem flavors can now be reduced of investigating the same space&nbsp;$\searchSpace$ using the same optimization algorithms, just with different representation mappings&nbsp;$\repMap$ and/or objective functions&nbsp;$\objf$.
@@ -111,26 +115,26 @@ This means that the size of the search space can be computed as given in [@eq:js
 
 $$ \left|\searchSpace\right| = \frac{\left(\jsspMachines*\jsspJobs\right)!}{ \left(\jsspMachines!\right)^{\jsspJobs} } $$ {#eq:jssp_search_space_size}
 
-|name|$\jsspJobs$|$\jsspMachines$|$\left|\solutionSpace\right|$|$\left|\searchSpace\right|$|
-|:--|--:|--:|--:|--:|
-||3|2|36|90
-||3|3|216|1'680
-||3|4|1'296|34'650
-||3|5|7'776|756'756
-||4|2|576|2'520
-||4|3|13'824|369'600
-||4|4|331'776|63'063'000
-||5|2|14'400|113'400
-||5|3|1'728'000|168'168'000
-||5|4|207'360'000|305'540'235'000
-||5|5|24'883'200'000|623'360'743'125'120
-`demo`|4|5|7'962'624|11'732'745'024
-`la24`|15|10|$\approx$ 1.462*10^121^|$\approx$ 2.293*10^164^
-`abz7`|20|15|$\approx$ 6.193*10^275^|$\approx$ 1.432*10^372^
-`yn4`|20|20|$\approx$ 5.278*10^367^|$\approx$ 1.213*10^501^
-`swv15`|50|10|$\approx$ 6.772*10^644^|$\approx$ 1.254*10^806^
+|name|$\jsspJobs$|$\jsspMachines$|$\lowerBound(\#\textnormal{feasible})$|$\left|\solutionSpace\right|$|$\left|\searchSpace\right|$|
+|:--|--:|--:|--:|--:|--:|
+||3|2|22|36|90
+||3|3|63|216|1'680
+||3|4|147|1'296|34'650
+||3|5|317|7'776|756'756
+||4|2|244|576|2'520
+||4|3|1'630|13'824|369'600
+||4|4||331'776|63'063'000
+||5|2|4'548|14'400|113'400
+||5|3|91'461|1'728'000|168'168'000
+||5|4||207'360'000|305'540'235'000
+||5|5||24'883'200'000|623'360'743'125'120
+demo|4|5||7'962'624|11'732'745'024
+la24|15|10||$\approx$&nbsp;1.462*10^121^|$\approx$&nbsp;2.293*10^164^
+abz7|20|15||$\approx$&nbsp;6.193*10^275^|$\approx$&nbsp;1.432*10^372^
+yn4|20|20||$\approx$&nbsp;5.278*10^367^|$\approx$&nbsp;1.213*10^501^
+swv15|50|10||$\approx$&nbsp;6.772*10^644^|$\approx$&nbsp;1.254*10^806^
 
-: The size&nbsp;$\left|\searchSpace\right|$ of the search space&nbsp;$\searchSpace$ for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth] and with the size&nbsp;$\left|\solutionSpace\right|$ of the solution space) {#tbl:jsspSearchSpaceTable}
+: The sizes&nbsp;$\left|\searchSpace\right|$ and&nbsp;$\left|\solutionSpace\right|$ of the search and solution spaces, as well as the lower bound&nbsp;$\lowerBound(\#\textnormal{feasible})$ of the number of feasible solutions for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth] and with the size&nbsp;$\left|\solutionSpace\right|$ of the solution space) {#tbl:jsspSearchSpaceTable}
 
 We give some example values for this search space size&nbsp;$\left|\searchSpace\right|$ in [@tbl:jsspSearchSpaceTable].
 From the table, we can immediately see that the number of points in the search space, too, grows very quickly with both the number of jobs&nbsp;$\jsspJobs$ and the number of machines&nbsp;$\jsspMachines$ of an JSSP instance&nbsp;$\instance$.
@@ -138,7 +142,6 @@ From the table, we can immediately see that the number of points in the search s
 For our `demo` JSSP instance with&nbsp;$\jsspJobs=4$ jobs and&nbsp;$\jsspMachines=5$ machines, we already have about 12&nbsp;billion different points in the search space and 7&nbsp;million possible, non-wasteful candidate solutions.
 From the table we also see that there is some redundancy in our mapping, $\repMap$&nbsp;here is not [injective](http://en.wikipedia.org/wiki/Injective_function):
 If we would exchange the first three numbers in the example string in [@fig:jssp_mapping_demo], we would obtain the same Gantt chart, as jobs&nbsp;0, 1, and&nbsp;2 start at different machines.
-Actually, in practice we should avoid redundancy in the search space, as it will slow down our algorithm&nbsp;[@KW2002OTUOREIMBES].
-However, here we will stick with our proposed mapping because it is very simple and allows me to relatively easily introduce and discuss many different approaches, algorithms, and sub-algorithms.[^betterMapping]
 
-[^betterMapping]: Of course, we could represent a solution as&nbsp;$\jsspMachines$ separate arrays, each with a permutation of the&nbsp;$\jsspJobs$ job-ids. This would render the following discussions and algorithms a little bit more complicated, while the goal of the book is to be readable and easy to understand.
+In practice we should avoid redundancy in the search space, as it will slow down our algorithm&nbsp;[@KW2002OTUOREIMBES].
+However, here we will stick with our proposed mapping because it is very simple, it solves the problem of feasibility of candidate solutions, and it allows me to relatively easily introduce and discuss many different approaches, algorithms, and sub-algorithms.

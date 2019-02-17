@@ -27,7 +27,7 @@ Usually, in order to actually implement an optimization approach, there also wil
 1. A search space&nbsp;$\searchSpace$ which can more easily be processed by an optimization algorithm under the hood than&nbsp;$\solutionSpace$ ([@sec:searchSpace]).
 2. A representation mapping $\repMap:\searchSpace\mapsto\solutionSpace$ which translates the points&nbsp;$\sespel$ of the search space&nbsp;$\searchSpace$ to candidate solutions&nbsp;$\solspel\in\solutionSpace$ in the solution space&nbsp;$\solutionSpace$ ([@sec:searchSpace]).
 3. Search operators&nbsp;$\searchOp:\searchSpace^n\mapsto\searchSpace$, which allow for the iterative exploration of the search space&nbsp;$\searchSpace$ ([@sec:searchOperators]).
-4. A termination criterion&nbsp;$\shouldTerminate$ which tells the optimization algorithm when to stop ([@sec:terminationCriterion]).
+4. A termination criterion which tells the optimization algorithm when to stop ([@sec:terminationCriterion]).
 
 We will explore these structural elements that make up an optimization problem in this chapter, based on a concrete example of the Job Shop Scheduling Problem (JSSP) from [@sec:jsspExample]&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP].
 This example should give a reasonable idea about how the definitions can be applied in practice.

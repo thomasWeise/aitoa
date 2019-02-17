@@ -88,7 +88,7 @@ This algorithm is implemented in [@lst:HillClimber] and will refer to it as&nbsp
 We now apply our&nbsp;`hc` algorithm together with the `1swap` to the JSSP.
 We will refer to this setup as `hc_1swap` and present its results with those of&nbsp;`rs` in [@tbl:hillClimbing1SwapJSSP].
 
-|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
 |`abz7`|656|`hc_1swap`|**717**|**800**|**798**|28|**0**s|16978|
 |||`rs`|895|945|948|**12**|77s|8246019|
@@ -183,7 +183,7 @@ We implement `hcr_256_1swap`, which begins at a new random point in the search s
 Of course, the actual search procedure of both algorithms is still the same as the one of the plain hill climber `hc_1swap`.
 What we can expect is therefore mainly an utilization of the variance in the end results and the time "wasted" after `hc_1swap` has converged.
 
-|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
 |`abz7`|656|`hc_1swap`|**717**|800|798|28|**0**s|16978|
 |||`hcr_256_1swap`|738|765|766|**7**|82s|22881557|
@@ -291,7 +291,7 @@ The operator therefore can make use of the *causality* while &ndash; at least th
 
 Let us now compare the end results that our hill climbers can achieve using either the `1swap` or the new `nswap` operator after three minutes of runtime on my little laptop in [@tbl:hillClimbingNSwapRSJSSP].
 
-|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
 |`abz7`|656|`hc_1swap`|717|800|798|28|**0**s|16978|
 |||`hc_nswap`|724|757|757|17|30s|8145596|

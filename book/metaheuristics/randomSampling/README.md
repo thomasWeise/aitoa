@@ -43,14 +43,14 @@ Of course, since the algorithm is *randomized*, it may give us a different resul
 In order to understand what kind of solution qualities we can expect, we hence have to run it a couple of times and compute result statistics.
 We therefore execute our program 101&nbsp;times and the results are summarized in [@tbl:singleRandomSampleJSSP].
 
-|$\instance$|$\lowerBound{\objf}$|best|mean|med|sd|med(t)|med(FEs)|
+|$\instance$|$\lowerBound(\objf)$|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|--:|--:|--:|--:|--:|--:
 |`abz7`|656|1131|1334|1326|106|0s|1|
 |`la24`|935|1487|1842|1814|165|0s|1|
 |`swv15`|2885|5935|6600|6563|346|0s|1|
 |`yn4`|929|1754|2036|2039|125|0s|1|
 
-: The results of the single random sample algorithm&nbsp;`1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound{\objf}$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, the standard deviation *sd* of the result quality, as well as the median time&nbsp;*med(t)* and FEs&nbsp;*med(FEs)* until a run was finished. {#tbl:singleRandomSampleJSSP}
+: The results of the single random sample algorithm&nbsp;`1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound(\objf)$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, the standard deviation *sd* of the result quality, as well as the median time&nbsp;*med(t)* and FEs&nbsp;*med(FEs)* until a run was finished. {#tbl:singleRandomSampleJSSP}
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_1rs_med.svgz}){#fig:jssp_gantt_1rs_med width=84%}
 
@@ -106,7 +106,7 @@ Matter of fact, each run of our&nbsp;`rs` algorithm can create and test several 
 Furthermore, the standard deviation of the results becomes lower as well.
 This means that this algorithm has a more reliable performance, we are more likely to get results close to the mean or median performance when we use&nbs;`rs` compared to&nbsp;`1rs`.
 
-|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
 |`abz7`|656|`1rs`|1131|1334|1326|106|**0**s|**1**|
 |||`rs`|**895**|**945**|**948**|**12**|77s|8246019|

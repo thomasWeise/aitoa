@@ -52,7 +52,7 @@ Solving a JSSP where all sub-jobs have the same time requirement, for instance, 
 
 If we apply an approximation algorithm, then we do not have the guarantee that the solution we get is optimal.
 We often do not even know if the best solution we currently have is optimal or not.
-In some cases, we be able to compute a *lower bound*&nbsp;$\lowerBound{\objf}$ for the objective value of an optimal solution, i.e., we know "It is not possible that any solution can have a quality better than $\lowerBound{\objf}$, but we may not know whether a solution actually exists that has quality&nbsp;$\lowerBound{\objf}$."
+In some cases, we be able to compute a *lower bound*&nbsp;$\lowerBound(\objf)$ for the objective value of an optimal solution, i.e., we know "It is not possible that any solution can have a quality better than $\lowerBound(\objf)$, but we may not know whether a solution actually exists that has quality&nbsp;$\lowerBound(\objf)$."
 This is not useful for solving the problem, but it can tell us whether our method for solving the problem is good.
 For instance, if we have developed an algorithm for approximately solving a given problem and we *know* that the qualities of the solutions we get are close to a the lower bound, then we know that our algorithm is good.
 We then know that improving the result quality of the algorithm may be hard, maybe even impossible, and probably not worthwhile.
@@ -69,7 +69,7 @@ There may be multiple globally optimal solutions, which then would all have the 
 
 When facing a JSSP instance&nbsp;$\instance$, we do not know whether a given Gantt chart is the globally optimal solution or not, because we do not know the shortest possible makespan.
 There is no direct way in which we can compute it.
-But we can, at least, compute some *lower bound*&nbsp;$\lowerBound{\objf}$ for the best possible makespan.
+But we can, at least, compute some *lower bound*&nbsp;$\lowerBound(\objf)$ for the best possible makespan.
 
 For instance, we know that a job&nbsp;$\jsspJobIndex$ needs at least as long to complete as the sum&nbsp;$\sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ over the processing times of all of its sub-jobs.
 It is clear that no schedule can complete faster then the longst job.
@@ -79,18 +79,18 @@ But it may also include a least initial idle time&nbsp;$\jsspMachineStartIdle{\j
 Similarly, there is a least idle time&nbsp;$\jsspMachineEndIdle{\jsspMachineIndex}$ at the end if these sub-jobs never come last in their job.
 As lower bound for the fastest schedule that could theoretically exist, we therefore get:
 
-$$ \lowerBound{\objf} = \max\left\{\max_{\jsspJobIndex}\left\{ \sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\right\} \;,\; \max_{\jsspMachineIndex} \left\{ \jsspMachineStartIdle{\jsspMachineIndex}+\jsspMachineRuntime{\jsspMachineIndex} +\jsspMachineEndIdle{\jsspMachineIndex}\right\}\right\} $$ {#eq:jsspLowerBound}
+$$ \lowerBound(\objf) = \max\left\{\max_{\jsspJobIndex}\left\{ \sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\right\} \;,\; \max_{\jsspMachineIndex} \left\{ \jsspMachineStartIdle{\jsspMachineIndex}+\jsspMachineRuntime{\jsspMachineIndex} +\jsspMachineEndIdle{\jsspMachineIndex}\right\}\right\} $$ {#eq:jsspLowerBound}
 
 More details are given in [@sec:appendix:jssp:lowerBounds] and [@T199BFBSP].
 
 Of course, we cannot know whether a schedule exists that can achieve this lower bound makespan.
 There simply may not be any way to arrange the jobs such that no sub-job stalls any other sub-job.
-This is why the value&nbsp;$\lowerBound{\objf}$ is a lower bound: we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
+This is why the value&nbsp;$\lowerBound(\objf)$ is a lower bound: we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
 
-However, if our algorithms produce solutions with a quality close to&nbsp;$\lowerBound{\objf}$, we know that are doing very well.
+However, if our algorithms produce solutions with a quality close to&nbsp;$\lowerBound(\objf)$, we know that are doing very well.
 The lower bounds for the makespans of our example problems are illustrated in [@tbl:jsspLowerBoundsTable].
 
-|name|$\jsspJobs$|$\jsspMachines$|$\lowerBound{\objf}$|$\lowerBound{\objf}^{\star}$|source for&nbsp;$\lowerBound{\objf}^{\star}$
+|name|$\jsspJobs$|$\jsspMachines$|$\lowerBound(\objf)$|$\lowerBound(\objf)^{\star}$|source for&nbsp;$\lowerBound{\objf}^{\star}$
 |:--|--:|--:|--:|--:|:--|
 demo|4|5|180|180|[@eq:jsspLowerBound]
 abz7|20|15|638|656|[@MF1975OSWRTADDTMML; @VLS2015FDSFCBS; @VLS2015FDSFCBSDER; @vH2015JSIAS]
@@ -98,7 +98,7 @@ la24|15|10|872|935|[@AC1991ACSOTJSSP; @vH2015JSIAS]
 swv15|50|10|2885|2885|[@eq:jsspLowerBound]
 yn4|20|20|818|929|[@VLS2015FDSFCBS; @VLS2015FDSFCBSDER; @vH2015JSIAS]
 
-: The lower bounds&nbsp;$\lowerBound{\objf}$ for the makespan of the optimal solutions for our example problems. For the instances `abz7`, `la24`, and `yn4`, research literature provides better/higher lower bounds $\lowerBound{\objf}^{\star}$, for which we provide references in the last column. {#tbl:jsspLowerBoundsTable}
+: The lower bounds&nbsp;$\lowerBound{\objf}$ for the makespan of the optimal solutions for our example problems. For the instances `abz7`, `la24`, and `yn4`, research literature provides better/higher lower bounds $\lowerBound(\objf)^{\star}$, for which we provide references in the last column. {#tbl:jsspLowerBoundsTable}
 
 ![The globally optimal solution of the demo instance [@fig:jssp_demo_instance], whose makespan happens to be the same as the lower bound.](\relative.path{gantt_demo_optimal_bound.svgz}){#fig:gantt_demo_optimal_bound width=80%}
 
@@ -120,4 +120,4 @@ Thus, [@fig:gantt_demo_optimal_bound] illustrates the optimal solution for the `
 
 Then, all the jobs together on the machine will consume&nbsp;$\jsspMachineRuntime{3}=150$ time units if we can execute them without further delay.
 Finally, it regardless with which job we finish on this machine, it will lead to a further waiting time of&nbsp;$\jsspMachineEndIdle{3}=10$ time units.
-This leads to a lower bound&nbsp;$\lowerBound{\objf}$ of&nbsp;180 and since we found the illustrated candidate solution with exactly this makespan, we have solved this (very easy) JSSP instance.
+This leads to a lower bound&nbsp;$\lowerBound(\objf)$ of&nbsp;180 and since we found the illustrated candidate solution with exactly this makespan, we have solved this (very easy) JSSP instance.

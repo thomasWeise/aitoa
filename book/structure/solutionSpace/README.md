@@ -58,39 +58,65 @@ It is not directly clear how many Gantt charts exist.
 If we allow arbitrary useless waiting times between jobs, then we could create arbitrarily many different valid Gantt charts for any problem instance.
 Let us therefore assume that no time is wasted by waiting unnecessarily.
 
-In this case, there exist exactly&nbsp;$\jsspJobs!=\prod_{\jsspJobIndex=1}^{\jsspJobs} \jsspJobIndex$ possible ways to arrange of&nbsp;$\jsspJobs$ on *each* of the&nbsp;$\jsspMachines$ machines.
+In this case, there are&nbsp;$\jsspJobs!=\prod_{\jsspJobIndex=1}^{\jsspJobs} \jsspJobIndex$ possible ways to arrange of&nbsp;$\jsspJobs$ on *each* of the&nbsp;$\jsspMachines$ machines.
 $\jsspJobs!$, called the [factorial](http://en.wikipedia.org/wiki/Factorial) of&nbsp;$\jsspJobs$, is the number of different [permutations](http://en.wikipedia.org/wiki/Permutation) (or orderings) of&nbsp;$\jsspJobs$ objects.
 If we have three jobs $a$, $b$, and $c$, then there are $3!=1*2*3=6$ possible permutations, namely $(a,b,c)$, $(a,c,b)$, $(b,a,c)$, $(b, c, a)$, $(c, a, b)$, and $(c, b, a)$.
 If we have three jobs and one machine, this is the number of possible different Gantt charts that do not waste time.
 
 If we would have&nbsp;$\jsspJobs=3$ jobs and&nbsp;$\jsspMachines=2$ machines, we then would have $(3!)^2=36$ possible Gantt charts, as for each of the&nbsp;6 possible sequence of jobs on the first machines, there would be&nbsp;6 possible arrangements on the second machine.
 For&nbsp;$\jsspMachines=2$ machines, it is then $(\jsspJobs!)^3$, and so on.
-In the general case, we obtain [@eq:jssp_solution_space_size] for the size&nbsp;$\left|\solutionSpace\right|$ of the solution space&nbsp;$\solutionSpace$.
+In the general case, we obtain [@eq:jssp_solution_space_size_upper] for the size&nbsp;$\left|\solutionSpace\right|$ of the solution space&nbsp;$\solutionSpace$.
 
-$$ \left|\solutionSpace\right| = (\jsspJobs!)^{\jsspMachines} $$ {#eq:jssp_solution_space_size}
+$$ \left|\solutionSpace\right| = (\jsspJobs!)^{\jsspMachines} $$ {#eq:jssp_solution_space_size_upper}
 
-|name|$\jsspJobs$|$\jsspMachines$|$\left|\solutionSpace\right|$|
-|:--|--:|--:|--:|
-||3|2|36
-||3|3|216
-||3|4|1'296
-||3|5|7'776
-||4|2|576
-||4|3|13'824
-||4|4|331'776
-||5|2|14'400
-||5|3|1'728'000
-||5|4|207'360'000
-||5|5|24'883'200'000
-`demo`|4|5|7'962'624
-`la24`|15|10|$\approx$ 1.462*10^121^
-`abz7`|20|15|$\approx$ 6.193*10^275^
-`yn4`|20|20|$\approx$ 5.278*10^367^
-`swv15`|50|10|$\approx$ 6.772*10^644^
+However, the fact that we can generate $(\jsspJobs!)^{\jsspMachines}$ possible Gantt charts without useless delay for a JSSP with&nbsp;$\jsspJobs$ jobs and&nbsp;$\jsspMachines$ machines does not mean that all of them are actual *feasible* solutions.
+
+#### The Feasibility of the Solutions {#sec:solutionSpace:feasibility}
+
+Imagine a JSSP with&nbsp;$\jsspJobs=2$ jobs and&nbsp;$\jsspMachines=2$ machines.
+There are&nbsp;$(2!)^2=(1*2)^2=4$ possible Gantt charts.
+Assume that the first job needs to first be processed by machine&nbsp;0 and then by machine&nbsp;1, while the second job first noods to go to machine&nbsp;1 and then to machine&nbsp;0.
+A Gantt chart which assigns the first job first to machine&nbsp;1 and the second job first to machine&nbsp;$0$ cannot be executed in practice, i.e., is *infeasible*.
+It contains a [deadlock](http://en.wikipedia.org/wiki/Deadlock).
+Hence, there are only three out of four possible Gantt charts that work for this problem instance.
+For a problem instance where all jobs need to pass through all machines in the same sequence, however, all possible Gantt charts will work.
+
+\text.block{definition}{feasibility}{A candidate solution&nbsp;$\solspel\in\solutionSpace$ is *feasible* if it fulfills all conditions and constraints to applicable in practice.}
+
+The number of actually feasible Gantt charts in&nbsp;$\solutionSpace$ is different for different problem instances.
+When solving a JSSP, we obviously only want to find feasible solutions.
+
+|name|$\jsspJobs$|$\jsspMachines$|$\lowerBound(\#\textnormal{feasible})$|$\left|\solutionSpace\right|$|
+|:--|--:|--:|--:|--:|
+||2|2|3|4
+||2|3|4|8
+||2|4|5|16
+||2|5|6|32
+||3|2|22|36
+||3|3|63|216
+||3|4|147|1'296
+||3|5|317|7'776
+||4|2|244|576
+||4|3|1'630|13'824
+||4|4||331'776
+||5|2|4'548|14'400
+||5|3|91'461|1'728'000
+||5|4||207'360'000
+||5|5||24'883'200'000
+demo|4|5||7'962'624
+la24|15|10||$\approx$&nbsp;1.462*10^121^
+abz7|20|15||$\approx$&nbsp;6.193*10^275^
+yn4|20|20||$\approx$&nbsp;5.278*10^367^
+swv15|50|10||$\approx$&nbsp;6.772*10^644^
 
 : The size&nbsp;$\left|\solutionSpace\right|$ of the solution space&nbsp;$\solutionSpace$ (without schedules that stall uselessly) for selected of values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (later compare also with [@fig:function_growth]) {#tbl:jsspSolutionSpaceTable}
 
-We illustrate some examples for the number&nbsp;$\left|\solutionSpace\right|$ of schedules which do not waste time useless in comparison to the problem size in [@tbl:jsspSolutionSpaceTable].
-Here we find that even small problems with $\jsspMachines=5$ machines and $\jsspJobs=5$ jobs already have billions of possible solutions.
+We illustrate some examples for the number&nbsp;$\left|\solutionSpace\right|$ of schedules which do not waste time useless in comparison to the problem size parameters&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$ in [@tbl:jsspSolutionSpaceTable].
+It is not so easy to find a formula for the lower bound&nbsp;$\lowerBound(\#\textnormal{feasible})$ of the number&nbsp;$\#\textnormal{feasible}$ of feasible Gantt charts based on&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$.
+It is not important here either, so we just provide it for some smaller, selected instances in&nbsp;[@tbl:jsspSolutionSpaceTable].
+
+We find that even small problems with $\jsspMachines=5$ machines and $\jsspJobs=5$ jobs already have billions of possible solutions.
 The four more realistic problem instances which we will try to solve here already have more solutions that what we could ever enumerate, list, or store with any conceivable hardware or computer.
 As we cannot simply test all possible solutions and pick the best one, we will need some more sophisticated algorithms to solve these problems &ndash; and this is what we will discuss in the following.
+Also, if we are unlucky, most of the possible Gantt charts might be infeasible, as&nbsp;$\lowerBound(\#\textnormal{feasible})$ can be much smaller than&nbsp;$\left|\solutionSpace\right|$.
+
