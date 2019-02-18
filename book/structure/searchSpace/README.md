@@ -11,6 +11,18 @@ But&nbsp;$\solutionSpace$ it not necessarily is the space that is most suitable 
 
 \text.block{definition}{representationMapping}{The *representation mapping*&nbsp;$\repMap:\searchSpace\mapsto\solutionSpace$ is a [left-total](http://en.wikipedia.org/wiki/Binary_relation#left-total) relation which maps the points&nbsp;$\sespel\in\searchSpace$ of the search space&nbsp;$\searchSpace$ to the candidate solutions&nbsp;$\solspel\in\solutionSpace$ in the solution space&nbsp;$\solutionSpace$.}
 
+Spaces that are especially suitable for searching in include, for instances:
+
+1. subsets of $s$-dimensional real vectors, i.e., $\realNumbers^s$,
+2. the set&nbsp;$\mathSpace{P}(s)$ of sequences/permutations of&nbsp;$s$ objects, and
+3. a number of&nbsp;$s$ yes-no decisions, which can be represented as bit strings of length&nbsp;$s$ and spans the space&nbsp;$\{0,1\}^s$.
+
+These spaces have clear and simple structures and we can intuitively understand, for instance, the concepts such as "distance" in&nbsp;$\realNumbers^s$ or&nbsp;$\{0,1\}^s$ or "similarity" in&nbsp;$\mathSpace{P}(s)$.
+For such spaces, we can relatively easily define good search methods and can rely on a large amount of existing research work and literature.
+If we are lucky, then our solution space&nbsp;$\solutionSpace$ is "similar" to one of these well-known and well-researched data structures.
+Then, we can set&nbsp;$\searchSpace=\solutionSpace$ and use the identity mapping&nbsp;$\repMap(\sespel)=\sespel\forall\sespel\in\searchSpace$ as representation mapping.
+In other cases, we will often prefer to map&nbsp;$\solutionSpace$ to something similar to these spaces and define&nbsp;$\repMap$ accordingly.  
+
 The mapping&nbsp;$\repMap$ does not need to be [injective](http://en.wikipedia.org/wiki/Injective_function), as it may map two points&nbsp;$\sespel_1$ and&nbsp;$\sespel_2$ to the same candidate solution even though they are different ($\sespel_1\neq \sespel_2$).
 Then, there exists some redundancy in the search space.
 We would normally like to avoid redundancy, as it tends to slow down the optimization process&nbsp;[@KW2002OTUOREIMBES]..
@@ -25,7 +37,7 @@ Being surjective is therefore a good feature for&nbsp;$\repMap$.
 The interface given in [@lst:IRepresentationMapping] provides a function `map` which maps one point&nbsp;`x` in the search space class&nbsp;`X` to a candidate solution instance&nbsp;`y` of the solution space class&nbsp;`Y`.
 We define the interface as [generic](http://en.wikipedia.org/wiki/Generics_in_Java), because we here do not make any assumption about the nature of&nbsp;`X and&nbsp;`Y`.
 This interface therefore truly corresponds to the general definition $\repMap:\searchSpace\mapsto\solutionSpace$ of the representation mapping.
-Side note: An implementation of `map` will overwrite whatever contents were stored in&nbsp;`y` in the process, i.e., we assume that `Y` is a class whose instances can be modified.
+Side note: An implementation of `map` will overwrite whatever contents were stored in object&nbsp;`y` in the process, i.e., we assume that `Y` is a class whose instances can be modified.
 
 ### Example: Job Shop Scheduling {#sec:jsspSearchSpace}
 
@@ -46,7 +58,7 @@ Each job has&nbsp;$\jsspMachines=5$ sub-jobs that must be distributed to the mac
 We use a string of length&nbsp;$\jsspMachines*\jsspJobs=20$ denoting the priority of the sub-jobs.
 We *know* the order of the sub-jobs per job as part of the problem instance data&nbsp;$\instance$.
 We therefore do not need to encode it.
-This means that we just include each job's id&nbsp;$\jsspMachines=5$ times in the string.
+This means that we just include each job's id&nbsp;$\jsspMachines=5$ times in the string.^[Our search space is thus somehow similar to the set&nbsp;$\mathSpace{P}(\jsspJobs*\jsspMachines)$ of permutations of&nbsp;$\jsspJobs*\jsspMachines$ objects mentioned earlier, but adapted to the needs of our problem.]
 
 ![Illustration of the first four steps of the representation mapping of an example point in the search space to a candidate solution.](\relative.path{demo_mapping.svgz}){#fig:jssp_mapping_demo width=99%}
 
