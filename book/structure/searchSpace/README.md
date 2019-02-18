@@ -20,7 +20,7 @@ Spaces that are especially suitable for searching in include, for instances:
 These spaces have clear and simple structures and we can intuitively understand, for instance, the concepts such as "distance" in&nbsp;$\realNumbers^s$ or&nbsp;$\{0,1\}^s$ or "similarity" in&nbsp;$\mathSpace{P}(s)$.
 For such spaces, we can relatively easily define good search methods and can rely on a large amount of existing research work and literature.
 If we are lucky, then our solution space&nbsp;$\solutionSpace$ is "similar" to one of these well-known and well-researched data structures.
-Then, we can set&nbsp;$\searchSpace=\solutionSpace$ and use the identity mapping&nbsp;$\repMap(\sespel)=\sespel\forall\sespel\in\searchSpace$ as representation mapping.
+Then, we can set&nbsp;$\searchSpace=\solutionSpace$ and use the identity mapping&nbsp;$\repMap(\sespel)=\sespel\forall \sespel\in\searchSpace$ as representation mapping.
 In other cases, we will often prefer to map&nbsp;$\solutionSpace$ to something similar to these spaces and define&nbsp;$\repMap$ accordingly.  
 
 The mapping&nbsp;$\repMap$ does not need to be [injective](http://en.wikipedia.org/wiki/Injective_function), as it may map two points&nbsp;$\sespel_1$ and&nbsp;$\sespel_2$ to the same candidate solution even though they are different ($\sespel_1\neq \sespel_2$).
