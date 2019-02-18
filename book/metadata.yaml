@@ -27,13 +27,17 @@ citecolor: blue!50!black
 urlcolor: blue!50!black
 toccolor: black
 
-# hold floating objects in the same section and sub-section
+# line 1..3: hold floating objects in the same section and sub-section
+# line 4..6: prevent ugly broken footnotes
 header-includes:
 - |
   ```{=latex}
   \usepackage[section,above,below]{placeins}
   \let\Oldsubsection\subsection
   \renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+  \addtolength{\topskip}{0pt plus 10pt}
+  \interfootnotelinepenalty=10000
+  \raggedbottom
   ```
 
 # pandoc-crossref setup
