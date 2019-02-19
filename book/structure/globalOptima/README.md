@@ -50,7 +50,7 @@ We may sometimes be lucky and even find the optimum, while in other cases, we ma
 And we will get this within acceptable time limits.
 
 It should be noted that it sometimes also makes sense to critically analyze if we really need to solve the general version of the problem.
-For example, for the JSSP there exists a simple and fast algorithm that can find the optimal schedules for problem instances with exactly&nbsp;$\jsspMachines=2$ machines *and* if all&nbsp;$\jsspJobs$ jobs need to be processed by the two machines in exactly the same order&nbsp;[@J1954OTATSPSWSTI].
+For example, for the JSSP there exists a simple and fast [algorithm](http://en.wikipedia.org/wiki/Johnson%27s_rule) that can find the optimal schedules for problem instances with exactly&nbsp;$\jsspMachines=2$ machines *and* if all&nbsp;$\jsspJobs$ jobs need to be processed by the two machines in exactly the same order&nbsp;[@J1954OTATSPSWSTI].
 If our application always falls into a special case of the problem, we may be lucky to find an efficient way to always solve it to optimality.
 Otherwise, developing a good (meta-)heuristic algorithm which cannot provide guaranteed optimality is a good choice.
  

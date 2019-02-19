@@ -35,7 +35,7 @@ Being surjective is therefore a good feature for&nbsp;$\repMap$.
 \repo.listing{lst:IRepresentationMapping}{A general interface for representation mappings.}{java}{src/main/java/aitoa/structure/IRepresentationMapping.java}{}{}
 
 The interface given in [@lst:IRepresentationMapping] provides a function `map` which maps one point&nbsp;`x` in the search space class&nbsp;`X` to a candidate solution instance&nbsp;`y` of the solution space class&nbsp;`Y`.
-We define the interface as [generic](http://en.wikipedia.org/wiki/Generics_in_Java), because we here do not make any assumption about the nature of&nbsp;`X and&nbsp;`Y`.
+We define the interface as [generic](http://en.wikipedia.org/wiki/Generics_in_Java), because we here do not make any assumption about the nature of&nbsp;`X` and&nbsp;`Y`.
 This interface therefore truly corresponds to the general definition $\repMap:\searchSpace\mapsto\solutionSpace$ of the representation mapping.
 Side note: An implementation of `map` will overwrite whatever contents were stored in object&nbsp;`y` in the process, i.e., we assume that `Y` is a class whose instances can be modified.
 
