@@ -9,12 +9,16 @@ But what is the meaning "best"?
 Assume that we have a single objective function&nbsp;$\objf:\solutionSpace\mapsto\realNumbers$ defined over a solution space&nbsp;$\solutionSpace$.
 This objective function is our primary guide during the search and we are looking for its global optima.
 
-\text.block{definition}{globalOptimum}{If a candidate solution$\globalOptimum{\solspel}\in\solutionSpace$ is a *global optimum* for an optimization problem defined over the solution space&nbsp;$\solutionSpace$, then is no other candidate solution in&nbsp;$\solutionSpace$ which is better.}
+\text.block{definition}{globalOptimum}{If a candidate solution$\globalOptimum{\solspel}\in\solutionSpace$ is a *global optimum* for an optimization problem defined over the solution space&nbsp;$\solutionSpace$, then there is no other candidate solution in&nbsp;$\solutionSpace$ which is better.}
 
 \text.block{definition}{globalOptimumSO}{For every *global optimum*&nbsp;$\globalOptimum{\solspel}\in\solutionSpace$ of single-objective optimization problem with solution space&nbsp;$\solutionSpace$ and objective function&nbsp;$\objf:\solutionSpace\mapsto\realNumbers$ subject to minimization, it holds that $\objf(\solspel) \geq \objf(\globalOptimum{\solspel}) \forall \solspel \in \solutionSpace$.}
 
-The real-world meaning of a global optimum is nothing else than a *superlative*.
-If we solve a JSSP for a factory, our goal is the *shortest* makespan.
+Notice that \text.ref{globalOptimumSO} does not state that the objective value of&nbsp;$\globalOptimum{\solspel}$ needs to be better than the objective value of all other possible solutions.
+The reason is that there may be more than one global optimum, in which case all of them have the same objective value.
+Thus, a global optimum is not defined as a candidate solutions better than all other solutions, but as a solution for which no better alternative exists.
+
+The real-world meaning of a "globally optimal" is nothing else than "superlative".
+If we solve a JSSP for a factory, our goal is to find the *shortest* makespan.
 If we try to pack the factory's products into containers, we look for the packing that needs the *least* amount of containers.
 Thus, optimization means searching for such superlatives, as illustrated in [@fig:optimization_superlatives].
 Vice versa, whenever we are looking for the cheapest, fastest, strongest, best, biggest or smallest "thing", then we have an optimization problem at hand.
@@ -37,16 +41,19 @@ This cannot mitigate the exponentially growing runtime requirements of many opti
 
 Unfortunately, our example problems are amongst this kind of problem.
 (We also already know that even small instances of the JSSP can have millions or billions of possible candidate solutions, see [@tbl:jsspSolutionSpaceTable].)
-So what can we do?
-The exponential time requirement occurs if we make *guarantees* about the solution quality, especially about its optimality, over all possible scenarios.
 
-What we can do is that we can trade-in the *guarantee* of finding the globally optimal solution for lower runtime requirements.[^npruntimeother]
+So what can we do to solve such problems?
+The exponential time requirement occurs if we make *guarantees* about the solution quality, especially about its optimality, over all possible scenarios.
+What we can do, therefore, is that we can trade-in the *guarantee* of finding the globally optimal solution for lower runtime requirements.
 We can use algorithms from which we hope that they find a good *approximation* of the optimum, i.e., a solution which is very good with respect to the objective function, but which do not *guarantee* that their result will be the best possible solution.
 We may sometimes be lucky and even find the optimum, while in other cases, we may get a solution which is close enough.
 And we will get this within acceptable time limits.
 
-[^npruntimeother]: Another choice would be to drop the "over all possible scenarios" aspect, by developing algorithms for specific, simpler versions of the optimization problem.
-Solving a JSSP where all sub-jobs have the same time requirement, for instance, may be much easier.
+It should be noted that it sometimes also makes sense to critically analyze if we really need to solve the general version of the problem.
+For example, for the JSSP there exists a simple and fast algorithm that can find the optimal schedules for problem instances with exactly&nbsp;$\jsspMachines=2$ machines *and* if all&nbsp;$\jsspJobs$ jobs need to be processed by the two machines in exactly the same order&nbsp;[@J1954OTATSPSWSTI].
+If our application always falls into a special case of the problem, we may be lucky to find an efficient way to always solve it to optimality.
+Otherwise, developing a good (meta-)heuristic algorithm which cannot provide guaranteed optimality is a good choice.
+ 
 
 ### Bounds of the Objective Function
 
