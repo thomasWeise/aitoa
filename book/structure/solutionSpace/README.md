@@ -83,8 +83,10 @@ Assume that the first job needs to first be processed by machine&nbsp;0 and then
 A Gantt chart which assigns the first job first to machine&nbsp;1 and the second job first to machine&nbsp;$0$ cannot be executed in practice, i.e., is *infeasible*.
 It contains a [deadlock](http://en.wikipedia.org/wiki/Deadlock).
 Hence, there are only three out of four possible Gantt charts that work for this problem instance.
-For a problem instance where all jobs need to pass through all machines in the same sequence, however, all possible Gantt charts will work.
+For a problem instance where all jobs need to pass through all machines in the same sequence, however, all possible Gantt charts will work, as illustrated in [@fig:jssp_feasible_gantt].
 The number of actually feasible Gantt charts in&nbsp;$\solutionSpace$ is different for different problem instances.
+
+![Two different JSSP instances with&nbsp;$\jsspMachines=2$ machines and&nbsp;$\jsspJobs=2$ jobs, one of which has only three feasible candidate solutions while the other has four.](\relative.path{jssp_feasible_gantt.svgz}){#fig:jssp_feasible_gantt width=90%}
 
 \text.block{definition}{feasibility}{A candidate solution&nbsp;$\solspel\in\solutionSpace$ is *feasible* if it fulfills all conditions and constraints to applicable in practice.}
 
