@@ -322,6 +322,7 @@ We now compare the end results of the two setups `ea4096_nswap` and `ea4096_nswa
 | On instance `la24`, we obtain 0.3275 as $p$-value.
 | On instance `swv15`, we obtain 0.8757 as $p$-value.
 | On instance `yn4`, we obtain 0.0002 as $p$-value.
+| &nbsp;
 
 We obtain two very small $p$-values (on `abz7` and `yn4`), indicating that our binary operator `sequence` leads to real, significant improvements on these instances.
 The $p$-values bigger than 0.3 on the other two instances indicate that it does not make an actual difference there.

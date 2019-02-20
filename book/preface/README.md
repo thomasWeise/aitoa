@@ -3,6 +3,7 @@
 After I wrote *Global Optimization Algorithms &ndash; Theory and Applications*&nbsp;[@WGOEB] during my time as PhD student more than ten years ago, I now want to write a more direct guide to optimization, optimization algorithms, and metaheuristics.
 Currently, this book is in a very early stage of development.
 It is work-in-progress, so expect many changes.
+This book is available as [pdf](http://thomasweise.github.io/aitoa/aitoa.pdf), [html](http://thomasweise.github.io/aitoa/aitoa.html), and [epub](http://thomasweise.github.io/aitoa/aitoa.epub).
 
 This book is intended to be accessible and easy to read.
 In my old book&nbsp;[@WGOEB], I tried to focus mainly on the abstract algorithms and sometimes described what problems we can solve with them.
