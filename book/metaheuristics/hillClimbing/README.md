@@ -9,7 +9,7 @@ Every search step is thus independent of all prior steps.
 They remember the current best point&nbsp;$\bestSoFar{\sespel}$ in the search space&nbsp;$\searchSpace$.
 In every step, a local search algorithm investigates a point&nbsp;$\sespel$ similar to&nbsp;$\bestSoFar{\sespel}$.
 If it is better, it is accepted as the new best-so-far solution.
-Otherwise, it is discarted.
+Otherwise, it is discarded.
 
 \text.block{definition}{causality}{Causality means that small changes in the features of an object (or candidate solution) also lead to small changes in its behavior (or objective value).}
 
@@ -37,10 +37,10 @@ Such a&nbsp;`1swap` operator can be implemented as follows:
 5. Swap the values at indexes&nbsp;$i$ and&nbsp;$j$ in&nbsp;$\sespel'$.
 6. Return the now modified copy&nbsp;$\sespel'$ of&nbsp;$\sespel$.
 
-We implement this operator in [@lst:JSSPUnaryOperator1Swap].
-Notice that the operator is randomized, i.e., appling it twice to the same point in the search space will likely yield different results.
-
 \repo.listing{lst:JSSPUnaryOperator1Swap}{An excerpt of the `1swap` operator for the JSSP, an implementation of the unary search operation interface [@lst:IUnarySearchOperator]. `1swap` swaps two jobs in our encoding of Gantt diagrams.}{java}{src/main/java/aitoa/examples/jssp/JSSPUnaryOperator1Swap.java}{}{relevant}
+
+We implemented this operator in [@lst:JSSPUnaryOperator1Swap].
+Notice that the operator is randomized, i.e., applying it twice to the same point in the search space will likely yield different results.
 
 ![An example for the application of `1swap` to an existing point in the search space (top-left) for the `demo` JSSP instance. It yields a slightly modified copy (top-right) with two jobs swapped. If we map these to the solution space (bottom) using the representation mapping&nbsp;$\repMap$, the changes marked with violet frames occur (bottom-right).](\relative.path{jssp_unary_1swap_demo.svgz}){#fig:jssp_unary_1swap_demo width=99%}
 
@@ -61,11 +61,11 @@ As soon as we have a good solution, the solutions similar to it tend to be worse
 However, if we would have been at&nbsp;$\sespel'$ instead, an application of `1swap` could well have resulted in&nbsp;$\sespel$.
 Often, the chance to find a really good solution by iteratively sampling the neighborhoods of good solutions is higher than trying to randomly guessing them (as `rs` does) &nbsp; even if most of our samples are worse.
 
-### Hill Climbing Algorithm
+### Stochastic Hill Climbing Algorithm
 
 #### The Algorithm
 
-Hill Climbing&nbsp;[@RN2002AI; @WGOEB] is the simplest implementation of local search.
+[Stochastic](http://en.wikipedia.org/wiki/Stochastic_hill_climbing) Hill Climbing](http://en.wikipedia.org/wiki/Hill_climbing)&nbsp;[@RN2002AI; @S2008TADM; @WGOEB] is the simplest implementation of local search.
 It proceeds as follows:
 
 1. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
@@ -140,7 +140,7 @@ Of course, we will remember the **best ever encountered** candidate solution ove
 
 #### The Algorithm
 
-1. Set counter&nbsp;$C$ of unsuccessful search steps to&nbsp;$0$, initialize limit&nbsp;$L$ for the maximally allowed unsucessfuly search steps.
+1. Set counter&nbsp;$C$ of unsuccessful search steps to&nbsp;$0$, initialize limit&nbsp;$L$ for the maximally allowed unsuccessful search steps.
 2. Set the overall-best objective value&nbsp;$\obspel_B$ to infinity and the overall-best candidate solution&nbsp;$\solspel_B$ to `NULL`. 
 3. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
 4. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
@@ -161,8 +161,8 @@ Of course, we will remember the **best ever encountered** candidate solution ove
       
         i. increment&nbsp;$C$ by&nbsp;$1$
         ii. if $C\geq L$ then
-            A. Maybe: increase&nbsp;$L$ (see later).
-            B. Go back to step&nbsp;3.
+            (1) Maybe: increase&nbsp;$L$ (see later).
+            (2) Go back to step&nbsp;3.
 9. Return **best ever encountered**  objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B$ to the user.
 
 \repo.listing{lst:HillClimberWithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts, which remembers the best-so-far solution and tries to find better solutions in its neighborhood but restarts if it seems to be trapped in a local optimum.}{java}{src/main/java/aitoa/algorithms/HillClimberWithRestarts.java}{}{relevant}
@@ -289,7 +289,7 @@ The operator therefore can make use of the *causality* while &ndash; at least th
 
 #### Results on the JSSP
 
-Let us now compare the end results that our hill climbers can achieve using either the `1swap` or the new `nswap` operator after three minutes of runtime on my little laptop in [@tbl:hillClimbingNSwapRSJSSP].
+Let us now compare the end results that our hill climbers can achieve using either the `1swap` or the new `nswap` operator after three minutes of runtime on my little laptop computer in [@tbl:hillClimbingNSwapRSJSSP].
 
 |$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
@@ -337,7 +337,7 @@ From [@tbl:hillClimbingNSwapRSJSSP] we know that the `nswap` operator here can s
 The Gantt charts of the median solutions obtained with `hcr_256+5%_nswap` setup, illustrated in [@fig:jssp_gantt_hcr_256_5_nswap_med], do thus look similar to those obtained with `hcr_256+5%_1swap` in [@fig:jssp_gantt_hcr_256_5_1swap_med], although there are some slight differences.
 Although 1% savings in makespan does not look much, but in a practical application, even a small improvement can mean a lot of benefit.
 
-Both restarts and the idea of allowing bigger search steps with small probability are intented to decrease the chance of premature convergence.
+Both restarts and the idea of allowing bigger search steps with small probability are intended to decrease the chance of premature convergence.
 We have seen that they work separately and in this case, we were lucky that they also work hand-in-hand.
 This is not necessarily always the case, in optimization sometimes two helpful measures combined may lead to worse results, as we can see when comparing `hcr_256_1swap` with `hcr_256_nswap`.
 

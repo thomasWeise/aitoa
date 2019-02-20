@@ -8,7 +8,7 @@ Now we will look at a third concept to prevent premature convergence: Instead of
 
 ### Evolutionary Algorithm without Recombination {#sec:evolutionaryAlgorithmWithoutRecombination}
 
-Today, there exists a wide variant of Evolutionary Algorithms (EAs)&nbsp;[@WGOEB; @BFM1997EA; @G1989GA; @DJ2006ECAUA; @M1996GADSEP; @M1998GA].
+Today, there exists a wide variant of [Evolutionary Algorithms](http://en.wikipedia.org/wiki/Evolutionary_algorithm) (EAs)&nbsp;[@WGOEB; @BFM1997EA; @G1989GA; @DJ2006ECAUA; @M1996GADSEP; @M1998GA].
 We will begin with a very simple, yet efficient variant: the $(\mu+\lambda)$&nbsp;EA without recombination.[^EA:no:recombination]
 This algorithm always remembers the best&nbsp;$\mu\in\naturalNumbersO$ points in the search space found so far.
 In each step, it derives&nbsp;$\lambda\in\naturalNumbersO$ new points from them by applying the unary search operator.
@@ -212,17 +212,17 @@ The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm with recombination works a
         i. Set the source index&nbsp;$p$ to&nbsp;$p=(p+1)\bmod \mu$, i.e., make sure that every one of the&nbsp;$\mu$ selected points is used approximately the same number of times.
         ii. Draw a random number&nbsp;$c$ uniformly distributed in&nbsp;$[0,1)$.
         iii. If&nbsp;$c$ is less than the crossover rate&nbsp;$cr$, then we apply the binary operator:
-             (1) Randomly choose another index&nbsp;$p2$ from $0\dots(\mu-1)$ such that&nbsp;$p2\neq p$.
-             (2) Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_2(\elementOf{\arrayIndex{P}{p}}{\sespel}, \elementOf{\arrayIndex{P}{p2}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the binary search operator to the points stored at index&nbsp;$p$ and&nbsp;$p2$.
+             A. Randomly choose another index&nbsp;$p2$ from $0\dots(\mu-1)$ such that&nbsp;$p2\neq p$.
+             B. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_2(\elementOf{\arrayIndex{P}{p}}{\sespel}, \elementOf{\arrayIndex{P}{p2}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the binary search operator to the points stored at index&nbsp;$p$ and&nbsp;$p2$.
         iv. else, i.e., $c\geq cr$, then we apply the unary operator:
-            (3) Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the unary search operator to the point stored at index&nbsp;$p$.
+            C. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the unary search operator to the point stored at index&nbsp;$p$.
         v. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
         vi. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 5. Return the candidate solution corresponding to the best record in&nbsp;$P$ to the user.
 
 \repo.listing{lst:EAwithCrossover}{An excerpt of the implementation of the Evolutionary Algorithm algorithm **with** crossover.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,withcrossover}
 
-This algorithm, implemented in [@lst:EAwithCrossover] only differs from the version in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo] by choosing whether to use the unary or binary operator to sample new points from the search space (*steps&nbsp;(1)*, *(2)*, and&nbsp;*(3)*).
+This algorithm, implemented in [@lst:EAwithCrossover] only differs from the version in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo] by choosing whether to use the unary or binary operator to sample new points from the search space (*steps&nbsp;A*, *B*, and&nbsp;*C*).
 If&nbsp;$cr$ is the probability to apply the binary operator and we draw a random number&nbsp;$c$ which is uniformly distributed in&nbsp;$[0,1)$, then the probability that $c<cr$ is exactly&nbsp;$cr$ (see *point&nbsp;iii*).
 
 #### Results on the JSSP
@@ -273,10 +273,10 @@ So we need to carefully analyze whether the small improvements that our binary o
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`ea4096_nswap_5` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_ea4096_nswap_5_med.svgz}){#fig:jssp_gantt_ea4096_nswap_5_med width=84%}
 
-![The progress of the&nbsp;`ea4096_nswap` setup without binary operator compared to those of `ea4096_nswap_5` and&nbsp;`ea4096_nswap_30`, which apply the binary operator in 5% and 30% of thereproduction steps, over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_ea_cr_log.svgz}){#fig:jssp_progress_ea_cr_log width=84%}
+![The progress of the&nbsp;`ea4096_nswap` setup without binary operator compared to those of `ea4096_nswap_5` and&nbsp;`ea4096_nswap_30`, which apply the binary operator in 5% and 30% of the reproduction steps, over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_ea_cr_log.svgz}){#fig:jssp_progress_ea_cr_log width=84%}
 
 Indeed, if we look at the progress of the setups `ea4096_nswap`, `ea4096_nswap_5`, and `ea4096_nswap_30` over time (illustrated in [@fig:jssp_progress_ea_cr_log]), we find that they look quite similar.
-Also the shedules of median quality obtained by `ea4096_nswap_5` and plotted in [@fig:jssp_gantt_ea4096_nswap_5_med] do not look very different from those of `ea4096_nswap` shown in [@fig:jssp_gantt_ea4096_nswap_med].
+Also the schedules of median quality obtained by `ea4096_nswap_5` and plotted in [@fig:jssp_gantt_ea4096_nswap_5_med] do not look very different from those of `ea4096_nswap` shown in [@fig:jssp_gantt_ea4096_nswap_med].
 Of course, applying an operator only 5% of the time, which here seems to be the better choice, will probably not change the algorithm behavior very much.
 Furthermore, in instance `la24`, we are already very close to lower bound defining the best possible solution quality that can theoretically be reached.
 
@@ -305,7 +305,7 @@ The "further investigation" which allows us to make this decision is called [sig
 In short, a test as we use it here is a statistical procedure which starts with the assumption that the two lists&nbsp;$A$ and&nbsp;$B$ stem from the same source (called "distribution").
 It then tries to compute how likely it is, under this assumption, that we would see differences as big as those that we have in the data (e.g., the medians 1058 and 1067).
 The resulting probability is called&nbsp;$p$-value.
-If&nbsp;$p$ is very small, below a reasonable theshold&nbsp;$\alpha$, say $\alpha=2\%$, then this means that is very unlikely that we would see what we saw if&nbsp;$A$ and&nbsp;$B$ stem from the same distribution.
+If&nbsp;$p$ is very small, below a reasonable threshold&nbsp;$\alpha$, say $\alpha=2\%$, then this means that is very unlikely that we would see what we saw if&nbsp;$A$ and&nbsp;$B$ stem from the same distribution.
 In our case, a small&nbsp;$p$-value means that the observed differences in performance of the algorithm setups are probably "real".
 Of course, they could still be an artifact of the randomness, but the chance for that would be small (e.g., smaller than 2%).
 If&nbsp;$p$ is big, on the other hand, maybe around 30% or more, then we cannot be confident that our binary operator is useful, as claiming this would be wrong with a chance of at least&nbsp;30%.
