@@ -15,6 +15,9 @@ bibliography: bibliography.bib
 csl: http://www.zotero.org/styles/association-for-computing-machinery
 link-citations: true
 
+# HTML template metadata
+template.html: GitHub.html5
+
 # LaTeX template metadata
 template.latex: eisvogel-book.latex
 titlepage: true
