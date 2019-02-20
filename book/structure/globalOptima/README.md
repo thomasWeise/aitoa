@@ -119,7 +119,7 @@ The reason is that no first sub-job of any job starts at machine&nbsp;3.
 Job&nbsp;0 would get to machine&nbsp;3 the earliest after 50&nbsp;time units, job&nbsp;1 after&nbsp;30, job&nbsp;2 after&nbsp;62, and job&nbsp;3 after again 50&nbsp;time units.
 Also, no job in the `demo` instance finishes at machine&nbsp;3.
 Job&nbsp;0, for instance, needs to be processed by machine&nbsp;4 for 10&nbsp;time units after it has passed through machine&nbsp;3.
-Job&nbsp;1 requires 80&nbsp;more time units after finishing at machine&nbp;3, job&nbsp;2 also 10&nbsp;time units, and job&nbsp;3again&nbsp;50 time units.
+Job&nbsp;1 requires 80&nbsp;more time units after finishing at machine&nbsp;3, job&nbsp;2 also 10&nbsp;time units, and job&nbsp;3 again&nbsp;50 time units.
 In other words, machine&nbsp;3 needs to wait at least 30&nbsp;time units before it can commence its work and will remain idle for at least 10&nbsp;time units after processing the last sub job.
 In between, it will need to work for exactly&nbsp;140 time units, the total sum of the running time of all sub-jobs assigned to it.
 This means that no schedule can complete faster than $30+140+10=180$ time units.

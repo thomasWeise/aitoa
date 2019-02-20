@@ -104,7 +104,7 @@ Its best, mean, and median result quality are siginificantly better.
 Since creating random points in the search space is so fast that we can sample many more than 101&nbsp;candidate solutions, even the median and mean result quality of the&nbsp;`rs` algorithm are better than the best quality obtainable with&nbsp;`1rs`.
 Matter of fact, each run of our&nbsp;`rs` algorithm can create and test several million candidate solutions within the three minute time window, i.e., perform several million FEs.
 Furthermore, the standard deviation of the results becomes lower as well.
-This means that this algorithm has a more reliable performance, we are more likely to get results close to the mean or median performance when we use&nbs;`rs` compared to&nbsp;`1rs`.
+This means that this algorithm has a more reliable performance, we are more likely to get results close to the mean or median performance when we use&nbsp;`rs` compared to&nbsp;`1rs`.
 
 |$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
