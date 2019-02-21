@@ -16,7 +16,7 @@ An instance of the class is a piece of memory which holds concrete values for ea
 #### JSSP Instance Structure
 
 So how can we characterize a JSSP instance&nbsp;$\instance$?
-In the most basic scenario&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP], our factory has&nbsp;$\jsspMachines\in\naturalNumbersO$ machines.^[Where&nbsp;$\naturalNumbersO$ stands for the natural numbers greater than&nbsp;0, i.e., 1, 2, 3, &hellip;]
+In the most basic scenario&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP], our factory has&nbsp;$\jsspMachines\in\naturalNumbersO$ machines.^[where&nbsp;$\naturalNumbersO$ stands for the natural numbers greater than&nbsp;0, i.e., 1, 2, 3, &hellip;]
 At each point in time, a machine can either work on exactly one job or do nothing (be idle).
 There are&nbsp;$\jsspJobs\in\naturalNumbersO$ jobs that we need to schedule to these machines.
 For the sake of simplicity and for agreement between our notation here, the Java source code, and the example instances that we will use, we reference jobs and machines with zero-based indices from&nbsp;$0\dots(\jsspJobs-1)$ and&nbsp;$0\dots(\jsspMachines-1)$, respectively.
