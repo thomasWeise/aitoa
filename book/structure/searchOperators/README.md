@@ -13,11 +13,11 @@ Special cases of search operators are
 - binary operators ($n=2$, see [@lst:IBinarySearchOperator]), which sample a new point from the search space by combining information from two existing points, and
 - ternary  operators ($n=3$), which sample a new point from the search space by combining information from three existing points.
 
-\repo.listing{lst:INullarySearchOperator}{A generic interface for nullary search operators.}{java}{src/main/java/aitoa/structure/INullarySearchOperator.java}{}{}
+\repo.listing{lst:INullarySearchOperator}{A generic interface for nullary search operators.}{java}{src/main/java/aitoa/structure/INullarySearchOperator.java}{}{relevant}
 
-\repo.listing{lst:IUnarySearchOperator}{A generic interface for unary search operators.}{java}{src/main/java/aitoa/structure/IUnarySearchOperator.java}{}{}
+\repo.listing{lst:IUnarySearchOperator}{A generic interface for unary search operators.}{java}{src/main/java/aitoa/structure/IUnarySearchOperator.java}{}{relevant}
 
-\repo.listing{lst:IBinarySearchOperator}{A generic interface for binary search operators.}{java}{src/main/java/aitoa/structure/IBinarySearchOperator.java}{}{}
+\repo.listing{lst:IBinarySearchOperator}{A generic interface for binary search operators.}{java}{src/main/java/aitoa/structure/IBinarySearchOperator.java}{}{relevant}
 
 Whether, which, and how such such operators are used depends on the nature of the optimization algorithms and will be discussed later on.
 
