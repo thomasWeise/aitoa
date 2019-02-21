@@ -21,7 +21,7 @@ What would be a candidate solution to a JSSP instance as defined in [@sec:jsspIn
 Recall from [@sec:jsspExample] that our goal is to complete the jobs, i.e., the production tasks, as soon as possible.
 Hence, a candidate solution should tell us what to do, i.e., how to process the jobs on the machines.
 
-#### Idea: Gantt Chart
+#### Idea: Gantt Chart {#sec:jssp:gantt}
 
 This is basically what a [Gantt chart](http://en.wikipedia.org/wiki/Gantt_chart) is about, as illustrated in [@fig:gantt_demo_without_makespan].
 A Gantt chart defines what each of our&nbsp;$\jsspMachines$ machines has to do at each point in time.

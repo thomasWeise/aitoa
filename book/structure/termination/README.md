@@ -58,7 +58,7 @@ Still, they are one of the most important time measures in research.
 
 The problem can be solved by using both time measures when evaluating the algorithm's performance.
 
-### Example: Job Shop Scheduling
+### Example: Job Shop Scheduling {#sec:jssp:termination}
 
 In our example domain, the JSSP, we can assume that the human operator will input the instance data&nbsp;$\instance$ into the computer.
 Then she may go drink a coffee and expect the results to be ready upon her return.
