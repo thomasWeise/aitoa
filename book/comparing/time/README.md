@@ -63,7 +63,7 @@ But measuring time in function evaluations also has some *disadvantages*, namely
 For instance, an algorithm could necessitate a length pre-processing procedure before sampling even the first point from the search space.
 This would not be visible in the FE counter, because, well, it is not an FE.
 - A big problem is that one function evaluation can have extremely different actual time requirements in different algorithms.
-For instance, it is known that in a Traveling Salesman Problem&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV] with $n$&nbsp;cities, some algorithms can create an evaluate a new candidate solution within a *constant* number of steps, i.e., in&nbsp;$\bigO{1}$, while others need a number of steps growing quadratically with&nbsp;$n$, i.e., are in&nbsp;$\bigO{n^2}$~[@WCTLTCMY2014BOAAOSFFTTSP].
+For instance, it is known that in a Traveling Salesman Problem&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV] with $n$&nbsp;cities, some algorithms can create an evaluate a new candidate solution within a *constant* number of steps, i.e., in&nbsp;$\bigO{1}$, while others need a number of steps growing quadratically with&nbsp;$n$, i.e., are in&nbsp;$\bigO{n^2}$&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP].
 If an algorithm of the former type can achieve the same quality as an algorithm of the latter type, we could consider it as better even if it would need ten times as many FEs.
 Hence, FEs are only fair measurements for comparing two algorithms if they take approximately the same time in both of them.
 - Time measured in FEs is harder to comprehend in the context of parallelization and distribution of algorithms.
