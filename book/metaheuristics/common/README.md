@@ -21,7 +21,7 @@ Often, this is not explicitly written in the formal definition of the algorithms
 This variable is updated each time a better solution is found.
 Its value is returned when the algorithm stops.
 
-### Randomization
+### Randomization {#sec:randomizedAlgos}
 
 Often, metaheuristics make randomized choices.
 In cases where it is not clear whether doing "A" or doing "B" is better, it makes sense to simply flip a coin and do "A" if it is heads and "B" if it is tails.

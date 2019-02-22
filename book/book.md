@@ -5,6 +5,7 @@
 \relative.input{introduction/README.md}
 \relative.input{structure/README.md}
 \relative.input{metaheuristics/README.md}
+\relative.input{comparing/README.md}
 
 \relative.input{appendix/README.md}
 

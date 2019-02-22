@@ -25,7 +25,7 @@ Vice versa, whenever we are looking for the cheapest, fastest, strongest, best, 
 
 ![Optimization is the search for superlatives.](\relative.path{optimization_superlatives.svgz}){#fig:optimization_superlatives width=60%}
 
-### Approxiation of the Optimum
+### Approximation of the Optimum {#sec:approximationOfTheOptimum}
 
 When solving an optimization problem, we hope to find at least one global optimum (there may be multiple), as stated in \text.ref{optimizationProblemMathematical}.
 However, this may often not be possible or it will just take too long!
