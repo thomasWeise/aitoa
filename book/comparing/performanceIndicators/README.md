@@ -2,7 +2,7 @@
 
 Unfortunately, many optimization problems are computationally hard.
 If we want to guarantee that we can solve them to optimality, this would often incur an unacceptably long runtime.
-Assume that an algorithm&nbsp;$\mathcal{A}$ can solve a problem instance in one million years while algorithm&nbsp;$\mathcal{B}$ only needs fifty.
+Assume that an algorithm&nbsp;$\mathcal{A}$ can solve a problem instance in ten million years while algorithm&nbsp;$\mathcal{B}$ only needs one million.
 In a practical scenario, usually neither is useful nor acceptable and the fact that&nbsp;$\mathcal{B}$ is better than&nbsp;$\mathcal{A}$ would not matter.^[From a research perspective, it does matter, though.]
 
 As mentioned in [@sec:approximationOfTheOptimum], heuristic and metaheuristic optimization algorithms offer a trade-off between runtime and solution quality.
@@ -38,7 +38,7 @@ This could be a globally optimal quality or a threshold at which the user consid
 This approach is preferred in&nbsp;[@HAFR2010RPBBOB2ES; @FHRA2015CDR1] for benchmarking algorithms.
 
 It has the advantage that the number of algorithm steps or seconds needed to solve the problem is a meaningful and interpretable quantity.
-We can then make statements such as "Algorithm&nbsp;$\mathcal{A}$ is ten times faster than algorithm&nbsp;$\mathcal{B} [in solving this problem]."
+We can then make statements such as "Algorithm&nbsp;$\mathcal{B}$ is ten times faster than algorithm&nbsp;$\mathcal{A}$ [in solving this problem]."
 An improvement in the objective value, as we could measure in the vertical cut approach, has no such interpretable meaning, since we do not know whether it is hard or easy to, for instance, squeeze out 10 more time units of makespan in a JSSP instance.
 
 One disadvantage of this method is that we cannot guarantee that a run will reach the specified goal quality.
