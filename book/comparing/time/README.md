@@ -1,4 +1,4 @@
-## Measuring Time
+## Measuring Time {sec:measuringTime}
 
 Let us investigate the question: "What does good optimization algorithm performance mean?"
 As a first approximation, we could state that an optimization algorithm performs well if it can solve the optimization problem to optimality.
@@ -62,6 +62,8 @@ But measuring time in function evaluations also has some *disadvantages*, namely
 - An algorithm may have hidden complexities which are not "appearing" in the FEs.
 For instance, an algorithm could necessitate a length pre-processing procedure before sampling even the first point from the search space.
 This would not be visible in the FE counter, because, well, it is not an FE.
+The same holds for the selection step in an Evolutionary Algorithm (realized as sorting in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo]).
+Although this is probably a very fast procedure, it will be outside of what we can measure with FEs. 
 - A big problem is that one function evaluation can have extremely different actual time requirements in different algorithms.
 For instance, it is known that in a Traveling Salesman Problem&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV] with $n$&nbsp;cities, some algorithms can create an evaluate a new candidate solution within a *constant* number of steps, i.e., in&nbsp;$\bigO{1}$, while others need a number of steps growing quadratically with&nbsp;$n$, i.e., are in&nbsp;$\bigO{n^2}$&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP].
 If an algorithm of the former type can achieve the same quality as an algorithm of the latter type, we could consider it as better even if it would need ten times as many FEs.
@@ -85,18 +87,3 @@ Measuring the runtime of algorithms solving artificial problems does not make th
 
 That being said, I personally prefer to **measure both FEs and clock time**.
 This way, we are on the safe side.
-
-### Two Performance Indicators
-
-Unfortunately, many optimization problems are computationally hard.
-If we want to guarantee that we can solve them to optimality, this would often incur an unacceptably long runtime.
-Assume that an algorithm&nbsp;$\mathcal{A}$ can solve a problem instance in one million years while algorithm&nbsp;$\mathcal{B}$ only needs fifty.
-In a practical scenario, usually neither is useful nor acceptable and the fact that&nbsp;$\mathcal{B}$ is better than&nbsp;$\mathcal{A}$ would not matter.^[From a research perspective, it does matter, though.]
-
-As briefly mentioned in [@sec:approximationOfTheOptimum], heuristic and metaheuristic optimization algorithms offer a trade-off between runtime and solution quality.
-This means we can define two types of performance indicators.
-
-1. The solution quality we can get within a pre-defined time.
-2. The time we need to get reach a pre-defined solution quality.
-
-With *solution quality*, we of course mean the objective value of the best solution discovered, and *time* is used in the sense of the time measure we have chosen.
