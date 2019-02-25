@@ -110,7 +110,9 @@ We find that:
 - $\median(B)=\arrayIndex{b}{9} = 6$.
 
 The value $\arrayIndex{b}{18}=10008$ in&nbsp;$B$ is an unusual value.
-We often call such values [outliers](http://en.wikipedia.org/wiki/Outlier).
+Its appearance in&nbsp;$B$ has led to a complete change in the average computed based on the arithmetic mean in comparison to dataset&nbsp;$A$, while it had no impact on the median.
+
+We often call such odd values [outliers](http://en.wikipedia.org/wiki/Outlier).
 Such values may often represent measurement errors or observations which have been been disturbed by uncommon effects.
 In our experiments on the JSSP, for instance, a run with unusual bad performance may occur when, for whatever reason, the operating system was busy with other things (e.g., updating itself) during an ongoing run and thus taking away much of its 3 minute computation budget.
 Usually, we prefer statistical measures which do not suffer too much from anomalies in the data.
