@@ -15,3 +15,4 @@ Let us now discuss here how such comparisons can be conducted.
 
 \relative.input{time/README.md}
 \relative.input{performanceIndicators/README.md}
+\relative.input{statistics/README.md}
