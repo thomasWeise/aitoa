@@ -20,7 +20,9 @@ One issues we need to clarify first is that there is a difference between a prob
 
 \text.block{definition}{probabilityDistribution}{A *[probability distribution](http://en.wikipedia.org/wiki/Probability_distribution)*&nbsp;$F$ is an assignment of probabilities of occurrence to different possible outcomes in an experiment.}
 
-\text.block{definition}{sample}{A [random sample](http://en.wikipedia.org/wiki/Sample_(statistics)) of length&nbsp;$k\geq 1$ is a set of $k$&nbsp;independently measured outcomes of an experiment following a random distribution&nbsp;$F$.}
+\text.block{definition}{sample}{A [random sample](http://en.wikipedia.org/wiki/Sample_(statistics)) of length&nbsp;$k\geq 1$ is a set of $k$&nbsp;independent observations of an experiment following a random distribution&nbsp;$F$.}
+
+\text.block{definition}{observation}{An *observation* is a measured outcome of an experiment or random variable.}
 
 The specification of an optimization algorithm together with its input data, i.e., the problem instance to which it is applied, defines a probability distribution over the possible values a basic performance indicator takes on.
 If I would possess sufficient mathematical wisdom, I could develop a mathematical formula for the probability of every possible makespan that the 1-swap hill climber `hc_1swap` without restarts could produce on the `swv15` JSSP instance within 100'000&nbsp;FEs.
@@ -57,7 +59,6 @@ We can, however, try to *estimate* their parameters by running experiments and m
 |100'000'000|&hellip;|0.1667|0.1666|0.1666|0.1667|0.1667|0.1667|
 |1'000'000'000|&hellip;|0.1667|0.1667|0.1667|0.1667|0.1667|0.1667|
 
-
 : The results of one possible outcome of an experiment with several simulated dice throws. The number&nbsp;*\# throws* and the thrown *number* are given in the first two columns, whereas the relative frequency of occurrence of number&nbsp;$i$ is given in the columns&nbsp;$f_i$. {#tbl:diceThrow}
 
 Think about throwing an ideal dice.
@@ -74,3 +75,21 @@ This is called the [Law of Large Numbers](http://en.wikipedia.org/wiki/Law_of_la
 The takeaway message is: It is *never* enough to just apply an optimization algorithm once or twice to a problem instance to get a good impression of the expected solution quality.
 It is a good rule of thumb to always perform at least 20 independent runs.
 In our experiments on the JSSP, we did 101 runs per problem instance. 
+
+### Arithmetic Mean vs. Median
+
+Assume that we have obtained a sample&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1}$ of $n$&nbsp;observations of an experiment, e.g., we have measured the quality of the best discovered solutions of 101 independent runs of an optimization algorithm.
+We usually want to get reduce this set of numbers to a single value which can give us an impression of what the "expected outcome" (or result quality is).
+Two of the most common options for doing so is to either compute the *arithmetic mean* or the *median*.
+
+\text.block{definition}{arithmeticMean}{The [arithmetic mean](http://en.wikipedia.org/wiki/Arithmetic_mean) $\mean(A)$ is an estimate of the expected value of a data sample $A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1}$. It is computed as the sum of all&nbsp;$n$ elements&nbsp;$\arrayIndex{a}{i}$ in the sample data&nbsp;$A$ divided by the total number&nbsp;$n$ of values.
+$$ \mean(A) = \frac{1}{n} \sum_{i=0}^{n-1} \arrayIndex{a}{i} $$
+}
+ 
+\text.block{definition}{median}{The median $\median(A)$ is the value separating the bigger half from the lower half of a data sample or distribution. It is the value right in the middle of a *sorted* data sample $A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1}$ where $\arrayIndex{a}{i-1}\leq\arrayIndex{a}{i} \forall 0<i<n$.
+
+$$ \median{A} = \left\{\begin{array}{ll}
+\arrayIndex{a}{\frac{n}{2}} & \textnormal{if }n\textnormal{ is odd}\\
+\frac{1}{2}\left(\arrayIndex{a}{\frac{n}{2}-1} + \arrayIndex{a}{\frac{n}{2}}\right) & \textnormal{otherwise}%
+\end{array}\right. \quad \textnormal{iff }\arrayIndex{a}{i-1}\leq\arrayIndex{a}{i} \forall 0<i<n $$
+}
