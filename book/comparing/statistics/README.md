@@ -119,6 +119,12 @@ Takeaway message: It makes sense to prefer the median over the mean, because:
 
 - The median it is a more [robust](http://en.wikipedia.org/wiki/Robust_statistics) against outliers than the arithmetic mean.
 - The arithmetic mean is useful especially for symmetric distributions while it does not really represent an intuitive average for [skewed distributions](http://en.wikipedia.org/wiki/Skewness) while the median is, per definition, suitable for both kinds of distributions.
+- Median values are either actually measured outcomes (if we have an odd number of observations) or are usually very close to such (if we have an even number of observations), while arithmetic means may not be similar to any measurement.
+
+The later point is obvious in our example above: $\mean(B)=533$ is far away from any of the actual samples in&nbsp;$B$.
+By the way: We did 101 runs of our optimization algorithms in each of our JSSP experiments instead of one so that there would be an odd number of observations.
+I thus could always pick a candidate solution of median quality for illustration purposes.
+There is no guarantee whatsoever that a solution of mean quality exists in an experiment.
 
 It should be noted that it is very common in literature to report arithmetic means of results.
 While I personally think we should emphasize reporting medians over means, I suggest to report both to be on the safe side &ndash; as we did in our JSSP experiments.
