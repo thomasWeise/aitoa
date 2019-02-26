@@ -28,7 +28,7 @@ Hence, we would like to see robust measures of dispersion as well.
 \text.block{definition}{quantiles}{The $q$-quantiles are the cut points that divide a sorted* data sample $A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ where $\arrayIndex{a}{i-1}\leq \arrayIndex{a}{i} \; \forall i \in 1\dots (n-1)$ into $q$-equally sized parts.}
 
 $\quantile{k}{q}$ be the $k$^th^ $q$-quantile, with $k\in 1\dots (q-n)$, i.e., there are $q-1$ $q$-quantiles.
-The idea is that the probability&nbsp;\probability\left[z < \quantile{k}{q}\right]$ to make an observation&nbsp;$z$ which is smaller than the $k$^th^ $q$-quantile should be less or equal than $k/q$.
+The idea is that the probability&nbsp;$\probability\left[z < \quantile{k}{q}\right]$ to make an observation&nbsp;$z$ which is smaller than the $k$^th^ $q$-quantile should be less or equal than $k/q$.
 The probability to encounter a sample which is less or equal to the quantile should be greater or equal to $k/q$:
 
 $$ \probability\left[z < \quantile{k}{q}\right] \leq \frac{k}{q} \leq \probability\left[z \leq \quantile{k}{q}\right] $$
