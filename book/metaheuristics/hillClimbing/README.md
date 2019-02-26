@@ -121,7 +121,7 @@ After initial phases with quick progress, it stops making any further progress.
 With the exception of instance&nbsp;`la24`, there is much space between the runs of&nbsp;`rs` and&nbsp;`hc_1swap`.
 We can also see again that there is more variance in the end results of&nbsp;`hc_1swap` compared to those of&nbsp;`rs`, as they are spread wider in the vertical direction.
 
-### Hill Climbing with Restarts
+### Stochastic Hill Climbing with Restarts {#sec:stochasticHillClimbingWithRestarts}
 
 We now are in the same situation as with the&nbsp;`1rs` algorithm:
 There is some variance between the results and most of the "action" takes place in a short time compared to our total computational budget (1s vs. 3min).
