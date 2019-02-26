@@ -4,13 +4,13 @@ One issues we need to clarify first is that there is a difference between a prob
 
 \text.block{definition}{probabilityDistribution}{A *[probability distribution](http://en.wikipedia.org/wiki/Probability_distribution)*&nbsp;$F$ is an assignment of probabilities of occurrence to different possible outcomes in an experiment.}
 
-\text.block{definition}{sample}{A [random sample](http://en.wikipedia.org/wiki/Sample_(statistics)) of length&nbsp;$k\geq 1$ is a set of $k$&nbsp;independent observations of an experiment following a random distribution&nbsp;$F$.}
+\text.block{definition}{sample}{A *[random sample](http://en.wikipedia.org/wiki/Sample_(statistics))* of length&nbsp;$k\geq 1$ is a set of $k$&nbsp;independent observations of an experiment following a random distribution&nbsp;$F$.}
 
 \text.block{definition}{observation}{An *observation* is a measured outcome of an experiment or random variable.}
 
 The specification of an optimization algorithm together with its input data, i.e., the problem instance to which it is applied, defines a probability distribution over the possible values a basic performance indicator takes on.
 If I would possess sufficient mathematical wisdom, I could develop a mathematical formula for the probability of every possible makespan that the 1-swap hill climber `hc_1swap` without restarts could produce on the `swv15` JSSP instance within 100'000&nbsp;FEs.
-I could say something like: "With 4% probability, we will find a Gantt chart with a makespan of 2885 time units within 100'000&nbsp;FEs (by applying `hc_1swap` to `swv15."
+I could say something like: "With 4% probability, we will find a Gantt chart with a makespan of 2885 time units within 100'000&nbsp;FEs (by applying `hc_1swap` to `swv15`."
 With sufficient mathematical skills, I could define such probability distributions for all algorithms.
 Then, I would know absolutely which algorithm will be the best for which problem.
 
