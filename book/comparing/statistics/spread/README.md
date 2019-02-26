@@ -43,7 +43,7 @@ Otherwise, both [@eq:median] and [@eu:quantiles] [interpolate linearly](http://e
 
 $$\begin{array}{rcl}
 h&=&(n-1)\frac{k}{q}\\ 
-\quantile{k}{q} &=& \left\{\begin{array}{ll}
+\quantile{k}{q}(A) &=& \left\{\begin{array}{ll}
 \arrayIndex{a}{h}&\textnormal{if~}h\textnormal{~is integer}\\
 \arrayIndex{a}{\lfloor h\rfloor}+\left(h-\lfloor h\rfloor\right)*\left(\arrayIndex{a}{\lfloor h\rfloor+1}-\arrayIndex{a}{\lfloor h\rfloor}\right)&\textnormal{otherwise}
 \end{array}\right.\end{array} $$ {#eq:quantiles}
@@ -65,5 +65,19 @@ We find that:
 - $\variance(B)=\frac{1}{19-1} \sum_{i=0}^{n-1} \left(\arrayIndex{b}{i} - 533\right)^2 = \frac{94763306}{18}\approx 5264628.1$, meaning
 - $\stddev(A)=\sqrt{\variance(A)} \approx 3.317$ and
 - $\stddev(B)=\sqrt{\variance(B)} \approx 2294.5$, while on the other hand
-- $\quantile{1}{4}(A)=\quantile{1}{4}{B}=4.5$ and
-- $\quantile{3}{4}(A)=\quantile{3}{4}{B}=9$.
+- $\quantile{1}{4}(A)=\quantile{1}{4}(B)=4.5$ and
+- $\quantile{3}{4}(A)=\quantile{3}{4}(B)=9$.
+
+There again two takeaway messages from this section:
+
+1. An average measure without a measure of dispersion does not give us much information, as we do not know whether we can rely on getting results similar to the average or not.
+2. We can use quantiles to get a good understanding of the range of observations which is most likely to occur, as quantiles are more robust than standard deviations.
+
+Many research works report standard deviations, though, so it makes sense to also report them &ndash; especially since there are probably more people who know what a standard deviation than who know the meaning of quantiles.
+
+Nevertheless, there is one important issue:
+I often see reports of ranges in the form of $[\mean-\stddev,\mean+\stddev]$.
+Handle these with *extreme* caution.
+In particular, before writing such ranges anywhere, it should be verified first whether the observations actually contain values less than or equal to $\mean-\stddev$ and greater than or equal to $\mean+\stddev$.
+If we have a good optimization method which often finds globally optimal solutions, then distribution of discovered solution qualities is probably skewed towards the optimum with a heavy tail towards worse solutions.
+The mean of the returned objective values minus their standard deviation could be a value smaller than the optimal one, i.e., an invalid, non-existing objective value&hellip;
