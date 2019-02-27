@@ -39,7 +39,7 @@ The `R`&nbsp;programming language widely used in statistics applies [@eq:quantil
 In an ideally-sized data sample, the number of elements minus 1, i.e., $n-1$, would be a multiple of $q$.
 In this case, the $k$^th^ cut point would directly be located at index&nbsp;$h=(n-1)\frac{k}{q}$.
 Both in [@eq:quantiles] and in the formula for the median [@eq:median], this is included the first of the two alternative options.
-Otherwise, both [@eq:median] and [@eu:quantiles] [interpolate linearly](http://en.wikipedia.org/wiki/Linear_interpolation) between the elements at the two closest indices, namely $\lfloor h\rfloor$ and $\lfloor h\rfloor + 1$.   
+Otherwise, both [@eq:median] and [@eq:quantiles] [interpolate linearly](http://en.wikipedia.org/wiki/Linear_interpolation) between the elements at the two closest indices, namely $\lfloor h\rfloor$ and $\lfloor h\rfloor + 1$.   
 
 $$\begin{array}{rcl}
 h&=&(n-1)\frac{k}{q}\\ 
