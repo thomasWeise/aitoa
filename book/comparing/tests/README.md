@@ -66,10 +66,6 @@ This, actually, is the [binomial test](http://en.wikipedia.org/wiki/Binomial_tes
 ### The Concept of Many Statistical Tests
 
 This is, roughly, how statistical tests work.
-
-
-
-
 We make a set of observations, for instance, we run experiments with two algorithms&nbsp;$\mathcal{A}$ and&nbsp;$\mathcal{B}$ on one problem instance and get two corresponding lists ($A$&nbsp;and&nbsp;$B$) of measurements of a performance indicator.
 The mean or median values of these lists will differ, i.e., one of the two methods will have performed better.
 So our hypothesis&nbsp;$H_1$ could be "Algorithms&nbsp;$\mathcal{A}$ is better than algorithm&nbsp;$\mathcal{B}$."
@@ -79,6 +75,54 @@ If that would have been the case, the the data samples&nbsp;$A$ and&nbsp;$B$ wou
 If we combine&nbsp;$A$ and&nbsp;$B$ to a set&nbsp;$O$, we can then wonder how likely it would be to draw two sets from&nbsp;$O$ that show the same characteristics as&nbsp;$A$ and&nbsp;$B$.
 If the probability is high, then we cannot rule out that $\mathcal{A} \equiv \mathcal{B}$.
 If the probability is low, say below $\alpha=0.02$, then we can reject&nbsp;$H_0$ and confidently assume that&nbsp;$H_1$ is true and our observation was significant.
+
+### Second Example
+
+Let us now consider a more concrete example.
+We want to compare two algorithms&nbsp;$\mathcal{A}$ and&nbsp;$\mathcal{B}$ on a given problem instance.
+We have conducted a small experiment and measured objective values of their final runs in a few runs in form of the two data sets&nbsp;$A$ and&nbsp;$B$, respectively:
+
+- $A = (2, 5, 6, 7, 9, 10)$ and
+- $B = (1, 3, 4, 8)$
+
+From this, we can compute the arithmetic means:
+
+- $\mean(A)=\frac{39}{6}=6.5$ and
+- $\mean(B)=\frac{16}{4}=4$.
+
+It looks like algorithm&nbsp;$\mathcal{B}$ may produce the smaller objective values.
+But is this assumption justified based on the data we have?
+Is the difference between $\mean(A)$ and $\mean(B)$ significant at a threshold of $\alpha=2$?
+
+If&nbsp;$\mathcal{B}$ is truly better than&nbsp;$\mathcal{A}$, which is our hypothesis&nbsp;$H_1$, then we cannot calculate anything.
+Let us therefore assume as null hypothesis&nbsp;$H_0$ the observed difference did just happen by chance and, well, $\mathcal{A} \equiv \mathcal{B}$.
+Then, this would mean that the data samples&nbsp;$A$ and&nbsp;$B$ stem from the *same* algorithm (as $\mathcal{A} \equiv \mathcal{B}$).
+The two sets would only be artificial, an artifact of our experimental design.
+Instead of having two data samples, we only have one, namely the union set&nbsp;$O$ with&nbsp;10 elements:
+
+- $O = A \cup B = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)$
+
+Moreover, any division&nbsp;$C$ of&nbsp;$O$ into two sets&nbsp;$A'$ and&nbsp;$B'$ of sizes&nbsp;6 and&nbsp;4, respectively, would have had the same probability of occurrence.
+There are $\binomial{10}{4}=210$ different ways of drawing 4&nbsp;elements from&nbsp;$O$.
+Whenever we draw 4&nbsp;elements from&nbsp;$O$ to form a potential set&nbsp;$B'$.
+This leaves the remaining 6&nbsp;elements for a potential set&nbsp;$A'$, meaning $\binomial{10}{6}=210$ as well.
+Any of these 210 possible divisions of&nbsp;$O$ would have had the same probability to occur in our experiment &ndash; if $H_0$ holds.
+
+If we enumerate all possible divisions with a small program, we find that there are exactly&nbsp;27 of them which lead to a set&nbsp;$B'$ with $\mean(B')\leq 4$.
+This, of course, means that in exactly these 27&nbsp;divisions, $\mean(A')\geq 6.5$.
+
+In other words, if $H_0$&nbsp;holds, there would have been a probability of $p=\frac{27}{210}=\frac{9}{70}\approx 0.1286$ that we would see arithmetic mean performances *as extreme* as we did.
+If we would reject&nbsp;$H_0$ and instead claim that&nbsp;$H_1$ is true, i.e., alogirthm&nbsp;$\mathcal{B}$ is better than&nbsp;$\mathcal{A}$, then we have a 13% chance of being wrong.
+Since this is more than our pre-defined significance threshold of&nbsp;$\alpha=0.02$, we cannot reject&nbsp;$H_0$.
+Based on the little data we collected, we cannot be sure whether algorithm&nbsp;$\mathcal{B}$ is better or not.
+
+This here just was an example for a [Randomization Test](http://en.wikipedia.org/wiki/Resampling_(statistics)#Permutation_tests)&nbsp;[@BLB2008VMIDBS; @E1995RT].
+It exemplifies how many statistical (non-parametric) tests work.
+
+The number of all possible divisions the joint sets&nbsp;$O$ of measurements grows very quickly with the size of&nbsp;$O$.
+In our experiments, where we always conducted 101&nbsp;runs per experiment, we would already need to enumerate $\binomial{202}{101} \approx 3.6*10^{59}$ possible divisions when comparing two sets of results.
+This, of course, is not possible.
+Hence, practically relevant tests avoid this by applying clever mathematical tricks.
 
 ### Parametric vs. Non-Parametric Tests {#sec:nonParametricTests}
 
