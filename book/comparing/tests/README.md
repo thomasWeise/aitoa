@@ -120,7 +120,7 @@ This here just was an example for a [Randomization Test](http://en.wikipedia.org
 It exemplifies how many statistical (non-parametric) tests work.
 
 The number of all possible divisions the joint sets&nbsp;$O$ of measurements grows very quickly with the size of&nbsp;$O$.
-In our experiments, where we always conducted 101&nbsp;runs per experiment, we would already need to enumerate $\binoml{202}{101} \approx 3.6*10^{59}$ possible divisions when comparing two sets of results.
+In our experiments, where we always conducted 101&nbsp;runs per experiment, we would already need to enumerate $\binom{202}{101} \approx 3.6*10^{59}$ possible divisions when comparing two sets of results.
 This, of course, is not possible.
 Hence, practically relevant tests avoid this by applying clever mathematical tricks.
 
