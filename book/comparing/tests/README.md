@@ -26,7 +26,7 @@ We flip a coin.
 If it shows up as heads, then you win 1&nbsp;RMB and if it is tails, you give me 1&nbsp;RMB instead.
 We play 160&nbsp;times and I win 128&nbsp;times, as illustrated in [@fig:coin_toss]. 
 
-![The results of our coin tossing game, where I win 128&nbsp;times (red) and you only 32&nbsp;times (green).](\relative.path{coin_toss.svgz}){#fig:coin_toss width=84%} 
+![The results of our coin tossing game, where I win 128&nbsp;times (red) and you only 32&nbsp;times (green).](\relative.path{coin_toss.svgz}){#fig:coin_toss width=74%} 
 
 This situation makes you suspicious, as it seems unlikely to you that I would win four times as often as you with a fair coin.
 You wonder ifI cheated on you, i.e., if used a "fixed" coin with a winning probability different from 0.5.
@@ -68,7 +68,7 @@ This, actually, is the [binomial test](http://en.wikipedia.org/wiki/Binomial_tes
 This is, roughly, how statistical tests work.
 We make a set of observations, for instance, we run experiments with two algorithms&nbsp;$\mathcal{A}$ and&nbsp;$\mathcal{B}$ on one problem instance and get two corresponding lists ($A$&nbsp;and&nbsp;$B$) of measurements of a performance indicator.
 The mean or median values of these lists will differ, i.e., one of the two methods will have performed better.
-So our hypothesis&nbsp;$H_1$ could be "Algorithms&nbsp;$\mathcal{A}$ is better than algorithm&nbsp;$\mathcal{B}$."
+So our hypothesis&nbsp;$H_1$ could be "Algorithm&nbsp;$\mathcal{A}$ is better than algorithm&nbsp;$\mathcal{B}$."
 Unfortunately, if that is indeed true, we cannot really know how likely it would have been to get exactly the experimental results that we got.
 Instead, we define the null hypothesis&nbsp;$H_0$ that "The performance of the two algorithms is the same," i.e., $\mathcal{A} \equiv \mathcal{B}$.
 If that would have been the case, the the data samples&nbsp;$A$ and&nbsp;$B$ would stem from the same algorithm, would be observations of the same random variable, i.e., elements from the same population.
