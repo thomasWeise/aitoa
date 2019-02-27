@@ -280,7 +280,7 @@ Also the schedules of median quality obtained by `ea4096_nswap_5` and plotted in
 Of course, applying an operator only 5% of the time, which here seems to be the better choice, will probably not change the algorithm behavior very much.
 Furthermore, in instance `la24`, we are already very close to lower bound defining the best possible solution quality that can theoretically be reached.
 
-### Testing for Significance
+### Testing for Significance {#sec:eaTestForSignificance}
 
 All in all, the changes in both [@tbl:eaCrHCJSSP] and [@fig:jssp_progress_ea_cr_log] achieved by introducing recombination in the EA seem to not be very big.
 This could either mean that they are an artifact of the randomness in the algorithm *or*, well, that there are improvements but they are small.
@@ -300,22 +300,10 @@ Now, our EAs are randomized as well.
 On `yn4`, setup `ea4096_nswap_5` has a median end result quality of 1058, while `ea4096_nswap` (without binary operator) achieves 1067, a difference of 0.8%.
 If our binary operator would have no impact whatsoever, we could theoretically still this results or any other from [@tbl:eaCrHCJSSP], just because of the randomness in the algorithms.
 It is simply not possible to decide, without further investigation, whether results and algorithm behaviors that overlap as much as those in [@fig:jssp_progress_ea_cr_log] are actually different or not.
-The "further investigation" which allows us to make this decision is called [significance test](http://en.wikipedia.org/wiki/Statistical_hypothesis_testing).
+The "further investigation" which allows us to make this decision is called [significance test](http://en.wikipedia.org/wiki/Statistical_hypothesis_testing) and it is discussed in-depth in [@sec:testForSignificance] as part of our investigation on how to compare algorithms.
 
-In short, a test as we use it here is a statistical procedure which starts with the assumption that the two lists&nbsp;$A$ and&nbsp;$B$ stem from the same source (called "distribution").
-It then tries to compute how likely it is, under this assumption, that we would see differences as big as those that we have in the data (e.g., the medians 1058 and 1067).
-The resulting probability is called&nbsp;$p$-value.
-If&nbsp;$p$ is very small, below a reasonable threshold&nbsp;$\alpha$, say $\alpha=2\%$, then this means that is very unlikely that we would see what we saw if&nbsp;$A$ and&nbsp;$B$ stem from the same distribution.
-In our case, a small&nbsp;$p$-value means that the observed differences in performance of the algorithm setups are probably "real".
-Of course, they could still be an artifact of the randomness, but the chance for that would be small (e.g., smaller than 2%).
-If&nbsp;$p$ is big, on the other hand, maybe around 30% or more, then we cannot be confident that our binary operator is useful, as claiming this would be wrong with a chance of at least&nbsp;30%.
-
-Since we know very little about the actual distribution of the end results of our algorithms, we apply a [non-parametric test](http://en.wikipedia.org/wiki/Nonparametric_statistics) to investigate whether the binary operator provides a significant improvement.
-In order to see whether two different setups also behave differently, we compare their two sets of 101 end results each.
-For this purpose, the Wilcoxon rank sum test with continuity correction (also called [Mann-Whitney U test](http://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test))&nbsp;[@B1972CCSURS; @SC1988NSFTBS; @HW1973NSM; @MW1947OATOWOOTRVISLTTO] is suitable.[^MannWhitneyUNotHere]
-We now compare the end results of the two setups `ea4096_nswap` and `ea4096_nswap_5`:
-
-[^MannWhitneyUNotHere]: Discussing how this test works exactly goes beyond the scope of this book. You can find it implemented in many tools, e.g., as function `wilcox.test` in the `R` programming language, where you can simply feed it with two lists of numbers and it returns the $p$-value.
+In order to see whether two different setups also behave differently, we compare their two sets of 101 end results on each of the problem instances.
+For this purpose, we use the [Mann-Whitney U test](http://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test)), as prescribed in [@sec:nonParametricTests] and compare the end results of the two setups `ea4096_nswap` and `ea4096_nswap_5`:
 
 | &nbsp;
 | On instance `abz7`, we obtain 0.0016 as $p$-value.
@@ -324,8 +312,11 @@ We now compare the end results of the two setups `ea4096_nswap` and `ea4096_nswa
 | On instance `yn4`, we obtain 0.0002 as $p$-value.
 | &nbsp;
 
-We obtain two very small $p$-values (on `abz7` and `yn4`), indicating that our binary operator `sequence` leads to real, significant improvements on these instances.
-The $p$-values bigger than 0.3 on the other two instances indicate that it does not make an actual difference there.
+The $p$-value can roughly be interpreted as the probability of observing the differences that we saw if the two algorithms would produce similar results.
+We obtain two very small $p$-values on `abz7` and `yn4`.
+There, it would thus be unlikely to see the different outcomes that we saw under the assumption that the binary operator is not useful.
+This means we can instead conclude that our binary operator `sequence` instead leads to real, significant improvements on these instances.
+The $p$-values bigger than 0.3 on the other two instances indicate that it does probably not make an actual difference there.
 
 In summary, although it was not as beneficial as one would have hoped, using the binary operator can be considered as helpful in our case.
 Of course, we just tested *one* binary operator on only *four* problem instances &ndash; in any application scenario, we would do more experiments with more settings.

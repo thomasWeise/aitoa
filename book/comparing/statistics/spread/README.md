@@ -9,7 +9,7 @@ For this, we can compute a measure of [dispersion](http://en.wikipedia.org/wiki/
 
 $$ \variance(A) = \frac{1}{n-1} \sum_{i=0}^{n-1} \left(\arrayIndex{a}{i} - \mean(A)\right)^2 $$
 
-\text.block{definition}{standardDeviation}{The statistical estimate&nbsp;$\stddev(A)$ of the [standard deviation](http://en.wikipedia.org/wiki/Standard_deviation) of a data sample&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1}$ with $n$&nbsp;observations is the square root of the estimated variance&nbsp;$\variance(A)$.}
+\text.block{definition}{standardDeviation}{The statistical estimate&nbsp;$\stddev(A)$ of the [standard deviation](http://en.wikipedia.org/wiki/Standard_deviation) of a data sample&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ with $n$&nbsp;observations is the square root of the estimated variance&nbsp;$\variance(A)$.}
 
 $$ \stddev(A) = \sqrt{\variance(A)} $$
 

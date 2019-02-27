@@ -41,7 +41,7 @@ Then, we do not need to take care of this in our algorithm, which makes the impl
 
 Of course, since the algorithm is *randomized*, it may give us a different result every time we run it.
 In order to understand what kind of solution qualities we can expect, we hence have to run it a couple of times and compute result statistics.
-We therefore execute our program 101&nbsp;times and the results are summarized in [@tbl:singleRandomSampleJSSP].
+We therefore execute our program 101&nbsp;times and the results are summarized in [@tbl:singleRandomSampleJSSP], which describes them using simple statistics whose meanings are discussed in-depth in [@sec:statisticalMeasures].
 
 |$\instance$|$\lowerBound(\objf)$|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|--:|--:|--:|--:|--:|--:
