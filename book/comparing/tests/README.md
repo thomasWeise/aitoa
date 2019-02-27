@@ -103,9 +103,9 @@ Instead of having two data samples, we only have one, namely the union set&nbsp;
 - $O = A \cup B = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)$
 
 Moreover, any division&nbsp;$C$ of&nbsp;$O$ into two sets&nbsp;$A'$ and&nbsp;$B'$ of sizes&nbsp;6 and&nbsp;4, respectively, would have had the same probability of occurrence.
-There are $\binomial{10}{4}=210$ different ways of drawing 4&nbsp;elements from&nbsp;$O$.
+There are $\binom{10}{4}=210$ different ways of drawing 4&nbsp;elements from&nbsp;$O$.
 Whenever we draw 4&nbsp;elements from&nbsp;$O$ to form a potential set&nbsp;$B'$.
-This leaves the remaining 6&nbsp;elements for a potential set&nbsp;$A'$, meaning $\binomial{10}{6}=210$ as well.
+This leaves the remaining 6&nbsp;elements for a potential set&nbsp;$A'$, meaning $\binom{10}{6}=210$ as well.
 Any of these 210 possible divisions of&nbsp;$O$ would have had the same probability to occur in our experiment &ndash; if $H_0$ holds.
 
 If we enumerate all possible divisions with a small program, we find that there are exactly&nbsp;27 of them which lead to a set&nbsp;$B'$ with $\mean(B')\leq 4$.
@@ -120,7 +120,7 @@ This here just was an example for a [Randomization Test](http://en.wikipedia.org
 It exemplifies how many statistical (non-parametric) tests work.
 
 The number of all possible divisions the joint sets&nbsp;$O$ of measurements grows very quickly with the size of&nbsp;$O$.
-In our experiments, where we always conducted 101&nbsp;runs per experiment, we would already need to enumerate $\binomial{202}{101} \approx 3.6*10^{59}$ possible divisions when comparing two sets of results.
+In our experiments, where we always conducted 101&nbsp;runs per experiment, we would already need to enumerate $\binoml{202}{101} \approx 3.6*10^{59}$ possible divisions when comparing two sets of results.
 This, of course, is not possible.
 Hence, practically relevant tests avoid this by applying clever mathematical tricks.
 
