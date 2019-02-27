@@ -36,20 +36,20 @@ Unfortunately, it is impossible to make any useful statement about my winning pr
 What you can do is use make the opposite hypothesis&nbsp;$H_0$: I did not cheat, the coin is fair and both of us have winning probability of&nbsp;$q=0.5$.
 Under this assumption you can compute the probability that I would win at least $m=128$&nbsp;times out of $n=160$&nbsp;coin tosses.
 Flipping a coin $n$&nbsp;times is a [Bernoulli process](http://en.wikipedia.org/wiki/Bernoulli_process)
-The probability&nbsp;$\probablity[k|n]$ to win *exactly* $k$&nbsp;times in $n$&nbsp;coin tosses is then: 
+The probability&nbsp;$\probability[k|n]$ to win *exactly* $k$&nbsp;times in $n$&nbsp;coin tosses is then: 
 
-$$ \probablity[k|n] = \binom{n}{k} q^k (1-q)^{n-k} = \binom{n}{k} 0.5^k 0.5^{n-k} = \binom{n}{k} 0.5^n = \binom{n}{k} \frac{1}{2^n} $$
+$$ \probability[k|n] = \binom{n}{k} q^k (1-q)^{n-k} = \binom{n}{k} 0.5^k 0.5^{n-k} = \binom{n}{k} 0.5^n = \binom{n}{k} \frac{1}{2^n} $$
 
 where $\binom{n}{k}$ is the [binomial coefficient](http://en.wikipedia.org/wiki/Binomial_coefficient) "$n$&nbsp;over&nbsp;$k$".
 Of course, if winning 128&nbsp;times would be an indication of cheating, winning even more often would have been, too.
-Hence we compute the probability&nbsp;$\probablity[k\geq m|n]$ for me to win *at least* $m$&nbsp;times if we had played with a fair coin, which is:
+Hence we compute the probability&nbsp;$\probability[k\geq m|n]$ for me to win *at least* $m$&nbsp;times if we had played with a fair coin, which is:
 
-$$ \probablity[k\geq m|n] = \sum_{k=m}^n \binom{n}{k} \frac{1}{2^n} = \frac{1}{2^n} \sum_{k=m}^n \binom{n}{k} $$
+$$ \probability[k\geq m|n] = \sum_{k=m}^n \binom{n}{k} \frac{1}{2^n} = \frac{1}{2^n} \sum_{k=m}^n \binom{n}{k} $$
 
 In our case, we get
 
 $$ \begin{array}{rcl}
-\probablity[k\geq 128|160] &=& \frac{1}{2^{160}} \sum_{k=128}^{160} \binom{n}{k}\\
+\probability[k\geq 128|160] &=& \frac{1}{2^{160}} \sum_{k=128}^{160} \binom{n}{k}\\
 &=&\frac{1'538'590'628'148'134'280'316'221'828'039'113}{365'375'409'332'725'729'550'921'208'179'070'754'913'983'135'744}\\
 &\approx& \frac{1.539*10^{33}}{3.654*10^{47}}\\
 &\approx& 0.00000000000000421098571\\
@@ -57,7 +57,7 @@ $$ \begin{array}{rcl}
 \end{array} $$
 
 In other words, the chance that I would win that often in a fair game is very, very small.
-If you reject the hypothesis&nbsp;$H_0$, your probability $p=\probablity[k\geq 128|160]$ to be wrong is very small.
+If you reject the hypothesis&nbsp;$H_0$, your probability $p=\probability[k\geq 128|160]$ to be wrong is very small.
 If you reject&nbsp;$H_0$ and accept&nbsp;$H_1$, $p$ would be your probability to be wrong.
 Normally, you would set yourself beforehand a limit&nbsp;$\alpha$, say&nbsp;$\alpha=0.01$ and if&nbsp;$p$ is less than that, you will risk accusing me.
 Since $p \ll \alpha$, you therefore can be confident to assume that the coin was fixed.
