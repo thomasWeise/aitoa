@@ -19,7 +19,7 @@ Instead of doing this directly, we try to compute the probability&nbsp;$p$ that 
 If&nbsp;$p$ is lower than a small threshold&nbsp;$\alpha$, say, $\alpha=0.02$, then we can accept the conclusion.
 Otherwise, the differences are not significant and we do not make the claim.
 
-### Example for the Underlying Idea
+### Example for the Underlying Idea (Binomial Test)
 
 Let's say I invited you to play a game of coin tossing.
 We flip a coin.
@@ -76,7 +76,7 @@ If we combine&nbsp;$A$ and&nbsp;$B$ to a set&nbsp;$O$, we can then wonder how li
 If the probability is high, then we cannot rule out that $\mathcal{A} \equiv \mathcal{B}$.
 If the probability is low, say below $\alpha=0.02$, then we can reject&nbsp;$H_0$ and confidently assume that&nbsp;$H_1$ is true and our observation was significant.
 
-### Second Example
+### Second Example (Randomization Test)
 
 Let us now consider a more concrete example.
 We want to compare two algorithms&nbsp;$\mathcal{A}$ and&nbsp;$\mathcal{B}$ on a given problem instance.
@@ -151,3 +151,36 @@ Here, the hypothesis&nbsp;$H_1$ is that one of the two distributions&nbsp;$\math
 The null hypothesis&nbsp;$H_0$ would be that this is not true and it can be rejected if the computed $p$-values are small. 
 Doing this test manually is quite complicated and describing it is beyond the scope of this book.
 Luckily, it is implemented in many tools, e.g., as the function `wilcox.test` in the `R`&nbsp;programming language, where you can simply feed it with two lists of numbers and it returns the $p$-value.
+
+Good significance thresholds&nbsp;$\alpha$ are 0.02 or 0.01.
+
+### Performing Multiple Tests
+
+We do not just compare two algorithms on a single problem instance.
+Instead, we may have multiple algorithms and several problem instances.
+In this case, we need to perform [multiple comparisons](http://en.wikipedia.org/wiki/Multiple_comparisons_problem) and thus apply $N>1$&nbsp;statistical tests.
+Before we begin this procedure, we will define a significance threshold&nbsp;$\alpha$, say 0.01.
+In each single test, we check one hypothesis, e.g., "this algorithm is better than that one" and estimate a certain probability&nbsp;$p$ to err.
+If $p<\alpha$, we can accept the hypothesis.
+
+However, with $N>1$ tests at a significance level&nbsp;$\alpha$ each, our overall probability to accept at least one wrong hypothesis is not&nbsp;$\alpha$.
+In *each* of the $N$&nbsp;test, the probability to err is&nbsp;$\alpha$ and the probability to be right is&nbsp;$1-\alpha$.
+The chance to always be right is therefore $(1-\alpha)^N$ and the chance to accept at least one wrong hypothesis becomes
+
+$$ \probability[\textnormal{error}|\alpha]=1-(1-\alpha)^N $$
+
+For $N=100$ comparisons and $\alpha=0.01$ we already arrive at $\probability[\textnormal{error}|\alpha]\approx 0.63$, i.e., are very likely to accept at least one conclusion.
+One hundred comparisons is not an unlikely situation: Many benchmark problem sets contain at 100 instances or more.
+One comparison of two algorithms on each instance means that&nbsp;$N=100$.
+Also, we often compare more than two algorithms.
+For $k$&nbsp;algorithms on a single problem instance, we would already have $N=k(k-1)/2$&nbsp;pairwise comparisons.
+
+In all cases with $N>1$, we therefore need to use an adjusted significance level&nbsp;$\alpha'$ in order to ensure that the overall probability to make wrong conclusions stays below&nbsp;$\alpha$.
+The most conservative &ndash; and therefore my favorite &ndash; way to do so is to apply the [Bonferroni correction](http://en.wikipedia.org/wiki/Bonferroni_correction)&nbsp;[@D1961MCAM].
+It defines: 
+
+$$ \alpha' = \alpha/N $$
+
+If we use&nbsp;$\alpha'$ as significance level in each of the&nbsp;$N$ tests, we can ensure that the resulting probability to accept at least one wrong hypothesis $\probability[\textnormal{error}|\alpha']\leq \alpha$, as illustrated in [@fig:multicomp_bonferroni].
+
+![The probability $\probability[\textnormal{error}|\alpha]$ of accepting at least one wrong hypothesis when applying an unchanged significance level&nbsp;$\alpha$ in&nbsp;$N$ (left axis) tests versus similar $\probability[\textnormal{error}|\alpha']$ when using corrected value&nbsp;$\alpha'=\alpha/N$ instead (both right axis), for&nbsp;$\alpha=0.01$. ](\relative.path{multicomp_bonferroni.svgz}){#fig:multicomp_bonferroni width=80%} 
