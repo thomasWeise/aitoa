@@ -45,6 +45,8 @@ In reality, the actual course of the optimization algorithms could have looked a
 Here, we find that algorithm&nbsp;C is always better than algorithm&nbsp;B, which, in turn, is always better than algorithm&nbsp;A. 
 However, we cannot get this information as only the "end results" were reported.
 
+**Takeaway-message:** Analyzing end results is normally not enough, you need to analyze the whole algorithm behavior&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP; @WWCTL2016GVLSTIOPSOEAP; @WWQLT2018ADCOAAPIBAWATCFEDASAIF].
+
 ### Progress Plots
 
 We, too, provide tables for the average achieved result qualities in our JSSP examples.
