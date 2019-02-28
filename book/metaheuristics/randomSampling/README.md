@@ -100,7 +100,7 @@ This is what we did with the implementations of the black-box process interface 
 
 Let us now compare the performance of this iterated random sampling with our initial method.
 [@tbl:randomSamplingJSSP] shows us that the iterated random sampling algorithm is better in virtually all relevant aspects than the single random sampling method.
-Its best, mean, and median result quality are siginificantly better.
+Its best, mean, and median result quality are significantly better.
 Since creating random points in the search space is so fast that we can sample many more than 101&nbsp;candidate solutions, even the median and mean result quality of the&nbsp;`rs` algorithm are better than the best quality obtainable with&nbsp;`1rs`.
 Matter of fact, each run of our&nbsp;`rs` algorithm can create and test several million candidate solutions within the three minute time window, i.e., perform several million FEs.
 Furthermore, the standard deviation of the results becomes lower as well.
