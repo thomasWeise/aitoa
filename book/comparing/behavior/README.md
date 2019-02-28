@@ -51,7 +51,7 @@ We, too, provide tables for the average achieved result qualities in our JSSP ex
 However, we always provide diagrams that illustrate the progress of our algorithms over time, too.
 Visualizations of the algorithm behavior over runtime can provide us important information.
 
-![Different algorithms may perform best at different points in time.](\relative.path{points_vs_lines.svgz}){#fig:performance_cuts width=74%}
+![Different algorithms may perform best at different points in time.](\relative.path{performance_cuts.svgz}){#fig:performance_cuts width=74%}
 
 [@fig:performance_cuts], for instance, illustrates a scenario where the best algorithm to choose depends on the available computational budget.
 Initially, an algorithm&nbsp;B produces the better median solution quality.
