@@ -11,8 +11,9 @@ If we have only a single method that can be applied to an optimization problem, 
 Instead, we often start by first developing one idea and then try to improve it.
 Of course, we need to compare each new approach with the ones we already have.
 Alternatively, especially if we work in a research scenario, maybe we have a new idea which then needs to be compared to a set of existing state-of-the-art algorithms.
-Let us now discuss here how such comparisons can be conducted.
+Let us now discuss here how such comparisons can be conducted in a rigorous, reliable, and reproducible way.
 
+\relative.input{coding/README.md}
 \relative.input{time/README.md}
 \relative.input{performanceIndicators/README.md}
 \relative.input{statistics/README.md}
