@@ -44,13 +44,13 @@ The following measures can be taken to ensure that your experimental results are
 
 1. Always use self-explaining formats like plain text files to store your results.
 2. Create one file for each run of your experiment and *automatically* store at least the following information&nbsp;[@W2017FSDFTSTFOAB; @WCTLTCMY2014BOAAOSFFTTSP]:
-	 a. The algorithm name and all parameter settings of the algorithm.
-	 b. The relevant measurements.
-	 c. The [seed](http://en.wikipedia.org/wiki/Random_seed) of the pseudo-random number generator used.
-	 d. Information about the problem instance on which the algorithm was applied.
-	 e. Short comments on how the above is to be interpreted.
-	 f. Maybe information about the computer system your code runs on, maybe the Java version, etc.
-	 g. Maybe even your contact information.
+	 i. The algorithm name and all parameter settings of the algorithm.
+	 ii. The relevant measurements.
+	 iii. The [seed](http://en.wikipedia.org/wiki/Random_seed) of the pseudo-random number generator used.
+	 iv. Information about the problem instance on which the algorithm was applied.
+	 v. Short comments on how the above is to be interpreted.
+	 vi. Maybe information about the computer system your code runs on, maybe the Java version, etc.
+	 vii. Maybe even your contact information.
 This way, you or someone else can, next year, or in ten years from now, read your results and get a clear understanding of "what is what."
 Ask yourself: If I put my data on my website and someone else downloads it, does every single file contain sufficient information to understand its content?
 3. Store the files and the compiled binaries of your code in a self-explaining directory structure&nbsp;[@W2017FSDFTSTFOAB; @WCTLTCMY2014BOAAOSFFTTSP].
@@ -61,7 +61,7 @@ After you are done with all experiments and evaluation, such folders lend them s
 4. Write your code such that you can specify the random seeds.
 This  allows to easily repeat selected runs or whole experiments.
 All random decisions of an algorithm depend on the random number generator (RNG).
-The "seed" (see *point&nbsp;2.c* above) is an initialization value of the RNG.
+The "seed" (see *point&nbsp;2.iii* above) is an initialization value of the RNG.
 If I initialize the (same) RNG with the same seed, it will produce the same sequence of random numbers.
 If I know the random seed used for an experiment, then I can start the same algorithm again with the same initialization of the RNG.
 Even if my optimization method is randomized, it will then make the same "random" decisions.

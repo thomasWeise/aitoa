@@ -11,9 +11,9 @@ $$ \mean(A) = \frac{1}{n} \sum_{i=0}^{n-1} \arrayIndex{a}{i} $$
 \text.block{definition}{median}{The [median](http://en.wikipedia.org/wiki/Median) $\median(A)$ is the value separating the bigger half from the lower half of a data sample or distribution. It is the value right in the middle of a *sorted* data sample $A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ where $\arrayIndex{a}{i-1}\leq \arrayIndex{a}{i} \; \forall i \in 1\dots (n-1)$.}
 
 $$ \median(A) = \left\{\begin{array}{ll}
-\arrayIndex{a}{\frac{n-1}{2}} & \textnormal{if }n\textnormal{ is odd}\\
-\frac{1}{2}\left(\arrayIndex{a}{\frac{n}{2}-1} + \arrayIndex{a}{\frac{n}{2}}\right) & \textnormal{otherwise}
-\end{array}\right. \quad \textnormal{if~}\arrayIndex{a}{i-1}\leq \arrayIndex{a}{i} \; \forall i \in 1\dots (n-1) $$ {#eq:median}
+\arrayIndex{a}{\frac{n-1}{2}} & \text{if }n\text{ is odd}\\
+\frac{1}{2}\left(\arrayIndex{a}{\frac{n}{2}-1} + \arrayIndex{a}{\frac{n}{2}}\right) & \text{otherwise}
+\end{array}\right. \quad \text{if~}\arrayIndex{a}{i-1}\leq \arrayIndex{a}{i} \; \forall i \in 1\dots (n-1) $$ {#eq:median}
 
 Notice the zero-based indices in our formula, i.e., the data samples&nbsp;$A$ start with&nbsp;$\arrayIndex{a}{0}$.
 Of course, any data sample can be transformed to a sorted data sample fulfilling the above constraints by, well, sorting it.

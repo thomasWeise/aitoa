@@ -167,9 +167,9 @@ However, with $N>1$ tests at a significance level&nbsp;$\alpha$ each, our overal
 In *each* of the $N$&nbsp;test, the probability to err is&nbsp;$\alpha$ and the probability to be right is&nbsp;$1-\alpha$.
 The chance to always be right is therefore $(1-\alpha)^N$ and the chance to accept at least one wrong hypothesis becomes
 
-$$ \probability[\textnormal{error}|\alpha]=1-(1-\alpha)^N $$
+$$ \probability[\text{error}|\alpha]=1-(1-\alpha)^N $$
 
-For $N=100$ comparisons and $\alpha=0.01$ we already arrive at $\probability[\textnormal{error}|\alpha]\approx 0.63$, i.e., are very likely to accept at least one conclusion.
+For $N=100$ comparisons and $\alpha=0.01$ we already arrive at $\probability[\text{error}|\alpha]\approx 0.63$, i.e., are very likely to accept at least one conclusion.
 One hundred comparisons is not an unlikely situation: Many benchmark problem sets contain at 100 instances or more.
 One comparison of two algorithms on each instance means that&nbsp;$N=100$.
 Also, we often compare more than two algorithms.
@@ -181,6 +181,6 @@ It defines:
 
 $$ \alpha' = \alpha/N $$
 
-If we use&nbsp;$\alpha'$ as significance level in each of the&nbsp;$N$ tests, we can ensure that the resulting probability to accept at least one wrong hypothesis $\probability[\textnormal{error}|\alpha']\leq \alpha$, as illustrated in [@fig:multicomp_bonferroni].
+If we use&nbsp;$\alpha'$ as significance level in each of the&nbsp;$N$ tests, we can ensure that the resulting probability to accept at least one wrong hypothesis $\probability[\text{error}|\alpha']\leq \alpha$, as illustrated in [@fig:multicomp_bonferroni].
 
-![The probability $\probability[\textnormal{error}|\alpha]$ of accepting at least one wrong hypothesis when applying an unchanged significance level&nbsp;$\alpha$ in&nbsp;$N$ tests (left axis) versus similar &ndash; and almost constant &ndash; $\probability[\textnormal{error}|\alpha']$ when using corrected value&nbsp;$\alpha'=\alpha/N$ instead (both right axis), for&nbsp;$\alpha=0.01$. ](\relative.path{multicomp_bonferroni.svgz}){#fig:multicomp_bonferroni width=80%} 
+![The probability $\probability[\text{error}|\alpha]$ of accepting at least one wrong hypothesis when applying an unchanged significance level&nbsp;$\alpha$ in&nbsp;$N$ tests (left axis) versus similar &ndash; and almost constant &ndash; $\probability[\text{error}|\alpha']$ when using corrected value&nbsp;$\alpha'=\alpha/N$ instead (both right axis), for&nbsp;$\alpha=0.01$. ](\relative.path{multicomp_bonferroni.svgz}){#fig:multicomp_bonferroni width=80%} 

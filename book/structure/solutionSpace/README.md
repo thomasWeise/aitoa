@@ -98,7 +98,7 @@ An optimization algorithm which might sometimes return infeasible solutions will
 
 #### Summary 
 
-|name|$\jsspJobs$|$\jsspMachines$|$\min(\#\textnormal{feasible})$|$\left|\solutionSpace\right|$|
+|name|$\jsspJobs$|$\jsspMachines$|$\min(\#\text{feasible})$|$\left|\solutionSpace\right|$|
 |:--|--:|--:|--:|--:|
 ||2|2|3|4
 ||2|3|4|8
@@ -132,9 +132,9 @@ The four more realistic problem instances which we will try to solve here alread
 As we cannot simply test all possible solutions and pick the best one, we will need some more sophisticated algorithms to solve these problems.
 This is what we will discuss in the following.
 
-The number&nbsp;$\#\textnormal{feasible}$ of possible *feasible* Gantt charts can be different, depending on the problem instance.
-For one setting of&nbsp;$\jsspMachines$ and&nbsp;$\jsspJobs$, we are interested in the minimum&nbsp;$\min(\#\textnormal{feasible})$ of this number, i.e., the *smallest value* that&nbsp;$\#\textnormal{feasible}$ can take on over all possible instances with $\jsspJobs$&nbsp;jobs and $\jsspMachines$&nbsp;machines.
+The number&nbsp;$\#\text{feasible}$ of possible *feasible* Gantt charts can be different, depending on the problem instance.
+For one setting of&nbsp;$\jsspMachines$ and&nbsp;$\jsspJobs$, we are interested in the minimum&nbsp;$\min(\#\text{feasible})$ of this number, i.e., the *smallest value* that&nbsp;$\#\text{feasible}$ can take on over all possible instances with $\jsspJobs$&nbsp;jobs and $\jsspMachines$&nbsp;machines.
 It is not so easy to find a formula for this minimum, so we won't do this here.
 Instead, in [@tbl:jsspSolutionSpaceTable], we provided the corresponding numbers for a few selected instances.
-We find that, if we are unlucky, most of the possible Gantt charts for a problem instance might be infeasible, as&nbsp;$\min(\#\textnormal{feasible})$ can be much smaller than&nbsp;$\left|\solutionSpace\right|$.
+We find that, if we are unlucky, most of the possible Gantt charts for a problem instance might be infeasible, as&nbsp;$\min(\#\text{feasible})$ can be much smaller than&nbsp;$\left|\solutionSpace\right|$.
 

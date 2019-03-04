@@ -44,8 +44,8 @@ Otherwise, both [@eq:median] and [@eq:quantiles] [interpolate linearly](http://e
 $$\begin{array}{rcl}
 h&=&(n-1)\frac{k}{q}\\ 
 \quantile{k}{q}(A) &=& \left\{\begin{array}{ll}
-\arrayIndex{a}{h}&\textnormal{if~}h\textnormal{~is integer}\\
-\arrayIndex{a}{\lfloor h\rfloor}+\left(h-\lfloor h\rfloor\right)*\left(\arrayIndex{a}{\lfloor h\rfloor+1}-\arrayIndex{a}{\lfloor h\rfloor}\right)&\textnormal{otherwise}
+\arrayIndex{a}{h}&\text{if~}h\text{~is integer}\\
+\arrayIndex{a}{\lfloor h\rfloor}+\left(h-\lfloor h\rfloor\right)*\left(\arrayIndex{a}{\lfloor h\rfloor+1}-\arrayIndex{a}{\lfloor h\rfloor}\right)&\text{otherwise}
 \end{array}\right.\end{array} $$ {#eq:quantiles}
 
 Quantiles are more robust against skewed distributions and outliers.

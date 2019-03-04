@@ -49,7 +49,7 @@ Think about throwing an ideal dice.
 Each number from one to six has the same probability to occur, i.e., the probability $\frac{1}{6}=0.166\overline{6}$.
 If we throw a dice a single time, we will get one number.
 If we throw it twice, we see two numbers.
-Let&nbsp;$f_i$ be the [relative frequency](http://en.wikipedia.org/wiki/Frequency_(statistics)) of each number in $k=\textnormal{\# throws}$ of the dice, i.e., $f_i=\frac{\textnormal{number of times we got }i}{k}$.
+Let&nbsp;$f_i$ be the [relative frequency](http://en.wikipedia.org/wiki/Frequency_(statistics)) of each number in $k=\text{\# throws}$ of the dice, i.e., $f_i=\frac{\text{number of times we got }i}{k}$.
 The more often we throw the dice, the more similar should&nbsp;$f_i$ get to&nbsp;$\frac{1}{6}$, as illustrated in [@tbl:diceThrow] for a simulated experiments with of many dice throws.
 
 As can be seen in [@tbl:diceThrow], the first ten or so dice throws tell us very little about the actual probability of each result.
