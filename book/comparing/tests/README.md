@@ -40,7 +40,7 @@ The probability&nbsp;$\probability[k|n]$ to win *exactly* $k$&nbsp;times in $n$&
 
 $$ \probability[k|n] = \binom{n}{k} q^k (1-q)^{n-k} = \binom{n}{k} 0.5^k 0.5^{n-k} = \binom{n}{k} 0.5^n = \binom{n}{k} \frac{1}{2^n} $$
 
-where $\binom{n}{k}$ is the [binomial coefficient](http://en.wikipedia.org/wiki/Binomial_coefficient) "$n$&nbsp;over&nbsp;$k$".
+where $\binom{n}{k}=\frac{n!}{k!(n-k)!}$ is the [binomial coefficient](http://en.wikipedia.org/wiki/Binomial_coefficient) "$n$&nbsp;over&nbsp;$k$".
 Of course, if winning 128&nbsp;times would be an indication of cheating, winning even more often would have been, too.
 Hence we compute the probability&nbsp;$\probability[k\geq m|n]$ for me to win *at least* $m$&nbsp;times if we had played with a fair coin, which is:
 
