@@ -153,11 +153,11 @@ $$ \left|\searchSpace\right| = \frac{\left(\jsspMachines*\jsspJobs\right)!}{ \le
 ||5|3|1'728'000|168'168'000
 ||5|4|207'360'000|305'540'235'000
 ||5|5|24'883'200'000|623'360'743'125'120
-demo|4|5||7'962'624|11'732'745'024
-la24|15|10||$\approx$&nbsp;1.462*10^121^|$\approx$&nbsp;2.293*10^164^
-abz7|20|15||$\approx$&nbsp;6.193*10^275^|$\approx$&nbsp;1.432*10^372^
-yn4|20|20||$\approx$&nbsp;5.278*10^367^|$\approx$&nbsp;1.213*10^501^
-swv15|50|10||$\approx$&nbsp;6.772*10^644^|$\approx$&nbsp;1.254*10^806^
+demo|4|5|7'962'624|11'732'745'024
+la24|15|10|$\approx$&nbsp;1.462*10^121^|$\approx$&nbsp;2.293*10^164^
+abz7|20|15|$\approx$&nbsp;6.193*10^275^|$\approx$&nbsp;1.432*10^372^
+yn4|20|20|$\approx$&nbsp;5.278*10^367^|$\approx$&nbsp;1.213*10^501^
+swv15|50|10|$\approx$&nbsp;6.772*10^644^|$\approx$&nbsp;1.254*10^806^
 
 : The sizes&nbsp;$\left|\searchSpace\right|$ and&nbsp;$\left|\solutionSpace\right|$ of the search and solution spaces for selected values of the number&nbsp;$\jsspJobs$ of jobs and the number&nbsp;$\jsspMachines$ of machines of an JSSP instance&nbsp;$\instance$. (compare with [@fig:function_growth] and with the size&nbsp;$\left|\solutionSpace\right|$ of the solution space) {#tbl:jsspSearchSpaceTable}
 
