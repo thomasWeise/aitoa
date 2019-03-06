@@ -104,7 +104,7 @@ The results are given in [@tbl:eaNoCrHCJSSP], together with those of our best hi
 [@tbl:eaNoCrHCJSSP] shows us that we can improve the best, mean, and median solution quality that we can get within three minutes of runtime by at least three percent when using our EA setups instead of the hill climber.
 The exception is case `la24`, where the hill climber already came close to the lower bound of the makespan.
 Here, the best solution encountered now has a makespan which is only 0.3% longer than what is theoretically possible.
-Nethertheless, we find quite a tangible improvement in case `swv15`.
+Nevertheless, we find quite a tangible improvement in case `swv15`.
 
 The bigger setting 4096 for&nbsp;$\mu$ and&nbsp;$\lambda$ tends to work better, except for instance&nbsp;`swv15`, where 2048 gives us better results.
 It is quite common in optimization that different problem instances may require different setups to achieve the best performance.

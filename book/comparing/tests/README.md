@@ -108,8 +108,10 @@ Whenever we draw 4&nbsp;elements from&nbsp;$O$ to form a potential set&nbsp;$B'$
 This leaves the remaining 6&nbsp;elements for a potential set&nbsp;$A'$, meaning $\binom{10}{6}=210$ as well.
 Any of these 210 possible divisions of&nbsp;$O$ would have had the same probability to occur in our experiment &ndash; if $H_0$ holds.
 
-If we enumerate all possible divisions with a small program, we find that there are exactly&nbsp;27 of them which lead to a set&nbsp;$B'$ with $\mean(B')\leq 4$.
+If we enumerate all possible divisions with the small program [@lst:RandomizationTestExample], we find that there are exactly&nbsp;27 of them which lead to a set&nbsp;$B'$ with $\mean(B')\leq 4$.
 This, of course, means that in exactly these 27&nbsp;divisions, $\mean(A')\geq 6.5$.
+
+\repo.listing{lst:RandomizationTestExample}{An excerpt of a simple program enumerating all different four-element subsets of $O$ and counting how many have a mean at last as extreme as 6.5.}{java}{src/test/java/aitoa/bookExamples/RandomizationTestExample.java}{}{relevant}
 
 In other words, if $H_0$&nbsp;holds, there would have been a probability of $p=\frac{27}{210}=\frac{9}{70}\approx 0.1286$ that we would see arithmetic mean performances *as extreme* as we did.
 If we would reject&nbsp;$H_0$ and instead claim that&nbsp;$H_1$ is true, i.e., alogirthm&nbsp;$\mathcal{B}$ is better than&nbsp;$\mathcal{A}$, then we have a 13% chance of being wrong.
