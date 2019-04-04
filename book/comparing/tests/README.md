@@ -33,9 +33,9 @@ You wonder ifI cheated on you, i.e., if used a "fixed" coin with a winning proba
 So your hypothesis&nbsp;$H_1$ is that I cheated.
 Unfortunately, it is impossible to make any useful statement about my winning probability if I cheated apart from that it should be bigger than 0.5. 
 
-What you can do is use make the opposite hypothesis&nbsp;$H_0$: I did not cheat, the coin is fair and both of us have winning probability of&nbsp;$q=0.5$.
+What you can do is use make the opposite hypothesis&nbsp;$H_0$: I did not cheat, the coin is fair and both of us have winning probability&nbsp;$q=0.5$.
 Under this assumption you can compute the probability that I would win at least $m=128$&nbsp;times out of $n=160$&nbsp;coin tosses.
-Flipping a coin $n$&nbsp;times is a [Bernoulli process](http://en.wikipedia.org/wiki/Bernoulli_process)
+Flipping a coin $n$&nbsp;times is a [Bernoulli process](http://en.wikipedia.org/wiki/Bernoulli_process).
 The probability&nbsp;$\probability[k|n]$ to win *exactly* $k$&nbsp;times in $n$&nbsp;coin tosses is then: 
 
 $$ \probability[k|n] = \binom{n}{k} q^k (1-q)^{n-k} = \binom{n}{k} 0.5^k 0.5^{n-k} = \binom{n}{k} 0.5^n = \binom{n}{k} \frac{1}{2^n} $$
@@ -57,11 +57,11 @@ $$ \begin{array}{rcl}
 \end{array} $$
 
 In other words, the chance that I would win that often in a fair game is very, very small.
-If you reject the hypothesis&nbsp;$H_0$, your probability $p=\probability[k\geq 128|160]$ to be wrong is very small.
+If you reject the hypothesis&nbsp;$H_0$, your probability $p=\probability[k\geq 128|160]$ to be wrong is, thus, very small as well.
 If you reject&nbsp;$H_0$ and accept&nbsp;$H_1$, $p$ would be your probability to be wrong.
 Normally, you would set yourself beforehand a limit&nbsp;$\alpha$, say&nbsp;$\alpha=0.01$ and if&nbsp;$p$ is less than that, you will risk accusing me.
 Since $p \ll \alpha$, you therefore can be confident to assume that the coin was fixed.
-This, actually, is the [binomial test](http://en.wikipedia.org/wiki/Binomial_test).
+The calculation that we performed here, actually, is called the *[binomial test](http://en.wikipedia.org/wiki/Binomial_test)*.
 
 ### The Concept of Many Statistical Tests
 
