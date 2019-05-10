@@ -1,4 +1,4 @@
-## Hill Climbing
+## Hill Climbing  {#sec:hillClimbing}
 
 Our first algorithm, random sampling, was not very efficient.
 It does not make any use of the information it "sees" during the optimization process.
