@@ -1,6 +1,6 @@
 ## Premature Convergence and Exploration vs. Exploitation
 
-\text.block{definition}{convergence}{An optimization process has converged if it cannot reach new candidate solutions anymore or if it keeps on producing candidate solutions from a small subset of the solution space&nbsp;\solutionSpace.}
+\text.block{definition}{convergence}{An optimization process has converged if it cannot reach new candidate solutions anymore or if it keeps on producing candidate solutions from a small subset of the solution space&nbsp;$\solutionSpace$.}
 
 One of the problems in global optimization is that it is often not possible to determine whether the best solution currently known is situated on local or a global optimum and thus, if convergence is acceptable.
 We often cannot even know if the current best solution is a local optimum or not.
