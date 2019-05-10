@@ -1,4 +1,4 @@
-## Hill Climbing  {#sec:hillClimbing}
+## Hill Climbing {#sec:hillClimbing}
 
 Our first algorithm, random sampling, was not very efficient.
 It does not make any use of the information it "sees" during the optimization process.
@@ -133,8 +133,10 @@ The algorithm has converged into a *local optimum*.
 
 \text.block{definition}{localOptimum}{A *local optimum* is a point&nbsp;$\localOptimum{\sespel}$ in the search space which maps to a better candidate solution than any other points in its neighborhood (see \text.ref{neighborhood}).}
 
-Of course, our hill climber does not really know that it is trapped in a local optimum.
-However, we can guess it: If there has not been any improvement for many steps, then the current-best candidate solution is probably a local optimum.
+\text.block{definition}{prematureConvergence}{An optimization process has prematurely converged if it has not yet discovered the global optimum but can no longer improve its approximation quality.&nbsp;[@WCT2012EOPABT; @WZCN2009WIOD]}
+
+Of course, our hill climber does not really know that it is trapped in a local optimum, that it has *prematurely converged*.
+However, we can try to guess it: If there has not been any improvement for many steps, then the current-best candidate solution is probably a local optimum.
 If that happens, we just restart at a new random point in the search space.
 Of course, we will remember the **best ever encountered** candidate solution over all restarts and return it to the user in the end.
 
@@ -224,16 +226,21 @@ On all problem instances except `la24`, `hcr_256+5%_1swap` provides visible bett
 
 ### Hill Climbing with a Different Unary Operator
 
-While our restart method could significantly improve the results of the hill climber, it could not solve the problem of "premature convergence" itself.
+With our restart method could significantly improve the results of the hill climber.
+It directly addressed the problem of premature convergence, but it tried to find a remedy for its symptoms, not its cause.
 
-\text.block{definition}{prematureConvergence}{An optimization process has prematurely converged if it has not yet discovered the global optimum but can no longer improve its approximation quality.&nbsp;[@WCT2012EOPABT; @WZCN2009WIOD]}
-
-This problem in our hill climber is caused by the unary operator.
+One cause for this problem in our hill climber is the design of unary operator.
 `1swap` will swap two jobs in an encoded solution.
 Since the solutions are encoded as integer arrays of length&nbsp;$\jsspMachines*\jsspJobs$, there are&nbsp;$\jsspMachines*\jsspJobs$ choices to pick the index of the first job to be swapped.
 Since we swap only with *different* jobs and each job appears&nbsp;$\jsspMachines$ times in the encoding, this leaves&nbsp;$\jsspMachines*(\jsspJobs-1)$ choices for the second swap index.
 In total, from any given point in the search space, `1swap` may reach&nbsp;$\jsspMachines*\jsspJobs*\jsspMachines*(\jsspJobs-1)=\jsspMachines^2 \jsspJobs^2-\jsspJobs$ different other points (some of which may still actually encode the same candidate solutions).
 These are only tiny fractions of the big search spaces (remember [@tbl:jsspSearchSpaceTable]?).
+
+This has two implications:
+
+1. The chance of premature convergence for a hill climber applying this operator is relatively high, since the neighborhoods are relatively small.
+2. Assume that there is no better solution in the `1swap` neighborhood of the current best point in the search space.
+   There might still be a much better, similar solution which could, for instance, require swapping three or four jobs &ndash; but the algorithm will never find it, because it can only swap two jobs.   
 
 Now we could define a new unary operator which can access a larger neighborhood.
 Here we first should think about the extreme cases.
@@ -244,7 +251,7 @@ From this thought experiment we know that unary operators which indiscriminately
 They also make less use of the causality of the search space, as they make large steps and their produced outputs are very different from their inputs.
 What we would like is an operator that often creates outputs very similar to its input (like `1swap`), but also from time to time samples points a bit farther away in the search space.
 
-#### Second Unary Search Operator for the JSSP
+#### Second Unary Search Operator for the JSSP {#sec:jsspUnaryOperator2}
 
 We define the `nswap` operator for the JSSP as follows and implement it in [@lst:JSSPUnaryOperatorNSwap]:
 
@@ -337,8 +344,8 @@ From [@tbl:hillClimbingNSwapRSJSSP] we know that the `nswap` operator here can s
 The Gantt charts of the median solutions obtained with `hcr_256+5%_nswap` setup, illustrated in [@fig:jssp_gantt_hcr_256_5_nswap_med], do thus look similar to those obtained with `hcr_256+5%_1swap` in [@fig:jssp_gantt_hcr_256_5_1swap_med], although there are some slight differences.
 Although 1% savings in makespan does not look much, but in a practical application, even a small improvement can mean a lot of benefit.
 
-Both restarts and the idea of allowing bigger search steps with small probability are intended to decrease the chance of premature convergence.
-We have seen that they work separately and in this case, we were lucky that they also work hand-in-hand.
+Both restarts and the idea of allowing bigger search steps with small probability are intended to decrease the chance of premature convergence, while the latter one also can investigate more solutions similar to the current best one.
+We have seen that both measures work separately and in this case, we were lucky that they also work hand-in-hand.
 This is not necessarily always the case, in optimization sometimes two helpful measures combined may lead to worse results, as we can see when comparing `hcr_256_1swap` with `hcr_256_nswap`.
 
 ![The progress of the hill climbers (without and with restarts) with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hc_1swap_nswap_rs_log.svgz}){#fig:jssp_progress_hc_1swap_nswap_rs_log width=84%}

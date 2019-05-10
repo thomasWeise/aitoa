@@ -18,7 +18,7 @@ The occurrence of numerous local optima, however, is more complicated, as the ph
 
 ![An example for how a hill climber from [@sec:hillClimbing] could get trapped in a local optimum when minimizing over a one-dimensional, real-valued search space.](\relative.path{premature_convergence.svgz}){#fig:premature_convergence}
 
-[@fig:premature_convergence] illustrates how a simple hill climber as introduced in Section&nbsp;[@sec:hillClimbing] could get trapped in a local optimum.
+[@fig:premature_convergence] illustrates how a simple hill climber as introduced in [@sec:hillClimbing] could get trapped in a local optimum.
 In the example, we assume that we have a sub-range of the real numbers as one-dimensional search space and try to minimize a multi-model objective function.
 There are more than three optima in the figure, but only one of them is the global minimum.
 The optimization process, however, discovers the basin of attraction of one of the local optima first.
@@ -43,3 +43,21 @@ One would then expect that we need to restart an hill climber about $s$&nbsp;tim
 Unfortunately, there are problems where the number of optima grows exponentially with the dimension of the search space&nbsp;[@FHRA2009RPBBOB2POTNF], so restarts alone will often not help us to discover the global optimum.
 This is also what we found in [@sec:stochasticHillClimbingWithRestarts]: While restarting the hill climber improved its solution quality, we did not discover any globally optimal schedule.
 Indeed, we did not even prematurely converge to the better local optima.
+
+#### Search Operator Design
+
+To a certain degree we can also combat premature convergence by designing search operators that induce a larger neighborhood.
+We introduced the `nswap` operator for our hill climber in [@sec:jsspUnaryOperator2] in such a way that it, most of the time, behaves similar to the original `1swap` operator.
+Sometimes, however, it can make a larger move.
+A hill climber using this operator will always have a non-zero probability from escaping a local optimum.
+This would require that the `nswap` operator makes a step large enough to leave the basin of attraction of the local optimum that it is trapped in *and* that the result of this step is better than the current local optimum.
+However, `nswap` also can swap three jobs in the job sequence, which is a relatively small change but still something that `1swap` cannot do.
+This happens much more likely and may help in cases where the optimization process is already at a solution which is locally optimal from the perspective of the `1swap` operator but could be improved by, say, swapping three jobs at once.
+This latter scenario is more likely, but a search operator whose neighborhood spans the entire search space could still sometimes help to escape local optima, especially during early stages of the search, where the optimization process did not yet trace down to the bottom of a really good local optimum.
+
+#### Investigating Multiple Points in the Search Space at Once
+
+With the Evolutionary Algorithms in [@sec:evolutionaryAlgorithm], we attempted yet another approach.
+The population, i.e., the $\mu$&nbsp;solutions that an EA preserves, also guard against premature convergence, especially if they are diverse.
+While a local search might always fall into the same local optimum if it has a large-enough basin of attraction, an EA that preserves a sufficiently large set of diverse points from the search space may find a better solution.
+
