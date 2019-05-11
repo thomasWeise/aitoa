@@ -79,4 +79,4 @@ Several techniques have been developed to increase and preserve the diversity in
 
 1. Sharing and Niching&nbsp;[@H1975GA; @SK1998FSANMR; @DY1996ENMHINFSAISC] are techniques that decrease the fitness of a solution if it is similar to the other solutions in the population.
    In other words, if solutions are similar, their chance to survive is decreased and different solutions, which are worse from the perspective of the objective function, can remain in the population.
-2. Clearning&nbsp;[@P1996ACPAANMFGA; P1997AEHCTFS] takes this idea one step further and only allows the best solution within a certain radius survive.
+2. Clearning&nbsp;[@P1996ACPAANMFGA; @P1997AEHCTFS] takes this idea one step further and only allows the best solution within a certain radius survive.

@@ -13,3 +13,4 @@ We explore them by again using the Job Shop Scheduling Problem (JSSP) from [@sec
 \relative.input{randomSampling/README.md}
 \relative.input{hillClimbing/README.md}
 \relative.input{evolutionaryAlgorithm/README.md}
+\relative.input{hillClimbing2/README.md}

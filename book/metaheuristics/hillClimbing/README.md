@@ -17,7 +17,7 @@ Local search exploits a property of many optimization problems called *causality
 The idea is that if we have a good candidate solution, then there may exist similar solutions which are better.
 We hope to find one of them and then continue trying to do the same from there.
 
-### Ingredient: Unary Search Operation for the JSSP
+### Ingredient: Unary Search Operation for the JSSP {#sec:hillClimbingJssp1Swap}
 
 So the question arises how we can create a candidate solution which is similar to &nbsp; but also slightly different from one &nbsp; we already have?
 Our search algorithms are working in the search space&nbsp;$\searchSpace$.
@@ -224,7 +224,7 @@ They should do that, because until they do their first restart, the are identica
 However, when `hc_1swap` has converged and stops making improvements, `hcr_256_1swap` and `hcr_256+5%_1swap` still continue to make progress.
 On all problem instances except `la24`, `hcr_256+5%_1swap` provides visible better end results compared to `hcr_256_1swap` as well, confirming the findings from [@tbl:hillClimbing1SwapRSJSSP].
 
-### Hill Climbing with a Different Unary Operator
+### Hill Climbing with a Different Unary Operator {#sec:hillClimbingWithDifferentUnaryOperator}
 
 With our restart method could significantly improve the results of the hill climber.
 It directly addressed the problem of premature convergence, but it tried to find a remedy for its symptoms, not its cause.
@@ -233,8 +233,9 @@ One cause for this problem in our hill climber is the design of unary operator.
 `1swap` will swap two jobs in an encoded solution.
 Since the solutions are encoded as integer arrays of length&nbsp;$\jsspMachines*\jsspJobs$, there are&nbsp;$\jsspMachines*\jsspJobs$ choices to pick the index of the first job to be swapped.
 Since we swap only with *different* jobs and each job appears&nbsp;$\jsspMachines$ times in the encoding, this leaves&nbsp;$\jsspMachines*(\jsspJobs-1)$ choices for the second swap index.
-In total, from any given point in the search space, `1swap` may reach&nbsp;$\jsspMachines*\jsspJobs*\jsspMachines*(\jsspJobs-1)=\jsspMachines^2 \jsspJobs^2-\jsspJobs$ different other points (some of which may still actually encode the same candidate solutions).
-These are only tiny fractions of the big search spaces (remember [@tbl:jsspSearchSpaceTable]?).
+We can also ignore equivalent swaps, e.g., exchanging the jobs at indexes $(10,5)$ and $(5,10)$ would result in the same outcome.
+In total, from any given point in the search space, `1swap` may reach&nbsp;$0.5*\jsspMachines*\jsspJobs*\jsspMachines*(\jsspJobs-1)=0.5*(\jsspMachines^2 \jsspJobs^2-\jsspJobs)$ different other points (some of which may still actually encode the same candidate solutions).
+These are only tiny fractions of the big search space (remember [@tbl:jsspSearchSpaceTable]?).
 
 This has two implications:
 
