@@ -23,7 +23,7 @@ We will partially sacrifice the formal and abstract structure of*&nbsp;[@WGOEB] 
                Faculty of Computer Science and Technology,
                Hefei University},
   address   = {Hefei, Anhui, China},
-  url       = {http://thomasweise.github.io/aitoa/aitoa.pdf},
+  url       = {http://thomasweise.github.io/aitoa/},
   edition   = {\meta.date}
 }
 ```
