@@ -239,15 +239,18 @@ These are only tiny fractions of the big search spaces (remember [@tbl:jsspSearc
 This has two implications:
 
 1. The chance of premature convergence for a hill climber applying this operator is relatively high, since the neighborhoods are relatively small.
+   If the neighborhood spanned by the operator was larger, it would contain more, potentially better solutions.
+   Hence, it would take longer for the optimization process to reach a point where no improving move can be discovered anymore.
 2. Assume that there is no better solution in the `1swap` neighborhood of the current best point in the search space.
-   There might still be a much better, similar solution which could, for instance, require swapping three or four jobs &ndash; but the algorithm will never find it, because it can only swap two jobs.   
+   There might still be a much better, similar solution which could, for instance, require swapping three or four jobs &ndash; but the algorithm will never find it, because it can only swap two jobs.
+   If the search operator would permit such moves, the hill climber may discover this better solution.
 
-Now we could define a new unary operator which can access a larger neighborhood.
-Here we first should think about the extreme cases.
+Now we need to think about how we could define a new unary operator which can access a larger neighborhood.
+Here we first should consider the extreme cases.
 On the one hand, we have `1swap` which samples from a relatively small neighborhood.
 The other extreme could be to use our nullary operator as unary operator: It would return an entirely random point from the search space&nbsp;$\searchSpace$ and ignore its input.
 It would span&nbsp;$\searchSpace$ as its neighborhood and uniformly sample from it, effectively turning the hill climber into random sampling.
-From this thought experiment we know that unary operators which indiscriminately sample from large neighborhoods are not very good ideas, as they are "too random."
+From this thought experiment we know that unary operators which indiscriminately sample from very large neighborhoods are not very good ideas, as they are "too random."
 They also make less use of the causality of the search space, as they make large steps and their produced outputs are very different from their inputs.
 What we would like is an operator that often creates outputs very similar to its input (like `1swap`), but also from time to time samples points a bit farther away in the search space.
 

@@ -53,11 +53,30 @@ A hill climber using this operator will always have a non-zero probability from 
 This would require that the `nswap` operator makes a step large enough to leave the basin of attraction of the local optimum that it is trapped in *and* that the result of this step is better than the current local optimum.
 However, `nswap` also can swap three jobs in the job sequence, which is a relatively small change but still something that `1swap` cannot do.
 This happens much more likely and may help in cases where the optimization process is already at a solution which is locally optimal from the perspective of the `1swap` operator but could be improved by, say, swapping three jobs at once.
-This latter scenario is more likely, but a search operator whose neighborhood spans the entire search space could still sometimes help to escape local optima, especially during early stages of the search, where the optimization process did not yet trace down to the bottom of a really good local optimum.
+This latter scenario is more likely and larger neighborhoods take longer to be explored, which further decreases the speed of convergence.
+Nevertheless, a search operator whose neighborhood spans the entire search space could still sometimes help to escape local optima, especially during early stages of the search, where the optimization process did not yet trace down to the bottom of a really good local optimum.
 
 #### Investigating Multiple Points in the Search Space at Once
 
 With the Evolutionary Algorithms in [@sec:evolutionaryAlgorithm], we attempted yet another approach.
-The population, i.e., the $\mu$&nbsp;solutions that an EA preserves, also guard against premature convergence, especially if they are diverse.
+The population, i.e., the $\mu$&nbsp;solutions that an $(\mu+\lambda)$&nbsp;EA preserves, also guard against premature convergence.
 While a local search might always fall into the same local optimum if it has a large-enough basin of attraction, an EA that preserves a sufficiently large set of diverse points from the search space may find a better solution.
+If we consider using a population, say in a $(\mu+\lambda)$&nbsp;EA, we need to think about its size.
+Clearly, a very small population will render the performance of the EA similar to a hill climber: it will be fast, but might converge to a local optimum.
+A large population, say big $\mu$ and $\lambda$ values, will increase the chance of eventually finding a better solution.
+This comes at the cost that every single solution is investigated more slowly: In a $(1+1)$-EA, every single function evaluation is spent on improving the current best solution (as it is a hill climber).
+In a $(2+1)$-EA, we preserve two solutions and, in average, the neighborhood of each of them is investigated by creating a modified copy only every second FE, and so on.
+We sacrifice speed for a higher chance of getting better results.
+Populations mark a trade-off.
+ 
+#### Diversity Preservation
 
+If we have already chosen to use a population of solutions, as mentioned in the previous section, we can add measures to preserve the diversity of solutions in it.
+Of course, a population is only useful if it consists of different elements.
+A population that has collapsed to only include copies of the same point from the search space is not better than performing hill climbing and preserving only that one single current best solution.
+In other words, only that part of the $\mu$&nbsp;elements of the population is effective that contains different points in the search space. 
+Several techniques have been developed to increase and preserve the diversity in the population, including:
+
+1. Sharing and Niching&nbsp;[@H1975GA; @SK1998FSANMR; @DY1996ENMHINFSAISC] are techniques that decrease the fitness of a solution if it is similar to the other solutions in the population.
+   In other words, if solutions are similar, their chance to survive is decreased and different solutions, which are worse from the perspective of the objective function, can remain in the population.
+2. Clearning&nbsp;[@P1996ACPAANMFGA; P1997AEHCTFS] takes this idea one step further and only allows the best solution within a certain radius survive.
