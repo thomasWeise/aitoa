@@ -13,7 +13,7 @@ Let us take one step back, to the simple hill climber and the original unary sea
 This operator tries to perform a single swap, i.e., exchange the order of two job IDs in a point from the search space.
 We already discussed in [@sec:hillClimbingWithDifferentUnaryOperator] that the size of this neighborhood is&nbsp;$0.5*\jsspMachines^2*\jsspJobs*(\jsspJobs-1)$ for each point in the search space.
 
-### Idea: Enumerating Neighborhoods
+### Idea: Enumerating Neighborhoods {#sec:hc2EnumNeighbors}
 
 Instead of randomly sampling elements from this neighborhood, we could simple iteratively and exhaustively enumerate over them.
 As soon as we encounter and improving move, we can stop and accept the better point.
@@ -44,6 +44,11 @@ The [`test` function](http://docs.oracle.com/javase/8/docs/api/java/util/functio
 It returns `true` when the enumeration should be stopped (maybe because a better solution was discovered) and `false` to continue. 
 `enumerate` itself will return `true` if and only if `test` ever returned `true` and `false` otherwise.
 
+Of course, we cannot implement a neighborhood enumeration for all unary operators:
+Already for `nswap`, this would include the complete search space and thus would take way too long.
+Hence, the `default` implementation of the new method should just create an error.
+It will only be overwritten by operators with a neighborhood sufficiently small for efficient enumeration.
+
 ### Ingredient: Neighborhood Enumerating `1swap` Operation for the JSSP {#sec:hillClimbingJssp1SwapEnum}
 
 Let us now consider how such an exhaustive enumeration of the neighborhood spanned by the `1swap` operator can be implemented.
@@ -65,3 +70,31 @@ Let us now consider how such an exhaustive enumeration of the neighborhood spann
 This simple algorithm is implemented in [@lst:JSSPUnaryOperator1SwapEnum], which only shows the new function that was added to our class `JSSPUnaryOperator1Swap` that we had already back in [@sec:hillClimbingJssp1Swap].
 
 \repo.listing{lst:JSSPUnaryOperator1SwapEnum}{An excerpt of the `1swap` operator for the JSSP, namely the implementation of the `enumerate` function from the interface `IUnarySearchOpertor`&nbsp;([@lst:IUnarySearchOperatorEnum]).}{java}{src/main/java/aitoa/examples/jssp/JSSPUnaryOperator1Swap.java}{}{enumerate}
+
+### Hill Climbing Algorithm based on Neighborhood Enumeration
+
+#### The Algorithm
+
+The new variant of the hill climber would then be able to step-by-step enumerating the neighborhood of the current best point&nbsp;$\bestSoFar{\obspel}$ from the search space spanned by a unary operator.
+As soon as it discovers an improvement with respect to the objective function, the new, better point replaces&nbsp;$\bestSoFar{\obspel}$.
+The neighborhood enumeration then starts again from there, until the termination criterion is met.
+The general pattern of this algorithm is given below: 
+
+1. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
+2. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
+3. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
+4. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
+5. Repeat until the termination criterion is met:
+    a. For each point&nbsp;$\sespel'$ in the search space that are neighboring to the current best point&nbsp;$\bestSoFar{\sespel}$ according to the unary search operator do:
+    	 i. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
+       ii. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
+       iii. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$, $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and stop the enumeration (go back to step *5*).
+6. Return best-so-far objective value and best solution to the user.
+
+\repo.listing{lst:HillClimber2}{An excerpt of the implementation of the neighborhood-enumerating Hill Climbing algorithm, which remembers the best-so-far solution and tries to find better solutions by iteratively investigating the solutions in its neighborhood until it finds an improvement.}{java}{src/main/java/aitoa/algorithms/HillClimber2.java}{}{relevant}
+ 
+If we want to implement this algorithm for black-box optimization, we face the situation that the algorithm does not know the nature of the search space nor the neighborhood spanned by the operator.
+Therefore, we rely on the design introduced in [@sec:hc2EnumNeighbors], which allows us to realize this implicitly unknown looping behavior (point *a)* above) in form of the visiting pattern.
+The idea is that, while our hill climber does not know how to enumerate the neighborhood, the unary operator does, since it defines the neighborhood.
+The resulting code is given in [@lst:HillClimber2].
+
