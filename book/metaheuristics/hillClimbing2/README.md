@@ -100,7 +100,7 @@ The idea is that, while our hill climber does not know how to enumerate the neig
 The resulting code is given in [@lst:HillClimber2].
 
 
-### Hill Climbing Algorithm based on Neighborhood Enumeration with Enumeration
+### Hill Climbing Algorithm based on Neighborhood Enumeration with Restarts
 
 There is one important aspect that we have entirely disregarded when creating our new hill climbing algorithm and implementing it in [@sec:hillClimbing2Algo]:
 If the neighborhood enumeration completes, then continuing this algorithm makes no sense at all, as it will keep enumerating the same neighborhood again and again.
