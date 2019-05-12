@@ -48,6 +48,7 @@ Of course, we cannot implement a neighborhood enumeration for all unary operator
 Already for `nswap`, this would include the complete search space and thus would take way too long.
 Hence, the `default` implementation of the new method should just create an error.
 It will only be overwritten by operators with a neighborhood sufficiently small for efficient enumeration.
+A usual limit is neighborhood whose size grows quadratically with the problem scale, as is the case here, or at most with the third power of the problem scale.
 
 ### Ingredient: Neighborhood Enumerating `1swap` Operation for the JSSP {#sec:hillClimbingJssp1SwapEnum}
 
@@ -73,7 +74,7 @@ This simple algorithm is implemented in [@lst:JSSPUnaryOperator1SwapEnum], which
 
 ### Hill Climbing Algorithm based on Neighborhood Enumeration
 
-#### The Algorithm
+#### The Algorithm {#sec:hillClimbing2Algo}
 
 The new variant of the hill climber would then be able to step-by-step enumerating the neighborhood of the current best point&nbsp;$\bestSoFar{\obspel}$ from the search space spanned by a unary operator.
 As soon as it discovers an improvement with respect to the objective function, the new, better point replaces&nbsp;$\bestSoFar{\obspel}$.
@@ -85,7 +86,7 @@ The general pattern of this algorithm is given below:
 3. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
 4. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
 5. Repeat until the termination criterion is met:
-    a. For each point&nbsp;$\sespel'$ in the search space that are neighboring to the current best point&nbsp;$\bestSoFar{\sespel}$ according to the unary search operator do:
+    a. For each point&nbsp;$\sespel'$ in the search space neighboring to the current best point&nbsp;$\bestSoFar{\sespel}$ according to the unary search operator do:
     	 i. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
        ii. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
        iii. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$, $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and stop the enumeration (go back to step *5*).
@@ -94,7 +95,39 @@ The general pattern of this algorithm is given below:
 \repo.listing{lst:HillClimber2}{An excerpt of the implementation of the neighborhood-enumerating Hill Climbing algorithm, which remembers the best-so-far solution and tries to find better solutions by iteratively investigating the solutions in its neighborhood until it finds an improvement.}{java}{src/main/java/aitoa/algorithms/HillClimber2.java}{}{relevant}
  
 If we want to implement this algorithm for black-box optimization, we face the situation that the algorithm does not know the nature of the search space nor the neighborhood spanned by the operator.
-Therefore, we rely on the design introduced in [@sec:hc2EnumNeighbors], which allows us to realize this implicitly unknown looping behavior (point *a)* above) in form of the visiting pattern.
+Therefore, we rely on the design introduced in [@sec:hc2EnumNeighbors], which allows us to realize this implicitly unknown looping behavior (point&nbsp;*a* above) in form of the visiting pattern.
 The idea is that, while our hill climber does not know how to enumerate the neighborhood, the unary operator does, since it defines the neighborhood.
 The resulting code is given in [@lst:HillClimber2].
 
+
+### Hill Climbing Algorithm based on Neighborhood Enumeration with Enumeration
+
+There is one important aspect that we have entirely disregarded when creating our new hill climbing algorithm and implementing it in [@sec:hillClimbing2Algo]:
+If the neighborhood enumeration completes, then continuing this algorithm makes no sense at all, as it will keep enumerating the same neighborhood again and again.
+Instead, the very idea of using an enumerate-able neighborhood was to be able to do restarts more efficiently compared to our original hill climber.
+As planned out, we are now free from the need to "guess" when we have to restart.
+Instead, we should restart exactly when we have finished enumerating the neighborhood of the current best solution without discovering an improvement. 
+
+#### The Algorithm
+
+1. Set the overall-best objective value&nbsp;$\obspel_B$ to infinity and the overall-best candidate solution&nbsp;$\solspel_B$ to `NULL`. 
+2. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
+3. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
+4. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
+5. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
+6. If $\bestSoFar{\obspel}<\obspel_B$, then set&nbsp;$\obspel_B$ to&nbsp;$\bestSoFar{\obspel}$ and store&nbsp;$\solspel_B=\repMap{\sespel}$.
+7. Repeat until the termination criterion is met:
+    a. For each point&nbsp;$\sespel'$ in the search space neighboring to the current best point&nbsp;$\bestSoFar{\sespel}$ according to the unary search operator do:
+    	 i. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
+       ii. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
+       iii. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$, $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and stop the enumeration (go back to step *6*).
+    b. If we arrive here, the neighborhood of&nbsp;$\bestSoFar{\obspel}$ did not contain any better solution. Hence, we perform a restart by going back to point&nbsp;2.
+6. Return **best ever encountered** objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B$ to the user.
+
+\repo.listing{lst:HillClimber2WithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts based on neighborhood enumeration.}{java}{src/main/java/aitoa/algorithms/HillClimber2WithRestarts.java}{}{relevant}
+
+
+Different from [@sec:hillClimberWithRestartAlgo], this new algorithm does not need to count steps or even manage a parameter regarding how often to restart.
+Its implementation in [@lst:HillClimber2WithRestarts] is therefore also shorter and simpler than the implementation of the original algorithm variant in [@lst:HillClimberWithRestarts].
+It should be noted that both new hill climbers can only be applied in scenarios where we actually can enumerate the neighborhoods of the current best solutions efficiently.
+In other words, we pay for a gain of search efficiency by limiting the search spaces we can process.

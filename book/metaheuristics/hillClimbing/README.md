@@ -140,7 +140,7 @@ However, we can try to guess it: If there has not been any improvement for many 
 If that happens, we just restart at a new random point in the search space.
 Of course, we will remember the **best ever encountered** candidate solution over all restarts and return it to the user in the end.
 
-#### The Algorithm
+#### The Algorithm {#sec:hillClimberWithRestartAlgo}
 
 1. Set counter&nbsp;$C$ of unsuccessful search steps to&nbsp;$0$, initialize limit&nbsp;$L$ for the maximally allowed unsuccessful search steps.
 2. Set the overall-best objective value&nbsp;$\obspel_B$ to infinity and the overall-best candidate solution&nbsp;$\solspel_B$ to `NULL`. 
@@ -165,7 +165,7 @@ Of course, we will remember the **best ever encountered** candidate solution ove
         ii. if $C\geq L$ then
             (1) Maybe: increase&nbsp;$L$ (see later).
             (2) Go back to step&nbsp;3.
-9. Return **best ever encountered**  objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B$ to the user.
+9. Return **best ever encountered** objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B$ to the user.
 
 \repo.listing{lst:HillClimberWithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts, which remembers the best-so-far solution and tries to find better solutions in its neighborhood but restarts if it seems to be trapped in a local optimum.}{java}{src/main/java/aitoa/algorithms/HillClimberWithRestarts.java}{}{relevant}
 
