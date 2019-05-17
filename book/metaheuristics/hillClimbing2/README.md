@@ -90,6 +90,7 @@ The general pattern of this algorithm is given below:
     	 i. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
        ii. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
        iii. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$, $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and stop the enumeration (go back to step *5*).
+    b. If we arrive here, the neighborhood of&nbsp;$\bestSoFar{\obspel}$ did not contain any better solution. So we can stop the algorithm by going to step&nbsp;6.
 6. Return best-so-far objective value and best solution to the user.
 
 \repo.listing{lst:HillClimber2}{An excerpt of the implementation of the neighborhood-enumerating Hill Climbing algorithm, which remembers the best-so-far solution and tries to find better solutions by iteratively investigating the solutions in its neighborhood until it finds an improvement.}{java}{src/main/java/aitoa/algorithms/HillClimber2.java}{}{relevant}
@@ -99,13 +100,15 @@ Therefore, we rely on the design introduced in [@sec:hc2EnumNeighbors], which al
 The idea is that, while our hill climber does not know how to enumerate the neighborhood, the unary operator does, since it defines the neighborhood.
 The resulting code is given in [@lst:HillClimber2].
 
+We find that this algorithm can quite its main loop early:
+If the complete enumeration of the neighborhood of the current best solution $\bestSoFar{\sespel}$ yields no improvement, we can stop.
+It makes no sense to enumerate the same neighborhood of the same solution again.
+What would make sense here would be to *restart* the search at a different, random point in the search space.
 
 ### Hill Climbing Algorithm based on Neighborhood Enumeration with Restarts {#sec:hc2WithRestarts}
 
-There is one important aspect that we have entirely disregarded when creating our new hill climbing algorithm and implementing it in [@sec:hillClimbing2Algo]:
-If the neighborhood enumeration completes, then continuing this algorithm makes no sense at all, as it will keep enumerating the same neighborhood again and again.
-Instead, the very idea of using an enumerate-able neighborhood was to be able to do restarts more efficiently compared to our original hill climber.
-As planned out, we are now free from the need to "guess" when we have to restart.
+The very idea of using an enumerate-able neighborhood was to be able to do restarts more efficiently compared to our original hill climber.
+As planned, we are now freed from the need to "guess" when we have to restart.
 Instead, we should restart exactly when we have finished enumerating the neighborhood of the current best solution without discovering an improvement. 
 
 #### The Algorithm
@@ -120,7 +123,7 @@ Instead, we should restart exactly when we have finished enumerating the neighbo
     a. For each point&nbsp;$\sespel'$ in the search space neighboring to the current best point&nbsp;$\bestSoFar{\sespel}$ according to the unary search operator do:
     	 i. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
        ii. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
-       iii. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$, $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and stop the enumeration (go back to step *6*).
+       iii. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$, $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and stop the enumeration (go back to step&nbsp;*6*).
     b. If we arrive here, the neighborhood of&nbsp;$\bestSoFar{\obspel}$ did not contain any better solution. Hence, we perform a restart by going back to point&nbsp;2.
 6. Return **best ever encountered** objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B$ to the user.
 
