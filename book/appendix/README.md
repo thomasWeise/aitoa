@@ -6,4 +6,3 @@ Unfortunately, we cannot have all at once.
 Therefore, I choose to sometimes just describe some issues from the surface perspective and dump the details into this appendix.
 
 \relative.input{jssp/README.md}
-\relative.input{longVersions/README.md}
