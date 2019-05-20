@@ -21,7 +21,11 @@ $$ \Delta E = \objf(\repMap(\sespel)) - \objf(\repMap(\bestSoFar{\sespel})) $$ {
 
 The probability $P$ to overwrite $\bestSoFar{\sespel}$ with $\sespel$ then be
 
-$$ P = \left\{\begin{array}{ll} 1&\textnormal{if~}\Delta E \leq 0\\ e^{-\frac{\Delta E}{T}}&\textnormal{if~}\Delta E >0 \land T > 0\\ 0&\textnormal{otherwise~}(\Delta E > 0 \land T=0) \end{array} \right. $$ {#eq:simulatedAnnealingP}
+$$ P = \left\{\begin{array}{rl}
+1 & \text{if~}\Delta E \leq 0\\
+e^{-\frac{\Delta E}{T}} & \text{if~}\Delta E >0 \land T > 0\\
+0 & \text{otherwise~}(\Delta E > 0 \land T=0)
+\end{array} \right. $$ {#eq:simulatedAnnealingP}
 
 In other words, if the new candidate solution is actually better than the current best one, then we will definitely accept it, i.e., if $\Delta E < 0$, which means that $\objf(\repMap(\sespel)) < \objf(\repMap(\bestSoFar{\sespel}))$.
 If the new solution is worse, then $\Delta E > 0$.
