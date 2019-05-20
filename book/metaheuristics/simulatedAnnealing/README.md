@@ -55,9 +55,9 @@ The SA algorithm can be summarized as follows:
     b. Apply the unary search operator to&nbsp;$\sespel$ to get the slightly modified copy&nbsp;$\sespel'$ of it.
     c. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
     d. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
-    e. If&nbsp;$\obspel'\leq\bestSoFar{\obspel}$, then
+    e. If&nbsp;$\obspel'\leq \bestSoFar{\obspel}$, then
        i. Store&nbsp;$\sespel'$ in the variable&nbsp;$\sespel$ and&nbsp;$\obspel'$ in&nbsp;$\obspel$.
-       ii. If&nbsp;$\obspel'\leq\bestSoFar{\obspel}$, then store&nbsp;$\solspel'$ in the variable&nbsp;$\bestSoFar{\solspel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$.
+       ii. If&nbsp;$\obspel'\leq \bestSoFar{\obspel}$, then store&nbsp;$\solspel'$ in the variable&nbsp;$\bestSoFar{\solspel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$.
        iii. Perform next iteration by going to step&nbsp;6.
     f. Compute the temperature $T$ according to the temperature schedule, i.e., set $T=T(\iteration)$.
     g. If&nbsp;$T\leq 0$ the perform next iteration by goind to step&nbsp;6.
