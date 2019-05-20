@@ -15,3 +15,4 @@ We explore them by again using the Job Shop Scheduling Problem (JSSP) from [@sec
 \relative.input{evolutionaryAlgorithm/README.md}
 \relative.input{hillClimbing2/README.md}
 \relative.input{memeticAlgorithm/README.md}
+\relative.input{simulatedAnnealing/README.md}
