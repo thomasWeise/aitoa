@@ -31,7 +31,7 @@ The acceptance probability then
 2. gets smaller the smaller the so-called "temperature" $T\geq 0$ is.
 
 The algorithm is inspired by simulating the thermodynamic process of *annealing* using statistical mechanics, hence the naming&nbsp;[@MRRTT1953EOSCBFCM].
-Both the temperature&nbsp;$T>0$ and the objective value difference&nbsp;$\Delta E>0$ enter [@eq:simulatedAnnealingP] in an exponential term and the two above points follow from $e^{-x_1}<e^{-x_2}\forall x_1>x_2$ and $e^{-x}\in\[0,1\]\forall x>0$.     
+Both the temperature&nbsp;$T>0$ and the objective value difference&nbsp;$\Delta E>0$ enter [@eq:simulatedAnnealingP] in an exponential term and the two above points follow from $e^{-x_1}<e^{-x_2}\forall x_1>x_2$ and $e^{-x}\in[0,1]\forall x>0$.     
 
 The temperature decreases and approaches zero with the algorithm iteration&nbsp;$\iteration$, i.e., the performed objective function evaluations.
 In other words, $T$ is actually a monotonously decreasing function $T(\iteration)$ called the "temperature schedule" and it holds that $\lim_{\iteration\rightarrow\infty} T(\iteration) = 0$.
