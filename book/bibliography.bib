@@ -19,6 +19,7 @@
 %% journals
 @string { adm = "{Annals of Discrete Mathematics}" }
 @string { aoms = "{The Annals of Mathematical Statistics ({AOMS})}" }
+@string { asn = "{{ACM} {SIGMICRO} Newsletter}" }
 @string { asoc = "{Applied Soft Computing Journal ({ASOC})}" }
 @string { bp = "{Biometrics Bulletin}" }
 @string { cim = "{{IEEE} Computational Intelligence Magazine ({CIM})}" }
@@ -31,11 +32,14 @@
 @string { jors = "{The Journal of the Operational Research Society ({JORS})}" }
 @string { jotrss = "{Journal of the Royal Statistical Society}" }
 @string { jos  = "{Journal of Scheduling}" }
+@string { jotaa = "{Journal of Optimization Theory and Applications}" }
 @string { mans = "{Management Science}" }
 @string { nrlq = "{Naval Research Logistics Quarterly}" }
 @string { ojoc = "{{ORSA} Journal on Computing}"}
 @string { or = "{Operations Research}" }
+@string { scimag = "{Science Magazine}" }
 @string { tas = "{The American Statistician}" }
+@string { tjocp = "{The Journal of Chemical Physics}" }
 
 %% series
 @string { coop = "{Combinatorial Optimization ({COOP})}" }
@@ -99,6 +103,30 @@
   issue = {339},
   volume = {67},
   pages = {687--690},
+}
+
+
+@phdthesis{B1980GAFFO,
+  author = {Anne F. Brindle},
+  title = {Genetic Algorithms for Function Optimization},
+  school = {University of Alberta},
+  address = {Edmonton, Alberta, Canada},
+  year = {1980},
+  note = {Technical Report TR81-2},
+  isbn = {0-315-01039-8}
+}
+
+
+@inproceedings{B1985ASMFGA,
+  author = {James E. Baker},
+  title = {Adaptive Selection Methods for Genetic Algorithms},
+  pages = {101--111},
+  year = {1985},
+  booktitle = {Proceedings of the 1st International Conference on Genetic Algorithms and their Applications ({ICGA'85}), } # jun # {~24--26, 1985, {Pittsburgh, PA, USA}},
+  editor = {John J. Grefenstette},
+  publisher = {Lawrence Erlbaum Associates},
+  address = {Hillsdale, NJ, USA},
+  isbn = {0-8058-0426-9},
 }
 
 
@@ -176,9 +204,9 @@
 }
 
 
-@techreport{BT1995EA,
+@techreport{BT1995ACOSSUIGA,
   author = {Tobias Blickle and Lothar Thiele},
-  title  = {A Comparison of Selection Schemes Used in Genetic Algorithms},
+  title  = {A Comparison of Selection Schemes used in Genetic Algorithms},
   edition = {2},
   institution = {Eidgen{\"{o}}ssische Technische Hochschule (ETH) Z{\"{u}}rich, Department of Electrical Engineering, Computer Engineering and Networks Laboratory (TIK)},
   address = {Z{\"{u}}rich, Switzerland},
@@ -199,6 +227,22 @@
   address = {New York, NY, USA},
   year = {1971},
   doi = {10.1145/800157.805047},
+}
+
+
+@article{C1985TATTTSPAESA,
+  author = {Vladim{\'{\i}}r {\v{C}}ern{\'{y}}},
+  title = {Thermodynamical Approach to the Traveling Salesman Problem: An Efficient Simulation Algorithm},
+  publisher = {Springer Netherlands},
+  address = {Dordrecht, Netherlands}.
+  journal = jotaa,
+  number = {1},
+  volume = {45},
+  pages = {41--51},
+  year = {1985},
+  month = jan,
+  url = {http://mkweb.bcgsc.ca/papers/cerny-travelingsalesman.pdf},
+  doi = {10.1007/BF00940812}
 }
 
 
@@ -255,10 +299,38 @@
 }
 
 
+@inproceedings{dlMT1993AAOSPWPAPTPABS,
+	author = {Michael {de la Maza} and Bruce Tidor},
+	title = {An Analysis of Selection Procedures with Particular Attention Paid to Proportional and Bolzmann Selection},
+	pages = {124--131},
+  booktitle = {{Proceedings of the 5th International Conference on Genetic Algorithms ({ICGA'93})}, } # jul # {~17--21, 1993, {Urbana-Champaign, IL, USA}},
+  editor = {Stephanie Forrest},
+  publisher = {Morgan Kaufmann Publishers Inc.},
+  address = {San Francisco, CA, USA},
+  year = {1993},
+  isbn = {1-55860-299-2}
+}
+
+
+@article{DPSW1982MCTICO,
+  author = {Dean Jacobs and Jan Prins and Peter Siegel and Kenneth Wilson},
+  title = {Monte Carlo Techniques in Code Optimization},
+  publisher = {Association for Computing Machinery ({ACM})},
+  address = {New York, NY, USA},
+  journal = asn,
+  number = {4},
+  volume = {13},
+  pages = {143--148},
+  year = {1982},
+  month = dec,
+  note = {Proceedings of the 15th Annual Workshop on Microprogramming ({MICRO~15}), } # oct # {~5--7, 1982, {Palo Alto, CA, USA}, {New York, NY, USA}: {ACM}} 
+}
+
+
 @inproceedings{DY1996ENMHINFSAISC,
   author = {Paul J. Darwen and Xin Yao},
   title = {Every Niching Method has its Niche: Fitness Sharing and Implicit Sharing Compared},
-  booktitle = {Proceedings The 4th International Conference on Parallel Problem Solving from Nature {PPSN~IV}, International Conference on Evolutionary Computation, } # sep # {~22-26, 1996, {Berlin, Germany}},
+  booktitle = {Proceedings The 4th International Conference on Parallel Problem Solving from Nature {PPSN~IV}, International Conference on Evolutionary Computation, } # sep # {~22--26, 1996, {Berlin, Germany}},
   pages = {398--407},
   year = {1996},
   doi = {10.1007/3-540-61723-X_1004},
@@ -362,6 +434,20 @@
 }
 
 
+@inproceedings{GD1990ACAOSSUIGA,
+  author = {David Edward Goldberg and Kalyanmoy Deb},
+  title = {A Comparative Analysis of Selection Schemes used in Genetic Algorithms},
+  pages = {69--93},
+  year = {1990},
+  url = {http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.101.9494},
+  booktitle = {Proceedings of the First Workshop on Foundations of Genetic Algorithms ({FOGA'90}), } # jul # {~15--18, 1990, {Bloomington, IN, USA}},
+  editor = {Bruce M. Spatz and Gregory J. E. Rawlins},
+  publisher = {Morgan Kaufmann Publishers Inc.},
+  address = {San Francisco, CA, USA},
+  isbn = {1-55860-170-8},
+}
+
+
 @article{GLLRK1979OAAIDSASAS,
   journal = adm,
   volume = {5},
@@ -455,7 +541,7 @@
   title = {Genetic Algorithm Difficulty and the Modality of the Fitness Landscape},
   pages = {243--269},
   year = {1995},
-  booktitle = {Proceedings of the Third Workshop on Foundations of Genetic Algorithms ({FOGA~3}), } # jul # {~31} # {--} # aug # {~2, } # {1994, {Estes Park, CO, USA}},
+  booktitle = {Proceedings of the Third Workshop on Foundations of Genetic Algorithms ({FOGA~3}), } # jul # {~31} # {--} # aug # {~2, 1994, {Estes Park, CO, USA}},
   editor = {L. Darrell Whitley and Michael D. Vose},
   publisher = {Morgan Kaufmann Publishers Inc.},
   address = {San Francisco, CA, USA},
@@ -533,10 +619,26 @@
 }
 
 
+@article{KGV1983OBSA,
+  author = {Scott Kirkpatrick and C. Daniel {Gelatt, Jr.} and Mario P. Vecchi},
+  title  = {Optimization by Simulated Annealing},
+  publisher = {American Association for the Advancement of Science ({AAAS})},
+  address = {Washington, DC, USA},
+  journal = scimag,
+  number = {4598},
+  volume = {220},
+  pages = {671--680},
+  year = {1983},
+  month = may # {~13, },
+  url = {http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.18.4175},
+  doi = {10.1126/science.220.4598.671}
+}
+
+
 @inproceedings{KW2002OTUOREIMBES,
   author = {Joshua D. Knowles and Richard A. Watson},
   title = {On the Utility of Redundant Encodings in Mutation-Based Evolutionary Search},
-  booktitle = {Proceedings of the 7th International Conference on Parallel Problem Solving from Nature {(PPSN VII)}, } # sep # {~7-11, 2002, {Granada}, {Spain}},
+  booktitle = {Proceedings of the 7th International Conference on Parallel Problem Solving from Nature {(PPSN VII)}, } # sep # {~7--11, 2002, {Granada}, {Spain}},
   pages = {88--98},
   editor = {Juan Juli{\'a}n {Merelo Guerv{\'o}s} and Panagiotis Adamidis and Hans-Georg Beyer and Hans-Paul Schwefel and Jos{\'e}-Luis Fern{\'a}ndez-Villaca{\~n}as},
   year = {2002},
@@ -635,7 +737,7 @@
 @inproceedings{MFH1991RRGAFLGAP,
   author = {Melanie Mitchell and Stephanie Forrest and John Henry Holland},
   title = {The Royal Road for Genetic Algorithms: Fitness Landscapes and GA Performance},
-  booktitle = {Toward a Practice of Autonomous Systems: Proceedings of the First European Conference on Artificial Life (Actes de la Premi{\`e}re Conf{\'e}rence Europ{\'e}enne sur la Vie Artificielle) ({ECAL'91}), } # dec # {~11-13, 1991, {Paris, France}},
+  booktitle = {Toward a Practice of Autonomous Systems: Proceedings of the First European Conference on Artificial Life (Actes de la Premi{\`e}re Conf{\'e}rence Europ{\'e}enne sur la Vie Artificielle) ({ECAL'91}), } # dec # {~11--13, 1991, {Paris, France}},
   editor = {Francisco J. Varela and Paul Bourgine},
   publisher = {MIT Press},
   address = {Cambridge, MA, USA},
@@ -643,6 +745,22 @@
   pages = {245--254},
   year = {1991},
   url = {http://web.cecs.pdx.edu/~mm/ecal92.pdf},
+}
+
+
+@article{MRRTT1953EOSCBFCM,
+  author = {Nicholas Metropolis and Arianna W. Rosenbluth and Marshall Nicholas Rosenbluth and Augusta H. Teller and Edward Teller},
+  title = {Equation of State Calculations by Fast Computing Machines},
+  publisher = {American Institute of Physics ({AIP})},
+  address = {College Park, MD, USA},
+  journal = tjocp,
+  number = {6},
+  volume = {21},
+  pages = {1087--1092},
+  year = {1953},
+  month = jun,
+  url = {http://scienze-como.uninsubria.it/bressanini/montecarlo-history/mrt2.pdf},
+  doi = {10.1063/1.1699114}
 }
 
 
@@ -682,7 +800,7 @@
   pages = {798--803},
   year = {1996},
   doi = {10.1109/ICEC.1996.542703},
-  booktitle = {Proceedings of {IEEE} International Conference on Evolutionary Computation ({CEC'96})}, } # may # {~20--22, } # {1996, {Nagoya, Japan}},
+  booktitle = {Proceedings of {IEEE} International Conference on Evolutionary Computation ({CEC'96})}, } # may # {~20--22, 1996, {Nagoya, Japan}},
   editor = {Keisoku Jid{\={o}} and Seigyo Gakkai},
   publisher = {IEEE Computer Society Press},
   address = {Los Alamitos, CA, USA},
@@ -885,7 +1003,6 @@
 }
 
 
-
 @misc{vH2015JSIAS,
   author = {Jelke J. van Hoorn},
   title = {Job Shop Instances and Solutions},
@@ -946,11 +1063,25 @@
 }
 
 
+@inproceedings{W1989EA,
+  author = {L. Darrell Whitley},
+  title = {The GENITOR Algorithm and Selection Pressure: Why Rank-Based Allocation of Reproductive Trials is Best},
+  pages = {116--121},
+  year = {1989},
+  url  = {http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.18.8195},
+  booktitle = {Proceedings of the 3rd International Conference on Genetic Algorithms ({ICGA'89}), } # jun # {~4--7, 1989, {Fairfax, VA, USA}},
+  editor = {J. David Schaffer},
+  publisher = {Morgan Kaufmann Publishers Inc.},
+  address = {San Francisco, CA, USA},
+  isbn = {1-55860-066-3},
+}
+
+
 @inproceedings{W2017FSDFTSTFOAB,
 	author = {Thomas Weise},
 	title = {From Standardized Data Formats to Standardized Tools for Optimization Algorithm Benchmarking},
 	editor = {Newton Howard and Yingxu Wang and Amir Hussain and Freddie Hamdy and Bernard Widrow and Lotfi A. Zadeh},
-	booktitle = {Proceedings of the 16th {IEEE} Conference on Cognitive Informatics \& Cognitive Computing ({ICCI*CC'17}), } # jul # {~26-28, 2017, {University} of {Oxford}, {Oxford}, {UK}},
+	booktitle = {Proceedings of the 16th {IEEE} Conference on Cognitive Informatics \& Cognitive Computing ({ICCI*CC'17}), } # jul # {~26--28, 2017, {University} of {Oxford}, {Oxford}, {UK}},
 	pages = {490--497},
 	address = {Los Alamitos, CA, USA},
 	publisher = {{IEEE} Computer Society Press},

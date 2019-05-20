@@ -134,3 +134,5 @@ Different from [@sec:hillClimberWithRestartAlgo], this new algorithm does not ne
 Its implementation in [@lst:HillClimber2WithRestarts] is therefore also shorter and simpler than the implementation of the original algorithm variant in [@lst:HillClimberWithRestarts].
 It should be noted that both new hill climbers can only be applied in scenarios where we actually can enumerate the neighborhoods of the current best solutions efficiently.
 In other words, we pay for a gain of search efficiency by limiting the search spaces we can process.
+
+#### Results on the JSSP

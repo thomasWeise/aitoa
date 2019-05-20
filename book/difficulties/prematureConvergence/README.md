@@ -79,4 +79,19 @@ Several techniques have been developed to increase and preserve the diversity in
 
 1. Sharing and Niching&nbsp;[@H1975GA; @SK1998FSANMR; @DY1996ENMHINFSAISC] are techniques that decrease the fitness of a solution if it is similar to the other solutions in the population.
    In other words, if solutions are similar, their chance to survive is decreased and different solutions, which are worse from the perspective of the objective function, can remain in the population.
-2. Clearning&nbsp;[@P1996ACPAANMFGA; @P1997AEHCTFS] takes this idea one step further and only allows the best solution within a certain radius survive.
+2. Clearing&nbsp;[@P1996ACPAANMFGA; @P1997AEHCTFS] takes this idea one step further and only allows the best solution within a certain radius survive.
+
+#### Sometimes Accepting Worse Solutions
+
+Another approach to escape from local optima is to sometimes accept worse solutions.
+Examples for this include:
+
+1. When the Simulated Annealing algorithm ([@sec:simulatedAnnealing]) creates a new solution by applying the unary operator to its current point in the search space, it will make the new point current if it is better.
+   If the new point is worse, however, it may still move to this point with a certain probability.
+   This allows the algorithm to escape local optima. 
+2. Evolutionary Algorithms do not always have to apply the strict truncation selection scheme "$(\mu+\lambda)$ that we introduced in [@sec:evolutionaryAlgorithm].
+   There exist alternative methods, such as
+   a. $(\mu,\lambda)$ population strategies, where the $\mu$ current best solutions are always disposed and replaced by the $\mu$ best ones the $\lambda$ newly sampled points in the search space.
+   b. When the EAs we have discussed so far have to select some solutions from a given population, they always pick those with the best objective value.
+      This is actually not necessary.
+      Actually, there exists a wide variety of different selection methods&nbsp;[@GD1990ACAOSSUIGA; @BT1995ACOSSUIGA] such as Tournament selection&nbsp;[@B1980GAFFO; @BT1995ACOSSUIGA], Ranking Selection&nbsp;[@B1980GAFFO; @B1985ASMFGA], or the (discouraged!&nbsp;[@W1989EA; @BT1995ACOSSUIGA; @dlMT1993AAOSPWPAPTPABS]) fitness-proportionate selection&nbsp;[@H1975GA; @GD1990EAA; @DJ1975GA] may also select worse candidate solutions with a certain probability.

@@ -79,7 +79,7 @@ It proceeds as follows:
     d. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$.
 6. Return best-so-far objective value and best solution to the user.
 
-This algorithm is implemented in [@lst:HillClimber] and will refer to it as&nbsp;`hc`.
+This algorithm is implemented in [@lst:HillClimber] and we will refer to it as&nbsp;`hc`.
 
 \repo.listing{lst:HillClimber}{An excerpt of the implementation of the Hill Climbing algorithm, which remembers the best-so-far solution and tries to find better solutions in its neighborhood.}{java}{src/main/java/aitoa/algorithms/HillClimber.java}{}{relevant}
 
