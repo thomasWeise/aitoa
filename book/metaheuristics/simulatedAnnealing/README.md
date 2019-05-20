@@ -17,13 +17,13 @@ This algorithm therefore introduces three principles:
 The basic idea of SA is as follows:
 $\Delta E$ be the difference between the objective value of the freshly sampled point&nbsp;$\sespel$ from the search space and the best-so-far point&nbsp;$\bestSoFar{\sespel}$, where $\repMap$ is the representation mapping and $\objf$ the objective function, i.e.
 
-$$ \Delta E = \objf(\repmap(\sespel)) - \objf(\repmap(\bestSoFar{\sespel})) $$ {#eq:simulatedAnnealingDeltaE}
+$$ \Delta E = \objf(\repMap(\sespel)) - \objf(\repMap(\bestSoFar{\sespel})) $$ {#eq:simulatedAnnealingDeltaE}
 
 The probability $P$ to overwrite $\bestSoFar{\sespel}$ with $\sespel$ then be
 
 $$ P = \left\{\begin{array}{ll} 1&\textnormal{if~}\Delta E \leq 0\\ e^{-\frac{\Delta E}{T}}&\textnormal{if~}\Delta E >0 \land T > 0\\ 0&\textnormal{otherwise~}(\Delta E > 0 \land T=0) \end{array} \right. $$ {#eq:simulatedAnnealingP}
 
-In other words, if the new candidate solution is actually better than the current best one, then we will definitely accept it, i.e., if $\Delta E < 0$, which means that $\objf(\repmap(\sespel)) < \objf(\repmap(\bestSoFar{\sespel}))$.
+In other words, if the new candidate solution is actually better than the current best one, then we will definitely accept it, i.e., if $\Delta E < 0$, which means that $\objf(\repMap(\sespel)) < \objf(\repMap(\bestSoFar{\sespel}))$.
 If the new solution is worse, then $\Delta E > 0$.
 The acceptance probability then
 
@@ -61,7 +61,7 @@ The SA algorithm can be summarized as follows:
        iii. Perform next iteration by going to step&nbsp;6.
     f. Compute the temperature $T$ according to the temperature schedule, i.e., set $T=T(\iteration)$.
     g. If&nbsp;$T\leq 0$ the perform next iteration by goind to step&nbsp;6.
-    h. Set $\Delta E = \objf(\repmap(\sespel)) - \objf(\repmap(\bestSoFar{\sespel}))$ according to [@eq:simulatedAnnealingDeltaE].
+    h. Set $\Delta E = \objf(\repMap(\sespel)) - \objf(\repMap(\bestSoFar{\sespel}))$ according to [@eq:simulatedAnnealingDeltaE].
     i. Compute $P=e^{-\frac{\Delta E}{T}}$ according to [@eq:simulatedAnnealingP].
     j. Draw a random number $r$ uniformly distributed in $[0,1)$.
     k. If&nbsp;$k\leq P$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$ and perform next iteration by goind to step&nbsp;6.    
