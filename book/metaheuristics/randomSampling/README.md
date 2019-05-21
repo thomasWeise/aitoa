@@ -109,13 +109,13 @@ This means that this algorithm has a more reliable performance, we are more like
 |$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
 |`abz7`|656|`1rs`|1131|1334|1326|106|**0**s|**1**|
-|||`rs`|**895**|**945**|**948**|**12**|77s|8246019|
+|||`rs`|**895**|**945**|**948**|**12**|77s|8'246'019|
 |`la24`|935|`1rs`|1487|1842|1814|165|**0**s|**1**|
-|||`rs`|**1154**|**1206**|**1207**|**15**|81s|17287329|
+|||`rs`|**1154**|**1206**|**1207**|**15**|81s|17'287'329|
 |`swv15`|2885|`1rs`|5935|6600|6563|346|**0**s|**1**|
-|||`rs`|**4988**|**5165**|**5174**|**49**|85s|5525082|
+|||`rs`|**4988**|**5165**|**5174**|**49**|85s|5'525'082|
 |`yn4`|929|`1rs`|1754|2036|2039|125|**0**s|**1**|
-|||`rs`|**1459**|**1496**|**1498**|**15**|83s|6549694|
+|||`rs`|**1459**|**1496**|**1498**|**15**|83s|6'549'694|
 
 : The results of the single random sample algorithm&nbsp;`1rs` and the random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:randomSamplingJSSP}
 

@@ -7,19 +7,19 @@ Such a restart is costly, as it forces the local search to start completely from
 
 ### Idea: Accepting Worse Solutions with Decreasing Probability
 
-[Simulated Annealing](http://en.wikipedia.org/wiki/Simulated_annealing) (SA)&nbsp;[@KGV1983OBSA; @C1985TATTTSPAESA; @DPSW1982MCTICO] is a local search which provides a different approach to escape local optima.
+[Simulated Annealing](http://en.wikipedia.org/wiki/Simulated_annealing) (SA)&nbsp;[@KGV1983OBSA; @C1985TATTTSPAESA; @DPSW1982MCTICO; @P1970AMCMFTASOCTOCOP] is a local search which provides a different approach to escape local optima.
 This algorithm therefore introduces three principles:
 
 1. Worse candidate solutions are sometimes accepted, too.
-2. The probability&nbsp;$P$ of accepting them is decreases with increasing differences&nbsp;$\Delta E$ of the objective values to the current-best solution.
+2. The probability&nbsp;$P$ of accepting them is decreases with increasing differences&nbsp;$\Delta E$ of the objective values to the current solution.
 3. The probability also decreases with the number of performed search steps.
 
-The basic idea of SA is as follows:
-$\Delta E$ be the difference between the objective value of the freshly sampled point&nbsp;$\sespel$ from the search space and the best-so-far point&nbsp;$\bestSoFar{\sespel}$, where $\repMap$ is the representation mapping and $\objf$ the objective function, i.e.
+This basic idea is realized as follows.
+First, $\Delta E$ be the difference between the objective value of the freshly sampled point&nbsp;$\sespel'$ from the search space and the "current" point&nbsp;$\sespel$, where $\repMap$ is the representation mapping and $\objf$ the objective function, i.e.
 
-$$ \Delta E = \objf(\repMap(\sespel)) - \objf(\repMap(\bestSoFar{\sespel})) $$ {#eq:simulatedAnnealingDeltaE}
+$$ \Delta E = \objf(\repMap(\sespel')) - \objf(\repMap(\sespel)) $$ {#eq:simulatedAnnealingDeltaE}
 
-The probability $P$ to overwrite $\bestSoFar{\sespel}$ with $\sespel$ then be
+The probability $P$ to overwrite&nbsp;$\sespel$ with&nbsp;$\sespel'$ then be
 
 $$ P = \left\{\begin{array}{rl}
 1 & \text{if~}\Delta E \leq 0\\
@@ -27,7 +27,8 @@ e^{-\frac{\Delta E}{T}} & \text{if~}\Delta E >0 \land T > 0\\
 0 & \text{otherwise~}(\Delta E > 0 \land T=0)
 \end{array} \right. $$ {#eq:simulatedAnnealingP}
 
-In other words, if the new candidate solution is actually better than the current best one, then we will definitely accept it, i.e., if $\Delta E < 0$, which means that $\objf(\repMap(\sespel)) < \objf(\repMap(\bestSoFar{\sespel}))$.
+In other words, if the new candidate solution is actually better than the current one, then we will definitely accept it.
+In this case, $\Delta E < 0$, which means that $\objf(\repMap(\sespel')) < \objf(\repMap(\sespel))$.
 If the new solution is worse, then $\Delta E > 0$.
 The acceptance probability then
 
@@ -35,7 +36,7 @@ The acceptance probability then
 2. gets smaller the smaller the so-called "temperature" $T\geq 0$ is.
 
 The algorithm is inspired by simulating the thermodynamic process of *annealing* using statistical mechanics, hence the naming&nbsp;[@MRRTT1953EOSCBFCM].
-Both the temperature&nbsp;$T>0$ and the objective value difference&nbsp;$\Delta E>0$ enter [@eq:simulatedAnnealingP] in an exponential term and the two above points follow from $e^{-x_1}<e^{-x_2}\forall x_1>x_2$ and $e^{-x}\in[0,1]\forall x>0$.     
+Both the temperature&nbsp;$T>0$ and the objective value difference&nbsp;$\Delta E>0$ enter [@eq:simulatedAnnealingP] in an exponential term and the two above points follow from $e^{-a}<e^{-b}\forall a>b$ and $e^{-a}\in[0,1]\forall a>0$.     
 
 The temperature decreases and approaches zero with the algorithm iteration&nbsp;$\iteration$, i.e., the performed objective function evaluations.
 In other words, $T$ is actually a monotonously decreasing function $T(\iteration)$ called the "temperature schedule" and it holds that $\lim_{\iteration\rightarrow\infty} T(\iteration) = 0$.
@@ -44,10 +45,66 @@ This means, we can add a third point, namely
 
 3. The acceptance probability decreases over time.
 
+### Ingredient: Temperature Schedule
+
+The temperature schedule&nbsp;$T(\iteration)$ determines how the temperature changes over time (where time is measured in algorithm steps&nbsp;$\iteration$).
+It begins with an start temperature&nbsp;$T_s$ at $\iteration=1$.
+Then, the temperature is the highest, which means that the algorithm is more likely to accept worse solutions.
+It will then behave similar to a random walk.
+As time goes by and $\iteration$ increases, $T(\iteration)$ decreases and may even reach&nbsp;0 eventually.
+Once $T$ gets small enough, then Simulated Annealing will behave exactly like a hill climber.
+This means the algorithm tunes itself from an initial exploration phase to strict exploitation.
+
+\repo.listing{lst:temperatureSchedule}{An excerpt of the abstract base class for temperature schedules.}{java}{src/main/java/aitoa/algorithms/TemperatureSchedule.java}{}{main}
+
+The ingredient needed for this tuning, the temperature schedule, can be expressed as a class implementing exactly one simple function that translates an iteration index&nbsp;$\iteration$ to a temperature&nbsp;$T(\iteration)$, as defined in [@lst:temperatureSchedule].
+
+If we want to apply Simulated Annealing to a given problem, we would like that the probability to accept worse solutions declines smoothly during the optimization process.
+It should not go down close to 0 too quickly, because then we essentially have a hill climber.
+It should also not stay too high for too long, because then we waste too much time investigating worse solutions.
+Since our SA is basically an improved hill climber, we therefore consider how many iterations the `hc_1swap` from [@sec:hc_1swap:jssp:results] performed within the three minutes of runtime.
+The median total steps range from about 30&nbsp;million on `swv15` to 97&nbsp;million on `abz7`.
+We also know that our objective function is discrete and reasonable values for $\Delta E$ are maybe somewhere in the range of&nbsp;1 to&nbsp;10.
+Hence, we should select temperature schedules that tune the probability of accepting such slightly worse solutions gracefully from relatively high to close-to-zero within 30&nbsp;million algorithms steps.
+But how can we do that? 
+
+Two common ways to decrease the temperature over time are the *exponential* and the *logarithmic* temperature schedules, examples for both of which with the desired properties are illustrated in [@fig:sa_temperature_schedules].  
+
+![The temperature progress of three logarithmic and three exponential temperature schedules (top chart), along with the probabilities to accept candidate solutions whose objective value is worse by&nbsp;1, 3, or&nbsp;5 compared to the current solution (charts&nbsp;2 to&nbsp;4). We let $\iteration$ range from&nbsp;1 to&nbsp;$30'000'000$, which is a value that we definitely can reach in our JSSP experiments. The legend is in the second graphic.](\relative.path{sa_temperature_schedules.svgz}){#fig:sa_temperature_schedules width=99%}
+
+#### Exponential Temperature Schedule
+
+In an exponential temperature schedule, the temperature decreases exponentially with time (as the name implies).
+It follows [@eq:sa:temperatureSchedule:exp] and is implemented in [@lst:temperatureSchedule:exp].
+Besides the start temperature&nbsp;$T_s$, it has a parameter $\epsilon\in(0,1)$ which tunes the speed of the temperature decrease.
+
+$$ T(\iteration) = T_s * (1 - \epsilon) ^ {\iteration - 1} $$ {#eq:sa:temperatureSchedule:exp}
+
+\repo.listing{lst:temperatureSchedule:exp}{An excerpt of the exponential temperature schedules.}{java}{src/main/java/aitoa/algorithms/TemperatureSchedule.java}{}{exponential}
+
+Higher values of $\epsilon$ lead to a faster temperature decline.
+In [@fig:sa_temperature_schedules], we choose the values $\epsilon\in\{2*10^{-7}, 4^{-7}, 8*10^{-7}\}$ and a starting temperature of&nbsp;$T_s=20$.
+As can be seen, they yield a nice and smooth decline of the probabilities to accept solutions slightly worse than the current solution.
+The probability curves corresponding to the exponential schedules eventually effectively become&nbsp;0 after about half of the predicted 30&nbsp;million steps. 
+
+#### Logarithmic Temperature Schedule
+
+The logarithmic temperature schedule will prevent the temperature from becoming very small for a longer time.
+Compared to the exponential schedule, it will thus longer retain a higher probability to accept worse solutions.
+It obeys [@eq:sa:temperatureSchedule:log] and is implemented in [@lst:temperatureSchedule:log]..
+It, too, has the parameters&nbsp;$\epsilon\in(0,\infty)$ and&nbsp;$T_s$.
+
+$$ T(\iteration) = \frac{T_s}{\ln{\left(\epsilon(\iteration-1)+e\right)}} $$ {#eq:sa:temperatureSchedule:log}
+
+\repo.listing{lst:temperatureSchedule:log}{An excerpt of the logarithmic temperature schedules.}{java}{src/main/java/aitoa/algorithms/TemperatureSchedule.java}{}{logarithmic}
+
+Larger values of $\epsilon$ again lead to a faster temperature decline and we investigated logarithmic schedules with $\epsilon=1$ for three starting temperatures&nbsp;$T_s\in\{5,10,20\}$ in [@fig:sa_temperature_schedules].
+Compared to our selected exponential schedules, the temperatures decline earlier but then remain at a higher value.
+This means that the probability to accept worse candidates in logarithmic schedules remains almost constant (and above&nbsp;0) after some time.
 
 ### The Algorithm
 
-The SA algorithm can be summarized as follows:
+Now that we have temperature schedules, we can completely define our SA algorithm and implement it in [@lst:SimulatedAnnealing]. 
 
 1. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
 2. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
@@ -70,7 +127,5 @@ The SA algorithm can be summarized as follows:
     j. Draw a random number $r$ uniformly distributed in $[0,1)$.
     k. If&nbsp;$k\leq P$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$ and perform next iteration by goind to step&nbsp;6.    
 7. Return best-so-far objective value&nbsp;$\bestSoFar{\obspel}$ and best solution&nbsp;&nbsp;$\bestSoFar{\obspel}$ to the user.
-
-This algorithm is implemented in [@lst:SimulatedAnnealing] and we will refer to it as&nbsp;`sa`.
 
 \repo.listing{lst:SimulatedAnnealing}{An excerpt of the implementation of the Simulated Annealing algorithm.}{java}{src/main/java/aitoa/algorithms/SimulatedAnnealing.java}{}{relevant}

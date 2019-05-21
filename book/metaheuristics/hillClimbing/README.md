@@ -83,21 +83,21 @@ This algorithm is implemented in [@lst:HillClimber] and we will refer to it as&n
 
 \repo.listing{lst:HillClimber}{An excerpt of the implementation of the Hill Climbing algorithm, which remembers the best-so-far solution and tries to find better solutions in its neighborhood.}{java}{src/main/java/aitoa/algorithms/HillClimber.java}{}{relevant}
 
-#### Results on the JSSP
+#### Results on the JSSP {#sec:hc_1swap:jssp:results}
 
 We now apply our&nbsp;`hc` algorithm together with the `1swap` to the JSSP.
 We will refer to this setup as `hc_1swap` and present its results with those of&nbsp;`rs` in [@tbl:hillClimbing1SwapJSSP].
 
 |$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|`hc_1swap`|**717**|**800**|**798**|28|**0**s|16978|
-|||`rs`|895|945|948|**12**|77s|8246019|
+|`abz7`|656|`hc_1swap`|**717**|**800**|**798**|28|**0**s|16'978|
+|||`rs`|895|945|948|**12**|77s|8'246'019|
 |`la24`|935|`hc_1swap`|**999**|**1095**|**1086**|56|**0**s|6612|
-|||`rs`|1154|1206|1207|**15**|81s|17287329|
-|`swv15`|2885|`hc_1swap`|**3837**|**4108**|**4108**|137|**1**s|104598|
-|||`rs`|4988|5165|5174|**49**|85s|5525082|
-|`yn4`|929|`hc_1swap`|**1109**|**1222**|**1220**|48|**0**s|31789|
-|||`rs`|1459|1496|1498|**15**|83s|6549694|
+|||`rs`|1154|1206|1207|**15**|81s|17'287'329|
+|`swv15`|2885|`hc_1swap`|**3837**|**4108**|**4108**|137|**1**s|104'598|
+|||`rs`|4988|5165|5174|**49**|85s|5'525'082|
+|`yn4`|929|`hc_1swap`|**1109**|**1222**|**1220**|48|**0**s|31'789|
+|||`rs`|1459|1496|1498|**15**|83s|6'549'694|
 
 : The results of the hill climber `hc_1swap` in comparison with those of random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hillClimbing1SwapJSSP}
 
@@ -187,18 +187,18 @@ What we can expect is therefore mainly an utilization of the variance in the end
 
 |$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|`hc_1swap`|**717**|800|798|28|**0**s|16978|
-|||`hcr_256_1swap`|738|765|766|**7**|82s|22881557|
-|||`hcr_256+5%_1swap`|723|**742**|**743**|7|21s|5681591|
+|`abz7`|656|`hc_1swap`|**717**|800|798|28|**0**s|16'978|
+|||`hcr_256_1swap`|738|765|766|**7**|82s|22'881'557|
+|||`hcr_256+5%_1swap`|723|**742**|**743**|7|21s|5'681'591|
 |`la24`|935|`hc_1swap`|999|1095|1086|56|**0**s|6612|
-|||`hcr_256_1swap`|975|1001|1002|**6**|91s|49588742|
-|||`hcr_256+5%_1swap`|**970**|**997**|**998**|9|6s|3470368|
-|`swv15`|2885|`hc_1swap`|3837|4108|4108|137|**1**s|104598|
-|||`hcr_256_1swap`|4069|4173|4177|**32**|92s|15351798|
-|||`hcr_256+5%_1swap`|**3701**|**3850**|**3857**|40|60s|9874102|
-|`yn4`|929|`hc_1swap`|1109|1222|1220|48|**0**s|31789|
-|||`hcr_256_1swap`|1153|1182|1184|**12**|90s|18843991|
-|||`hcr_256+5%_1swap`|**1095**|**1129**|**1130**|14|22s|4676669|
+|||`hcr_256_1swap`|975|1001|1002|**6**|91s|49'588'742|
+|||`hcr_256+5%_1swap`|**970**|**997**|**998**|9|6s|3'470'368|
+|`swv15`|2885|`hc_1swap`|3837|4108|4108|137|**1**s|104'598|
+|||`hcr_256_1swap`|4069|4173|4177|**32**|92s|15'351'798|
+|||`hcr_256+5%_1swap`|**3701**|**3850**|**3857**|40|60s|9'874'102|
+|`yn4`|929|`hc_1swap`|1109|1222|1220|48|**0**s|31'789|
+|||`hcr_256_1swap`|1153|1182|1184|**12**|90s|18'843'991|
+|||`hcr_256+5%_1swap`|**1095**|**1129**|**1130**|14|22s|4'676'669|
 
 : The results of the hill climber `hc_1swap` with restarts. `hcr_256_1swap` restarts after 256 unsuccessful search moves, `hcr_256+5%_1swap` does the same but increases the allowed number of unsuccessful moves by 5% after each restart. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hillClimbing1SwapRSJSSP}
 
