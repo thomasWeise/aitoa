@@ -123,7 +123,7 @@ The population used by the EA seemingly guards against premature convergence and
 
 ![The progress of the&nbsp;`ea4096_nswap`, `ea2048_nswap`, and&nbsp;`hcr_256+5%_nswap` algorithms over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_ea_nocr_hc_log.svgz}){#fig:jssp_progress_ea_nocr_hc_log width=84%}
 
-#### Exploration versus Exploitation
+#### Exploration versus Exploitation {#sec:ea:exploration:exploitation}
 
 Naturally, we may ask why the population is helpful in the search.
 First of all, we can consider it as a "generalized" version of the Hill Climber.

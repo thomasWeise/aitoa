@@ -1,4 +1,4 @@
-## Premature Convergence and Exploration vs. Exploitation
+## Premature Convergence
 
 \text.block{definition}{convergence}{An optimization process has converged if it cannot reach new candidate solutions anymore or if it keeps on producing candidate solutions from a small subset of the solution space&nbsp;$\solutionSpace$.}
 
@@ -32,6 +32,7 @@ The algorithm has prematurely converged.
 
 What can we do to prevent premature convergence?
 Actually, we already learned a wide set of techniques!
+Many of them boil down to balancing exploitation and exploration, as already discovered back in [@sec:ea:exploration:exploitation].
 
 #### Restarts
 
