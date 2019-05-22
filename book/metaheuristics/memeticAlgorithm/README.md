@@ -6,7 +6,7 @@ We now have seen two types of efficient algorithms for solving optimization prob
 2. global search methods, like evolutionary algorithms, which try to preserve a diverse set of solutions and are less likely to end up in local optima, but pay for it by slower optimization speed.
 
 It is a natural idea to combine both types of algorithms, to obtain a hybrid algorithm which unites the best from both worlds.
-Such algorithms are today often called *Memetic Algorithms* (MAs)&nbsp;[@M1989MA; @HSK2005RAIMA; @NCM2012HOMA].
+Such algorithms are today often called *Memetic Algorithms* (MAs)&nbsp;[@M1989MA; @HSK2005RAIMA; @NCM2012HOMA] (sometimes also Lamarkian Evolution&nbsp;[@WGM1994LETBEAFO]).
 
 ### Idea: Combining Local Search and Global Search
 

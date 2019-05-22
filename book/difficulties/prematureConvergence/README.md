@@ -12,9 +12,9 @@ This can, of course, only become cumbersome if there are multiple (local) optima
 The existence of multiple global optima (which, by definition, are also local optima) itself is not problematic and the discovery of only a subset of them can still be considered as successful in many cases.
 The occurrence of numerous local optima, however, is more complicated, as the phenomenon of *premature convergence* can occur.
 
-### The Problem
+### The Problem: Convergence to a Local Optimum
 
-\text.block{definition}{prematureConvergence2}{Convergence to a local optimum is called *premature convergence* (see also \text.ref{prematureConvergence}).}
+\text.block{definition}{prematureConvergence2}{Convergence to a local optimum is called *premature convergence* ([@WCT2012EOPABT; @WZCN2009WIOD], see also \text.ref{prematureConvergence}).}
 
 ![An example for how a hill climber from [@sec:hillClimbing] could get trapped in a local optimum when minimizing over a one-dimensional, real-valued search space.](\relative.path{premature_convergence.svgz}){#fig:premature_convergence}
 

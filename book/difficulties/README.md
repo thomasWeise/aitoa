@@ -9,3 +9,4 @@ It is natural to ask what makes an optimization problem hard for a given algorit
 It is natural to ask *Why is optimization difficult?*&nbsp;[@WZCN2009WIOD; @WCT2012EOPABT]
 
 \relative.input{prematureConvergence/README.md}
+\relative.input{ruggedness/README.md}

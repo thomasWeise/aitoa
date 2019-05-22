@@ -2,7 +2,7 @@
 
 Our first algorithm, random sampling, was not very efficient.
 It does not make any use of the information it "sees" during the optimization process.
-A search step consists of creating an entirel new, entirely random candidate solution.
+A search step consists of creating an entirely new, entirely random candidate solution.
 Every search step is thus independent of all prior steps.
 
 [Local search algorithms](http://en.wikipedia.org/wiki/Local_search_(optimization))&nbsp;[@HS2005SLSFAA; @WGOEB] offer an alternative.
