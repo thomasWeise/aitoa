@@ -73,7 +73,7 @@ But how can we do that?
 
 Two common ways to decrease the temperature over time are the *exponential* and the *logarithmic* temperature schedules, examples for both of which with the desired properties are illustrated in [@fig:sa_temperature_schedules].  
 
-![The temperature progress of 3&nbsp;logarithmic and 3&nbsp;exponential temperature schedules (top) plus the probabilities to accept solutions with objective values worse by&nbsp;1, 3, or&nbsp;5 compared to the current solution.}
+![The temperature progress of 3&nbsp;logarithmic and 3&nbsp;exponential temperature schedules (top) plus the probabilities to accept solutions with objective values worse by&nbsp;1, 3, or&nbsp;5 compared to the current solution.](\relative.path{sa_temperature_schedules.svgz}){#fig:sa_temperature_schedules width=99%}
 
 #### Exponential Temperature Schedule
 
