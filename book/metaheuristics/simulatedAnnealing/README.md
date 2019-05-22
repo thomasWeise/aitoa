@@ -19,7 +19,9 @@ First, $\Delta E$ be the difference between the objective value of the freshly s
 
 $$ \Delta E = \objf(\repMap(\sespel')) - \objf(\repMap(\sespel)) $$ {#eq:simulatedAnnealingDeltaE}
 
-The probability $P$ to overwrite&nbsp;$\sespel$ with&nbsp;$\sespel'$ then be
+Clearly, if we try to minimize the objective function&nbsp;$\objf$, then $\Delta E < 0$ means that $\sespel'$ is better than $\sespel$ since $\objf(\repMap(\sespel')) < \objf(\repMap(\sespel))$.
+If $\Delta E>0$, on the other hand, the new solution is worse.
+The probability&nbsp;$P$ to overwrite&nbsp;$\sespel$ with&nbsp;$\sespel'$ then be
 
 $$ P = \left\{\begin{array}{rl}
 1 & \text{if~}\Delta E \leq 0\\
@@ -27,10 +29,8 @@ e^{-\frac{\Delta E}{T}} & \text{if~}\Delta E >0 \land T > 0\\
 0 & \text{otherwise~}(\Delta E > 0 \land T=0)
 \end{array} \right. $$ {#eq:simulatedAnnealingP}
 
-In other words, if the new candidate solution is actually better than the current one, then we will definitely accept it.
-In this case, $\Delta E < 0$, which means that $\objf(\repMap(\sespel')) < \objf(\repMap(\sespel))$.
-If the new solution is worse, then $\Delta E > 0$.
-The acceptance probability then
+In other words, if the new candidate solution is actually better than the current one, i.e., $\Delta E <0$, then we will definitely accept it.
+If the new solution is worse ($\Delta E > 0$), the acceptance probability then
 
 1. gets smaller the larger $\Delta E$ is and 
 2. gets smaller the smaller the so-called "temperature" $T\geq 0$ is.
@@ -62,15 +62,18 @@ The ingredient needed for this tuning, the temperature schedule, can be expresse
 If we want to apply Simulated Annealing to a given problem, we would like that the probability to accept worse solutions declines smoothly during the optimization process.
 It should not go down close to 0 too quickly, because then we essentially have a hill climber.
 It should also not stay too high for too long, because then we waste too much time investigating worse solutions.
-Since our SA is basically an improved hill climber, we therefore consider how many iterations the `hc_1swap` from [@sec:hc_1swap:jssp:results] performed within the three minutes of runtime.
+This means that the right temperature schedule to select will depend on the problem (namely, the range of the objective values) and the computational budget at hand.
+
+Our SA is basically an improved hill climber and, here, we want to solve the JSSP with it.
+We therefore consider how many iterations the `hc_1swap` from [@sec:hc_1swap:jssp:results] performed within the three minutes of runtime.
 The median total steps range from about 30&nbsp;million on `swv15` to 97&nbsp;million on `abz7`.
 We also know that our objective function is discrete and reasonable values for $\Delta E$ are maybe somewhere in the range of&nbsp;1 to&nbsp;10.
 Hence, we should select temperature schedules that tune the probability of accepting such slightly worse solutions gracefully from relatively high to close-to-zero within 30&nbsp;million algorithms steps.
-But how can we do that? 
+But how can we do that?
 
 Two common ways to decrease the temperature over time are the *exponential* and the *logarithmic* temperature schedules, examples for both of which with the desired properties are illustrated in [@fig:sa_temperature_schedules].  
 
-![The temperature progress of three logarithmic and three exponential temperature schedules (top chart), along with the probabilities to accept candidate solutions whose objective value is worse by&nbsp;1, 3, or&nbsp;5 compared to the current solution (charts&nbsp;2 to&nbsp;4). We let $\iteration$ range from&nbsp;1 to&nbsp;$30'000'000$, which is a value that we definitely can reach in our JSSP experiments. The legend is in the second graphic.](\relative.path{sa_temperature_schedules.svgz}){#fig:sa_temperature_schedules width=99%}
+![The temperature progress of 3&nbsp;logarithmic and 3&nbsp;exponential temperature schedules (top) plus the probabilities to accept solutions with objective values worse by&nbsp;1, 3, or&nbsp;5 compared to the current solution.}
 
 #### Exponential Temperature Schedule
 
@@ -129,3 +132,8 @@ Now that we have temperature schedules, we can completely define our SA algorith
 7. Return best-so-far objective value&nbsp;$\bestSoFar{\obspel}$ and best solution&nbsp;&nbsp;$\bestSoFar{\obspel}$ to the user.
 
 \repo.listing{lst:SimulatedAnnealing}{An excerpt of the implementation of the Simulated Annealing algorithm.}{java}{src/main/java/aitoa/algorithms/SimulatedAnnealing.java}{}{relevant}
+
+There exist a several proofs&nbsp;[@GKR1994SAAPOC; @NS2000ANOTFTBOSA] showing that, with a slow-enough cooling schedule, the probability that Simulated Annealing will find the globally optimal solution approaches&nbsp;1.
+However, the runtime one would need to invest to actually "cash in" on this promise exceeds the time needed to enumerate all possible solutions&nbsp;[@NS2000ANOTFTBOSA].
+In [@sec:approximationOfTheOptimum] we discussed that we are using metaheuristics because for many problems, we can only guarantee to find the global optimum if we invest a runtime growing exponentially with the problem scale (i.e., proportional to the size of the solution space).
+So while we have a proof that SA will eventually find a globally optimal solution, this proof is not applicable in any practical scenario and we instead use SA as what it is: a metaheuristic that will hopefully give us good *approximate* solutions in *reasonable* time.
