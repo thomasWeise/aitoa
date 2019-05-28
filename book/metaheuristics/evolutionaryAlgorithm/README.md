@@ -162,7 +162,7 @@ By defining such an operator, we hope that we can merge the "good characteristic
 If we are lucky and that works, then ideally such good characteristics could aggregate over time&nbsp;[@G1989GA; @MFH1991RRGAFLGAP].
 
 How can we define a binary search operator for our JSSP representation?
-Here we just propose one possible idea (and implement it in [@lst:JSSPOperatorBinarySequence]).
+Here we just propose one possible idea (and implement it in [@lst:JSSPBinaryOperatorSequence]).
 
 1. Allocate a data structure&nbsp;$\sespel'$ to hold the new point in the search space that we want to sample.
 2. Mark all sub-jobs in both of the input points&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$ as "not assigned yet".
@@ -176,7 +176,7 @@ Here we just propose one possible idea (and implement it in [@lst:JSSPOperatorBi
     f. Mark&nbsp;$J$ as "already assigned" in ${\sespel}1$.
     g. Mark&nbsp;$J$ as "already assigned" in ${\sespel}2$.
 
-\repo.listing{lst:JSSPOperatorBinarySequence}{An excerpt of the `sequence` recombination operator for the JSSP, an implementation of the biary search operation interface [@lst:IBinarySearchOperator].}{java}{src/main/java/aitoa/examples/jssp/JSSPOperatorBinarySequence.java}{}{relevant}
+\repo.listing{lst:JSSPBinaryOperatorSequence}{An excerpt of the `sequence` recombination operator for the JSSP, an implementation of the biary search operation interface [@lst:IBinarySearchOperator].}{java}{src/main/java/aitoa/examples/jssp/JSSPBinaryOperatorSequence.java}{}{relevant}
 
 As we discussed in [@sec:jsspSearchSpace], our representation mapping processes the elements&nbsp;$\sespel\in\searchSpace$ from the front to the back and assigns the job to machines according to the order in which their ids appear.
 This binary operator here works in a similar way, but it works with *two* points from the search space&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$.
