@@ -33,7 +33,10 @@ By using such random number generators, we can let an algorithm make random choi
 
 ### Black-Box Optimization {#sec:blackbox}
 
-The concept of general metaheuristics, the idea to attack a very wide class of optimization problems with one basic algorithm design, can only be realized when following a *black-box* approach.
+
+![The black-box character of many metaheuristics, which can often accept arbitrary search operators, representations, and objective functions.](\relative.path{black_box_metaheuristic.svgz}){#fig:black_box_metaheuristic}
+
+The concept of general metaheuristics, the idea to attack a very wide class of optimization problems with one basic algorithm design, can be realized when following a *black-box* approach.
 If we want to have one algorithm that can be applied to all the examples given in in the introduction, then this can best be done if we hide all details of the problems under the hood of the structural elements introduced in [@sec:structure].
 For a black-box metaheuristic, it does not matter how the objective function&nbsp;$\objf$ works.
 The only thing that matters is that gives a rating of a candidate solution&nbsp;$\solspel\in\solutionSpace$ and that smaller ratings are better.
@@ -41,6 +44,7 @@ For a black-box metaheuristic, it does not matter what exactly the search operat
 It only matters that these operators can be used to get to new points in the search space (which can be mapped to candidate solutions&nbsp;$\solspel$ via a representation mapping&nbsp;$\repMap$ whose nature is also unimportant for the metaheuristic).
 Indeed, even the nature of the candidate solutions&nbsp;$\solspel\in\solutionSpace$ and the solution space&nbsp;$\solutionSpace$ play no big role for black-box optimization methods, as they only work on and explore the search space&nbsp;$\searchSpace$.
 The solution space is relevant for the human operator using the algorithm only, the search space is what the algorithm works on.
+Thus, a black-box metaheuristic is a general algorithm into which we can plug search operators, representations, and objective functions as needed by a specific application, as illustrated in [@fig:black_box_metaheuristic].
 Black-box optimization is the highest level of abstraction on which we can work when trying to solve complex problems.
 
 ### Putting it Together: A simple API
