@@ -32,7 +32,7 @@ The mapping&nbsp;$\repMap$ also does not necessarily need to be [surjective](htt
 However, such solutions then can never be discovered.
 Being surjective is therefore a good feature for&nbsp;$\repMap$.
 
-\repo.listing{lst:IRepresentationMapping}{A general interface for representation mappings.}{java}{src/main/java/aitoa/structure/IRepresentationMapping.java}{}{}
+\repo.listing{lst:IRepresentationMapping}{A general interface for representation mappings.}{java}{src/main/java/aitoa/structure/IRepresentationMapping.java}{}{relevant}
 
 The interface given in [@lst:IRepresentationMapping] provides a function `map` which maps one point&nbsp;`x` in the search space class&nbsp;`X` to a candidate solution instance&nbsp;`y` of the solution space class&nbsp;`Y`.
 We define the interface as [generic](http://en.wikipedia.org/wiki/Generics_in_Java), because we here do not make any assumption about the nature of&nbsp;`X` and&nbsp;`Y`.
@@ -133,7 +133,7 @@ Additionally, it became very easy to indirectly create and modify candidate solu
 
 #### Size of the Search Space
 
-It is relatively easy to compute the size&nbsp;$\left|\searchSpace\right|$ of our proposed &nbsp;$\searchSpace$.
+It is relatively easy to compute the size&nbsp;$\left|\searchSpace\right|$ of our proposed search space&nbsp;$\searchSpace$.
 We do not need to make any assumptions regarding "no useless waiting time", as in [@sec:solutionSpace:size], since this is not possible by default.
 Each element&nbsp;$\sespel\in\searchSpace$ is a [permutation of a multiset](http://en.wikipedia.org/wiki/Permutation#Permutations_of_multisets) where each of the&nbsp;$\jsspJobs$ elements occurs exactly&nbsp;$\jsspMachines$ times.
 This means that the size of the search space can be computed as given in [@eq:jssp_search_space_size].

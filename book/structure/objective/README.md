@@ -25,7 +25,7 @@ The `evaluate` function of this interface accepts one instance of the solution s
 We keep the interface [generic](http://en.wikipedia.org/wiki/Generics_in_Java), so that we can implement it for arbitrary solution spaces.
 Any actual objective function would then be an implementation of that interface.
 
-\repo.listing{lst:IObjectiveFunction}{A generic interface for objective functions.}{java}{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{}
+\repo.listing{lst:IObjectiveFunction}{A generic interface for objective functions.}{java}{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{relevant}
 
 ### Example: Job Shop Scheduling {#sec:jsspObjectiveFunction}
 

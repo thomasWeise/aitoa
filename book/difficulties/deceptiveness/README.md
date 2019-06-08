@@ -1,7 +1,7 @@
 ## Deceptiveness
 
-Besides causality, another very basic assumption behind metaheuristic optimization is that if candidate solution&nbsp;$\solspel_1$ is better than&nbsp;$\solspel_2$, it is more likely that we can find even better solutions around $\solspel_1$ than around $\solspel_2$.
-In other words, we assume that following a trail of solutions with improving objective values is in average our best chance of discovering the optimum.  
+Besides causality, another very basic assumption behind metaheuristic optimization is that if candidate solution&nbsp;$\solspel_1$ is better than&nbsp;$\solspel_2$, it is more likely that we can find even better solutions in the neighborhood around&nbsp;$\solspel_1$ than in the neighborhood of&nbsp;$\solspel_2$.
+In other words, we assume that following a trail of solutions with improving objective values is in average our best chance of discovering the optimum or, at least, some very good solutions.
 
 ### The Problem: Deceptiveness
 

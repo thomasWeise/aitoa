@@ -44,6 +44,8 @@
 @string { tpami = "{IEEE Transactions on Pattern Analysis and Machine Intelligence ({TPAMI})}" }
 
 %% series
+@string { bb = "{Bradford Books}" }
+@string { cas = "{Complex Adaptive Systems}" }
 @string { coop = "{Combinatorial Optimization ({COOP})}" }
 @string { dbom = "{Dover Books on Mathematics}" }
 @string { isor = "{International Series in Operations Research \& Management Science ({ISOR})}"}
@@ -145,6 +147,22 @@
 }
 
 
+@inproceedings{B1998RANTNKPFOFL,
+ author = {Lionel Barnett},
+ title = {Ruggedness and Neutrality -- The {NKp} Family of Fitness Landscapes},
+ booktitle = {Artificial Life VI: Proceedings of the 6th International Conference on the Simulation and Synthesis of Living Systems, } # jun # {~26--29, 1998, {Los Angeles}, {CA}, {USA}},
+ year = {1998},
+ pages = {18--27},
+ isbn = {0-262-51099-5},
+ publisher = {{MIT} Press},
+ address = {Cambridge, MA, USA},
+ series = cas,
+ volume = {6},
+ editor = {Christoph Adami and Richard K. Belew and Hiroaki Kitano and Charles E. Taylor},
+ url = {http://users.sussex.ac.uk/~lionelb/downloads/EASy/publications/alife6_paper.pdf}
+}
+
+
 @article{B2001MVORSNPM,
   author = {Shaun Burke},
   title = {Missing Values, Outliers, Robust Statistics {\&} Non-Parametric Methods},
@@ -196,7 +214,7 @@
 @book{BLB2008VMIDBS,
   author = {J{\"u}rgen Bortz and Gustav Adolf Lienert and Klaus Boehnke},
   title = {Verteilungsfreie Methoden in der Biostatistik},
-  edition = {3., korrigierte Auflage},
+  edition = {3},
   publisher = {Springer Medizin Verlag},
   address = {Heidelberg, Germany},
   series = sl,
@@ -294,7 +312,7 @@
   title  = {Evolutionary Computation: A Unified Approach},
   publisher = {MIT Press},
   address = {Cambridge, MA, USA},
-  series = {Complex Adaptive Systems, Bradford Books},
+  series = cas # {, } # bb,
   volume = {4},
   year = {2006},
   isbn = {0262041944},
@@ -347,7 +365,7 @@
 @book{E1995RT,
   author = {Eugene S. Edgington},
   title = {Randomization Tests},
-  edition = {3rd Revised and Expanded},
+  edition = {3},
   publisher = {CRC Press, Inc.},
   address = {Boca Raton, FL, USA},
   year = {1995},
@@ -409,7 +427,7 @@
   author = {{Sir} Ronald Aylmer Fisher and Frank Yates},
   year = {1948},
   title = {Statistical Tables for Biological, Agricultural and Medical Research},
-  edition = {3rd},
+  edition = {3},
   publisher = {Oliver \& Boyd},
   address = {London, UK},
 }
@@ -541,6 +559,17 @@
 }
 
 
+@phdthesis{H2010EAROEIEC,
+	title = {Evolvability and Rate of Evolution in Evolutionary Computation},
+	author = {Ting Hu},
+	school = {Department of Computer Science, Memorial University of Newfoundland},
+	month = may,
+	year = 2010,
+	address = {{St. John's}, Newfoundland, Canada},
+	url = {https://www.cs.bham.ac.uk/~wbl/biblio/gp-html/TingHu_thesis.html},
+}
+
+
 @techreport{HAFR2010RPBBOB2ES,
   author = {Nikolaus Hansen and Anne Auger and Steffen Finck and Raymond Ros},
   title = {Real-Parameter Black-Box Optimization Benchmarking 2010: Experimental Setup},
@@ -652,7 +681,7 @@
 @book{K2014PTACC,
 	title = {Probability Theory: A Comprehensive Course},
 	series = ut,
-	edition = {2nd},
+	edition = {2},
 	year = {2014},
 	author = {Achim Klenke},
 	isbn = {144715360X},
@@ -690,6 +719,7 @@
   isbn = {978-3-540-44139-7},
   publisher = {Springer-Verlag},
   address = {Berlin, Heidelberg},
+  url = {http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.7.9843},
   doi = {10.1007/3-540-45712-7_9},
 }
 
@@ -759,7 +789,7 @@
   title = {An Introduction to Genetic Algorithms},
   publisher = {MIT Press},
   address = {Cambridge, MA, USA},
-  series = {Complex Adaptive Systems, Bradford Books},
+  series = cas # {, } bb,
   year = {1998},
   month = feb,
   isbn = {0-262-13316-4},
@@ -785,7 +815,7 @@
   editor = {Francisco J. Varela and Paul Bourgine},
   publisher = {MIT Press},
   address = {Cambridge, MA, USA},
-  series = {Bradford Books},
+  series = bb,
   pages = {245--254},
   year = {1991},
   url = {http://web.cecs.pdx.edu/~mm/ecal92.pdf},
@@ -850,7 +880,7 @@
   month = aug,
   doi = {10.1287/moor.25.3.476.12211},
   note = {Revised version from } # mar # {~1999.},
-},
+}
 
 
 @article{P1970AMCMFTASOCTOCOP,
@@ -949,10 +979,24 @@
 }
 
 
+@book{R2006RFGAEA,
+ title = {Representations for Genetic and Evolutionary Algorithms},
+ author = {Franz Rothlauf},
+ year = {2006},
+ isbn-13 = {978-3-540-25059-3},
+ series = studfuzz,
+ volume = {104},
+ doi = {10.1007/3-540-32444-5},
+ publisher = {Springer-Verlag},
+ edition = {2},
+ address = {Berlin/Heidelberg},
+}
+
+
 @book{RN2002AI,
   author = {Stuart J. Russell and Peter Norvig},
   title = {Artificial Intelligence: A Modern Approach ({AIMA})},
-  edition = {2nd},
+  edition = {2},
   publisher = {Prentice Hall International Inc.},
   address = {Upper Saddle River, NJ, USA},
   year = {2002},
@@ -969,6 +1013,21 @@
   publisher = {Princeton University Press},
   address = {Princeton, NJ, USA},
   month = mar,
+}
+
+
+@inproceedings{S1999GAGR,
+ author = {Rob Shipman},
+ title = {Genetic Redundancy: Desirable or Problematic for Evolutionary Adaptation?},
+ pages = {1--11},
+ year = {1999},
+ booktitle = {Proceedings of the 4th International Conference on Artificial Neural Nets and Genetic Algorithms ({ICANNGA'99}), } # apr # {~6--9, 1999, {Protoro{\v{z}}}, {Slovenia}},
+ editor = {Andrej Dobnikar and Nigel C. Steele and David W. Pearson and Rudolf F. Albrecht},
+ publisher = {Springer-Verlag},
+ address = {Vienna, Austria},
+ isbn = {3-211-83364-1},
+ doi = {10.1007/978-3-7091-6384-9_57},
+ pages = {337-344}
 }
 
 
@@ -1011,7 +1070,7 @@
   author = {Paul Anthony Samuelson and William Dawbney Nordhaus},
   year = {2001},
   title = {Microeconomics},
-  edition = {17th},
+  edition = {17},
   address = {Boston, MA, USA},
   publisher = {McGraw-Hill Education (ISE Editions)},
   isbn = {0071-180664},
@@ -1045,7 +1104,7 @@
 
 @book{T2017LOPTAMS,
 	title = {Lectures on Probability Theory and Mathematical Statistics},
-	edition = {3rd},
+	edition = {3},
 	month = dec,
 	year = {2017},
 	author = {Marco Taboga},
@@ -1064,6 +1123,20 @@
 	author = {Oliver Theobald},
 	isbn = {1980797749},
 	publisher = {Independently published}
+}
+
+
+@inproceedings{TI2002SAOA,
+ author = {Marc Toussaint and Christian Igel},
+ title = {Neutrality: A Necessity for Self-Adaptation},
+ pages = {1354--1359},
+ year = {2002},
+ doi = {10.1109/CEC.2002.1004440},
+ booktitle = {Proceedings of the {IEEE} Congress on Evolutionary Computation ({CEC'02}), } # may # {~12-17, 2002, {Honolulu}, {HI}, {USA}},
+ editor = {David B. Fogel and Mohamed A. {El-Sharkawi} and Xin Yao and Hitoshi Iba and Paul Marrow and Mark Shackleton},
+ publisher = {IEEE Computer Society Press},
+ address = {Los Alamitos, CA, USA},
+ isbn = {0-7803-7282-4},
 }
 
 
@@ -1282,7 +1355,7 @@
   editor = {Raymond Chiong},
   booktitle = {Nature-Inspired Algorithms for Optimisation},
   volume = {193/2009},
-  series = {Studies in Computational Intelligence},
+  series = sici,
   chapter = {1},
   pages = {1--50},
   year = {2010},
