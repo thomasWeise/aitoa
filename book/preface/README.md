@@ -5,18 +5,14 @@ Currently, this book is in a very early stage of development.
 It is work-in-progress, so expect many changes.
 This [book](http://thomasweise.github.io/aitoa/index.html) is available as [pdf](http://thomasweise.github.io/aitoa/aitoa.pdf), [html](http://thomasweise.github.io/aitoa/aitoa.html), [epub](http://thomasweise.github.io/aitoa/aitoa.epub), and [azw3](http://thomasweise.github.io/aitoa/aitoa.azw3).
 
-This book is intended to be accessible and easy to read.
-Even undergraduate students with no background in optimization should be able to read and understand it without any problem.
-Many books in computer science try to be as concise as possible and give limited examples.
-The focus of this book here is to be easy to understand and not concise.
-
+Here, I want to write an accessible and easy to read guide to optimization that even undergraduate students with no background in the field should be able to understand without any problem.
 In my old book&nbsp;[@WGOEB], I tried to focus mainly on the abstract algorithms and sometimes described what problems we can solve with them.
 This, however, may not give the reader a good intuition about how the algorithms work in practice, what things to look for when solving a problem, or how we can get from a simple, working, proof-of-concept approach to an efficient solution for a given problem.
 So in this book, we follow more of a "learning-by-doing" approach, by trying to solve one practical optimization problem as example theme throughout the book.
 All algorithms are directly implemented and applied to that problem after we introduce them.
 This allows us to discuss their strengths and weaknesses based on their actual results.
 Based on these discussions, we step-by-step try to improve the algorithms, moving from very simple approaches which do not work well to efficient metaheuristics.
-We will partially sacrifice the formal and abstract structure of*&nbsp;[@WGOEB] and introduce concepts "as they come," with the goal to increase the accessibility of the ideas.
+We will partially sacrifice the formal and abstract structure of&nbsp;[@WGOEB] and introduce concepts "as they come," with the goal to increase the accessibility of the ideas.
 
 ```
 @book {aitoa,
