@@ -11,4 +11,3 @@ We can decide when which sub-job should begin and we are looking for the startin
 A very simplified version of this is sketched in [@fig:manufacturing], while we introduce the problem in detail in [@sec:jsspInstance].
 
 ![Illustrative sketch of a single production line where work pieces pass through 3 machines sequentially. The JSSP allows for more complex setups, where the order of machines can freely be chosen (but this is harder to paint).](\relative.path{manufacturing.svgz}){#fig:manufacturing width=99%}
-
