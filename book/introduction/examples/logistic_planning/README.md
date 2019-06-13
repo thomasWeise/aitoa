@@ -20,7 +20,7 @@ Actually, it might seek to maximize its profit, which could even mean to outsour
 The goal of optimization then would be to find the assignment of containers to delivery orders and vehicles and of vehicles to routes, which maximizes the profit.
 And it should do so within a limited, feasible time.
 
-![A Traveling Salesman Problem (TSP) through eleven cities in China.](\relative.path{tsp_china.svgz}){#fig:tsp_china width=70%}
+![A Traveling Salesman Problem (TSP) through eleven cities in China.](\relative.path{tsp_china.svgz}){#fig:tsp_china width=55%}
 
 Of course, there is a wide variety of possible logistics planning tasks. 
 Besides our real-world example above, a classical task is the [Traveling Salesman Problem](http://en.wikipedia.org/wiki/Travelling_salesman_problem) (TSP)&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV], where the goal is to find the shortest round-trip tour through$n$&nbsp;cities, as sketched in [@fig:tsp_china].
