@@ -187,6 +187,14 @@ If it would, by chance, always choose&nbsp;${\sespel}1$ as source, then it would
 If it would always pick&nbsp;${\sespel}2$ as source, then it would also return&nbsp;${\sespel}2$.
 If it would pick&nbsp;${\sespel}1$ for the first half of the times and then always pick&nbsp;${\sespel}2$, it would basically copy the first half of&nbsp;${\sespel}1$ and then assign the rest of the sub-jobs in exactly the order in which they appear in&nbsp;${\sespel}2$.
 
+![An example application of our sequence recombination operator to two points&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$ in the search space of the `demo` instance, resulting in a new point $\sespel'$. The corresponding candidate solutions&nbsp;${\solspel}1$, ${\solspel}2$, and&nbsp;$\solspel'$ are illustrated as well.](\relative.path{jssp_sequence_recombination.svgz}){#fig:jssp_sequence_recombination width=90%}
+
+For illustration purposes, one example application of this operator is sketched in [@fig:jssp_sequence_recombination].
+As input, we chose to points&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$ from the search space for our `demo` instance.
+We find that they have different corresponding Gantt charts&nbsp;${\solspel}1$ and&nbsp;${\solspel}2$ with makespans of 202 and 182 time units, respectively.
+The application of our binary operator yields a new point&nbsp;$\sespel'$ which corresponds to the Gantt chart&nbsp;$\solspel'$ with makespan 192.
+This new candidate solution clearly "inherits" some characteristics from either of its parents.
+
 ### Evolutionary Algorithm with Recombination {#sec:evolutionaryAlgorithmWithRecombination}
 
 We can now utilize this new operator in our EA, which therefore needs to be modified a bit.
