@@ -1,4 +1,4 @@
-## Neutrality
+## Neutrality and Redundancy
 
 An optimization problem and its representation have the property of causality if small changes in a candidate solution lead to small changes in the objective value.
 If the resulting changes are large, then causality is weak and the objective function is rugged, which has negative effects on optimization performance.
