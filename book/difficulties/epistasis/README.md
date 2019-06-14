@@ -11,7 +11,7 @@ But this is only partially true!
 It is only true if the variables depend on each other.
 As a counter example, consider the following problem subject to minimization:
 
-$$ \objf(\solspel) = (\arrayIndex{\solspel}{1} - 3)^2 + (\arrayIndex{\solspel}{2} + 5)^2 + (\arrayIndex{\solspel}{3} - 1)^2, \quad\solspel\in \{-10 \dots 10\}^3 $$
+$$ \objf(\solspel) = (\arrayIndex{\solspel}{1} - 3)^2 + (\arrayIndex{\solspel}{2} + 5)^2 + (\arrayIndex{\solspel}{3} - 1)^2, {\quad}\solspel\in \{-10 \dots 10\}^3 $$
 
 There are three decision variables.
 However, upon close inspection, we find that they are entirely unrelated.
@@ -19,9 +19,9 @@ Indeed, we could solve the three *separate* minimization problems given below on
 
 $$
 \begin{array}{rcll}
-\objf_1(\arrayIndex{\solspel}{1}) &=& (\arrayIndex{\solspel}{1} - 3)^2 & \quad\arrayIndex{\solspel}{1}\in -10 \dots 10 \\
-\objf_2(\arrayIndex{\solspel}{2}) &=& (\arrayIndex{\solspel}{1} + 5)^2 & \quad\arrayIndex{\solspel}{2}\in -10 \dots 10\\
-\objf_3(\arrayIndex{\solspel}{3}) &=& (\arrayIndex{\solspel}{1} - 1)^2 & \quad\arrayIndex{\solspel}{3}\in -10 \dots 10
+\objf_1(\arrayIndex{\solspel}{1}) &=& (\arrayIndex{\solspel}{1} - 3)^2 & {\quad}\arrayIndex{\solspel}{1}\in -10 \dots 10 \\
+\objf_2(\arrayIndex{\solspel}{2}) &=& (\arrayIndex{\solspel}{1} + 5)^2 & {\quad}\arrayIndex{\solspel}{2}\in -10 \dots 10\\
+\objf_3(\arrayIndex{\solspel}{3}) &=& (\arrayIndex{\solspel}{1} - 1)^2 & {\quad}\arrayIndex{\solspel}{3}\in -10 \dots 10
 \end{array}
 $$
 
