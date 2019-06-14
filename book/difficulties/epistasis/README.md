@@ -52,7 +52,7 @@ Then, the optimization problem is separable and can be solved by finding the bes
 A problem is maximally epistatic (or non-separable&nbsp;[@HRMSA2008PFNSAICP]) when no proper subset of decision variables is independent of any other decision variable&nbsp;[@NV1996EOFAIS].
 
 Another related biological phenomenon is *[pleiotropy](https://en.wikipedia.org/wiki/Pleiotropy)*, which means that a single gene is responsible for multiple phenotypical traits&nbsp;[@H2010EAROEIEC].
-Like epistasis, pleiotropy can sometimes lead to unexpected improvements but often is harmful&nbsp;[@A1994TSTAPT].
+Like epistasis, pleiotropy can sometimes lead to unexpected improvements but often is harmful.
 Both effects are sketched in [@fig:pleiotropy_and_epistasis].
 
 ![How epistasis creates and influences the problematic problem features discussed in the previous sections.](\relative.path{epistasis_influence.svgz}){#fig:epistasis_influence}
