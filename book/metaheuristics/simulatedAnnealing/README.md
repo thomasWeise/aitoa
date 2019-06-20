@@ -178,9 +178,9 @@ So while we have a proof that SA will eventually find a globally optimal solutio
 : The results of different Simulated Annealing setups compared to the best plain hill climber with restarts and the best basic EA. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:saVsHCAndEAJSSP}
 
 In [@tbl:saVsHCAndEAJSSP], we now present the results of different setups of our Simulated Annealing algorithm in comparison with the hill climbers with restarts and the best pure EA setup, `ea4096_nswap_5`.
-The setups are named after the pattern `sa_e_$T_s$_$\epsilon$_unary` have an exponential temperature schedule with the provided parameters.
+The setups are named after the pattern `sa_e_TS_EP_unary` have an exponential temperature schedule with the start temperature $T_s=`TS`$ and $\epsilon=`EP`$.
 `sa_e_20_8e-7_1swap`, for instance, is SA with an exponential temperature schedule with $T_s=20$ and $\epsilon=8*10^{-7}$ and the `1swap` unary operator.
-The setups named after the pattern `sa_l_$T_s$_unary` use logarithmic schedules with $\epsilon=1$, the start temperature $T_s$, and the named unary operator.
+The setups named after the pattern `sa_l_TS_unary` use logarithmic schedules with $\epsilon=1$, the start temperature $T_s=`TS`$, and the named unary operator.
 
 What we find from the table is that Simulated Annealing here consistently and significantly outperforms the hill climbers and the EA.
 On `ab7`, `swv15`, and `yn4`, its mean and median solutions are better than the best solutions offered by these algorithms.
