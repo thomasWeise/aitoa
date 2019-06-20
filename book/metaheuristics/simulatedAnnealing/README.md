@@ -137,3 +137,52 @@ There exist a several proofs&nbsp;[@GKR1994SAAPOC; @NS2000ANOTFTBOSA] showing th
 However, the runtime one would need to invest to actually "cash in" on this promise exceeds the time needed to enumerate all possible solutions&nbsp;[@NS2000ANOTFTBOSA].
 In [@sec:approximationOfTheOptimum] we discussed that we are using metaheuristics because for many problems, we can only guarantee to find the global optimum if we invest a runtime growing exponentially with the problem scale (i.e., proportional to the size of the solution space).
 So while we have a proof that SA will eventually find a globally optimal solution, this proof is not applicable in any practical scenario and we instead use SA as what it is: a metaheuristic that will hopefully give us good *approximate* solutions in *reasonable* time.
+
+### Results on the JSSP
+
+|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
+|`abz7`|656|`hcr_256+5%_nswap`|707|733|734|7|64s|17293038|
+|||`ea4096_nswap_5`|685|706|706|10|**29**s|**5933332**|
+|||`sa_e_20_2e-7_1swap`|663|673|672|5|92s|22456822|
+|||`sa_e_20_4e-7_1swap`|**658**|674|675|5|55s|13388301|
+|||`sa_e_20_8e-7_1swap`|663|675|675|6|36s|8625161|
+|||`sa_l_5_1swap`|**658**|675|675|6|63s|15745842|
+|||`sa_l_10_1swap`|659|**672**|**671**|4|86s|21271077|
+|||`sa_l_20_1swap`|675|682|682|**3**|125s|30740378|
+|`la24`|935|`hcr_256+5%_nswap`|945|981|984|9|57s|29246097|
+|||`ea4096_nswap_5`|941|974|971|13|**6**s|**2277833**|
+|||`sa_e_20_2e-7_1swap`|938|949|946|**8**|27s|12358941|
+|||`sa_e_20_4e-7_1swap`|**935**|949|946|9|16s|7135423|
+|||`sa_e_20_8e-7_1swap`|**935**|951|950|8|9s|4044217|
+|||`sa_l_5_1swap`|940|956|950|13|6s|2873837|
+|||`sa_l_10_1swap`|938|953|950|11|7s|3210824|
+|||`sa_l_20_1swap`|938|**946**|**941**|10|19s|9097608|
+|`swv15`|2885|`hcr_256+5%_nswap`|3645|3804|3811|44|**91**s|**14907737**|
+|||`ea4096_nswap_5`|3440|3543|3537|51|177s|22603785|
+|||`sa_e_20_2e-7_1swap`|2937|**2990**|**2988**|28|148s|21949073|
+|||`sa_e_20_4e-7_1swap`|2941|2993|2993|28|128s|18244751|
+|||`sa_e_20_8e-7_1swap`|**2936**|3000|3002|28|111s|16029528|
+|||`sa_l_5_1swap`|2963|3032|3029|33|135s|20087431|
+|||`sa_l_10_1swap`|2964|3021|3018|30|141s|21252052|
+|||`sa_l_20_1swap`|2985|3017|3016|**12**|153s|22596946|
+|`yn4`|929|`hcr_256+5%_nswap`|1081|1117|1119|14|55s|11299461|
+|||`ea4096_nswap_5`|1017|1058|1058|18|**52**s|**8248627**|
+|||`sa_e_20_2e-7_1swap`|973|**985**|**985**|5|113s|20676041|
+|||`sa_e_20_4e-7_1swap`|**971**|987|986|7|68s|12193934|
+|||`sa_e_20_8e-7_1swap`|972|988|988|7|58s|10178219|
+|||`sa_l_5_1swap`|980|1005|1006|13|75s|13732297|
+|||`sa_l_10_1swap`|975|997|996|11|108s|19850143|
+|||`sa_l_20_1swap`|979|990|990|**4**|116s|21108153|
+
+: The results of different Simulated Annealing setups compared to the best plain hill climber with restarts and the best basic EA. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:saVsHCAndEAJSSP}
+
+In [@tbl:saVsHCAndEAJSSP], we now present the results of different setups of our Simulated Annealing algorithm in comparison with the hill climbers with restarts and the best pure EA setup, `ea4096_nswap_5`.
+The setups are named after the pattern `sa_e_$T_s$_$\epsilon$_unary` have an exponential temperature schedule with the provided parameters.
+`sa_e_20_8e-7_1swap`, for instance, is SA with an exponential temperature schedule with $T_s=20$ and $\epsilon=8*10^{-7}$ and the `1swap` unary operator.
+The setups named after the pattern `sa_l_$T_s$_unary` use logarithmic schedules with $\epsilon=1$, the start temperature $T_s$, and the named unary operator.
+
+What we find from the table is that Simulated Annealing here consistently and significantly outperforms the hill climbers and the EA.
+On `ab7`, `swv15`, and `yn4`, its mean and median solutions are better than the best solutions offered by these algorithms.
+Instance `la24` is solved to optimality and on `abz7`, we are only 0.3% worse than the lower bound of the objective function.
+We also tested the Simulated Annealing setups with the unary `nswap` operator, but this did not yield further improvements.

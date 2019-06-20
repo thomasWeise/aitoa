@@ -5,9 +5,12 @@ The results of our nullary, unary, and binary operators are all random.
 In case of the unary and binary operator, they of course depend on the input points in the search space fed to the operators, but still, the results are unpredictable and random.
 This is, in general, not a bad property.
 In the absence of knowledge about what is best, doing an arbitrary thing might have a better expected outcome than doing a fixed, pre-determined thing.
-However, it also does not provide us with any information regarding whether we have prematurely converged to a local optimum or not.
-We simply guess this, and in [@sec:stochasticHillClimbingWithRestarts] we therefore design an algorithm that restarts if it did not encounter an improvement for a certain time.
-This might be too early, as there may still be undiscovered solutions in the neighborhood of the current best on &ndash; or it might be too late and we may have already investigated the complete neighborhood.
+
+However, it also has some drawbacks.
+For example, there is no guarantee to not test the same `1swap` move several times in the `hc_1swap` algorithm.
+Also, since we do not know when we have tested the complete neighborhood of a point&nbsp;$\sespel$ in the search space, we also do not know whether&nbsp;$\sespel$ is a (local) optimum or not.
+We instead need to guess this and in [@sec:stochasticHillClimbingWithRestarts] we therefore design an algorithm that restarts if it did not encounter an improvement for a certain time.
+This might be too early, as there may still be undiscovered solutions in the neighborhood of&nbsp;$\sespel$ &ndash; or it might be too late and we may have already investigated the complete neighborhood several times.
 
 Let us take one step back, to the simple hill climber and the original unary search operator `1swap` for the JSSP from [@sec:hillClimbingJssp1Swap].
 This operator tries to perform a single swap, i.e., exchange the order of two job IDs in a point from the search space.
@@ -16,8 +19,8 @@ We already discussed in [@sec:hillClimbingWithDifferentUnaryOperator] that the s
 ### Idea: Enumerating Neighborhoods {#sec:hc2EnumNeighbors}
 
 Instead of randomly sampling elements from this neighborhood, we could simple iteratively and exhaustively enumerate over them.
-As soon as we encounter and improving move, we can stop and accept the better point.
-If we have finished enumerating all possible `1swap` neighbors of a given point in the search space and none of them yields a candidate solution with better objective value (i.e., a Gantt chart with shorter makespan), we know that we have arrived in a local optimum.
+As soon as we encounter an improvement, we can stop and accept the better point.
+If we have finished enumerating all possible `1swap` neighbors and none of them yields a candidate solution with better objective value (e.g., a Gantt chart with shorter makespan), we know that we have arrived in a local optimum.
 This way, we do no longer need to "guess" if we have converged or not, we know it directly.
 Also, as detailed in [@sec:appendix:jssp:1swapProb], we should be able to find an improving move faster in average, because we will never redundantly sample the same point in the search space again when investigating the neighborhood of the current best solution.
 
@@ -44,9 +47,10 @@ The [`test` function](http://docs.oracle.com/javase/8/docs/api/java/util/functio
 It returns `true` when the enumeration should be stopped (maybe because a better solution was discovered) and `false` to continue. 
 `enumerate` itself will return `true` if and only if `test` ever returned `true` and `false` otherwise.
 
-Of course, we cannot implement a neighborhood enumeration for all unary operators:
-Already for `nswap`, this would include the complete search space and thus would take way too long.
-Hence, the `default` implementation of the new method should just create an error.
+Of course, we cannot implement a neighborhood enumeration for all possible unary operators:
+In the case of the `nswap`, operator, for instance, all other points in the search space could potentially be reached from the current one.
+Enumerating this neighborhood would include the complete search space and would take way too long.
+Hence, the [`default`](http://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html) implementation of the new method should just create an error.
 It will only be overwritten by operators with a neighborhood sufficiently small for efficient enumeration.
 A usual limit is neighborhood whose size grows quadratically with the problem scale, as is the case here, or at most with the third power of the problem scale.
 
@@ -129,10 +133,44 @@ Instead, we should restart exactly when we have finished enumerating the neighbo
 
 \repo.listing{lst:HillClimber2WithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts based on neighborhood enumeration.}{java}{src/main/java/aitoa/algorithms/HillClimber2WithRestarts.java}{}{relevant}
 
-
 Different from [@sec:hillClimberWithRestartAlgo], this new algorithm does not need to count steps or even manage a parameter regarding how often to restart.
 Its implementation in [@lst:HillClimber2WithRestarts] is therefore also shorter and simpler than the implementation of the original algorithm variant in [@lst:HillClimberWithRestarts].
 It should be noted that both new hill climbers can only be applied in scenarios where we actually can enumerate the neighborhoods of the current best solutions efficiently.
-In other words, we pay for a gain of search efficiency by limiting the search spaces we can process.
+In other words, we pay for a potential gain of search efficiency by a reduction of the types of problems we can process.
 
 #### Results on the JSSP
+
+|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
+|`abz7`|656|`hc_1swap`|717|800|798|28|**0**s|**16978**|
+|||`hc2_1swap`|723|789|786|30|3s|737235|
+|||`hcr_256+5%_1swap`|723|742|743|**7**|21s|5681591|
+|||`hc2r_1swap`|**705**|734|736|8|84s|23244617|
+|||`hcr_256+5%_nswap`|707|**733**|**734**|7|64s|17293038|
+|`la24`|935|`hc_1swap`|999|1095|1086|56|**0**s|**6612**|
+|||`hc2_1swap`|1004|1102|1092|55|0s|99601|
+|||`hcr_256+5%_1swap`|970|997|998|9|6s|3470368|
+|||`hc2r_1swap`|959|**977**|**977**|**8**|78s|43179265|
+|||`hcr_256+5%_nswap`|**945**|981|984|9|57s|29246097|
+|`swv15`|2885|`hc_1swap`|3837|4108|4108|137|**1**s|**104598**|
+|||`hc2_1swap`|3685|3982|3974|153|24s|3708826|
+|||`hcr_256+5%_1swap`|3701|3850|3857|**40**|60s|9874102|
+|||`hc2r_1swap`|**3628**|**3797**|**3799**|66|112s|17325313|
+|||`hcr_256+5%_nswap`|3645|3804|3811|44|91s|14907737|
+|`yn4`|929|`hc_1swap`|1109|1222|1220|48|**0**s|**31789**|
+|||`hc2_1swap`|1121|1203|1198|50|9s|1905085|
+|||`hcr_256+5%_1swap`|1095|1129|1130|14|22s|4676669|
+|||`hc2r_1swap`|**1076**|1125|1124|17|89s|18869590|
+|||`hcr_256+5%_nswap`|1081|**1117**|**1119**|**14**|55s|11299461|
+
+: The results of the neighborhood-enumerating hill climber with (`hc2r_1swap`) and without (`hc2_1swap`) restarts in comparison with the "original" hill climbers from [@sec:hillClimbing]. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hc2VsHc1Jssp}
+
+In [@tbl:hc2VsHc1Jssp], we compare this new neighborhood-enumerating hill climbers (prefix `hc2`) with the "original" hill climbers from [@sec:hillClimbing].
+
+We find that the non-restarting variant `hc2_1swap` from [@sec:hillClimbing2Algo] outperforms `hc_1swap` except for instance `la24`.
+We can also see that it can require several seconds (3s for `abz7` and 24s for `swv15`) until it arrives in a local optimum from which it can no longer escape with `1swap` moves.
+
+`hc2r_1swap` is the algorithm version with restarts, i.e., once it finds a point in the search space whose neighborhood, given in [@sec:hc2WithRestarts].
+It performs better than its non-enumerating counterpart `hcr_256+5%_1swap` and sometimes also than `hcr_256+5%_nswap` which was the best original hill climber due to its `nswap` operator with a larger neighborhood (see [@sec:jsspUnaryOperator2]).
+
+The improvements are small, but they are there.

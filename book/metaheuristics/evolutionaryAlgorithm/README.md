@@ -71,7 +71,8 @@ To make our algorithm more fair, we randomly shuffle the selected&nbsp;$\mu$ poi
 After implementing the $(\mu+\lambda)$&nbsp;EA as discussed above, we already have all the ingredients ready to apply to the JSSP.
 We need to decide which values for&nbsp;$\mu$ and&nbsp;$\lambda$ we want to use.
 The configuration of EAs is a whole research area itself.
-Here, let us just set&nbsp;$\mu=\lambda$ and test the two fairly large values 2048 and 4096.
+Here, let us just set&nbsp;$\mu=\lambda$ and test the values 16, 32, 64, 512, 2048, and 4096.
+We find that the two fairly large values 2048 and 4096 give the best results, so we will focus on them.
 We will call the corresponding setups `ea2048` and `ea4096`, respectively.
 As unary search operators, we test again `1swap` and `nswap`.
 The results are given in [@tbl:eaNoCrHCJSSP], together with those of our best hill climber with restarts `hcr_256+5%_nswap`.
@@ -99,7 +100,7 @@ The results are given in [@tbl:eaNoCrHCJSSP], together with those of our best hi
 |||`ea4096_1swap`|**1020**|1076|1074|21|39s|6'907'692|
 |||`ea4096_nswap`|1034|**1068**|**1067**|18|56s|9'976'531|
 
-: The results of the Evolutionary Algorithms without crossover in comparision to the best hill climber with restarts setup `hcr_256+5%_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:eaNoCrHCJSSP}
+: The results of the Evolutionary Algorithms without crossover in comparison to the best hill climber with restarts setup `hcr_256+5%_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:eaNoCrHCJSSP}
 
 [@tbl:eaNoCrHCJSSP] shows us that we can improve the best, mean, and median solution quality that we can get within three minutes of runtime by at least three percent when using our EA setups instead of the hill climber.
 The exception is case `la24`, where the hill climber already came close to the lower bound of the makespan.
@@ -250,7 +251,7 @@ If&nbsp;$cr$ is the probability to apply the binary operator and we draw a rando
 #### Results on the JSSP
 
 We now apply the new algorithm with our binary `sequence` operator to the JSSP.
-As unary operator, we only apply `nswap` and for&nbsp;$\mu$ and&nbsp;$\lambda$, we again test 2048 and 4096.
+As unary operator, we only apply `nswap` and for&nbsp;$\mu$ and&nbsp;$\lambda$, we again provide results for the values 2048 and 4096.
 As crossover rates&nbsp;$cr$, we use&nbsp;0, 0.05, and&nbsp;0.3.
 A crossover rate of&nbsp;0 is exactly equivalent to not applying the binary operator at all, that is, to our EAs from [@sec:evolutionaryAlgorithmWithoutRecombination].
 For the non-zero crossover rates, we append $cr*100$ to the setup name, i.e., `ea2048_nswap_30` stands for an $(2048+2048)$&nbsp;EA with the `nswap` unary operator which applies the binary `sequence` operator at a crossover rate (=probability) of 0.3.
@@ -284,7 +285,7 @@ For the non-zero crossover rates, we append $cr*100$ to the setup name, i.e., `e
 
 : The results of the Evolutionary Algorithms with crossover rates $0$, $0.05$, and $0.3$. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:eaCrHCJSSP}
 
-The results in [@tbl:eaCrHCJSSP] show that a moderate crossover rate of 0.05 can indeed improve our algorithm's performance &ndash; a bit.
+The results in [@tbl:eaCrHCJSSP] show that a moderate crossover rate of 0.05 can indeed improve our algorithm's performance &ndash; a little bit.
 Only for the JSSP instance `swv15`, setup `ea2048_nswap` without crossover remains best.
 
 By the way: It is very important to *always* test the $cr=0$ rate!
