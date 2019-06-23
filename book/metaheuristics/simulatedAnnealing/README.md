@@ -5,17 +5,27 @@ A hill climbing algorithm is likely to get stuck at local optima, which may vary
 We found that we can utilize this variance of the result quality by restarting the optimization process when it could not improve any more in [@sec:stochasticHillClimbingWithRestarts].
 Such a restart is costly, as it forces the local search to start completely from scratch (while we, of course, remember the best-ever solution in a variable hidden from the algorithm).
 
+Another way to look at this is the following:
+A schedule which is a local optimum probably is somewhat similar to what the globally optimal schedule would look like.
+If is, obviously, also somewhat different.
+This difference is shaped such that it cannot be conquered by the unary search operator that we use, because otherwise, the basic hill climber could already move from the local to the global optimum.
+If we do a restart, we also dispose of the similarities to the global optimum that we have already discovered.
+We will subsequently spend time to re-discover them in the hope that this will happen in a way that allows us to eventually reach the global optimum itself.
+But maybe there is a less-costly way?
+Maybe we can escape from a local optimum without discarding the entirety good solution characteristics we already have discovered?
+
 ### Idea: Accepting Worse Solutions with Decreasing Probability
 
-[Simulated Annealing](http://en.wikipedia.org/wiki/Simulated_annealing) (SA)&nbsp;[@KGV1983OBSA; @C1985TATTTSPAESA; @DPSW1982MCTICO; @P1970AMCMFTASOCTOCOP] is a local search which provides a different approach to escape local optima.
+[Simulated Annealing](http://en.wikipedia.org/wiki/Simulated_annealing) (SA)&nbsp;[@KGV1983OBSA; @C1985TATTTSPAESA; @DPSW1982MCTICO; @P1970AMCMFTASOCTOCOP] is a local search which provides another approach to escape local optima.
+Instead of restarting the algorithm when reaching a local optima, it tries to preserve the parts of the current best solution by permitting search steps towards worsening objective values. 
 This algorithm therefore introduces three principles:
 
 1. Worse candidate solutions are sometimes accepted, too.
-2. The probability&nbsp;$P$ of accepting them is decreases with increasing differences&nbsp;$\Delta E$ of the objective values to the current solution.
+2. The probability&nbsp;$P$ of accepting them is decreases with increasing differences&nbsp;$\Delta E$ of the objective values to the current best solution.
 3. The probability also decreases with the number of performed search steps.
 
 This basic idea is realized as follows.
-First, $\Delta E$ be the difference between the objective value of the freshly sampled point&nbsp;$\sespel'$ from the search space and the "current" point&nbsp;$\sespel$, where $\repMap$ is the representation mapping and $\objf$ the objective function, i.e.
+First, $\Delta E$ be the difference between the objective value of the freshly sampled point&nbsp;$\sespel'$ from the search space and the "current" best point&nbsp;$\sespel$, where $\repMap$ is the representation mapping and $\objf$ the objective function, i.e.
 
 $$ \Delta E = \objf(\repMap(\sespel')) - \objf(\repMap(\sespel)) $$ {#eq:simulatedAnnealingDeltaE}
 
@@ -29,30 +39,30 @@ e^{-\frac{\Delta E}{T}} & \text{if~}\Delta E >0 \land T > 0\\
 0 & \text{otherwise~}(\Delta E > 0 \land T=0)
 \end{array} \right. $$ {#eq:simulatedAnnealingP}
 
-In other words, if the new candidate solution is actually better than the current one, i.e., $\Delta E <0$, then we will definitely accept it.
+In other words, if the new candidate solution is actually better than the current best one, i.e., $\Delta E <0$, then we will definitely accept it.
 If the new solution is worse ($\Delta E > 0$), the acceptance probability then
 
-1. gets smaller the larger $\Delta E$ is and 
+1. gets smaller the larger $\Delta E$ is and
 2. gets smaller the smaller the so-called "temperature" $T\geq 0$ is.
 
 The algorithm is inspired by simulating the thermodynamic process of *annealing* using statistical mechanics, hence the naming&nbsp;[@MRRTT1953EOSCBFCM].
 Both the temperature&nbsp;$T>0$ and the objective value difference&nbsp;$\Delta E>0$ enter [@eq:simulatedAnnealingP] in an exponential term and the two above points follow from $e^{-a}<e^{-b}\forall a>b$ and $e^{-a}\in[0,1]\forall a>0$.     
 
-The temperature decreases and approaches zero with the algorithm iteration&nbsp;$\iteration$, i.e., the performed objective function evaluations.
+The optimization process is initially "hot."
+The search progresses wildly any may accept even significantly worse solutions.
+As the process "cools" down, the search tends to accept fewer and fewer worse solutions and more likely such which are only a bit worse.
+Eventually, at temperature&nbsp;$T=0$, the algorithm only accepts better solutions. 
+Therefore, the temperature decreases and approaches zero with the algorithm iteration&nbsp;$\iteration$, i.e., the performed objective function evaluations.
 In other words, $T$ is actually a monotonously decreasing function $T(\iteration)$ called the "temperature schedule" and it holds that $\lim_{\iteration\rightarrow\infty} T(\iteration) = 0$.
-
-This means, we can add a third point, namely
-
-3. The acceptance probability decreases over time.
 
 ### Ingredient: Temperature Schedule
 
 The temperature schedule&nbsp;$T(\iteration)$ determines how the temperature changes over time (where time is measured in algorithm steps&nbsp;$\iteration$).
 It begins with an start temperature&nbsp;$T_s$ at $\iteration=1$.
 Then, the temperature is the highest, which means that the algorithm is more likely to accept worse solutions.
-It will then behave similar to a random walk.
+It will then behave a bit similar to a random walk and put more emphasis on exploring the search space than on improving the objective value.
 As time goes by and $\iteration$ increases, $T(\iteration)$ decreases and may even reach&nbsp;0 eventually.
-Once $T$ gets small enough, then Simulated Annealing will behave exactly like a hill climber.
+Once $T$ gets small enough, then Simulated Annealing will behave exactly like a hill climber and only accepts a new solution if it is better than the best-so-far solution.
 This means the algorithm tunes itself from an initial exploration phase to strict exploitation.
 
 \repo.listing{lst:temperatureSchedule}{An excerpt of the abstract base class for temperature schedules.}{java}{src/main/java/aitoa/algorithms/TemperatureSchedule.java}{}{main}
@@ -89,6 +99,9 @@ Higher values of $\epsilon$ lead to a faster temperature decline.
 In [@fig:sa_temperature_schedules], we choose the values $\epsilon\in\{2*10^{-7}, 4^{-7}, 8*10^{-7}\}$ and a starting temperature of&nbsp;$T_s=20$.
 As can be seen, they yield a nice and smooth decline of the probabilities to accept solutions slightly worse than the current solution.
 The probability curves corresponding to the exponential schedules eventually effectively become&nbsp;0 after about half of the predicted 30&nbsp;million steps. 
+Notice that we chose the starting temperature&nbsp;$T_s$ and the parameter&nbsp;$\epsilon$ in such a way that solutions which are "reasonably worse" in our JSSP scenario are acceptable for a reasonable time in our optimization process, based on our knowledge of the range of objective values that may occur and the number of algorithm steps that will probably be performed.
+The values of&nbsp;$T_s$ and&nbsp;$\epsilon$ are not chosen arbitrarily!
+They play an important role in the algorithm.
 
 #### Logarithmic Temperature Schedule
 
@@ -104,6 +117,7 @@ $$ T(\iteration) = \frac{T_s}{\ln{\left(\epsilon(\iteration-1)+e\right)}} $$ {#e
 Larger values of $\epsilon$ again lead to a faster temperature decline and we investigated logarithmic schedules with $\epsilon=1$ for three starting temperatures&nbsp;$T_s\in\{5,10,20\}$ in [@fig:sa_temperature_schedules].
 Compared to our selected exponential schedules, the temperatures decline earlier but then remain at a higher value.
 This means that the probability to accept worse candidates in logarithmic schedules remains almost constant (and above&nbsp;0) after some time.
+Notice again that the settings of&nbsp;$T_s$ and&nbsp;$\epsilon$ are not arbitrary, they are selected so that the probability curve gives a not-too-high and not-too-low acceptance probability to solutions which are not too much worse than the current best solution.
 
 ### The Algorithm
 
@@ -182,7 +196,29 @@ The setups are named after the pattern `sa_e_TS_EP_unary` have an exponential te
 `sa_e_20_8e-7_1swap`, for instance, is SA with an exponential temperature schedule with $T_s=20$ and $\epsilon=8*10^{-7}$ and the `1swap` unary operator.
 The setups named after the pattern `sa_l_TS_unary` use logarithmic schedules with $\epsilon=1$, the start temperature $T_s=TS$, and the named unary operator.
 
-What we find from the table is that Simulated Annealing here consistently and significantly outperforms the hill climbers and the EA.
+![The Gantt charts of the median solutions obtained by the&nbsp;`sa_e_20_4e-7_1swap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_sa_e_20_4em7_1swap_med.svgz}){#fig:jssp_gantt_sa_e_20_4em7_1swap_med width=84%}
+
+What we find from the table is that Simulated Annealing here consistently and significantly outperforms the hill climbers and the best plain EA.
 On `ab7`, `swv15`, and `yn4`, its mean and median solutions are better than the best solutions offered by these algorithms.
-Instance `la24` is solved to optimality and on `abz7`, we are only 0.3% worse than the lower bound of the objective function.
+Over all, instance `la24` could be solved to optimality and on `abz7`, we are only 0.3% worse than the lower bound of the objective function.
+The median solutions of `sa_e_20_4e-7_1swap` are illustrated in [@fig:jssp_gantt_sa_e_20_4em7_1swap_med].
+For `abz7`, they are only 3% longer than the theoretical lower bound (656), for `la24` 1.1%, for `swv15` 4%, and for `yan4` 6%.
 We also tested the Simulated Annealing setups with the unary `nswap` operator, but this did not yield further improvements.
+
+![The progress of the two Simulated Annealing setups&nbsp;`sa_e_20_4e-7_1swap` and&nbsp;`sa_l_10_1swap` compared with the
+ best basic hill climber with restarts&nbsp;`hcr_256+5%_nswap`, over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_sa.svgz}){#fig:jssp_progress_sa_log width=84%}
+
+In [@fig:jssp_progress_sa_log], we compare the progress over time of our Simulated Annealing setups with those of the best hill climber with restarts.
+We find a very significant difference on three of the four problem instancee.
+The higher similarity of the end result distribution on `la24` results from the fact that even `hcr_256+5%_nswap` produces schedules which are less than 5% longer than the best possible one (objective function lower bound) in median.
+
+We also find that the two SA approaches have qualitatively different behavior.
+The setup with the logarithmic schedule improves the solution quality a bit similar to the hill climber but eventually yields better results, as it can escape from local optima.
+The setup with the exponential schedule progresses initially more slowly, but at some point suddenly speeds up.
+These two behaviors fit exactly the temperature schedule and acceptance probability illustrations in [@fig:sa_temperature_schedules]:
+While the temperature and acceptance probability of the logarithmic schedule slowly decrease and remaine at a slightly higher level, there is a clear phase transition in the exponential schedule.
+Both the temperature and acceptance probability remain higher for some time until they suddenly drop.
+Interestingly, the objective value of the best-so-far solution in SA seems to follow that pattern.
+
+This also means: It is very important to have the right temperature schedule.
+We obtained the right temperature schedule because we know *a)*&nbsp;the reasonable range of good objective values and *b)*&nbsp;roughly how many algorithm steps we can perform within our computational budget.
