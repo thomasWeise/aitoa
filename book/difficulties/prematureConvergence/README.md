@@ -85,7 +85,9 @@ Several techniques have been developed to increase and preserve the diversity in
 #### Sometimes Accepting Worse Solutions
 
 Another approach to escape from local optima is to sometimes accept worse solutions.
-Examples for this include:
+This is a softer approach than performing full restarts.
+It allows the search to retain some information about the optimization, whereas a "hard" restart discards all knowledge gathered so far.
+Examples for the idea of sometimes moving towards worse solutions include:
 
 1. When the Simulated Annealing algorithm ([@sec:simulatedAnnealing]) creates a new solution by applying the unary operator to its current point in the search space, it will make the new point current if it is better.
    If the new point is worse, however, it may still move to this point with a certain probability.

@@ -152,7 +152,7 @@ However, the runtime one would need to invest to actually "cash in" on this prom
 In [@sec:approximationOfTheOptimum] we discussed that we are using metaheuristics because for many problems, we can only guarantee to find the global optimum if we invest a runtime growing exponentially with the problem scale (i.e., proportional to the size of the solution space).
 So while we have a proof that SA will eventually find a globally optimal solution, this proof is not applicable in any practical scenario and we instead use SA as what it is: a metaheuristic that will hopefully give us good *approximate* solutions in *reasonable* time.
 
-### Results on the JSSP
+### Results on the JSSP {#sec:saResultsOnJSSP}
 
 |$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
@@ -196,17 +196,12 @@ The setups are named after the pattern `sa_e_TS_EP_unary` have an exponential te
 `sa_e_20_8e-7_1swap`, for instance, is SA with an exponential temperature schedule with $T_s=20$ and $\epsilon=8*10^{-7}$ and the `1swap` unary operator.
 The setups named after the pattern `sa_l_TS_unary` use logarithmic schedules with $\epsilon=1$, the start temperature $T_s=TS$, and the named unary operator.
 
-![The Gantt charts of the median solutions obtained by the&nbsp;`sa_e_20_4e-7_1swap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_sa_e_20_4em7_1swap_med.svgz}){#fig:jssp_gantt_sa_e_20_4em7_1swap_med width=84%}
-
 What we find from the table is that Simulated Annealing here consistently and significantly outperforms the hill climbers and the best plain EA.
 On `ab7`, `swv15`, and `yn4`, its mean and median solutions are better than the best solutions offered by these algorithms.
 Over all, instance `la24` could be solved to optimality and on `abz7`, we are only 0.3% worse than the lower bound of the objective function.
 The median solutions of `sa_e_20_4e-7_1swap` are illustrated in [@fig:jssp_gantt_sa_e_20_4em7_1swap_med].
-For `abz7`, they are only 3% longer than the theoretical lower bound (656), for `la24` 1.1%, for `swv15` 4%, and for `yan4` 6%.
+For `abz7`, they are only 3% longer than the theoretical lower bound (656), 1.1% for `la24`, 4% for `swv15`, and 6% for `yan4`.
 We also tested the Simulated Annealing setups with the unary `nswap` operator, but this did not yield further improvements.
-
-![The progress of the two Simulated Annealing setups&nbsp;`sa_e_20_4e-7_1swap` and&nbsp;`sa_l_10_1swap` compared with the
- best basic hill climber with restarts&nbsp;`hcr_256+5%_nswap`, over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_sa.svgz}){#fig:jssp_progress_sa_log width=84%}
 
 In [@fig:jssp_progress_sa_log], we compare the progress over time of our Simulated Annealing setups with those of the best hill climber with restarts.
 We find a very significant difference on three of the four problem instancee.
@@ -222,3 +217,8 @@ Interestingly, the objective value of the best-so-far solution in SA seems to fo
 
 This also means: It is very important to have the right temperature schedule.
 We obtained the right temperature schedule because we know *a)*&nbsp;the reasonable range of good objective values and *b)*&nbsp;roughly how many algorithm steps we can perform within our computational budget.
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`sa_e_20_4e-7_1swap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_sa_e_20_4em7_1swap_med.svgz}){#fig:jssp_gantt_sa_e_20_4em7_1swap_med width=84%}
+
+![The progress of the two Simulated Annealing setups&nbsp;`sa_e_20_4e-7_1swap` and&nbsp;`sa_l_10_1swap` compared with the
+ best basic hill climber with restarts&nbsp;`hcr_256+5%_nswap`, over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_sa.svgz}){#fig:jssp_progress_sa_log width=84%}

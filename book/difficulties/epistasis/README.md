@@ -45,7 +45,7 @@ The feature that makes optimization problems with more decision variables *much*
 In biology, [epistasis](https://en.wikipedia.org/wiki/Epistasis) is defined as a form of interaction between different genes&nbsp;[@P1998TLOGIA].
 The interaction between genes is epistatic if the effect on the fitness of resulting from altering one gene depends on the allelic state of other genes&nbsp;[@L1935PTAIPAIOAABV].
 
-\text.block{definition}{epistasis}{In optimization, *epistasis* is the dependency of the contribution of one decision variable to the value of the objective functions on the value of other decision variables&nbsp;[@D1991EVAVOGH; @A1996NKFL; @NV1996EOFAIS].}
+\text.block{definition}{epistasis}{In optimization, *epistasis* is the dependency of the contribution of one decision variable to the value of the objective functions on the value of other decision variables&nbsp;[@WCT2012EOPABTM; @WZCN2009WIOD; @D1991EVAVOGH; @A1996NKFL; @NV1996EOFAIS].}
 
 A representation has minimal epistasis when every decision variable is independent of every other one.
 Then, the optimization problem is separable and can be solved by finding the best value for each decision variable separately.
@@ -57,7 +57,7 @@ Both effects are sketched in [@fig:pleiotropy_and_epistasis].
 
 ![How epistasis creates and influences the problematic problem features discussed in the previous sections.](\relative.path{epistasis_influence.svgz}){#fig:epistasis_influence}
 
-As [@fig:epistasis_influence] illustrates, epistasis causes or contributes to the problematic traits we have discussed before.
+As [@fig:epistasis_influence] illustrates, epistasis causes or contributes to the problematic traits we have discussed before&nbsp;[@WCT2012EOPABTM; @WZCN2009WIOD].
 First, it reduces the causality because changing the value of one decision variable now has an impact on the meaning of other variables.
 In our representation for the JSSP problem, for instance, changing the order of job IDs at the beginning of an encoded solution can have an impact on the times at which the sub-jobs coming later will be scheduled, even if these themselves were not changed.
 
@@ -74,7 +74,7 @@ Finding rugged, deep valleys in a neutral plane in the objective space correspon
 Many of the countermeasures for ruggedness, deceptiveness, and neutrality are also valid for epistatic problems.
 In particular, a good representation design should aim to make the decision variables in the search space as independent as possible
 
-#### Learning the Variable Interactions
+#### Learning the Variable Interactions {sec:epistasis:variableInteraction}
 
 Often, a problem may neither be fully-separable nor maximally epistasic.
 Sometimes, there are groups of decision variables which depend on each others while being independent from other groups.
