@@ -74,7 +74,7 @@ Finding rugged, deep valleys in a neutral plane in the objective space correspon
 Many of the countermeasures for ruggedness, deceptiveness, and neutrality are also valid for epistatic problems.
 In particular, a good representation design should aim to make the decision variables in the search space as independent as possible
 
-#### Learning the Variable Interactions {sec:epistasis:variableInteraction}
+#### Learning the Variable Interactions {#sec:epistasis:variableInteraction}
 
 Often, a problem may neither be fully-separable nor maximally epistasic.
 Sometimes, there are groups of decision variables which depend on each others while being independent from other groups.

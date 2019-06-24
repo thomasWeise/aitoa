@@ -19,7 +19,7 @@ While there are various slightly differing definitions of evolvability both in o
 Researchers in the late 1990s and early 2000s hoped that *adding* neutrality to the representation could increase the evolvability in an optimization process and may hence lead to better performance&nbsp;[@B1998RANTNKPFOFL; @S1999GRDOPFEA; @TI2002NANFSA].
 A common idea on how neutrality could be beneficial was the that *neutral networks* would form connections in the search space&nbsp;[@B1998RANTNKPFOFL; @S1999GRDOPFEA].
 
-\text.block{neutralNetwork}{*Neutral networks* are sets of points in the search space which map to candidate solutions of the same objective value and which are transitively connected by neighborhoods spanned by the unary search operator&nbsp;[@S1999GRDOPFEA].}
+\text.block{definition}{neutralNetwork}{*Neutral networks* are sets of points in the search space which map to candidate solutions of the same objective value and which are transitively connected by neighborhoods spanned by the unary search operator&nbsp;[@S1999GRDOPFEA].}
 
 The members of a neutral network may have neighborhoods that contain solutions with the same objective value (forming the network), but also solutions with worse and better objective values.
 An optimization process may drift along a neutral network until eventually discovering a better candidate solution, which then would be in a (better) neutral network of its own.
