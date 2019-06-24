@@ -52,7 +52,7 @@ In summary, when battling an exponential growth of the search space size with a 
 #### Indirect Representations
 
 In several application areas, we can try to speed up the search by reducing the size of the search space.
-The idea is to define a small search space&nbsp;$\searchSpace$ which is mapped by a representation mapping&nbsp;$\repMap:\searchSpace\mapsto\solutionSpace$ to a much larger solution space&nbsp;$\solutionSpace$, i.e., $|\searchSpace|\ll|\solutionSpace|$&nbsp;[@BK1999TWTGDACOEFAEDP].
+The idea is to define a small search space&nbsp;$\searchSpace$ which is mapped by a representation mapping&nbsp;$\repMap:\searchSpace\mapsto\solutionSpace$ to a much larger solution space&nbsp;$\solutionSpace$, i.e., $|\searchSpace|\ll|\solutionSpace|$&nbsp;[@BK1999TWTGDACOEFAEDP; @D2009WAWDINGADS].
 
 The first group of indirect representations uses so-called *generative mappings* assume some underlying structure, usually forms of symmetry, in&nbsp;$\solutionSpace$&nbsp;[@DAS2007ANGEFENNSAOG; @RCON1998GPGE].
 When trying to optimize, e.g., the profile of a tire, it makes sense to assume that it will by symmetrically repeated over the whole tire.
@@ -70,7 +70,7 @@ Based on these symmetries, indirect representations create a "compressed" versio
 The search then takes place in this compressed search space and thus only needs to consider much fewer possible solutions.
 If the assumptions about the structure of the search space is correct, then we will lose only very little solution quality.
 
-A second form of indirect representations is called *ontogenic representation* or *developmental mappings*&nbsp;[@DWT2012ASOSRFEOOGS; @EL2007DBELOSEI].
+A second form of indirect representations is called *ontogenic representation* or *developmental mappings*&nbsp;[@DWT2012ASOSRFEOOGS; @D2009WAWDINGADS; @EL2007DBELOSEI].
 They are similar to generative mapping in that the search space is smaller than the solution space.
 However, their representational mappings are more complex and often iteratively transform an initial candidate solution with feedback from simulations.
 Assume that we want to optimize a metal structure composed of hundreds of beams.
