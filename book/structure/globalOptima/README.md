@@ -79,7 +79,7 @@ There is no direct way in which we can compute it.
 But we can, at least, compute some *lower bound*&nbsp;$\lowerBound(\objf)$ for the best possible makespan.
 
 For instance, we know that a job&nbsp;$\jsspJobIndex$ needs at least as long to complete as the sum&nbsp;$\sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ over the processing times of all of its sub-jobs.
-It is clear that no schedule can complete faster then the longst job.
+It is clear that no schedule can complete faster then the longest job.
 Furthermore, we know that the makespan of the optimal schedule also cannot be shorter than the latest "finishing time" of any machine&nbsp;$\jsspMachineIndex$.
 This finishing time is at least as big as the sum&nbsp;$\jsspMachineRuntime{\jsspMachineIndex}$ of the runtimes of all the sub-jobs assigned to this machine.
 But it may also include a least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$, namely if the sub-jobs for machine&nbsp;$\jsspMachineIndex$ never come first in their job.
@@ -128,3 +128,8 @@ Thus, [@fig:gantt_demo_optimal_bound] illustrates the optimal solution for the `
 Then, all the jobs together on the machine will consume&nbsp;$\jsspMachineRuntime{3}=150$ time units if we can execute them without further delay.
 Finally, it regardless with which job we finish on this machine, it will lead to a further waiting time of&nbsp;$\jsspMachineEndIdle{3}=10$ time units.
 This leads to a lower bound&nbsp;$\lowerBound(\objf)$ of&nbsp;180 and since we found the illustrated candidate solution with exactly this makespan, we have solved this (very easy) JSSP instance.
+
+\repo.listing{lst:IObjectiveFunctionLB}{A generic interface for objective functions, now including a function for the lower bound.}{java}{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{relevant,lowerBound}
+
+We can extend our interface for objective functions in [@lst:IObjectiveFunctionLB] to now also allow us to implement a function `lowerBound` which returns, well, the lower bound.
+If we have no idea how to compute that for a given problem instance, this function can simply return&nbsp;$-\infty$.
