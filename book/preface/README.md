@@ -28,16 +28,15 @@ We will partially sacrifice the formal and abstract structure of&nbsp;[@WGOEB] a
 }
 ```
 
-As said, we will be using a lot of concrete examples and algorithm implementations, which are written in the programming language [Java](http://en.wikipedia.org/wiki/Java_(programming_language)).
-All source code is published in the repository *[thomasWeise/aitoa-code](\repo.name)* on [GitHub](http://www.github.com) and also freely accessible.
-Often, we will just look at certain portions of the code.
-These excerpts may just be parts of a class, where we omit methods or member variables, or even just snippets from functions.
+We will use concrete examples and algorithm implementations written in the programming language [Java](http://en.wikipedia.org/wiki/Java_(programming_language)).
+All source code is freely available in the repository *[thomasWeise/aitoa-code](\repo.name)* on [GitHub](http://www.github.com).
+Often, we will just look at certain portions of the code, maybe parts of a class, where we omit methods or member variables, or even just snippets from functions.
 Sometimes we may omit even some portions of the code and just describe them in a comment.
 However, each source code listing is accompanied by a *(src)* link in the caption linking to the current full version of the file in the GitHub repository.
 If you discover any error in any of the code examples, please [file an issue](http://github.com/\repo.name/issues).
 
-This book is written using our automated book writing environment, which integrates GitHub, [Travis CI](http://www.travis-ci.org), and [docker](http://www.docker.com)-[hub](http://hub.docker.com) (see <http://iao.hfuu.edu.cn/157>).
-The complete text of the book is actively written and available in the repository *[thomasWeise/aitoa](http://github.com/thomasWeise/aitoa)* on GitHub.
+This book is written using our automated book writing environment, which integrates GitHub, [Travis CI](http://www.travis-ci.org), and [docker](http://www.docker.com)-[hub](http://hub.docker.com).
+The text of the book is actively written and available in the repository *[thomasWeise/aitoa](http://github.com/thomasWeise/aitoa)* on GitHub.
 There, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)*, which can be change requests, suggestions, discovered errors or typos, or you can inform me that something is unclear, so that I can improve the book.
 
 
@@ -51,14 +50,16 @@ There, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)
 | Code for Generating Diagrams: <http://github.com/thomasWeise/aitoaEvaluate>
 | &nbsp;
 
+![](\rel.path{qr_code_aitoa_book.svgz})
 
 This book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
 
 
 | &nbsp;
 | Prof. Dr. [Thomas Weise](http://iao.hfuu.edu.cn/team/director)
-| Institute of Applied Optimization ([IAO](http://iao.hfuu.edu.cn))
-| Hefei University,
+| Institute of Applied Optimization ([IAO](http://iao.hfuu.edu.cn)),
+| Faculty of Computer Science and Technology,
+| [Hefei University](http://www.hfuu.edu.cn/english/),
 | Hefei, Anhui, China.
 | Web: <http://iao.hfuu.edu.cn/team/director>
 | Email: <tweise@hfuu.edu.cn>, <tweise@ustc.edu.cn>
