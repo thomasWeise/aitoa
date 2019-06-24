@@ -50,7 +50,7 @@ There, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)
 | Code for Generating Diagrams: <http://github.com/thomasWeise/aitoaEvaluate>
 | &nbsp;
 
-![book website qr code](\rel.path{qr_code_aitoa_book.svgz})\
+![](\relative.path{qr_code_aitoa_book.svgz})
 
 This book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
 
