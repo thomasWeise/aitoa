@@ -48,6 +48,7 @@ There, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)
 | Author: [Thomas Weise](http://iao.hfuu.edu.cn/team/director)
 | Example Source Repository: <\repo.name>
 | This Example Source Commit: [\repo.commit](\repo.name/commit/\repo.commit)
+| Code for Generating Diagrams: <http://github.com/thomasWeise/aitoaEvaluate>
 | &nbsp;
 
 

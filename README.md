@@ -7,7 +7,8 @@
 With the book "An Introduction to Optimization Algorithms" we try to develop an accessible and easy-to-read introduction to optimization, optimization algorithms, and, in particular, metaheuristics.
 The goal is to discuss to develop a general framework structure for optimization problems and then approach algorithms from bottom-up, starting with simple approaches and step-by-step moving to more advanced methods.
 These moves are incremental, as problems of the current algorithm are discussed based on real results on a real example application, the Job Shop Scheduling Problem ([JSSP](http://en.wikipedia.org/wiki/Job_shop_scheduling)).
-Every algorithm is implemented in [Java 1.8](http://en.wikipedia.org/wiki/Java_version_history#Java_SE_8) and all accompanying sources codes are provided in an additional [GitHub repository](http://github.com/thomasWeise/aitoa-code). 
+Every algorithm is implemented in [Java 1.8](http://en.wikipedia.org/wiki/Java_version_history#Java_SE_8) and all accompanying sources codes are provided in an additional [GitHub repository](http://github.com/thomasWeise/aitoa-code).
+Furthermore, many of the diagrams in this book are generated using `R` code whish is published in another [GitHub Repository](http://github.com/thomasWeise/aitoaEvaluate).
 
 The [book](http://thomasweise.github.io/aitoa/index.html) is available in the following formats:
 

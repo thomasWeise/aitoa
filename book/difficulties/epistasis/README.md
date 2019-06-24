@@ -84,5 +84,5 @@ We could then consider each group as a unit, e.g., make sure to pass their value
 Examples for such techniques are:
 
 - linkage learning in EAs&nbsp;[@H1997LGLTESPOBDUGA; @MG1999LIBNMDFOF; @C2006ETSOLLGATP; @GDK1989MGAMAAFR]
-- modeling of variable dependency via statistical models&nbsp;[@PGCP1999BTBOA; CPPG2000LPDEABN]
+- modeling of variable dependency via statistical models&nbsp;[@PGCP1999BTBOA; @CPPG2000LPDEABN]
 - variable interaction learning&nbsp;[@CWYT2010LSGOUCCWVIL]
