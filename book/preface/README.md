@@ -5,13 +5,13 @@ Currently, this book is in a very early stage of development.
 It is work-in-progress, so expect many changes.
 This [book](http://thomasweise.github.io/aitoa/index.html) is available as [pdf](http://thomasweise.github.io/aitoa/aitoa.pdf), [html](http://thomasweise.github.io/aitoa/aitoa.html), [epub](http://thomasweise.github.io/aitoa/aitoa.epub), and [azw3](http://thomasweise.github.io/aitoa/aitoa.azw3).
 
-Here, I want to write an accessible and easy to read guide to optimization that even undergraduate students with no background in the field should be able to understand without any problem.
+My goal is to write an accessible and easy to read book on optimization that even undergraduate students with no background in the field should be able to understand without any problem.
 In my old book&nbsp;[@WGOEB], I tried to focus mainly on the abstract algorithms and sometimes described what problems we can solve with them.
 This, however, may not give the reader a good intuition about how the algorithms work in practice, what things to look for when solving a problem, or how we can get from a simple, working, proof-of-concept approach to an efficient solution for a given problem.
-So in this book, we follow more of a "learning-by-doing" approach, by trying to solve one practical optimization problem as example theme throughout the book.
+So in this book, we follow a "learning-by-doing" approach, by trying to solve one practical optimization problem as example theme throughout the book.
 All algorithms are directly implemented and applied to that problem after we introduce them.
 This allows us to discuss their strengths and weaknesses based on their actual results.
-Based on these discussions, we step-by-step try to improve the algorithms, moving from very simple approaches which do not work well to efficient metaheuristics.
+We try to improve the algorithms step-by-step, moving from very simple approaches, which do not work well, to efficient metaheuristics.
 We will partially sacrifice the formal and abstract structure of&nbsp;[@WGOEB] and introduce concepts "as they come," with the goal to increase the accessibility of the ideas.
 
 ```
@@ -28,25 +28,23 @@ We will partially sacrifice the formal and abstract structure of&nbsp;[@WGOEB] a
 }
 ```
 
-We will use concrete examples and algorithm implementations written in the programming language [Java](http://en.wikipedia.org/wiki/Java_(programming_language)).
+We use concrete examples and algorithm implementations written in [Java](http://en.wikipedia.org/wiki/Java_(programming_language)).
 All source code is freely available in the repository *[thomasWeise/aitoa-code](\repo.name)* on [GitHub](http://www.github.com).
 Often, we will just look at certain portions of the code, maybe parts of a class, where we omit methods or member variables, or even just snippets from functions.
-Sometimes we may omit even some portions of the code and just describe them in a comment.
-However, each source code listing is accompanied by a *(src)* link in the caption linking to the current full version of the file in the GitHub repository.
-If you discover any error in any of the code examples, please [file an issue](http://github.com/\repo.name/issues).
+Each source code listing is accompanied by a *(src)* link in the caption linking to the current full version of the file in the GitHub repository.
+If you discover an error in any of the examples, please [file an issue](http://github.com/\repo.name/issues).
 
 This book is written using our automated book writing environment, which integrates GitHub, [Travis CI](http://www.travis-ci.org), and [docker](http://www.docker.com)-[hub](http://hub.docker.com).
 The text of the book is actively written and available in the repository *[thomasWeise/aitoa](http://github.com/thomasWeise/aitoa)* on GitHub.
-There, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)*, which can be change requests, suggestions, discovered errors or typos, or you can inform me that something is unclear, so that I can improve the book.
+There, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)*, such as change requests, suggestions, errors or typos, or you can inform me that something is unclear, so that I can improve the book.
 
 | &nbsp;
-| Repository: <http://github.com/thomasWeise/aitoa>
-| This Commit: [\meta.commit](http://github.com/thomasWeise/aitoa/commit/\meta.commit)
-| Time and Date: \meta.time
-| Author: [Thomas Weise](http://iao.hfuu.edu.cn/team/director)
-| Example Source Repository: <\repo.name>
-| This Example Source Commit: [\repo.commit](\repo.name/commit/\repo.commit)
-| Code for Generating Diagrams: <http://github.com/thomasWeise/aitoaEvaluate>
+| repository: <http://github.com/thomasWeise/aitoa>
+| commit: [\meta.commit](http://github.com/thomasWeise/aitoa/commit/\meta.commit)
+| time and date: \meta.time
+| example source repository: <\repo.name>
+| example source commit: [\repo.commit](\repo.name/commit/\repo.commit)
+| code for generating diagrams: <http://github.com/thomasWeise/aitoaEvaluate>
 
 ![](\relative.path{qr_code_aitoa_book.svgz})
 
