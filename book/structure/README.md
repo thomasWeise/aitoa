@@ -15,18 +15,18 @@ We can refine it to the more mathematical formulation given in \text.ref{optimiz
 
 \text.block{definition}{optimizationProblemMathematical}{The goal of solving an *optimization problem* is finding an input value&nbsp;$\globalOptimum{\solspel}\in\solutionSpace$ from a set&nbsp;$\solutionSpace$ of allowed values for which a function $\objf:\solutionSpace\mapsto\realNumbers$ takes on the smallest value.}
 
-From these definitions, we can already deduce a set of necessary components that make up such an optimization problem.
+From these definitions, we can already deduce a set of necessary components that make up such an optimization problem, which are
 
-1. The problem instance data&nbsp;$\instance$, i.e., the concrete situation which defines the framework conditions for the solutions we try to find ([@sec:problemInstance]).
-2. The data structure&nbsp;$\solutionSpace$ representing possible solutions to the problem ([@sec:solutionSpace]).
-3. The objective function&nbsp;$\objf:\solutionSpace\mapsto\realNumbers$ which rates the quality of the candidate solutions&nbsp;$\solspel\in\solutionSpace$ ([@sec:objectiveFunction]).
+1. the problem instance data&nbsp;$\instance$, i.e., the concrete situation which defines the framework conditions for the solutions we try to find ([@sec:problemInstance]),
+2. the data structure&nbsp;$\solutionSpace$ representing possible solutions to the problem ([@sec:solutionSpace]), and
+3. the objective function&nbsp;$\objf:\solutionSpace\mapsto\realNumbers$ which rates the quality of the candidate solutions&nbsp;$\solspel\in\solutionSpace$ ([@sec:objectiveFunction]).
 
 Usually, in order to actually implement an optimization approach, there also will be
 
-1. A search space&nbsp;$\searchSpace$ which can efficiently be processed by an optimization algorithm under the hood than&nbsp;$\solutionSpace$ ([@sec:searchSpace]).
-2. A representation mapping&nbsp;$\repMap:\searchSpace\mapsto\solutionSpace$ which translates points&nbsp;$\sespel\in\searchSpace$ from the search space&nbsp;$\searchSpace$ to candidate solutions&nbsp;$\solspel\in\solutionSpace$ in the solution space&nbsp;$\solutionSpace$ ([@sec:searchSpace]).
-3. Search operators&nbsp;$\searchOp:\searchSpace^n\mapsto\searchSpace$, which allow for the iterative exploration of the search space&nbsp;$\searchSpace$ ([@sec:searchOperators]).
-4. A termination criterion which tells the optimization algorithm when to stop ([@sec:terminationCriterion]).
+1. a search space&nbsp;$\searchSpace$, which can more efficiently be processed by an optimization algorithm under the hood than&nbsp;$\solutionSpace$ ([@sec:searchSpace]),
+2. a representation mapping&nbsp;$\repMap:\searchSpace\mapsto\solutionSpace$, which translates points&nbsp;$\sespel\in\searchSpace$ from the search space&nbsp;$\searchSpace$ to candidate solutions&nbsp;$\solspel\in\solutionSpace$ in the solution space&nbsp;$\solutionSpace$ ([@sec:searchSpace]),
+3. search operators&nbsp;$\searchOp:\searchSpace^n\mapsto\searchSpace$, which allow for the iterative exploration of the search space&nbsp;$\searchSpace$ ([@sec:searchOperators]), and
+4. a termination criterion, which tells the optimization algorithm when to stop ([@sec:terminationCriterion]).
 
 We will explore these structural elements that make up an optimization problem in this chapter, based on a concrete example of the Job Shop Scheduling Problem (JSSP) from [@sec:jsspExample]&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP].
 This example should give a reasonable idea about how the definitions can be applied in practice.

@@ -8,7 +8,11 @@ So each production job has one sub-job for each machine on which it needs to be 
 We need to execute these sub-jobs in the right sequence.
 Of course, no machine can process more than one order at the same time.
 We can decide when which sub-job should begin and we are looking for the starting times that lead to the earliest completion of all jobs, i.e., the shortest makespan.
-A very simplified version of this is sketched in [@fig:manufacturing], while we introduce the problem in detail in [@sec:jsspInstance].
+
+This general scenario "contains" many simpler problems.
+For example, if we only produce one single product, then all jobs would pass through the same machines in the same order.
+Clearly, since the JSSP allows for an *arbitrary* machine order per job, being able to solve the JSSP would also enable us to solve the easier problem where the machine order is fixed.
+A very simplified example of a JSSP scenario is sketched in [@fig:manufacturing], while we introduce the problem in detail in [@sec:jsspInstance].
 
 ![Illustrative sketch of a single production line where work pieces pass through 3 machines sequentially. The JSSP allows for more complex setups, where the order of machines can freely be chosen (but this is harder to paint).](\relative.path{manufacturing.svgz}){#fig:manufacturing width=99%}
 

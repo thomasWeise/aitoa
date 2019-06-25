@@ -17,13 +17,13 @@ Notice that \text.ref{globalOptimumSO} does not state that the objective value o
 The reason is that there may be more than one global optimum, in which case all of them have the same objective value.
 Thus, a global optimum is not defined as a candidate solutions better than all other solutions, but as a solution for which no better alternative exists.
 
-The real-world meaning of a "globally optimal" is nothing else than "superlative".
+The real-world meaning of a "globally optimal" is nothing else than "superlative"&nbsp;[@BB2008NO].
 If we solve a JSSP for a factory, our goal is to find the *shortest* makespan.
 If we try to pack the factory's products into containers, we look for the packing that needs the *least* amount of containers.
 Thus, optimization means searching for such superlatives, as illustrated in [@fig:optimization_superlatives].
 Vice versa, whenever we are looking for the cheapest, fastest, strongest, best, biggest or smallest "thing", then we have an optimization problem at hand.
 
-![Optimization is the search for superlatives.](\relative.path{optimization_superlatives.svgz}){#fig:optimization_superlatives width=60%}
+![Optimization is the search for superlatives&nbsp;[@BB2008NO].](\relative.path{optimization_superlatives.svgz}){#fig:optimization_superlatives width=60%}
 
 ### Approximation of the Optimum {#sec:approximationOfTheOptimum}
 
@@ -33,7 +33,7 @@ However, this may often not be possible or it will just take too long!
 ![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim 2^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible. (compare with [@tbl:jsspSolutionSpaceTable] and [@tbl:jsspSearchSpaceTable])](\relative.path{function_growth.svgz}){#fig:function_growth width=99%}
 
 Matter of fact, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the size of the problem in the worst case.
-Or, in other words, unless something [fundamentally changes](http://en.wikipedia.org/wiki/P_versus_NP_problem)&nbsp;[@C1971TCOTPP], there will be some problems which usually will take too long to solve.
+Or, in other words, unless something [fundamentally changes](http://en.wikipedia.org/wiki/P_versus_NP_problem)&nbsp;[@C1971TCOTPP; @K1972RACP], there will be some problems which usually will take too long to solve.
 [@fig:function_growth] illustrates that finding the globally optimal solutions for problems with such exponential "time complexity" will quickly become infeasible, even for relatively small problem instances.
 Just throwing more computing power at the problems will not solve this fundamental issue.
 Our processing power is limited and parallelization can provide a linear speed-up at best.
