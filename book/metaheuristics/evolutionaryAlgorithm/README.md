@@ -8,7 +8,7 @@ Now we will look at a third concept to prevent premature convergence: Instead of
 
 ### Evolutionary Algorithm without Recombination {#sec:evolutionaryAlgorithmWithoutRecombination}
 
-Today, there exists a wide variant of [Evolutionary Algorithms](http://en.wikipedia.org/wiki/Evolutionary_algorithm) (EAs)&nbsp;[@WGOEB; @BFM1997EA; @G1989GA; @DJ2006ECAUA; @M1996GADSEP; @M1998GA].
+Today, there exists a wide variant of [Evolutionary Algorithms](http://en.wikipedia.org/wiki/Evolutionary_algorithm) (EAs)&nbsp;[@WGOEB; @BFM1997EA; @G1989GA; @DJ2006ECAUA; @M1996GADSEP; @M1998GA; @CWM2012VOEAFRWA].
 We will begin with a very simple, yet efficient variant: the $(\mu+\lambda)$&nbsp;EA without recombination.[^EA:no:recombination]
 This algorithm always remembers the best&nbsp;$\mu\in\naturalNumbersO$ points in the search space found so far.
 In each step, it derives&nbsp;$\lambda\in\naturalNumbersO$ new points from them by applying the unary search operator.

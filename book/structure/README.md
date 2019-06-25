@@ -13,7 +13,7 @@ First, let us clarify what *optimization problems* actually are.
 \text.ref{optimizationProblemEconomical} presents an economical point of view on optimization in a rather informal manner.
 We can refine it to the more mathematical formulation given in \text.ref{optimizationProblemMathematical}.
 
-\text.block{definition}{optimizationProblemMathematical}{The goal of solving an *optimization problem* is finding an input value $\globalOptimum{\solspel}\in\solutionSpace$ from a set of allowed values&nbsp;$\solutionSpace$ for which a function $\objf:\solutionSpace\mapsto\realNumbers$ takes on the smallest value.}
+\text.block{definition}{optimizationProblemMathematical}{The goal of solving an *optimization problem* is finding an input value&nbsp;$\globalOptimum{\solspel}\in\solutionSpace$ from a set&nbsp;$\solutionSpace$ of allowed values for which a function $\objf:\solutionSpace\mapsto\realNumbers$ takes on the smallest value.}
 
 From these definitions, we can already deduce a set of necessary components that make up such an optimization problem.
 

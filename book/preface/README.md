@@ -45,6 +45,7 @@ There, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)
 | example source repository: <\repo.name>
 | example source commit: [\repo.commit](\repo.name/commit/\repo.commit)
 | code for generating diagrams: <http://github.com/thomasWeise/aitoaEvaluate>
+| &nbsp;
 
 ![](\relative.path{qr_code_aitoa_book.svgz})
 

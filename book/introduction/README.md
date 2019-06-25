@@ -30,5 +30,5 @@ We will look at their actual implementations and we will apply them to example p
 But before we do all of that, let us first get a feeling about typical use cases of optimization.
 
 \relative.input{examples/logistic_planning/README.md}
-\relative.input{examples/jssp/README.md}
 \relative.input{examples/bin_packing/README.md}
+\relative.input{examples/jssp/README.md}
