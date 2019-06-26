@@ -26,8 +26,21 @@ Discussions of both approaches from the perspective of measuring algorithm perfo
 
 In our example domain, the JSSP, we can assume that the human operator will input the instance data&nbsp;$\instance$ into the computer.
 Then she may go drink a coffee and expect the results to be ready upon her return.
-A termination criterion granting three minutes of runtime seems to be reasonable to me here.
+While she does so, can we solve the problem?
+Unfortunately, probably not.
+As said, for finding the best possible solution, if we are unlucky, we would need in invest a runtime growing exponentially with the problem size, i.e., $\jsspMachines$ and $\jsspJobs$&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA].
+So can we guarantee to find a solution which is, say, 1% worse, until she finishes her drink? 
+Well, it was shown that there is *no* algorithm which can guarantee us to find a solution only 25% worse than the optimum within a runtime polynomial in the problem size&nbsp;[@WHHHLSS1997SSS; @JMSO2005ASFJSSPWCPT] in 1997.
+Since 2011, we know that *any* algorithm guaranteeing to provide schedules that are only be a constant factor (be it 25% or 1'000'000) worse than the optimum may need the dreaded exponential runtime&nbsp;[@MS2011HOAFAJSSP].
+So whatever algorithm we will develop for the JSSP, defining a some limit solution quality based on the lower bound of the objective value at which we can stop makes little sense. 
 
-Of course, there may also be other limits, e.g., whether a proposed schedule can be implemented/completed within the working hours of a single day.
+Hence, we should rely on the simple practical concern:
+The operator drinks a coffee. 
+A termination criterion granting three minutes of runtime seems to be reasonable to me here.
+We should look for the algorithm implementation that can give us the best solution quality within that time window.
+
+Of course, there may also be other constraints based on the application scenario, e.g., whether a proposed schedule can be implemented/completed within the working hours of a single day.
 We might let the algorithm run longer than three minutes until such a solution was discovered.
+But, as said before, if a very odd scenario occurs, it might take a long time to discover such a solution, if ever.
+The operator may also need to be given the ability to manually stop the process and extract the best-so-far solution if needed.
 For our benchmark instances, however, this is not relevant and we can limit ourselves to the runtime-based termination criterion.

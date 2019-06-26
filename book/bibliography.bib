@@ -23,12 +23,14 @@
 @string { asoc = "{Applied Soft Computing Journal ({ASOC})}" }
 @string { bp = "{Biometrics Bulletin}" }
 @string { cace = "{Computers {\&} Chemical Engineering}" }
+@string { caor = "{Computers {\&} Operations Research}" }
 @string { cim = "{{IEEE} Computational Intelligence Magazine ({CIM})}" }
 @string { cs = "{Complex Systems}" }
 @string { ec = "{Evolutionary Computation}" }
 @string { ejor = "{European Journal of Operational Research ({EJOR})}" }
 @string { genetics = "{Genetics}" }
 @string { itevc = "{{IEEE} Transactions on Evolutionary Computation ({TEVC})}" }
+@string { jacm = "{Journal of the {ACM} ({JACM})}" }
 @string { jasa = "{Journal of the American Statistical Association ({J AM STAT ASSOC})}" }
 @string { jcst = "{Journal of Computer Science and Technology ({JCST})}"}
 @string { jds = "{Journal of Dairy Science ({JDS})}" }
@@ -395,6 +397,21 @@
 }
 
 
+@incollection{CPW1998AROMSCAAA,
+	title = {A Review of Machine Scheduling: Complexity, Algorithms and Approximability},
+	author = {Bo Chen and Chris N. Potts and Gerhard J. Woeginger},
+	booktitle = {Handbook of Combinatorial Optimization},
+	pages = {1493--1641},
+	doi = {10.1007/978-1-4613-0303-9_25},
+	editor = {Ding{-}Zhu Du and Panos M. Pardalos},
+	isbn = {978-1-4613-7987-4},
+	publisher = {Springer-Verlag US},
+	year = {1998},
+	address = {Boston, {MA}, {USA}},
+	note = {also pages~21--169 in volume 3/3 by Kluwer Academic Publishers}
+}
+
+
 @book{CT2018AITMFO,
 	author = {Bastien Chopard and Marco Tomassini},
 	title = {An Introduction to Metaheuristics for Optimization},
@@ -403,7 +420,7 @@
 	publisher = {Springer Nature Switzerland AG},	
   address = {Cham, Switzerland},
   series = ncs,
-  volume = 54
+  volume = {54}
 }
 
 
@@ -722,6 +739,19 @@
 }
 
 
+@article{GvHSGT2010STJSSPOBDP,
+  author = {Joaquim A. S. Gromicho and Jelke Jeroen {van Hoorn} and {Francisco Saldanha{-}da{-}Gama} and Gerrit T. Timmer},
+  title = {Solving the Job-Shop Scheduling Problem Optimally by Dynamic Programming},
+  journal = caor,
+  volume = {39},
+  number = {12},
+  pages = {2968--2977},
+  year = {2012},
+  doi = {10.1016/j.cor.2012.02.024},
+  month = dec,
+}
+
+
 @inproceedings{GD1990ACAOSSUIGA,
   author = {David Edward Goldberg and Kalyanmoy Deb},
   title = {A Comparative Analysis of Selection Schemes used in Genetic Algorithms},
@@ -1008,6 +1038,20 @@
 }
 
 
+@article{JMSO2005ASFJSSPWCPT,
+  author = {Klaus Jansen and Monaldo Mastrolilli and Roberto Solis{-}Oba},
+  title = {Approximation Schemes for Job Shop Scheduling Problems with Controllable Processing Times},
+  journal = ejor,
+  volume = {167},
+  number = {2},
+  pages = {297--319},
+  year = {2005},
+  month = dec,
+  doi = {10.1016/j.ejor.2004.03.025},
+  url = {http://people.idsia.ch/~monaldo/papers/EJOR-varJsp-05.pdf}
+}
+
+
 @book{K1969SA,
   author = {Donald Ervin Knuth},
   year = {1969},
@@ -1141,6 +1185,7 @@
   year = {1993},
   chapter = {9},
   pages = {445--522},
+  doi = {10.1016/S0927-0507(05)80189-6}
 }
 
 
@@ -1245,6 +1290,20 @@
   month = jun,
   url = {http://scienze-como.uninsubria.it/bressanini/montecarlo-history/mrt2.pdf},
   doi = {10.1063/1.1699114}
+}
+
+
+@article{MS2011HOAFAJSSP,
+  author = {Monaldo Mastrolilli and Ola Svensson},
+  title = {Hardness of Approximating Flow and Job Shop Scheduling Problems},
+  journal = jacm,
+  volume = {58},
+  number = {5},
+  pages = {20:1--20:32},
+  year = {2011},
+  doi = {10.1145/2027216.2027218},
+  month = oct,
+  url = {http://theory.epfl.ch/osven/Ola%20Svensson_publications/JACM11.pdf}
 }
 
 
@@ -1604,16 +1663,16 @@
 
 
 @inproceedings{TI2002NANFSA,
- author = {Marc Toussaint and Christian Igel},
- title = {Neutrality: A Necessity for Self-Adaptation},
- pages = {1354--1359},
- year = {2002},
- doi = {10.1109/CEC.2002.1004440},
- booktitle = {Proceedings of the {IEEE} Congress on Evolutionary Computation ({CEC'02}), } # may # {~12-17, 2002, {Honolulu}, {HI}, {USA}},
- editor = {David B. Fogel and Mohamed A. {El-Sharkawi} and Xin Yao and Hitoshi Iba and Paul Marrow and Mark Shackleton},
- publisher = {{IEEE} Computer Society Press},
- address = {Los Alamitos, CA, USA},
- isbn = {0-7803-7282-4},
+  author = {Marc Toussaint and Christian Igel},
+  title = {Neutrality: A Necessity for Self-Adaptation},
+  pages = {1354--1359},
+  year = {2002},
+  doi = {10.1109/CEC.2002.1004440},
+  booktitle = {Proceedings of the {IEEE} Congress on Evolutionary Computation ({CEC'02}), } # may # {~12-17, 2002, {Honolulu}, {HI}, {USA}},
+  editor = {David B. Fogel and Mohamed A. {El-Sharkawi} and Xin Yao and Hitoshi Iba and Paul Marrow and Mark Shackleton},
+  publisher = {{IEEE} Computer Society Press},
+  address = {Los Alamitos, CA, USA},
+  isbn = {0-7803-7282-4},
 }
 
 
@@ -1628,15 +1687,27 @@
 
 
 @misc{vH2015JSIAS,
-  author = {Jelke J. {van Hoorn}},
+  author = {Jelke Jeroen {van Hoorn}},
   title = {Job Shop Instances and Solutions},
   url = {http://jobshop.jjvh.nl},
   year = {2015},
 }
 
 
+@phdthesis{vH2016DPFRASOSOD,
+	title = {Dynamic Programming for Routing and Scheduling: Optimizing Sequences of Decisions},
+  author = {Jelke Jeroen {van Hoorn}},
+  year = {2016},
+  month = jun,
+  school = {Vrije Universiteit Amsterdam},
+  address = {Amsterdam, The Netherlands},
+  url = {http://jobshop.jjvh.nl/dissertation},
+	isbn = {978-94-6332-008-5}
+}
+
+
 @article{vH2018TCSOBOBIOTJSSP,
-  author = {Jelke J. {van Hoorn}},
+  author = {Jelke Jeroen {van Hoorn}},
   title = {The Current State of Bounds on Benchmark Instances of the Job-Shop Scheduling Problem},
   journal = jos,
   month = {feb},
@@ -1645,6 +1716,18 @@
   issue = {1},
   pages = {127--128},
   doi = {10.1007/s10951-017-0547-8},
+}
+
+
+@article{vHNOG2017ACOTPSTJSSPOBDP,
+  author = {Jelke Jeroen {van Hoorn} and Agust{\'{\i}}n Nogueira and Ignacio Ojea and Joaquim A. S. Gromicho},
+  title = {An Corrigendum on the Paper: Solving the Job-Shop Scheduling Problem Optimally by Dynamic Programming},
+  journal = caor,
+  volume = {78},
+  pages = {381},
+  year = {2017},
+  doi = {10.1016/j.cor.2016.09.001},
+  month = feb
 }
 
 
@@ -1766,6 +1849,19 @@
  year = {2009},
  address = {Germany},
  url = {http://www.it-weise.de/projects/book.pdf},
+}
+
+
+@article{WHHHLSS1997SSS,
+  author = {David Paul Williamson and Leslie A. Hall and J. A. Hoogeveen and Cor A. J. Hurkens and Jan Karel Lenstra and Sergey Vasil'evich Sevast'janov and David B. Shmoys},
+  title = {Short Shop Schedules},
+  journal = or,
+  volume = {45},
+  number = {2},
+  pages = {288--294},
+  year = {1997},
+  doi = {10.1287/opre.45.2.288},
+  month = mar # {--} # apr
 }
 
 

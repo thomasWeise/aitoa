@@ -32,7 +32,7 @@ However, this may often not be possible or it will just take too long!
 
 ![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim 2^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible. (compare with [@tbl:jsspSolutionSpaceTable] and [@tbl:jsspSearchSpaceTable])](\relative.path{function_growth.svgz}){#fig:function_growth width=99%}
 
-Matter of fact, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the size of the problem in the worst case.
+Matter of fact, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the size of the problem in the worst case&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA].
 Or, in other words, unless something [fundamentally changes](http://en.wikipedia.org/wiki/P_versus_NP_problem)&nbsp;[@C1971TCOTPP; @K1972RACP], there will be some problems which usually will take too long to solve.
 [@fig:function_growth] illustrates that finding the globally optimal solutions for problems with such exponential "time complexity" will quickly become infeasible, even for relatively small problem instances.
 Just throwing more computing power at the problems will not solve this fundamental issue.

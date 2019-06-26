@@ -34,7 +34,13 @@ I could, for instance, execute four separate runs of the hill climber of Simulat
 Matter of fact, I could four different algorithm setups or four different algorithms at once.
 It makes sense to assume that this would give me a better chance to obtain a good solution.
 However, it is also clear that, overall, I am still just utilizing the variance of the results.
-In other words, the result I obtain this way will not really be better than the results I could expect from the best of setups or algorithms if run alone. 
+In other words, the result I obtain this way will not really be better than the results I could expect from the best of setups or algorithms if run alone.
+
+One more interesting option is that I could run a metaheuristic together with an exact algorithm which can guarantee to find the optimal solution.
+For the JSSP, for instance, there exists an efficient dynamic programming algorithm which can solve several well-known benchmark instances within seconds or minutes&nbsp;[@vH2016DPFRASOSOD; @vHNOG2017ACOTPSTJSSPOBDP; @GvHSGT2010STJSSPOBDP].
+Of course, there can and will be instances that it cannot solve.
+So the idea would be that in case the exact algorithm can find the optimal solution within the computational budget, we take it.
+In case it fails, one or multiple metaheuristics running other CPUs may give us a good approximate solution.
 
 Alternatively, I could take a population-based metaheuristic like an Evolutionary Algorithm.
 Instead of executing $\nu$ independent runs on $\nu$ CPU cores, I could divide the offspring generation between the different cores.
@@ -47,7 +53,7 @@ However, there is a limit to the speed-up we can achieve with either paralleliza
 On the one hand, only a certain fraction of a program can be parallelized and each parallel block has a minimum required execution time (e.g., a block must take at least as long as one single CPU instruction).
 On the other hand, communication and synchronization between the&nbsp;$\nu$ involved threads or processes is required, and the amount of it grows with their number&nbsp;$\nu$.
 There is a limit value for the number of parallel processes&nbsp;$\nu$ above which no further runtime reduction can be achieved.
-In summary, when battling an exponential growth of the search space size with a sub-linear gain in speed, we will hit certain limits, which may only be surpassed by qualitatively better algorithms. 
+In summary, when battling an exponential growth of the search space size with a sub-linear gain in speed, we will hit certain limits, which may only be surpassed by qualitatively better algorithms.
 
 #### Indirect Representations
 
