@@ -66,6 +66,7 @@ Often, the chance to find a really good solution by iteratively sampling the nei
 #### The Algorithm
 
 [Stochastic](http://en.wikipedia.org/wiki/Stochastic_hill_climbing) Hill Climbing](http://en.wikipedia.org/wiki/Hill_climbing)&nbsp;[@RN2002AI; @S2008TADM; @WGOEB] is the simplest implementation of local search.
+It is also sometimes called localized random search&nbsp;[@S2003ITSSAO].
 It proceeds as follows:
 
 1. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).

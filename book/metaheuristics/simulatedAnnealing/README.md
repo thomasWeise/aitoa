@@ -16,7 +16,7 @@ Maybe we can escape from a local optimum without discarding the entirety good so
 
 ### Idea: Accepting Worse Solutions with Decreasing Probability
 
-[Simulated Annealing](http://en.wikipedia.org/wiki/Simulated_annealing) (SA)&nbsp;[@KGV1983OBSA; @C1985TATTTSPAESA; @DPSW1982MCTICO; @P1970AMCMFTASOCTOCOP] is a local search which provides another approach to escape local optima.
+[Simulated Annealing](http://en.wikipedia.org/wiki/Simulated_annealing) (SA)&nbsp;[@KGV1983OBSA; @C1985TATTTSPAESA; @DPSW1982MCTICO; @P1970AMCMFTASOCTOCOP] is a local search which provides another approach to escape local optima&nbsp;[@WGOEB; @S2003ITSSAO].
 Instead of restarting the algorithm when reaching a local optima, it tries to preserve the parts of the current best solution by permitting search steps towards worsening objective values. 
 This algorithm therefore introduces three principles:
 
@@ -61,9 +61,13 @@ The temperature schedule&nbsp;$T(\iteration)$ determines how the temperature cha
 It begins with an start temperature&nbsp;$T_s$ at $\iteration=1$.
 Then, the temperature is the highest, which means that the algorithm is more likely to accept worse solutions.
 It will then behave a bit similar to a random walk and put more emphasis on exploring the search space than on improving the objective value.
-As time goes by and $\iteration$ increases, $T(\iteration)$ decreases and may even reach&nbsp;0 eventually.
+As time goes by and $\iteration$&nbsp;increases, $T(\iteration)$ decreases and may even reach&nbsp;0 eventually.
 Once $T$ gets small enough, then Simulated Annealing will behave exactly like a hill climber and only accepts a new solution if it is better than the best-so-far solution.
 This means the algorithm tunes itself from an initial exploration phase to strict exploitation.
+
+Consider the following perspective:
+An Evolutionary Algorithm allows us to pick a behavior in between a hill climber and a random sampling algorithm by choosing a small or large population size.
+The Simulated Annealing algorithm allows for a smooth transition of a random search behavior towards a hill climbing behavior over time. 
 
 \repo.listing{lst:temperatureSchedule}{An excerpt of the abstract base class for temperature schedules.}{java}{src/main/java/aitoa/algorithms/TemperatureSchedule.java}{}{main}
 

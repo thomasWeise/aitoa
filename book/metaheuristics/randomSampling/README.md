@@ -75,7 +75,7 @@ So why don't we try to make use of this variance and the high speed of solution 
 
 #### The Algorithm
 
-The actual random sampling algorithm repeats creating random solutions until the computational budget is exhausted.
+Random sampling algorithm, also called random search, repeats creating random solutions until the computational budget is exhausted&nbsp;[@S2003ITSSAO].
 In our corresponding Java implementation given in [@lst:RandomSampling], we therefore only needed to add a loop around the code from the single random sampling algorithm from [@lst:SingleRandomSample].
 
 \repo.listing{lst:RandomSampling}{An excerpt of the implementation of the random sampling algorithm which keeps createing random candidate solutions and remembering the best encountered on until the computational budget is exhausted.}{java}{src/main/java/aitoa/algorithms/RandomSampling.java}{}{relevant}
