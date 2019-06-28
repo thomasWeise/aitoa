@@ -7,7 +7,7 @@ Such a restart is costly, as it forces the local search to start completely from
 
 Another way to look at this is the following:
 A schedule which is a local optimum probably is somewhat similar to what the globally optimal schedule would look like.
-If is, obviously, also somewhat different.
+It must, obviously, also be somewhat different.
 This difference is shaped such that it cannot be conquered by the unary search operator that we use, because otherwise, the basic hill climber could already move from the local to the global optimum.
 If we do a restart, we also dispose of the similarities to the global optimum that we have already discovered.
 We will subsequently spend time to re-discover them in the hope that this will happen in a way that allows us to eventually reach the global optimum itself.
@@ -17,6 +17,7 @@ Maybe we can escape from a local optimum without discarding the entirety good so
 ### Idea: Accepting Worse Solutions with Decreasing Probability
 
 [Simulated Annealing](http://en.wikipedia.org/wiki/Simulated_annealing) (SA)&nbsp;[@KGV1983OBSA; @C1985TATTTSPAESA; @DPSW1982MCTICO; @P1970AMCMFTASOCTOCOP] is a local search which provides another approach to escape local optima&nbsp;[@WGOEB; @S2003ITSSAO].
+The algorithm is inspired by the idea of simulating the thermodynamic process of *annealing* using statistical mechanics, hence the naming&nbsp;[@MRRTT1953EOSCBFCM].
 Instead of restarting the algorithm when reaching a local optima, it tries to preserve the parts of the current best solution by permitting search steps towards worsening objective values. 
 This algorithm therefore introduces three principles:
 
@@ -45,14 +46,13 @@ If the new solution is worse ($\Delta E > 0$), the acceptance probability then
 1. gets smaller the larger $\Delta E$ is and
 2. gets smaller the smaller the so-called "temperature" $T\geq 0$ is.
 
-The algorithm is inspired by simulating the thermodynamic process of *annealing* using statistical mechanics, hence the naming&nbsp;[@MRRTT1953EOSCBFCM].
 Both the temperature&nbsp;$T>0$ and the objective value difference&nbsp;$\Delta E>0$ enter [@eq:simulatedAnnealingP] in an exponential term and the two above points follow from $e^{-a}<e^{-b}\forall a>b$ and $e^{-a}\in[0,1]\forall a>0$.     
 
+The temperature decreases and approaches zero with the algorithm iteration&nbsp;$\iteration$, i.e., the performed objective function evaluations.
 The optimization process is initially "hot."
-The search progresses wildly any may accept even significantly worse solutions.
+Then, the search progresses wildly any may accept even significantly worse solutions.
 As the process "cools" down, the search tends to accept fewer and fewer worse solutions and more likely such which are only a bit worse.
 Eventually, at temperature&nbsp;$T=0$, the algorithm only accepts better solutions. 
-Therefore, the temperature decreases and approaches zero with the algorithm iteration&nbsp;$\iteration$, i.e., the performed objective function evaluations.
 In other words, $T$ is actually a monotonously decreasing function $T(\iteration)$ called the "temperature schedule" and it holds that $\lim_{\iteration\rightarrow\infty} T(\iteration) = 0$.
 
 ### Ingredient: Temperature Schedule
@@ -82,6 +82,7 @@ Our SA is basically an improved hill climber and, here, we want to solve the JSS
 We therefore consider how many iterations the `hc_1swap` from [@sec:hc_1swap:jssp:results] performed within the three minutes of runtime.
 The median total steps range from about 30&nbsp;million on `swv15` to 97&nbsp;million on `abz7`.
 We also know that our objective function is discrete and reasonable values for $\Delta E$ are maybe somewhere in the range of&nbsp;1 to&nbsp;10.
+This rough estimate of scale can be can be seen if we look at the differences between the best or median solutions of different algorithm settings in our previous experiments.
 Hence, we should select temperature schedules that tune the probability of accepting such slightly worse solutions gracefully from relatively high to close-to-zero within 30&nbsp;million algorithms steps.
 But how can we do that?
 
@@ -93,7 +94,7 @@ Two common ways to decrease the temperature over time are the *exponential* and 
 
 In an exponential temperature schedule, the temperature decreases exponentially with time (as the name implies).
 It follows [@eq:sa:temperatureSchedule:exp] and is implemented in [@lst:temperatureSchedule:exp].
-Besides the start temperature&nbsp;$T_s$, it has a parameter $\epsilon\in(0,1)$ which tunes the speed of the temperature decrease.
+Besides the start temperature&nbsp;$T_s$, it has a parameter&nbsp;$\epsilon\in(0,1)$ which tunes the speed of the temperature decrease.
 
 $$ T(\iteration) = T_s * (1 - \epsilon) ^ {\iteration - 1} $$ {#eq:sa:temperatureSchedule:exp}
 
@@ -160,38 +161,38 @@ So while we have a proof that SA will eventually find a globally optimal solutio
 
 |$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|`hcr_256+5%_nswap`|707|733|734|7|64s|17293038|
-|||`ea4096_nswap_5`|685|706|706|10|**29**s|**5933332**|
-|||`sa_e_20_2e-7_1swap`|663|673|672|5|92s|22456822|
-|||`sa_e_20_4e-7_1swap`|**658**|674|675|5|55s|13388301|
-|||`sa_e_20_8e-7_1swap`|663|675|675|6|36s|8625161|
-|||`sa_l_5_1swap`|**658**|675|675|6|63s|15745842|
-|||`sa_l_10_1swap`|659|**672**|**671**|4|86s|21271077|
-|||`sa_l_20_1swap`|675|682|682|**3**|125s|30740378|
-|`la24`|935|`hcr_256+5%_nswap`|945|981|984|9|57s|29246097|
-|||`ea4096_nswap_5`|941|974|971|13|**6**s|**2277833**|
-|||`sa_e_20_2e-7_1swap`|938|949|946|**8**|27s|12358941|
-|||`sa_e_20_4e-7_1swap`|**935**|949|946|9|16s|7135423|
-|||`sa_e_20_8e-7_1swap`|**935**|951|950|8|9s|4044217|
-|||`sa_l_5_1swap`|940|956|950|13|6s|2873837|
-|||`sa_l_10_1swap`|938|953|950|11|7s|3210824|
-|||`sa_l_20_1swap`|938|**946**|**941**|10|19s|9097608|
-|`swv15`|2885|`hcr_256+5%_nswap`|3645|3804|3811|44|**91**s|**14907737**|
-|||`ea4096_nswap_5`|3440|3543|3537|51|177s|22603785|
-|||`sa_e_20_2e-7_1swap`|2937|**2990**|**2988**|28|148s|21949073|
-|||`sa_e_20_4e-7_1swap`|2941|2993|2993|28|128s|18244751|
-|||`sa_e_20_8e-7_1swap`|**2936**|3000|3002|28|111s|16029528|
-|||`sa_l_5_1swap`|2963|3032|3029|33|135s|20087431|
-|||`sa_l_10_1swap`|2964|3021|3018|30|141s|21252052|
-|||`sa_l_20_1swap`|2985|3017|3016|**12**|153s|22596946|
-|`yn4`|929|`hcr_256+5%_nswap`|1081|1117|1119|14|55s|11299461|
-|||`ea4096_nswap_5`|1017|1058|1058|18|**52**s|**8248627**|
-|||`sa_e_20_2e-7_1swap`|973|**985**|**985**|5|113s|20676041|
-|||`sa_e_20_4e-7_1swap`|**971**|987|986|7|68s|12193934|
-|||`sa_e_20_8e-7_1swap`|972|988|988|7|58s|10178219|
-|||`sa_l_5_1swap`|980|1005|1006|13|75s|13732297|
-|||`sa_l_10_1swap`|975|997|996|11|108s|19850143|
-|||`sa_l_20_1swap`|979|990|990|**4**|116s|21108153|
+|`abz7`|656|`hcr_256+5%_nswap`|707|733|734|7|64s|17'293'038|
+|||`ea4096_nswap_5`|685|706|706|10|**29**s|**5'933'332**|
+|||`sa_e_20_2e-7_1swap`|663|673|672|5|92s|22'456'822|
+|||`sa_e_20_4e-7_1swap`|**658**|674|675|5|55s|13'388'301|
+|||`sa_e_20_8e-7_1swap`|663|675|675|6|36s|8'625'161|
+|||`sa_l_5_1swap`|**658**|675|675|6|63s|15'745'842|
+|||`sa_l_10_1swap`|659|**672**|**671**|4|86s|21'271'077|
+|||`sa_l_20_1swap`|675|682|682|**3**|125s|30'740'378|
+|`la24`|935|`hcr_256+5%_nswap`|945|981|984|9|57s|29'246'097|
+|||`ea4096_nswap_5`|941|974|971|13|**6**s|**22'77'833**|
+|||`sa_e_20_2e-7_1swap`|938|949|946|**8**|27s|12'358'941|
+|||`sa_e_20_4e-7_1swap`|**935**|949|946|9|16s|7'135'423|
+|||`sa_e_20_8e-7_1swap`|**935**|951|950|8|9s|4'044'217|
+|||`sa_l_5_1swap`|940|956|950|13|6s|2'873'837|
+|||`sa_l_10_1swap`|938|953|950|11|7s|3'210'824|
+|||`sa_l_20_1swap`|938|**946**|**941**|10|19s|9'097'608|
+|`swv15`|2885|`hcr_256+5%_nswap`|3645|3804|3811|44|**91**s|**14'907'737**|
+|||`ea4096_nswap_5`|3440|3543|3537|51|177s|22'603'785|
+|||`sa_e_20_2e-7_1swap`|2937|**2990**|**2988**|28|148s|21'949'073|
+|||`sa_e_20_4e-7_1swap`|2941|2993|2993|28|128s|18'244'751|
+|||`sa_e_20_8e-7_1swap`|**2936**|3000|3002|28|111s|16'029'528|
+|||`sa_l_5_1swap`|2963|3032|3029|33|135s|20'087'431|
+|||`sa_l_10_1swap`|2964|3021|3018|30|141s|21'252'052|
+|||`sa_l_20_1swap`|2985|3017|3016|**12**|153s|22'596'946|
+|`yn4`|929|`hcr_256+5%_nswap`|1081|1117|1119|14|55s|11'299'461|
+|||`ea4096_nswap_5`|1017|1058|1058|18|**52**s|**8'248'627**|
+|||`sa_e_20_2e-7_1swap`|973|**985**|**985**|5|113s|20'676'041|
+|||`sa_e_20_4e-7_1swap`|**971**|987|986|7|68s|12'193'934|
+|||`sa_e_20_8e-7_1swap`|972|988|988|7|58s|10'178'219|
+|||`sa_l_5_1swap`|980|1005|1006|13|75s|13'732'297|
+|||`sa_l_10_1swap`|975|997|996|11|108s|19'850'143|
+|||`sa_l_20_1swap`|979|990|990|**4**|116s|21'108'153|
 
 : The results of different Simulated Annealing setups compared to the best plain hill climber with restarts and the best basic EA. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:saVsHCAndEAJSSP}
 
