@@ -15,7 +15,7 @@ They require algorithms, they require computer science.
 
 Unfortunately, while we have learned many types of equations that can be solved easily in our mathematics classes, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the number of involved variables in the worst case.
 (The number of involved variables here could be the number of cities in a TSP, the number of jobs or machines in a JSSP, or the number of objects to pack in a, well, packing problem.)
-A big group of such complicated problems are called [\NPhard](https://en.wikipedia.org/wiki/NP-hardness)&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA].
+A big group of such complicated problems are called [\NPprefix&#8209;hard](https://en.wikipedia.org/wiki/NP-hardness)&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA].
 In other words, unless some [fundamentally breakthrough happens](http://en.wikipedia.org/wiki/P_versus_NP_problem)&nbsp;[@C1971TCOTPP; @K1972RACP], there will be many problems which we cannot solve exactly within reasonable time.
 
 ![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim 2^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible. (compare with [@tbl:jsspSolutionSpaceTable] and [@tbl:jsspSearchSpaceTable])](\relative.path{function_growth.svgz}){#fig:function_growth width=99%}
@@ -37,7 +37,7 @@ And we will get this within acceptable time limits.
 
 In [@fig:runtime_quality_tradeoff] we illustrate this idea on the example of the Traveling Salesman Problem&nbsp;[@ABCC2006TTSPACS; @LLKS1985TTSPAGTOCO; @GP2002TTSPAIV] briefly mentioned in [@sec:intro:logistics].
 The goal of solving the TSP is to find the shortest round trip tour through $n$&nbsp;cities.
-The TSP is \NPhard&nbsp;[@GJ1979CAIAGTTTONC; @GP2002TTSPAIV].
+The TSP is \NPprefix&#8209;hard&nbsp;[@GJ1979CAIAGTTTONC; @GP2002TTSPAIV].
 Today, it is possible to solve many large instances of this problem to optimality by using sophisticated *exact* algorithms&nbsp;[@CEG2005CWDPIFT; @W2003ROCFTB].
 Yet, finding the *shortest possible tour* for a particular TSP may (still and probably always in the future) simply take way too long, e.g., in the scale of many years.
 Finding just *one tour* is, however, very easy: I can write down the cities in any particular order.

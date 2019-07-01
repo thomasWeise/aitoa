@@ -27,7 +27,7 @@ Vice versa, whenever we are looking for the cheapest, fastest, strongest, best, 
 
 For example, for the JSSP there exists a simple and fast [algorithm](http://en.wikipedia.org/wiki/Johnson%27s_rule) that can find the optimal schedules for problem instances with exactly&nbsp;$\jsspMachines=2$ machines *and* if all&nbsp;$\jsspJobs$ jobs need to be processed by the two machines in exactly the same order&nbsp;[@J1954OTATSPSWSTI].
 If our application always falls into a special case of the problem, we may be lucky to find an efficient way to always solve it to optimality.
-The general version of the JSSP, however, is \NPhard&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA], meaning that we cannot expect to solve it to global optimality in reasonable time.
+The general version of the JSSP, however, is \NPprefix&#8209;hard&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA], meaning that we cannot expect to solve it to global optimality in reasonable time.
 Developing a good (meta-)heuristic algorithm, which cannot provide guaranteed optimality but will give close-to-optimal solutions in practice, is a good choice. 
 
 ### Bounds of the Objective Function
