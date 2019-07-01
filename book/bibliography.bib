@@ -30,10 +30,12 @@
 @string { ejor = "{European Journal of Operational Research ({EJOR})}" }
 @string { genetics = "{Genetics}" }
 @string { itevc = "{{IEEE} Transactions on Evolutionary Computation ({TEVC})}" }
+@string { ijoc = "{{INFORMS} Journal on Computing}" }
 @string { jacm = "{Journal of the {ACM} ({JACM})}" }
 @string { jasa = "{Journal of the American Statistical Association ({J AM STAT ASSOC})}" }
 @string { jcst = "{Journal of Computer Science and Technology ({JCST})}"}
 @string { jds = "{Journal of Dairy Science ({JDS})}" }
+@string { jetai = "{Journal of Experimental {\&} Theoretical Artificial Intelligence ({JETAI})}" }
 @string { jogo = "{Journal of Global Optimization}" }
 @string { jors = "{The Journal of the Operational Research Society ({JORS})}" }
 @string { jotrss = "{Journal of the Royal Statistical Society}" }
@@ -41,6 +43,7 @@
 @string { jotaa = "{Journal of Optimization Theory and Applications}" }
 @string { mans = "{Management Science}" }
 @string { mor = "{Mathematics of Operations Research ({MOR})}" }
+@string { mpc = "{Mathematical Programming Computation ({MPC}): A Publication of the Mathematical Optimization Society}" }
 @string { nrlq = "{Naval Research Logistics Quarterly}" }
 @string { ojoc = "{{ORSA} Journal on Computing}"}
 @string { or = "{Operations Research}" }
@@ -56,6 +59,7 @@
 @string { coop = "{Combinatorial Optimization ({COOP})}" }
 @string { ctms = "{Contributions to Management Science}" }
 @string { dbom = "{Dover Books on Mathematics}" }
+@string { esacwisidmao = "{Estimation, Simulation, and Control {--} Wiley-Interscience Series in Discrete Mathematics and Optimizationn}" }
 @string { isor = "{International Series in Operations Research \& Management Science ({ISOR})}"}
 @string { lncs = "{Lecture Notes in Computer Science ({LNCS})}" }
 @string { lntcs = "{Theoretical Computer Science and General Issues book sub series ({LNTCS})}" }
@@ -67,7 +71,6 @@
 @string { studfuzz = "{Studies in Fuzziness and Soft Computing book series ({STUDFUZZ})}" }
 @string { ut = "{Universitext}" }
 @string { wbccss = "{Wadsworth \& Brooks/Cole Computer Science Series}" }
-@string { wsidmao = "{Wiley Series in Discrete Mathematics and Optimization}" }
 
 %% contents
 
@@ -379,6 +382,16 @@
   year = {1996},
   month = summer,
   doi = {10.1162/evco.1996.4.2.133}
+}
+
+
+@techreport{CEG2005CWDPIFT,
+  author = {William John Cook and Daniel G. Espinoza and Marcos Goycoolea},
+  title = {Computing with Domino-Parity Inequalities for the TSP},
+  institution = {Georgia Institute of Technology, Industrial and Systems Engineering},
+  address = {Atlanta, GA, USA},
+  year = {2005},
+  url = {http://www.dii.uchile.cl/~daespino/PApers/DP_paper.pdf}
 }
 
 
@@ -780,6 +793,15 @@
   url = {http://www.complex-systems.com/pdf/03-5-5.pdf}
 }
 
+@book{GJ1979CAIAGTTTONC,
+  title = {Computers and Intractability: {A} Guide to the Theory of NP-Completeness},
+  author = {Michael R. Garey and David S. Johnson},
+  year = {1979},
+  publisher = {W. H. Freeman and Company},
+  address = {New York, NY, USA},
+  isbn = {0-7167-1045-5}
+}
+
 
 @article{GJR1991OCOPADMACS,
   author = {Martin Gr{\"{o}}tschel and Michael J{\"{u}}nger and Gerhard Reinelt},
@@ -903,6 +925,21 @@
   address = {Ann Arbor, MI, USA},
   year = {1997},
   url = {http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.54.7092}
+}
+
+
+@article{H2009GKOSFTLKTH,
+  author = {Keld Helsgaun},
+  title = {General k-opt Submoves for the {Lin-Kernighan} {TSP} Heuristic},
+  address = {Berlin, Germany},
+  publisher = {Springer-Verlag GmbH},
+  journal = mpc,
+  number = {2-3},
+  volume = {1},
+  pages = {119--163},
+  year = {2009},
+  month = oct,
+  doi = {10.1007/s12532-009-0004-6}
 }
 
 
@@ -1176,6 +1213,18 @@
 }
 
 
+@book{LLKS1985TTSPAGTOCO,
+  author = {Eugene Leighton (Gene) Lawler and Jan Karel Lenstra and Alexander Hendrik George {Rinnooy Kan} and David B. Shmoys},
+  title = {The Traveling Salesman Problem: A Guided Tour of Combinatorial Optimization},
+  publisher = {Wiley Interscience},
+  address = {Chichester, West Sussex, UK},
+  series = esacwisidmao,
+  year = {1985},
+  month = sep,
+  isbn = {0-471-90413-9}
+}
+
+
 @incollection{LLRKS1993SASAAC,
   author = {Eugene Leighton (Gene) Lawler and Jan Karel Lenstra and Alexander Hendrik George {Rinnooy Kan} and David B. Shmoys},
   title = {Sequencing and Scheduling: Algorithms and Complexity},
@@ -1335,6 +1384,19 @@
   year = {2012},
   doi = {10.1007/978-3-642-23247-3},
   isbn = {978-3-642-23246-6}
+}
+
+
+@article{NK2013APGAUEACFTTSP,
+	author = {Yuichi Nagata and Shigenobu Kobayashi},
+	title = {A Powerful Genetic Algorithm using Edge Assembly Crossover for the Traveling Salesman Problem},
+	journal = ijoc,
+	volume = {25},
+	issue = {2},
+	pages = {346--363},
+	year = {2013},
+	month = spring,
+	doi = {10.1287/ijoc.1120.0506}
 }
 
 
@@ -1559,10 +1621,10 @@
 
 @book{S2003ITSSAO,
   author = {James C. Spall},
-  title = {Introduction to Stochastic Search and Optimization: Estimation, Simulation, and Control},
+  title = {Introduction to Stochastic Search and Optimization},
   publisher = {Wiley Interscience},
   address = {Chichester, West Sussex, UK},
-  series = wsidmao,
+  series = esacwisidmao,
   volume = {6},
   year = {2003},
   month = apr,
@@ -1801,6 +1863,29 @@
 }
 
 
+@misc{W2003ROCFTB,
+  author = {William John Cook},
+  title = {Results of Concorde for TSPLib Benchmark},
+  publisher = {Georgia Institute of Technology, H. Milton Stewart School of Industrial and Systems Engineering},
+  address = {Atlanta, GA, USA},
+  year = {2003},
+  url = {http://www.tsp.gatech.edu/concorde/benchmarks/bench99.html}
+}
+
+
+@inproceedings{W2016BNMDPCADIM,
+  author = {L. Darrell Whitley},
+  title = {Blind No More: Deterministic Partition Crossover and Deterministic Improving Moves},
+  booktitle = {Companion Material Proceedings of the Genetic and Evolutionary Computation Conference ({GECCO'16}), } # jul # {~20--24, 2016, {Denver}, {CO}, {USA}},
+  pages = {515--532},
+  year = {2016},
+  doi = {10.1145/2908961.2926987},
+  editor = {Tobias Friedrich and Frank Neumann and Andrew M. Sutton},
+  publisher = {ACM},
+  isbn = {978-1-4503-4323-7}
+}
+
+
 @inproceedings{W2017FSDFTSTFOAB,
 	author = {Thomas Weise},
 	title = {From Standardized Data Formats to Standardized Tools for Optimization Algorithm Benchmarking},
@@ -1923,6 +2008,16 @@
   month = nov,
   year = {2016},
   doi = {10.1007/s10898-016-0417-5}
+}
+
+
+@article{WWLC2019IIIOADTM,
+	title = {Implementation Issues in Optimization Algorithms: Do They Matter?},
+	author = {Thomas Weise and Yuezhong Wu and Weichen Liu and Raymond Chiong},
+	journal = jetai,
+	volume = {31},
+	year = {2019},
+	doi = {10.1080/0952813X.2019.1574908}
 }
 
 

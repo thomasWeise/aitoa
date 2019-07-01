@@ -1,4 +1,4 @@
-## Example: Route Planning for a Logistics Company
+### Example: Route Planning for a Logistics Company {#sec:intro:logistics}
 
 One example field of application for optimization is [logistics](http://en.wikipedia.org/wiki/Logistics).
 Let us look at a typical real-world scenario from this field&nbsp;[@WPG2009SRWVRPWEA; @WPRGG2009EFTP]: the situation of a logistics company that fulfills delivery tasks for its clients.
@@ -23,6 +23,6 @@ And it should do so within a limited, feasible time.
 ![A Traveling Salesman Problem (TSP) through eleven cities in China.](\relative.path{tsp_china.svgz}){#fig:tsp_china width=55%}
 
 Of course, there is a wide variety of possible logistics planning tasks. 
-Besides our real-world example above, a classical task is the [Traveling Salesman Problem](http://en.wikipedia.org/wiki/Travelling_salesman_problem) (TSP)&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV], where the goal is to find the shortest round-trip tour through$n$&nbsp;cities, as sketched in [@fig:tsp_china].
+Besides our real-world example above, a classical task is the [Traveling Salesman Problem](http://en.wikipedia.org/wiki/Travelling_salesman_problem) (TSP)&nbsp;[@ABCC2006TTSPACS; @LLKS1985TTSPAGTOCO; @GP2002TTSPAIV], where the goal is to find the shortest round-trip tour through$n$&nbsp;cities, as sketched in [@fig:tsp_china].
 Many other scenarios can be modeled as such logistics questions, too:
 If a robot arm needs to several drill holes into a circuit board, finding the shortest tour means solving a TSP and will speed up the production process, for instance&nbsp;[@GJR1991OCOPADMACS].

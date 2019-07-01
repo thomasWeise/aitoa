@@ -27,8 +27,6 @@ And how can they help us to save resources?
 In this book, we will answer all of these questions.
 We will explore quite a lot of different optimization algorithms.
 We will look at their actual implementations and we will apply them to example problems to see what their strengths and weaknesses are.
-But before we do all of that, let us first get a feeling about typical use cases of optimization.
 
-\relative.input{examples/logistic_planning/README.md}
-\relative.input{examples/bin_packing/README.md}
-\relative.input{examples/jssp/README.md}
+\relative.input{examples/README.md}
+\relative.input{metaheuristics/README.md}

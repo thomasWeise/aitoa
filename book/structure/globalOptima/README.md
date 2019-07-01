@@ -25,35 +25,10 @@ Vice versa, whenever we are looking for the cheapest, fastest, strongest, best, 
 
 ![Optimization is the search for superlatives&nbsp;[@BB2008NO].](\relative.path{optimization_superlatives.svgz}){#fig:optimization_superlatives width=60%}
 
-### Approximation of the Optimum {#sec:approximationOfTheOptimum}
-
-When solving an optimization problem, we hope to find at least one global optimum (there may be multiple), as stated in \text.ref{optimizationProblemMathematical}.
-However, this may often not be possible or it will just take too long!
-
-![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim 2^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible. (compare with [@tbl:jsspSolutionSpaceTable] and [@tbl:jsspSearchSpaceTable])](\relative.path{function_growth.svgz}){#fig:function_growth width=99%}
-
-Matter of fact, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the size of the problem in the worst case&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA].
-Or, in other words, unless something [fundamentally changes](http://en.wikipedia.org/wiki/P_versus_NP_problem)&nbsp;[@C1971TCOTPP; @K1972RACP], there will be some problems which usually will take too long to solve.
-[@fig:function_growth] illustrates that finding the globally optimal solutions for problems with such exponential "time complexity" will quickly become infeasible, even for relatively small problem instances.
-Just throwing more computing power at the problems will not solve this fundamental issue.
-Our processing power is limited and parallelization can provide a linear speed-up at best.
-This cannot mitigate the exponentially growing runtime requirements of many optimization problems.
-
-Unfortunately, our example problems are amongst this kind of problem.
-(We also already know that even small instances of the JSSP can have millions or billions of possible candidate solutions, see [@tbl:jsspSolutionSpaceTable].)
-
-So what can we do to solve such problems?
-The exponential time requirement occurs if we make *guarantees* about the solution quality, especially about its optimality, over all possible scenarios.
-What we can do, therefore, is that we can trade-in the *guarantee* of finding the globally optimal solution for lower runtime requirements.
-We can use algorithms from which we hope that they find a good *approximation* of the optimum, i.e., a solution which is very good with respect to the objective function, but which do not *guarantee* that their result will be the best possible solution.
-We may sometimes be lucky and even find the optimum, while in other cases, we may get a solution which is close enough.
-And we will get this within acceptable time limits.
-
-It should be noted that it sometimes also makes sense to critically analyze if we really need to solve the general version of the problem.
 For example, for the JSSP there exists a simple and fast [algorithm](http://en.wikipedia.org/wiki/Johnson%27s_rule) that can find the optimal schedules for problem instances with exactly&nbsp;$\jsspMachines=2$ machines *and* if all&nbsp;$\jsspJobs$ jobs need to be processed by the two machines in exactly the same order&nbsp;[@J1954OTATSPSWSTI].
 If our application always falls into a special case of the problem, we may be lucky to find an efficient way to always solve it to optimality.
-Otherwise, developing a good (meta-)heuristic algorithm which cannot provide guaranteed optimality is a good choice.
- 
+The general version of the JSSP, however, is \NPhard&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA], meaning that we cannot expect to solve it to global optimality in reasonable time.
+Developing a good (meta-)heuristic algorithm, which cannot provide guaranteed optimality but will give close-to-optimal solutions in practice, is a good choice. 
 
 ### Bounds of the Objective Function
 

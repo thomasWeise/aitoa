@@ -1,4 +1,4 @@
-## Example: Packing, Cutting Stock, and Knapsack
+### Example: Packing, Cutting Stock, and Knapsack
 
 Let's say that your family is moving to a new home in another city.
 This means that you need to transport all of your belongings from your old to your new place, your PC, your clothes, maybe some furniture, a washing machine, and a fridge, as sketched in [@fig:packing].
