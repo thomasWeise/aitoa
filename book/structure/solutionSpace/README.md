@@ -23,7 +23,7 @@ Hence, a candidate solution should tell us what to do, i.e., how to process the 
 
 #### Idea: Gantt Chart {#sec:jssp:gantt}
 
-This is basically what a [Gantt chart](http://en.wikipedia.org/wiki/Gantt_chart) is about, as illustrated in [@fig:gantt_demo_without_makespan].
+This is basically what a [Gantt chart](http://en.wikipedia.org/wiki/Gantt_chart)&nbsp;[@W2003GCACA; @K2000SORCP] is about, as illustrated in [@fig:gantt_demo_without_makespan].
 A Gantt chart defines what each of our&nbsp;$\jsspMachines$ machines has to do at each point in time.
 The sub-jobs of each job are assigned to time windows on their corresponding machines.
 
@@ -77,20 +77,33 @@ However, the fact that we can generate $(\jsspJobs!)^{\jsspMachines}$ possible G
 
 #### The Feasibility of the Solutions {#sec:solutionSpace:feasibility}
 
+
+\text.block{definition}{constraint}{A *constraint* is a rule imposed on the solution space&nbsp;$\solutionSpace$ which can either be fulfilled or violated by a candidate solution&nbsp;$\solspel\in\solutionSpace$.}
+
+\text.block{definition}{feasibility}{A candidate solution&nbsp;$\solspel\in\solutionSpace$ is *feasible* if and only if it fulfills all constraints.}
+
+\text.block{definition}{infeasibility}{A candidate solution&nbsp;$\solspel\in\solutionSpace$ is *infeasible* if it is *not feasible*, i.e., if it violates at least one constraint.}
+
+In order to be a feasible solution for a JSSP instance, a Gantt chart must indeed fulfill a couple of *constraints*:
+
+1. all sub-jobs of all jobs must be assigned to their respective machines and properly be completed,
+2. only the jobs and machines specified by the problem instance must occur in the chart,
+3. a sub-job will must be assigned a time window on its corresponding machine which is exactly as long as the sub-job needs on that machine,
+4. the sub-jobs cannot intersect or overlap, each machine can only carry out one job at a time, and
+5. the precedence constraints of the sub-jobs must be honored.
+
+While the first four *constraints* are rather trivial, the latter one proofs problematic.
 Imagine a JSSP with&nbsp;$\jsspJobs=2$ jobs and&nbsp;$\jsspMachines=2$ machines.
 There are&nbsp;$(2!)^2=(1*2)^2=4$ possible Gantt charts.
 Assume that the first job needs to first be processed by machine&nbsp;0 and then by machine&nbsp;1, while the second job first needs to go to machine&nbsp;1 and then to machine&nbsp;0.
-A Gantt chart which assigns the first job first to machine&nbsp;1 and the second job first to machine&nbsp;$0$ cannot be executed in practice, i.e., is *infeasible*.
-It contains a [deadlock](http://en.wikipedia.org/wiki/Deadlock).
+A Gantt chart which assigns the first job first to machine&nbsp;1 and the second job first to machine&nbsp;$0$ cannot be executed in practice, i.e., is *infeasible*, as such an assignment does not honor the precedence constraints of the jobs.
+Instead, it contains a [deadlock](http://en.wikipedia.org/wiki/Deadlock).
+
 Hence, there are only three out of four possible Gantt charts that work for this problem instance.
 For a problem instance where all jobs need to pass through all machines in the same sequence, however, all possible Gantt charts will work, as illustrated in [@fig:jssp_feasible_gantt].
-The number of actually feasible Gantt charts in&nbsp;$\solutionSpace$ is different for different problem instances.
+The number of actually feasible Gantt charts in&nbsp;$\solutionSpace$ thus is different for different problem instances.
 
 ![Two different JSSP instances with&nbsp;$\jsspMachines=2$ machines and&nbsp;$\jsspJobs=2$ jobs, one of which has only three feasible candidate solutions while the other has four.](\relative.path{jssp_feasible_gantt.svgz}){#fig:jssp_feasible_gantt width=90%}
-
-\text.block{definition}{feasibility}{A candidate solution&nbsp;$\solspel\in\solutionSpace$ is *feasible* if it fulfills all conditions and constraints to applicable in practice.}
-
-\text.block{definition}{infeasibility}{A candidate solution&nbsp;$\solspel\in\solutionSpace$ is *infeasible* if it is *not feasible*, i.e., if it cannot be applied in practice.}
 
 This is very annoying.
 The potential existence of infeasible solutions means that we cannot just pick a good element from&nbsp;$\solutionSpace$ (according to whatever *good* means), we also must be sure that it is actually *feasible*.
