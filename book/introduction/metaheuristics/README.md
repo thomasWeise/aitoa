@@ -14,9 +14,10 @@ Of course, the example problems discussed before cannot be attacked as easily as
 They require algorithms, they require computer science.
 
 Unfortunately, while we have learned many types of equations that can be solved easily in our mathematics classes, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the number of involved variables in the worst case.
-(The number of involved variables here could be the number of cities in a TSP, the number of jobs or machines in a JSSP, or the number of objects to pack in a, well, packing problem.)
+The number of involved variables here could be the number of cities in a TSP, the number of jobs or machines in a JSSP, or the number of objects to pack in a, well, packing problem.
 A big group of such complicated problems are called [\NPprefix&#8209;hard](https://en.wikipedia.org/wiki/NP-hardness)&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA].
-In other words, unless some [fundamentally breakthrough happens](http://en.wikipedia.org/wiki/P_versus_NP_problem)&nbsp;[@C1971TCOTPP; @K1972RACP], there will be many problems which we cannot solve exactly within reasonable time.
+Unless some [unlikely breakthrough happens](http://en.wikipedia.org/wiki/P_versus_NP_problem)&nbsp;[@C1971TCOTPP; @K1972RACP], there will be many such problems that we cannot solve exactly within reasonable time &dash; and all of the example problems discussed so far are among them.
+(And: No, quantum computers are not the answer. Most likely, they cannot solve these problems qualitatively faster either&nbsp;[@A2008TLOQC].) 
 
 ![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim 2^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible. (compare with [@tbl:jsspSolutionSpaceTable] and [@tbl:jsspSearchSpaceTable])](\relative.path{function_growth.svgz}){#fig:function_growth width=99%}
 
