@@ -287,6 +287,11 @@ For the non-zero crossover rates, we append $cr*100$ to the setup name, i.e., `e
 
 The results in [@tbl:eaCrHCJSSP] show that a moderate crossover rate of 0.05 can indeed improve our algorithm's performance &ndash; a little bit.
 Only for the JSSP instance `swv15`, setup `ea2048_nswap` without crossover remains best.
+Here, the reason is probably hidden in the late median last improvement times, which are already at 157s and 178s for the two algorithm variants with $cr=0$.
+Since the total budget is only 180s, there might just not be enough time for any potential benefits of the binary operator to kick in.
+This could also be a valuable lesson: it does not help if the algorithm gives better results if it needs too much time.
+Any statement about an achieved result quality is only valid if it also contains a statement about the required computational budget.
+If we would have let the algorithms longer, maybe the setups using the binary operator would have given more saliently better results &hellip; but these would then be useless in our real-world scenario, since we only have 3 minutes of runtime.  
 
 By the way: It is very important to *always* test the $cr=0$ rate!
 Only by doing this, we can find whether our binary operator is designed properly.
@@ -339,7 +344,7 @@ The $p$-value can roughly be interpreted as the probability of observing the dif
 We obtain two very small $p$-values on `abz7` and `yn4`.
 There, it would thus be unlikely to see the different outcomes that we saw under the assumption that the binary operator is not useful.
 This means we can instead conclude that our binary operator `sequence` instead leads to real, significant improvements on these instances.
-The $p$-values bigger than 0.3 on the other two instances indicate that it does probably not make an actual difference there.
+The $p$-values bigger than 0.3 on the other two instances indicate that it does probably not make an actual difference there, so while our operator does certain not improve the results on `swv15`, from a statistical point of view, it also does not make them significantly worse.
 
 In summary, although it was not as beneficial as one would have hoped, using the binary operator can be considered as helpful in our case.
 Of course, we just tested *one* binary operator on only *four* problem instances &ndash; in any application scenario, we would do more experiments with more settings.

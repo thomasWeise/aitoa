@@ -79,7 +79,6 @@ However, the fact that we can generate $(\jsspJobs!)^{\jsspMachines}$ possible G
 
 #### The Feasibility of the Solutions {#sec:solutionSpace:feasibility}
 
-
 \text.block{definition}{constraint}{A *constraint* is a rule imposed on the solution space&nbsp;$\solutionSpace$ which can either be fulfilled or violated by a candidate solution&nbsp;$\solspel\in\solutionSpace$.}
 
 \text.block{definition}{feasibility}{A candidate solution&nbsp;$\solspel\in\solutionSpace$ is *feasible* if and only if it fulfills all constraints.}
@@ -101,11 +100,24 @@ Assume that the first job needs to first be processed by machine&nbsp;0 and then
 A Gantt chart which assigns the first job first to machine&nbsp;1 and the second job first to machine&nbsp;$0$ cannot be executed in practice, i.e., is *infeasible*, as such an assignment does not honor the precedence constraints of the jobs.
 Instead, it contains a [deadlock](http://en.wikipedia.org/wiki/Deadlock).
 
-Hence, there are only three out of four possible Gantt charts that work for this problem instance.
-For a problem instance where all jobs need to pass through all machines in the same sequence, however, all possible Gantt charts will work, as illustrated in [@fig:jssp_feasible_gantt].
-The number of actually feasible Gantt charts in&nbsp;$\solutionSpace$ thus is different for different problem instances.
-
 ![Two different JSSP instances with&nbsp;$\jsspMachines=2$ machines and&nbsp;$\jsspJobs=2$ jobs, one of which has only three feasible candidate solutions while the other has four.](\relative.path{jssp_feasible_gantt.svgz}){#fig:jssp_feasible_gantt width=90%}
+
+The third schedule in the first column of [@fig:jssp_feasible_gantt] illustrates exactly this case.
+Machine&nbsp;0 should begin by doing job&nbsp;1.
+Job&nbsp;1 can only start on machine&nbsp;0 after it has been finished on machine&nbsp;1.
+At machine&nbsp;1, we should begin with job&nbsp;0.
+Before job&nbsp;0 can be put on machine&nbsp;1, it must go through machine&nbsp;0.
+So job&nbsp;1 cannot go to machine&nbsp;0 until it has passed through machine&nbsp;1, but in order to be executed on machine&nbsp;1, job&nbsp;0 needs to be finished there first.
+Job&nbsp;0 cannot begin on machine&nbsp;1 until it has been passed through machine&nbsp;0, but it cannot be executed there, because job&nbsp;1 needs to be finished there first.
+A cyclic blockage has appeared: no job can be executed on any machine if we follow this schedule.
+This is called a deadlock.
+No jobs overlap in the schedule.
+All sub-jobs are assigned to proper machines and receive the right processing times.
+Still, the schedule is infeasible, because it cannot be executed or written down without breaking the precedence constraint.
+
+Hence, there are only three out of four possible Gantt charts that work for this problem instance.
+For a problem instance where the jobs need to pass through all machines in the same sequence, however, all possible Gantt charts will work, as also illustrated in [@fig:jssp_feasible_gantt].
+The number of actually feasible Gantt charts in&nbsp;$\solutionSpace$ thus is different for different problem instances.
 
 This is very annoying.
 The potential existence of infeasible solutions means that we cannot just pick a good element from&nbsp;$\solutionSpace$ (according to whatever *good* means), we also must be sure that it is actually *feasible*.
