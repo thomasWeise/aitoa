@@ -49,9 +49,11 @@ Such an array stores three numbers for each of the&nbsp;$\jsspJobs$ sub-jobs to 
 
 \repo.listing{lst:JSSPCandidateSolution}{Excerpt from a Java class for representing the data of a candidate solution to a JSSP.}{java}{src/main/java/aitoa/examples/jssp/JSSPCandidateSolution.java}{}{relevant}
 
+![An example how the internal `int[][]` data of the `JSSPCandidateSolution` class maps to a Gantt chart.](\relative.path{jssp_candidate_solution_structure.svgz}){#jssp_candidate_solution_structure width=80%}
+
 Of course, we would not strictly need a class for that, as we could as well use the integer array `int[][]` directly.
 Also the third number, i.e., the end time, is not strictly necessary, as it can be computed based on the instance data as $start+\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex'}$ for job&nbsp;$\jsspJobIndex$ on machine&nbsp;$\jsspMachineIndex$ after searching&nbsp;$\jsspMachineIndex'$ such that $\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex'}=\jsspMachineIndex$.
-But the presented structure is handy and easier to understand.
+But the presented structure &ndash; illustrated on an example in [@fig:jssp_candidate_solution_structure] &ndash; is handy and easier to understand.
 It allows the human operator to directly take action, to directly tell each machine or worker what to do and when to do it, without needing to look up any additional information from the problem instance.
 
 #### Size of the Solution Space {#sec:solutionSpace:size}

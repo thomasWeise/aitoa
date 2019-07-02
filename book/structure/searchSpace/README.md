@@ -3,6 +3,11 @@
 The solution space&nbsp;$\solutionSpace$ is the data structure that "makes sense" from the perspective of the user, the decision maker, who will be supplied with one instance of this structure (a candidate solution) at the end of the optimization procedure.
 But&nbsp;$\solutionSpace$ it not necessarily is the space that is most suitable for searching inside.
 
+We have already seen that there are several constraints that apply to the Gantt charts.
+For every problem instance, different solutions may be feasible.
+Besides the constraints, the space of Gantt charts also looks kind of unordered, unstructured, and messy.
+It would be nice to have a compact, clear, and easy-to-understand representation of the candidate solutions.
+
 ### Definitions
 
 \text.block{definition}{searchSpace}{The *search space*&nbsp;$\searchSpace$ is a representation of the solution space&nbsp;$\solutionSpace$ suitable for exploration by an algorithm.}
@@ -11,15 +16,16 @@ But&nbsp;$\solutionSpace$ it not necessarily is the space that is most suitable 
 
 \text.block{definition}{representationMapping}{The *representation mapping*&nbsp;$\repMap:\searchSpace\mapsto\solutionSpace$ is a [left-total](http://en.wikipedia.org/wiki/Binary_relation#left-total) relation which maps the points&nbsp;$\sespel\in\searchSpace$ of the search space&nbsp;$\searchSpace$ to the candidate solutions&nbsp;$\solspel\in\solutionSpace$ in the solution space&nbsp;$\solutionSpace$.}
 
+For applying an optimization algorithm, we usually choose a data structure&nbsp;$\searchSpace$ which we can understand intuitively.
+Ideally, it should be possible to define concepts such as distances, similarity, or neighborhoods on this data structure.
 Spaces that are especially suitable for searching in include, for instances:
 
 1. subsets of $s$-dimensional real vectors, i.e., $\realNumbers^s$,
 2. the set&nbsp;$\mathSpace{P}(s)$ of sequences/permutations of&nbsp;$s$ objects, and
 3. a number of&nbsp;$s$ yes-no decisions, which can be represented as bit strings of length&nbsp;$s$ and spans the space&nbsp;$\{0,1\}^s$.
 
-These spaces have clear and simple structures and we can intuitively understand, for instance, the concepts such as "distance" in&nbsp;$\realNumbers^s$ or&nbsp;$\{0,1\}^s$ or "similarity" in&nbsp;$\mathSpace{P}(s)$.
 For such spaces, we can relatively easily define good search methods and can rely on a large amount of existing research work and literature.
-If we are lucky, then our solution space&nbsp;$\solutionSpace$ is "similar" to one of these well-known and well-researched data structures.
+If we are lucky, then our solution space&nbsp;$\solutionSpace$ is already "similar" to one of these well-known and well-researched data structures.
 Then, we can set&nbsp;$\searchSpace=\solutionSpace$ and use the identity mapping&nbsp;$\repMap(\sespel)=\sespel\forall \sespel\in\searchSpace$ as representation mapping.
 In other cases, we will often prefer to map&nbsp;$\solutionSpace$ to something similar to these spaces and define&nbsp;$\repMap$ accordingly.  
 
