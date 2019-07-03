@@ -73,8 +73,8 @@ If we fail to do so, then our software will probably be rejected.
 If we succeed, then the vertical view would allow us to distinguish algorithms which can *over-achieve* the user requirements.
 The horizontal view would allow us to distinguish algorithms which can achieve the user requirements *earlier*.
 
-In our opinion, it makes sense to use both indicators.
-In&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP], for example, we voted for defining a couple of horizontal and vertical cuts to describe the performance of algorithms solving the Traveling Salesman Problem.
+In my opinion, it makes sense to use both indicators.
+In&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP; @WNT2010AAOAB; @WWQLT2018ADCOAAPIBAWATCFEDASAIF], for example, we voted for defining a couple of horizontal and vertical cuts to describe the performance of algorithms solving the Traveling Salesman Problem.
 By using both horizontal and vertical cuts *and* measure runtime both in FEs and milliseconds, we can get a better understanding of the performance and behavior of our algorithms.
 
 Finally, it should be noted that the goal thresholds for horizontal or vertical cuts can directly lead us to defining termination criteria (see [@sec:terminationCriterion]).

@@ -85,7 +85,7 @@ We have conducted a small experiment and measured objective values of their fina
 - $A = (2, 5, 6, 7, 9, 10)$ and
 - $B = (1, 3, 4, 8)$
 
-From this, we can compute the arithmetic means:
+From this, we can estimate the arithmetic means:
 
 - $\mean(A)=\frac{39}{6}=6.5$ and
 - $\mean(B)=\frac{16}{4}=4$.
@@ -97,7 +97,7 @@ Is the difference between $\mean(A)$ and $\mean(B)$ significant at a threshold o
 If&nbsp;$\mathcal{B}$ is truly better than&nbsp;$\mathcal{A}$, which is our hypothesis&nbsp;$H_1$, then we cannot calculate anything.
 Let us therefore assume as null hypothesis&nbsp;$H_0$ the observed difference did just happen by chance and, well, $\mathcal{A} \equiv \mathcal{B}$.
 Then, this would mean that the data samples&nbsp;$A$ and&nbsp;$B$ stem from the *same* algorithm (as $\mathcal{A} \equiv \mathcal{B}$).
-The two sets would only be artificial, an artifact of our experimental design.
+The division into the two sets would only be artificial, an artifact of our experimental design.
 Instead of having two data samples, we only have one, namely the union set&nbsp;$O$ with&nbsp;10 elements:
 
 - $O = A \cup B = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)$
@@ -114,7 +114,7 @@ This, of course, means that in exactly these 27&nbsp;divisions, $\mean(A')\geq 6
 \repo.listing{lst:RandomizationTestExample}{An excerpt of a simple program enumerating all different four-element subsets of $O$ and counting how many have a mean at last as extreme as 6.5.}{java}{src/test/java/aitoa/bookExamples/RandomizationTestExample.java}{}{relevant}
 
 In other words, if $H_0$&nbsp;holds, there would have been a probability of $p=\frac{27}{210}=\frac{9}{70}\approx 0.1286$ that we would see arithmetic mean performances *as extreme* as we did.
-If we would reject&nbsp;$H_0$ and instead claim that&nbsp;$H_1$ is true, i.e., alogirthm&nbsp;$\mathcal{B}$ is better than&nbsp;$\mathcal{A}$, then we have a 13% chance of being wrong.
+If we would reject&nbsp;$H_0$ and instead claim that&nbsp;$H_1$ is true, i.e., algorithm&nbsp;$\mathcal{B}$ is better than&nbsp;$\mathcal{A}$, then we have a 13% chance of being wrong.
 Since this is more than our pre-defined significance threshold of&nbsp;$\alpha=0.02$, we cannot reject&nbsp;$H_0$.
 Based on the little data we collected, we cannot be sure whether algorithm&nbsp;$\mathcal{B}$ is better or not.
 
@@ -130,9 +130,9 @@ Hence, practically relevant tests avoid this by applying clever mathematical tri
 
 There are two types of tests: parametric and non-parametric tests.
 The so-called parametric tests assume that the data follows certain distributions.
-Examples for parametric tests&nbsp;[@B2001MVORSNPM] include the $t$-test, which assumes normal distribution.
-This means that if our observations follow the normal distribution, then we cannot apply the $t$-test.
-Since we often do not know which distribution our results follow, we should not apply the $t$-test.
+Examples for parametric tests&nbsp;[@B2001MVORSNPM] include the $t$&#8209;test, which assumes normal distribution.
+This means that if our observations follow the normal distribution, then we cannot apply the $t$&#8209;test.
+Since we often do not know which distribution our results follow, we should not apply the $t$&#8209;test.
 In general, if we are not 100% sure that our data fulfills the requirements of the tests, we should not apply the tests.
 Hence, we are on the safe side if we do not use parametric tests.
 
@@ -154,7 +154,7 @@ The null hypothesis&nbsp;$H_0$ would be that this is not true and it can be reje
 Doing this test manually is quite complicated and describing it is beyond the scope of this book.
 Luckily, it is implemented in many tools, e.g., as the function `wilcox.test` in the `R`&nbsp;programming language, where you can simply feed it with two lists of numbers and it returns the $p$-value.
 
-Good significance thresholds&nbsp;$\alpha$ are 0.02 or 0.01.
+Good significance thresholds&nbsp;$\alpha$ are&nbsp;0.02 or&nbsp;0.01.
 
 ### Performing Multiple Tests
 

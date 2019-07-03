@@ -5,6 +5,8 @@ It does not tell us much about the range of the data.
 We do not know whether the data we have measured is very similar to the median or whether it may differ very much from the mean.
 For this, we can compute a measure of [dispersion](http://en.wikipedia.org/wiki/Statistical_dispersion), i.e., a value that tells us whether the observations are stretched and spread far or squeezed tight around the center.
 
+#### Variance, Standard Deviation, and Quantiles 
+
 \text.block{definition}{variance}{The [variance](http://en.wikipedia.org/wiki/Variance) is the expectation of the squared deviation of a random variable from its mean. The variance&nbsp;$\variance(A)$ of a data sample&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ with $n$&nbsp;observations can be estimated as:}
 
 $$ \variance(A) = \frac{1}{n-1} \sum_{i=0}^{n-1} \left(\arrayIndex{a}{i} - \mean(A)\right)^2 $$
@@ -25,10 +27,10 @@ A problem with using standard deviations as measure of dispersion becomes visibl
 We already found that the mean is not a robust statistic and the median should be prefered over it whenever possible.
 Hence, we would like to see robust measures of dispersion as well. 
 
-\text.block{definition}{quantiles}{The $q$-quantiles are the cut points that divide a sorted* data sample $A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ where $\arrayIndex{a}{i-1}\leq \arrayIndex{a}{i} \; \forall i \in 1\dots (n-1)$ into $q$-equally sized parts.}
+\text.block{definition}{quantiles}{The $q$-quantiles are the cut points that divide a *sorted* data sample $A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ where $\arrayIndex{a}{i-1}\leq \arrayIndex{a}{i} \; \forall i \in 1\dots (n-1)$ into $q$-equally sized parts.}
 
-$\quantile{k}{q}$ be the $k$^th^ $q$-quantile, with $k\in 1\dots (q-n)$, i.e., there are $q-1$ $q$-quantiles.
-The idea is that the probability&nbsp;$\probability\left[z < \quantile{k}{q}\right]$ to make an observation&nbsp;$z$ which is smaller than the $k$^th^ $q$-quantile should be less or equal than $k/q$.
+$\quantile{k}{q}$ be the $k$^th^ $q$-quantile, with $k\in 1\dots (q-n)$, i.e., there are $q-1$ of the $q$-quantiles.
+The probability&nbsp;$\probability\left[z < \quantile{k}{q}\right]$ to make an observation&nbsp;$z$ which is smaller than the $k$^th^ $q$-quantile should be less or equal than $k/q$.
 The probability to encounter a sample which is less or equal to the quantile should be greater or equal to $k/q$:
 
 $$ \probability\left[z < \quantile{k}{q}\right] \leq \frac{k}{q} \leq \probability\left[z \leq \quantile{k}{q}\right] $$
@@ -53,6 +55,7 @@ Quantiles are more robust against skewed distributions and outliers.
 If we do not assume that the data sample is distributed symmetrically, it makes sense to describe the spreads both left and right from the median.
 A good impression can be obtained by using $\quantile{1}{4}$ and $\quantile{3}{4}$, which are usually called the first and third quartile (while $\median=\quantile{2}{4}$).
 
+#### Outliers
 
 Let us look again at our previous example with the two data samples
 
@@ -68,7 +71,9 @@ We find that:
 - $\quantile{1}{4}(A)=\quantile{1}{4}(B)=4.5$ and
 - $\quantile{3}{4}(A)=\quantile{3}{4}(B)=9$.
 
-There again two takeaway messages from this section:
+#### Summary
+
+There again two take-away messages from this section:
 
 1. An average measure without a measure of dispersion does not give us much information, as we do not know whether we can rely on getting results similar to the average or not.
 2. We can use quantiles to get a good understanding of the range of observations which is most likely to occur, as quantiles are more robust than standard deviations.

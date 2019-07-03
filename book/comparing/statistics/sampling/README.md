@@ -56,7 +56,7 @@ As can be seen in [@tbl:diceThrow], the first ten or so dice throws tell us very
 However, when we throw the dice many times, the observed relative frequencies become more similar to what we expect.
 This is called the [Law of Large Numbers](http://en.wikipedia.org/wiki/Law_of_large_numbers) &ndash; and it holds for the application of optimization algorithms too.
 
-There are two takeaway messages from this section:
+There are two take-away messages from this section:
 
 1. It is *never* enough to just apply an optimization algorithm once or twice to a problem instance to get a good impression of a performance indicator.
 It is a good rule of thumb to always perform at least 20 independent runs.
