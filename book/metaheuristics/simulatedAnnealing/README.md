@@ -203,7 +203,7 @@ The setups named after the pattern `sa_l_TS_unary` use logarithmic schedules wit
 
 What we find from the table is that Simulated Annealing here consistently and significantly outperforms the hill climbers and the best plain EA.
 On `ab7`, `swv15`, and `yn4`, its mean and median solutions are better than the best solutions offered by these algorithms.
-Over all, instance `la24` could be solved to optimality and on `abz7`, we are only 0.3% worse than the lower bound of the objective function.
+Over all, instance `la24` could even be solved to optimality and on `abz7`, we are only 0.3% worse than the lower bound of the objective function.
 The median solutions of `sa_e_20_4e-7_1swap` are illustrated in [@fig:jssp_gantt_sa_e_20_4em7_1swap_med].
 For `abz7`, they are only 3% longer than the theoretical lower bound (656), 1.1% for `la24`, 4% for `swv15`, and 6% for `yan4`.
 We also tested the Simulated Annealing setups with the unary `nswap` operator, but this did not yield further improvements.
@@ -216,7 +216,7 @@ We also find that the two SA approaches have qualitatively different behavior.
 The setup with the logarithmic schedule improves the solution quality a bit similar to the hill climber but eventually yields better results, as it can escape from local optima.
 The setup with the exponential schedule progresses initially more slowly, but at some point suddenly speeds up.
 These two behaviors fit exactly the temperature schedule and acceptance probability illustrations in [@fig:sa_temperature_schedules]:
-While the temperature and acceptance probability of the logarithmic schedule slowly decrease and remaine at a slightly higher level, there is a clear phase transition in the exponential schedule.
+While the temperature and acceptance probability of the logarithmic schedule slowly decrease and remain at a slightly higher level, there is a clear phase transition in the exponential schedule.
 Both the temperature and acceptance probability remain higher for some time until they suddenly drop.
 Interestingly, the objective value of the best-so-far solution in SA seems to follow that pattern.
 

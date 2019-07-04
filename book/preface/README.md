@@ -6,9 +6,8 @@ It is work-in-progress, so expect many changes.
 This [book](http://thomasweise.github.io/aitoa/index.html) is available as [pdf](http://thomasweise.github.io/aitoa/aitoa.pdf), [html](http://thomasweise.github.io/aitoa/aitoa.html), [epub](http://thomasweise.github.io/aitoa/aitoa.epub), and [azw3](http://thomasweise.github.io/aitoa/aitoa.azw3).
 
 My goal is to write an accessible and easy to read book on optimization that even undergraduate students with no background in the field should be able to understand without any problem.
-In my old book&nbsp;[@WGOEB], I tried to focus mainly on the abstract algorithms and sometimes described what problems we can solve with them.
-This, however, may not give the reader a good intuition about how the algorithms work in practice, what things to look for when solving a problem, or how we can get from a simple, working, proof-of-concept approach to an efficient solution for a given problem.
-So in this book, we follow a "learning-by-doing" approach, by trying to solve one practical optimization problem as example theme throughout the book.
+This book should give the reader a good intuition about how the algorithms work in practice, what things to look for when solving a problem, or how to get from a simple, working, proof-of-concept approach to an efficient solution for a given problem.
+We follow a "learning-by-doing" approach, by trying to solve one practical optimization problem as example theme throughout the book.
 All algorithms are directly implemented and applied to that problem after we introduce them.
 This allows us to discuss their strengths and weaknesses based on their actual results.
 We try to improve the algorithms step-by-step, moving from very simple approaches, which do not work well, to efficient metaheuristics.

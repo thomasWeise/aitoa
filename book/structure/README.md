@@ -33,6 +33,12 @@ We will explore these structural elements that make up an optimization problem i
 This example should give a reasonable idea about how the structural elements and formal definitions involved in optimization can be realized in practice.
 While any actual optimization problem can require very different data structures and operations from what we will discuss here, the general approach and ideas that we will discuss on specific examples should carry over to many scenarios.
 
+**At this point, I would like to make explicitly clear to the reader that the goal of this book is NOT to solve the JSSP particularly well. Our goal is to have an easy-to-understand and yet fully-functional introduction to optimization.**
+This means that sometimes I will intentionally and knowingly choose an easy-to-understand approach, algorithm, or data structure over a better but more complicated one.
+Also, our aim is to nurture the general ability to come up with a solution approach to a new optimization problem within a reasonably short time, i.e., without being able to conduct research over several years.
+That being said, the algorithms and approaches discussed here are not necessarily inefficient.
+While having much room for improvement, we eventually reach approaches that find quite decent solutions (see, e.g., [@sec:saResultsOnJSSP]).
+
 \relative.input{instance/README.md}
 \relative.input{solutionSpace/README.md}
 \relative.input{objective/README.md}

@@ -52,9 +52,11 @@ Such an array stores three numbers for each of the&nbsp;$\jsspJobs$ sub-jobs to 
 ![An example how the internal `int[][]` data of the `JSSPCandidateSolution` class maps to a Gantt chart.](\relative.path{jssp_candidate_solution_structure.svgz}){#jssp_candidate_solution_structure width=80%}
 
 Of course, we would not strictly need a class for that, as we could as well use the integer array `int[][]` directly.
+
 Also the third number, i.e., the end time, is not strictly necessary, as it can be computed based on the instance data as $start+\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex'}$ for job&nbsp;$\jsspJobIndex$ on machine&nbsp;$\jsspMachineIndex$ after searching&nbsp;$\jsspMachineIndex'$ such that $\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex'}=\jsspMachineIndex$.
+Another form of representing a solution would be to just map each sub-job to a starting time, leading to $\jsspMachines*\jsspJobs$ integer values per candidate solution&nbsp;[@vH2016DPFRASOSOD].
 But the presented structure &ndash; illustrated on an example in [@fig:jssp_candidate_solution_structure] &ndash; is handy and easier to understand.
-It allows the human operator to directly take action, to directly tell each machine or worker what to do and when to do it, without needing to look up any additional information from the problem instance.
+It allows the human operator to directly see what is going on, to directly tell each machine or worker what to do and when to do it, without needing to look up any additional information from the problem instance data.
 
 #### Size of the Solution Space {#sec:solutionSpace:size}
 
