@@ -29,7 +29,7 @@ We play 160&nbsp;times and I win 128&nbsp;times, as illustrated in [@fig:coin_to
 ![The results of our coin tossing game, where I win 128&nbsp;times (red) and you only 32&nbsp;times (green).](\relative.path{coin_toss.svgz}){#fig:coin_toss width=74%} 
 
 This situation makes you suspicious, as it seems unlikely to you that I would win four times as often as you with a fair coin.
-You wonder ifI cheated on you, i.e., if used a "fixed" coin with a winning probability different from 0.5.
+You wonder if I cheated on you, i.e., if used a "fixed" coin with a winning probability different from 0.5.
 So your hypothesis&nbsp;$H_1$ is that I cheated.
 Unfortunately, it is impossible to make any useful statement about my winning probability if I cheated apart from that it should be bigger than 0.5. 
 
@@ -67,8 +67,11 @@ The calculation that we performed here, actually, is called the *[binomial test]
 
 This is, roughly, how statistical tests work.
 We make a set of observations, for instance, we run experiments with two algorithms&nbsp;$\mathcal{A}$ and&nbsp;$\mathcal{B}$ on one problem instance and get two corresponding lists ($A$&nbsp;and&nbsp;$B$) of measurements of a performance indicator.
-The mean or median values of these lists will differ, i.e., one of the two methods will have performed better.
-So our hypothesis&nbsp;$H_1$ could be "Algorithm&nbsp;$\mathcal{A}$ is better than algorithm&nbsp;$\mathcal{B}$."
+The mean or median values of these lists will probably differ, i.e., one of the two methods will have performed better in average.
+Then again, it would be very unlikely to, say, apply two randomized algorithms to a problem instance, 100 times each, and get the same results.
+Matter of fact, it would be very unlikely to apply the same randomized algorithm to a problem instance 100 times and then again for another 100 times and get the same results again.
+ 
+Still, our hypothesis&nbsp;$H_1$ could be "Algorithm&nbsp;$\mathcal{A}$ is better than algorithm&nbsp;$\mathcal{B}$."
 Unfortunately, if that is indeed true, we cannot really know how likely it would have been to get exactly the experimental results that we got.
 Instead, we define the null hypothesis&nbsp;$H_0$ that "The performance of the two algorithms is the same," i.e., $\mathcal{A} \equiv \mathcal{B}$.
 If that would have been the case, the the data samples&nbsp;$A$ and&nbsp;$B$ would stem from the same algorithm, would be observations of the same random variable, i.e., elements from the same population.
@@ -103,7 +106,11 @@ Instead of having two data samples, we only have one, namely the union set&nbsp;
 - $O = A \cup B = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)$
 
 Moreover, any division&nbsp;$C$ of&nbsp;$O$ into two sets&nbsp;$A'$ and&nbsp;$B'$ of sizes&nbsp;6 and&nbsp;4, respectively, would have had the same probability of occurrence.
-There are $\binom{10}{4}=210$ different ways of drawing 4&nbsp;elements from&nbsp;$O$.
+Maybe I had first taken all the measurements in&nbsp;$A$ and then those in&nbsp;$B$ afterwards.
+If I had first taken the measurements in&nbsp;$B$ and then those for&nbsp;$A$, then I would have gotten $B'=(2, 5, 6, 7)$ and $A'=(9, 10, 1, 3, 4, 8)$.
+Since I could have taken the measurements in any possible way, if $H_0$ is true, any division of&nbsp;$O$ into&nbsp;$A$ and&nbsp;$B$ could have happened &ndash; and I happened to get one particular division just by pure chance.
+
+From high school [combinatorics](https://en.wikipedia.org/wiki/Binomial_coefficient#Combinatorics_and_statistics), we know that there are $\binom{10}{4}=210$ different ways of drawing 4&nbsp;elements from&nbsp;$O$.
 Whenever we draw 4&nbsp;elements from&nbsp;$O$ to form a potential set&nbsp;$B'$.
 This leaves the remaining 6&nbsp;elements for a potential set&nbsp;$A'$, meaning $\binom{10}{6}=210$ as well.
 Any of these 210 possible divisions of&nbsp;$O$ would have had the same probability to occur in our experiment &ndash; if $H_0$ holds.
@@ -114,9 +121,15 @@ This, of course, means that in exactly these 27&nbsp;divisions, $\mean(A')\geq 6
 \repo.listing{lst:RandomizationTestExample}{An excerpt of a simple program enumerating all different four-element subsets of $O$ and counting how many have a mean at last as extreme as 6.5.}{java}{src/test/java/aitoa/bookExamples/RandomizationTestExample.java}{}{relevant}
 
 In other words, if $H_0$&nbsp;holds, there would have been a probability of $p=\frac{27}{210}=\frac{9}{70}\approx 0.1286$ that we would see arithmetic mean performances *as extreme* as we did.
+In other words, we check how likely the actual observed outcome of our experiment is if we assume&nbsp;$H_0$. 
 If we would reject&nbsp;$H_0$ and instead claim that&nbsp;$H_1$ is true, i.e., algorithm&nbsp;$\mathcal{B}$ is better than&nbsp;$\mathcal{A}$, then we have a 13% chance of being wrong.
 Since this is more than our pre-defined significance threshold of&nbsp;$\alpha=0.02$, we cannot reject&nbsp;$H_0$.
 Based on the little data we collected, we cannot be sure whether algorithm&nbsp;$\mathcal{B}$ is better or not.
+
+While we cannot reject&nbsp;$H_0$, this does not mean that it might not be true &ndash; actually, the $p$-value is just&nbsp;13%.
+$H_0$&nbsp;may or may not be true, and the same holds for&nbsp;$H_1$.
+We just do not have enough experimental evidence to reach a conclusion.
+Thus, we need to be conservative, which here means to not reject&nbsp;$H_0$ and not accept&nbsp;$H_1$. 
 
 This here just was an example for a [Randomization Test](http://en.wikipedia.org/wiki/Resampling_(statistics)#Permutation_tests)&nbsp;[@BLB2008VMIDBS; @E1995RT].
 It exemplifies how many statistical (non-parametric) tests work.
