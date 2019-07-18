@@ -12,9 +12,12 @@ We can decide when which sub-job should begin and we are looking for the startin
 This general scenario "contains" many simpler problems.
 For example, if we only produce one single product, then all jobs would pass through the same machines in the same order.
 Clearly, since the JSSP allows for an *arbitrary* machine order per job, being able to solve the JSSP would also enable us to solve the easier problem where the machine order is fixed.
-A very simplified example of a JSSP scenario is sketched in [@fig:manufacturing], while we introduce the problem in detail in [@sec:jsspInstance].
+An example for the general scenario is sketched in [@fig:jssp_sketch], where four orders for different types of shoe should be produced.
+The resulting jobs pass through different workshops (or machines, if you want) in different order.
+Some, like the green sneakers, only need to be processed by a subset of the workshops.
+We will introduce the JSSP in detail in [@sec:jsspInstance].
 
-![Illustrative sketch of a single production line where work pieces pass through 3 machines sequentially. The JSSP allows for more complex setups, where the order of machines can freely be chosen (but this is harder to paint).](\relative.path{manufacturing.svgz}){#fig:manufacturing width=99%}
+![Illustrative sketch of a JSSP scenario with four jobs where four different types of shoe should be produced, which require different workshops ("machines") to do perform different production steps.](\relative.path{jssp_sketch.svgz}){#fig:jssp_sketch width=70%}
 
 The three examples we have discussed so far are, actually, quite related.
 They all fit into the broad area of [smart manufacturing](http://en.wikipedia.org/wiki/Smart_manufacturing)&nbsp;[@DEPBS2012SMMIADDP; @HPO2016DPFI4S].

@@ -23,9 +23,9 @@ For the sake of simplicity and for agreement between our notation here, the Java
 
 Each of the&nbsp;$\jsspJobs$ jobs is composed of&nbsp;$\jsspMachines$ sub-jobs, one for each machine.
 The sub-job&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ must be executed on machine $\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}\in 0\dots(\jsspMachines-1)$ and doing so needs&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\in\naturalNumbersZ$ time units for completion.^[$\naturalNumbersZ$ stands for the natural numbers including zero, i.e., 0, 1, 2, &hellip;]
-This setup also allows us to represent the situation where a certain job&nbsp;$\jsspJobIndex$ does not need to be executed on a machine&nbsp;$\jsspMachineIndex'$.
+This setup also allows us to represent the situation illustrated in [@fig:jssp_sketch], where a certain job&nbsp;$\jsspJobIndex$ does not need to be executed on a machine&nbsp;$\jsspMachineIndex'$.
 We then can simply set the required time&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ to&nbsp;0 for the sub-job&nbsp;$\jsspMachineIndex$ with&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}=\jsspMachineIndex'$.
-The scenario also allows us to represent problems such as those illustrated in [@fig:manufacturing], where all jobs need to be processed by exactly the same machines in exactly the same sequence.
+We can also model problems where all jobs need to be processed by exactly the same machines in exactly the same sequence.
 In this case&nbsp;$\jsspSubJobMachine{\jsspJobIndex_1}{\jsspMachineIndex}=\jsspSubJobMachine{\jsspJobIndex_2}{\jsspMachineIndex}$ would hold for all jobs&nbsp;$\jsspJobIndex_1$ and&nbsp;$\jsspJobIndex_2$ and all sub-job indices&nbsp;$\jsspMachineIndex$.
 In other words, the JSSP described here already encompasses a wide variety of real-world production situations.
 

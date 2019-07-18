@@ -109,6 +109,8 @@ Moreover, any division&nbsp;$C$ of&nbsp;$O$ into two sets&nbsp;$A'$ and&nbsp;$B'
 Maybe I had first taken all the measurements in&nbsp;$A$ and then those in&nbsp;$B$ afterwards.
 If I had first taken the measurements in&nbsp;$B$ and then those for&nbsp;$A$, then I would have gotten $B'=(2, 5, 6, 7)$ and $A'=(9, 10, 1, 3, 4, 8)$.
 Since I could have taken the measurements in any possible way, if $H_0$ is true, any division of&nbsp;$O$ into&nbsp;$A$ and&nbsp;$B$ could have happened &ndash; and I happened to get one particular division just by pure chance.
+If $H_0$ is true, then the outcome that we observed should not be very unlikely, not very surprising.
+If the observation that $\mean(A)-\mean(B)\geq 2.5$ would, however, have a very low probability to occur under&nbsp;$H_0$, then we can probably reject it.
 
 From high school [combinatorics](https://en.wikipedia.org/wiki/Binomial_coefficient#Combinatorics_and_statistics), we know that there are $\binom{10}{4}=210$ different ways of drawing 4&nbsp;elements from&nbsp;$O$.
 Whenever we draw 4&nbsp;elements from&nbsp;$O$ to form a potential set&nbsp;$B'$.
@@ -116,12 +118,11 @@ This leaves the remaining 6&nbsp;elements for a potential set&nbsp;$A'$, meaning
 Any of these 210 possible divisions of&nbsp;$O$ would have had the same probability to occur in our experiment &ndash; if $H_0$ holds.
 
 If we enumerate all possible divisions with the small program [@lst:RandomizationTestExample], we find that there are exactly&nbsp;27 of them which lead to a set&nbsp;$B'$ with $\mean(B')\leq 4$.
-This, of course, means that in exactly these 27&nbsp;divisions, $\mean(A')\geq 6.5$.
+This, of course, means that in exactly these 27&nbsp;divisions, $\mean(A')\geq 6.5$, because $A'$ contains the numbers which are not in&nbsp;$B'$.
 
 \repo.listing{lst:RandomizationTestExample}{An excerpt of a simple program enumerating all different four-element subsets of $O$ and counting how many have a mean at last as extreme as 6.5.}{java}{src/test/java/aitoa/bookExamples/RandomizationTestExample.java}{}{relevant}
 
-In other words, if $H_0$&nbsp;holds, there would have been a probability of $p=\frac{27}{210}=\frac{9}{70}\approx 0.1286$ that we would see arithmetic mean performances *as extreme* as we did.
-In other words, we check how likely the actual observed outcome of our experiment is if we assume&nbsp;$H_0$. 
+If $H_0$&nbsp;holds, there would have been a probability of $p=\frac{27}{210}=\frac{9}{70}\approx 0.1286$ that we would see arithmetic mean performances *as extreme* as we did.
 If we would reject&nbsp;$H_0$ and instead claim that&nbsp;$H_1$ is true, i.e., algorithm&nbsp;$\mathcal{B}$ is better than&nbsp;$\mathcal{A}$, then we have a 13% chance of being wrong.
 Since this is more than our pre-defined significance threshold of&nbsp;$\alpha=0.02$, we cannot reject&nbsp;$H_0$.
 Based on the little data we collected, we cannot be sure whether algorithm&nbsp;$\mathcal{B}$ is better or not.
