@@ -17,7 +17,7 @@ The resulting jobs pass through different workshops (or machines, if you want) i
 Some, like the green sneakers, only need to be processed by a subset of the workshops.
 We will introduce the JSSP in detail in [@sec:jsspInstance].
 
-![Illustrative sketch of a JSSP scenario with four jobs where four different types of shoe should be produced, which require different workshops ("machines") to do perform different production steps.](\relative.path{jssp_sketch.svgz}){#fig:jssp_sketch width=70%}
+![Illustrative sketch of a JSSP scenario with four jobs where four different types of shoe should be produced, which require different workshops ("machines") to perform different production steps.](\relative.path{jssp_sketch.svgz}){#fig:jssp_sketch width=70%}
 
 The three examples we have discussed so far are, actually, quite related.
 They all fit into the broad area of [smart manufacturing](http://en.wikipedia.org/wiki/Smart_manufacturing)&nbsp;[@DEPBS2012SMMIADDP; @HPO2016DPFI4S].
