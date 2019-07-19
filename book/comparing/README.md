@@ -1,4 +1,4 @@
-# Evaluating and Comparing Optimization Algorithms
+# Evaluating and Comparing Optimization Algorithms {#sec:comparingOptimizationAlgorithms}
 
 We have now learned quite a few different approaches for solving optimization problems.
 Whenever we have introduced a new algorithm, we have compared it with some of the methods we have discussed before.

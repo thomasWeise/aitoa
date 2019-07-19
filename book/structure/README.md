@@ -46,3 +46,4 @@ While having much room for improvement, we eventually reach approaches that find
 \relative.input{searchSpace/README.md}
 \relative.input{searchOperators/README.md}
 \relative.input{termination/README.md}
+\relative.input{solvingOptimizationProblems/README.md}
