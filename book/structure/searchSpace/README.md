@@ -130,6 +130,7 @@ If it contains the numbers&nbsp;$0\dots (\jsspJobs-1)$ each exactly&nbsp;$\jsspM
 Indeed, the candidate solution corresponding to a valid point from the search space will always be *feasible*&nbsp;[@B1995AGPATJSSWGA].
 The mapping&nbsp;$\repMap$ will ensure that the order of the sub-jobs per job is always observed.
 We do not need to worry about the issue of deadlocks mentioned in [@sec:solutionSpace:feasibility].
+We know from [@tbl:jsspSolutionSpaceTable], that the vast majority of the possible Gantt charts for a given problem may be infeasible &ndash; and now we do no longer need to worry about that. 
 Our mapping also makes sure of the more trivial constraints, such as that each machine will process at most one job at a time and that all sub-jobs are eventually processed.
 
 We could also modify our representation mapping&nbsp;$\repMap$ to adapt to more complicated and constraint versions of the JSSP if need be:

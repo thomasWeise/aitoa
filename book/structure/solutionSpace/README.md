@@ -154,7 +154,7 @@ swv15|50|10||$\approx$&nbsp;6.772*10^644^
 
 We illustrate some examples for the number&nbsp;$\left|\solutionSpace\right|$ of schedules which do not waste time uselessly for different values of&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$ in [@tbl:jsspSolutionSpaceTable].
 Since we use instances for testing our JSSP algorithms, we have added their settings as well and listed them in column "name".
-Of course, there are infinitely many JSSP instances for a given setting of&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$ and our instances always only mark single examples for them. 
+Of course, there are infinitely many JSSP instances for a given setting of&nbsp;$\jsspJobs$ and&nbsp;$\jsspMachines$ and our instances always only mark single examples for them.
 
 We find that even small problems with $\jsspMachines=5$ machines and $\jsspJobs=5$ jobs already have billions of possible solutions.
 The four more realistic problem instances which we will try to solve here already have more solutions that what we could ever enumerate, list, or store with any conceivable hardware or computer.
@@ -166,4 +166,3 @@ For one setting of&nbsp;$\jsspMachines$ and&nbsp;$\jsspJobs$, we are interested 
 It is not so easy to find a formula for this minimum, so we won't do this here.
 Instead, in [@tbl:jsspSolutionSpaceTable], we provided the corresponding numbers for a few selected instances.
 We find that, if we are unlucky, most of the possible Gantt charts for a problem instance might be infeasible, as&nbsp;$\min(\#\text{feasible})$ can be much smaller than&nbsp;$\left|\solutionSpace\right|$.
-
