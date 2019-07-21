@@ -29,7 +29,7 @@ Usually, in order to actually practically implement an optimization approach, th
 4. a termination criterion, which tells the optimization process when to stop ([@sec:terminationCriterion]).
 
 At first glance, this looks a bit complicated &ndash; but rest assured, it won't be.
-We will explore these structural elements that make up an optimization problem in this chapter, based on a concrete example of the Job Shop Scheduling Problem (JSSP) from [@sec:jsspExample]&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP].
+We will explore these structural elements that make up an optimization problem in this chapter, based on a concrete example of the Job Shop Scheduling Problem (JSSP) from [@sec:jsspExample]&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP; @BDP1996TJSSPCANST].
 This example should give a reasonable idea about how the structural elements and formal definitions involved in optimization can be realized in practice.
 While any actual optimization problem can require very different data structures and operations from what we will discuss here, the general approach and ideas that we will discuss on specific examples should carry over to many scenarios.
 
