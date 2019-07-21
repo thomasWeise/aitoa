@@ -23,6 +23,7 @@
 @string { asoc = "{Applied Soft Computing Journal ({ASOC})}" }
 @string { bp = "{Biometrics Bulletin}" }
 @string { cace = "{Computers {\&} Chemical Engineering}" }
+@string { caie = "{Computers {\&} Industrial Engineering}" }
 @string { caor = "{Computers {\&} Operations Research}" }
 @string { cim = "{{IEEE} Computational Intelligence Magazine ({CIM})}" }
 @string { cs = "{Complex Systems}" }
@@ -41,12 +42,14 @@
 @string { jotrss = "{Journal of the Royal Statistical Society}" }
 @string { jos  = "{Journal of Scheduling}" }
 @string { jotaa = "{Journal of Optimization Theory and Applications}" }
+@string { jsea = "{Journal of Software Engineering and Applications ({JSEA})}" }
 @string { mans = "{Management Science}" }
 @string { mor = "{Mathematics of Operations Research ({MOR})}" }
 @string { mpc = "{Mathematical Programming Computation ({MPC}): A Publication of the Mathematical Optimization Society}" }
 @string { nrlq = "{Naval Research Logistics Quarterly}" }
-@string { ojoc = "{{ORSA} Journal on Computing}"}
+@string { ojoc = "{{ORSA} Journal on Computing}" }
 @string { or = "{Operations Research}" }
+@string { ors = "{{O}perations-{R}esearch-{S}pektrum ({OR} Spectrum)}" }
 @string { sa = "{Scientific American}" }
 @string { scimag = "{Science Magazine}" }
 @string { tas = "{The American Statistician}" }
@@ -120,6 +123,19 @@
 }
 
 
+@article{A2010RIGAFTJSPACS,
+	author = {Tamer F. Abdelmaguid},
+	title = {Representations in Genetic Algorithm for the Job Shop Scheduling Problem: {A} Computational Study},
+	journal = jsea,
+	volume = {3},
+	number = {12},
+	month = dec,
+	year = {2010},
+	pages = {1155--1162},
+	doi = {10.4236/jsea.2010.312135}	
+}
+
+
 @book{ABCC2006TTSPACS,
   author = {David Lee Applegate and Robert E. Bixby and Va{\v{s}}ek Chv{\'a}tal and William John Cook},
   title = {The Traveling Salesman Problem: {A} Computational Study},
@@ -146,14 +162,27 @@
 
 
 @article{AC1991ACSOTJSSP,
+  title = {A Computational Study of the Job-Shop Scheduling Problem},
+  author = {David Lee Applegate and William John Cook},
   journal = ojoc,
   volume = {3},
   number = {2},
-  title = {A Computational Study of the Job-Shop Scheduling Problem},
-  author = {David Lee Applegate and William John Cook},
   month = may,
   year = {1991},
   doi = {10.1287/ijoc.3.2.149}
+}
+
+
+@article{ANCK2008ASOSPWSTOC,
+  title = {A Survey of Scheduling Problems with Setup Times or Costs},
+  author = {Ali Allahverdi and C. T. Ng and T. C. Edwin Cheng and Mikhail Y. Kovalyov},
+  journal = ejor,
+  volume = {187},
+  issue = {3},
+  month = jun,
+  year = {2008},
+  pages = {985--1032},
+  doi = {10.1016/j.ejor.2006.06.060}
 }
 
 
@@ -228,6 +257,20 @@
   year = {1990},
   month = nov,
   doi = {10.1057/jors.1990.166}
+}
+
+
+@article{B1995AGPATJSSWGA,
+	author = {Christian Bierwirth},
+	title = {A Generalized Permutation Approach to Job Shop Scheduling with Genetic Algorithms},
+	journal = ors,
+	month = jun,
+	year = {1995},
+	volume = {17},
+	issue = {2--3},
+  pages = {87--92},
+	url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.52.7392&type=pdf},
+	doi = {10.1007/BF01719250}
 }
 
 
@@ -333,6 +376,23 @@
 }
 
 
+@inproceedings{BMK1996OPRFSP,
+  author = {Christian Bierwirth and Dirk C. Mattfeld and Herbert Kopfer},
+  title = {On Permutation Representations for Scheduling Problems},
+  pages = {310--318},
+  booktitle = {Proceedings of the 4th International Conference on Parallel Problem Solving from Nature ({PPSN IV}), } # sep # {~22--24, 1996, {Berlin}, {Germany}},
+  editor = {Hans{-}Michael Voigt and Werner Ebeling and Ingo Rechenberg and Hans{-}Paul Schwefel},
+  publisher = {Springer-Verlag GmbH},
+  address = {Berlin, Germany},
+  series = lncs,
+  volume = {1141/1996},
+  year = {1996},
+  isbn = {3-540-61723-X},  
+  doi = {10.1007/3-540-61723-X_995},
+  url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.51.8377&type=pdf}
+}
+
+
 @techreport{BT1995ACOSSUIGA,
   author = {Tobias Blickle and Lothar Thiele},
   title  = {A Comparison of Selection Schemes used in Genetic Algorithms},
@@ -425,6 +485,19 @@
 }
 
 
+@article{CGT1996ATSOJSSPUGAIR,
+  author = {Runwei Cheng and Mitsuo Gen and Yasuhiro Tsujimura},
+  title = {A Tutorial Survey of Job-Shop Scheduling Problems using Genetic Algorithms -- {I}. {R}epresentation},
+	journal = caie,
+	volume = {30},
+	issue = {4},
+  month = sep,
+  year = {1996},
+  pages = {983--997},
+  doi = {10.1016/0360-8352(96)00047-2}
+}
+
+
 @article{CPPG2000LPDEABN,
   author = {Erick {Cant{\'{u}}-Paz} and Martin Pelikan and David Edward Goldberg},
   title = {Linkage Problem, Distribution Estimation, and Bayesian Networks},
@@ -442,7 +515,7 @@
 
 
 @incollection{CPW1998AROMSCAAA,
-	title = {A Review of Machine Scheduling: Complexity, Algorithms and Approximability},
+	title = {A Review of Machine Scheduling: {C}omplexity, Algorithms and Approximability},
 	author = {Bo Chen and Chris N. Potts and Gerhard J. Woeginger},
 	booktitle = {Handbook of Combinatorial Optimization},
 	pages = {1493--1641},
@@ -837,7 +910,7 @@
 
 
 @book{GJ1979CAIAGTTTONC,
-  title = {Computers and Intractability: {A} Guide to the Theory of NP-Completeness},
+  title = {Computers and Intractability: {A} Guide to the Theory of {NP}-Completeness},
   author = {Michael R. Garey and David S. Johnson},
   year = {1979},
   publisher = {W. H. Freeman and Company},
@@ -857,6 +930,19 @@
   doi = {10.1007/BF01415960},
   month = jan
 }
+
+
+@article{GJS1976TCOFAJS,
+  author = {Michael R. Garey and David S. Johnson and Ravi Sethi},
+	title = {The Complexity of Flowshop and Jobshop Scheduling},
+	journal = mor,
+	volume = {1},
+	number = {2},
+	pages = {117--129},
+	year = {1976},
+	month = may,
+	doi = {10.1287/moor.1.2.117}
+}	
 
 
 @article{GLLRK1979OAAIDSASAS,
@@ -1961,6 +2047,20 @@
   address = {Atlanta, GA, USA},
   year = {2003},
   url = {http://www.tsp.gatech.edu/concorde/benchmarks/bench99.html}
+}
+
+
+@incollection{W2013GAFSSPAS,
+  author = {Frank Werner},
+  title = {Genetic Algorithms for Shop Scheduling Problems: {A} Survey},
+  booktitle = {Heuristics: Theory and Applications},
+  publisher = {Nova Science Publishers},
+  address = {New York, NY, USA},
+  editor = {Patrick Siarry},
+  isbn = {1624176372},
+  year = {2013},
+  url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.718.2312&type=pdf},
+  chapter = {1}
 }
 
 

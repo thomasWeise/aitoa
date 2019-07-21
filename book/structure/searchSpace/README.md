@@ -51,6 +51,7 @@ In our JSSP example, we have developed the class `JSSPCandidateSolution` given i
 It can easily be interpreted by the user and we have defined a suitable objective function for it in [@lst:JSSPMakespanObjectiveFunction].
 Yet, it is not that clear how we can efficiently create such solutions, especially feasible ones, let alone how to *search* in the space of Gantt charts.
 What we would like to have is a *search space*&nbsp;$\searchSpace$, which can represent the possible candidate solutions of the problem in a more machine-tangible, algorithm-friendly way.
+While comprehensive overviews about different such search spaces for the JSSP can be found in [@CGT1996ATSOJSSPUGAIR, @W2013GAFSSPAS; @A2010RIGAFTJSPACS], we here focus only on one single idea which I find particularly appealing. 
 
 #### Idea: 1-dimensional Encoding
 
@@ -65,6 +66,7 @@ We use a string of length&nbsp;$\jsspMachines*\jsspJobs=20$ denoting the priorit
 We *know* the order of the sub-jobs per job as part of the problem instance data&nbsp;$\instance$.
 We therefore do not need to encode it.
 This means that we just include each job's id&nbsp;$\jsspMachines=5$ times in the string.^[Our search space is thus somehow similar to the set&nbsp;$\mathSpace{P}(\jsspJobs*\jsspMachines)$ of permutations of&nbsp;$\jsspJobs*\jsspMachines$ objects mentioned earlier, but adapted to the needs of our problem.]
+This encoding has the mathematical name "permutation with repetition" and was first used for the JSSP by Bierwirth&nbsp;[@B1995AGPATJSSWGA; @BMK1996OPRFSP].
 
 ![Illustration of the first four steps of the representation mapping of an example point in the search space to a candidate solution.](\relative.path{demo_mapping.svgz}){#fig:jssp_mapping_demo width=99%}
 
@@ -125,16 +127,18 @@ We now have a very simple data structure&nbsp;$\searchSpace$ to represent our ca
 We have very simple rules for validating a point&nbsp;$\sespel$ in the search space:
 If it contains the numbers&nbsp;$0\dots (\jsspJobs-1)$ each exactly&nbsp;$\jsspMachines$ times, it represents a feasible candidate solution.
 
-Indeed, the candidate solution corresponding to a valid point from the search space will always be *feasible*.
+Indeed, the candidate solution corresponding to a valid point from the search space will always be *feasible*&nbsp;[@B1995AGPATJSSWGA].
 The mapping&nbsp;$\repMap$ will ensure that the order of the sub-jobs per job is always observed.
 We do not need to worry about the issue of deadlocks mentioned in [@sec:solutionSpace:feasibility].
 Our mapping also makes sure of the more trivial constraints, such as that each machine will process at most one job at a time and that all sub-jobs are eventually processed.
 
 We could also modify our representation mapping&nbsp;$\repMap$ to adapt to more complicated and constraint versions of the JSSP if need be:
 For example, imagine that it would take a job- and machine-dependent time requirement for carrying a job from one machine to another, then we could facilitate this by changing&nbsp;$\repMap$ so that it adds this time to the starting time of the job.
-If there was a job-dependent setup time for each machine, which could be different if job&nbsp;1 follows job&nbsp;0 instead of job&nbsp;2, then this could be facilitated easily as well.
+If there was a job-dependent setup time for each machine&nbsp;[@ANCK2008ASOSPWSTOC], which could be different if job&nbsp;1 follows job&nbsp;0 instead of job&nbsp;2, then this could be facilitated easily as well.
 If our sub-jobs would be assigned to "machine types" instead of "machines" and there could be more than one machine per machine type, then the representation mapping could assign the sub-jobs to the next machine of their type which becomes idle.
-If we would need a certain time to transport the jobs between the machines, we could easily include that as well.
+Our representation also trivially covers the situation where each job may have more than&nbsp;$\jsspMachines$ operations, i.e., where a job may need to cycle back and pass one machine twice.
+It is also suitable to simple scenarios, such as the [Flow Shop Problem](http://en.wikipedia.org/wiki/Flow_shop_scheduling), where all jobs pass through the machines in the same, pre-determined order&nbsp;[@T199BFBSP; @GJS1976TCOFAJS; @W2013GAFSSPAS].
+
 Many such different problem flavors can now be reduced to investigating the same space&nbsp;$\searchSpace$ using the same optimization algorithms, just with different representation mappings&nbsp;$\repMap$ and/or objective functions&nbsp;$\objf$.
 Additionally, it became very easy to indirectly create and modify candidate solutions by sampling points from the search space and moving to similar points, as we will see in the following chapters.
 
