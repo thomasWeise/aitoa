@@ -107,7 +107,13 @@ It produces better mean, median, and best solutions.
 Actually, its median and mean solutions are better than the best solutions discovered by&nbsp;`rs`.
 Furthermore, it finds its solutions much much faster.
 The time consumed until convergence is not more than one seconds and the number of consumed FEs to find the best solutions per run is between 7000 and 105'000, i.e., between one 50^th^ and one 2500^th^ of the number of FEs needed by&nbsp;`rs`.
-The Gantt charts of the median solutions illustrated in [@fig:jssp_gantt_hc_1swap_med] are also more compact than those in [@fig:jssp_gantt_rs_med].
+
+It may be interesting to know that this simple `hc_1swap` algorithm can already achieve some remotely acceptable performance.
+For instance, on instance `abz7`, it delivers better best and mean results than all four Genetic Algorithms (GAs) presented in&nbsp;[@JPDS2014CAODRIGAFJSSP] and on `la24`, only one of the four (GA&#8209;PR) has a better best result and all lose in terms of mean result.
+On this instance, `hc_1swap` finds a better best solution than all six GAs in [@A2010RIGAFTJSPACS] and better mean results than four of them.
+In [@sec:evolutionaryAlgorithm], we will later introduce Evolutionary Algorithms, to which GAs belong.
+
+The Gantt charts of the median solutions of `hc_1swap` are illustrated in [@fig:jssp_gantt_hc_1swap_med] are also more compact than those in [@fig:jssp_gantt_rs_med].
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`hc_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hc_1swap_med.svgz}){#fig:jssp_gantt_hc_1swap_med width=84%}
 
@@ -212,6 +218,8 @@ Slowly increasing the time until restart turns out to be a good idea: `hcr_256+5
 This could also mean that waiting 256 steps until a restart is not enough, of course.
 If this was an actual, practical application scenario we should experiment with more settings.
 For the sake of demonstrating the basic ideas in this book, however, we will not do that.
+
+The best result of our still quite basic `hcr_256_1swap` and `hcr_256+5%_1swap` for instance `la24` can both surpass the best result (982) delivered by the Gray Wolf Optimization algorithm in&nbsp;[@JZ2018AOGWOFSCPJSAFJSSC]. 
 
 ![The Gantt charts of the median solutions obtained by the `hcr_256+5%_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hcr_256_5_1swap_med.svgz}){#fig:jssp_gantt_hcr_256_5_1swap_med width=84%}
 

@@ -111,6 +111,9 @@ The bigger setting 4096 for&nbsp;$\mu$ and&nbsp;$\lambda$ tends to work better, 
 It is quite common in optimization that different problem instances may require different setups to achieve the best performance.
 The`nswap` operator again works better than `1swap`.
 
+The best solution quality for `abz7` delivered by `ea4096_1swap` is better than the best result found by the old Fast Simulated Annealing algorithm which was improved in [@AKZ2016FSAHWQFSJSSP], and both `ea4096_1swap` and `ea4096_nswap` find better best solutions on `la24` as well (but are slower and have worse mean results and we also did more runs).
+Later, in [@sec:simulatedAnnealing], we will introduce Simulated Annealing.  
+
 The Gantt charts of the median solutions of `ea4096_nswap` are illustrated in [@fig:jssp_gantt_ea4096_nswap_med].
 More interesting are the progress diagrams of `ea4096_nswap`, `ea2048_nswap`, and&nbsp;`hcr_256+5%_nswap` in [@fig:jssp_progress_ea_nocr_hc_log].
 Here we find big visual differences between the way the EAs and hill climbers proceed.
@@ -254,7 +257,7 @@ We now apply the new algorithm with our binary `sequence` operator to the JSSP.
 As unary operator, we only apply `nswap` and for&nbsp;$\mu$ and&nbsp;$\lambda$, we again provide results for the values 2048 and 4096.
 As crossover rates&nbsp;$cr$, we use&nbsp;0, 0.05, and&nbsp;0.3.
 A crossover rate of&nbsp;0 is exactly equivalent to not applying the binary operator at all, that is, to our EAs from [@sec:evolutionaryAlgorithmWithoutRecombination].
-For the non-zero crossover rates, we append $cr*100$ to the setup name, i.e., `ea2048_nswap_30` stands for an $(2048+2048)$&nbsp;EA with the `nswap` unary operator which applies the binary `sequence` operator at a crossover rate (=probability) of 0.3.
+For the non-zero crossover rates, we append $cr*100$ to the setup name, i.e., `ea2048_nswap_30` stands for an $(2048+2048)$&nbsp;EA with the `nswap` unary operator which applies the binary `sequence` operator at a crossover rate (=probability) of&nbsp;0.3.
 
 |$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
@@ -285,13 +288,15 @@ For the non-zero crossover rates, we append $cr*100$ to the setup name, i.e., `e
 
 : The results of the Evolutionary Algorithms with crossover rates $0$, $0.05$, and $0.3$. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:eaCrHCJSSP}
 
+`ea4096_nswap_5` outperforms all the Genetic Algorithms in&nbsp;[@A2010RIGAFTJSPACS] and [@JPDS2014CAODRIGAFJSSP] and the Grey Wolf Algorithm in&nbsp;[@JZ2018AOGWOFSCPJSAFJSSC] in terms of both best and mean result quality on `la24`.
+
 The results in [@tbl:eaCrHCJSSP] show that a moderate crossover rate of 0.05 can indeed improve our algorithm's performance &ndash; a little bit.
 Only for the JSSP instance `swv15`, setup `ea2048_nswap` without crossover remains best.
 Here, the reason is probably hidden in the late median last improvement times, which are already at 157s and 178s for the two algorithm variants with $cr=0$.
 Since the total budget is only 180s, there might just not be enough time for any potential benefits of the binary operator to kick in.
 This could also be a valuable lesson: it does not help if the algorithm gives better results if it needs too much time.
 Any statement about an achieved result quality is only valid if it also contains a statement about the required computational budget.
-If we would have let the algorithms longer, maybe the setups using the binary operator would have given more saliently better results &hellip; but these would then be useless in our real-world scenario, since we only have 3 minutes of runtime.  
+If we would have let the algorithms longer, maybe the setups using the binary operator would have given more saliently better results &hellip; but these would then be useless in our real-world scenario, since we only have 3 minutes of runtime.
 
 By the way: It is very important to *always* test the $cr=0$ rate!
 Only by doing this, we can find whether our binary operator is designed properly.

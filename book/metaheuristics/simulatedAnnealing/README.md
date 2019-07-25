@@ -208,6 +208,12 @@ The median solutions of `sa_e_20_4e-7_1swap` are illustrated in [@fig:jssp_gantt
 For `abz7`, they are only 3% longer than the theoretical lower bound (656), 1.1% for `la24`, 4% for `swv15`, and 6% for `yan4`.
 We also tested the Simulated Annealing setups with the unary `nswap` operator, but this did not yield further improvements.
 
+If we compare our `sa_e_20_4e-7_1swap` with the related work, we find its best and mean solution quality on `abz7` surpass those of the four Genetic Algorithms in&nbsp;[@JPDS2014CAODRIGAFJSSP] as well as those of the original Fast Simulated Annealing algorithm and its improved version HFSAQ from&nbsp;[@AKZ2016FSAHWQFSJSSP].
+The best result is better than the one of the TGA in&nbsp;[@AZ2015AEAGAFSTJSSP].
+Its mean and best results of `sa_e_20_4e-7_1swap` on `la24` outperform all algorithms from [@JPDS2014CAODRIGAFJSSP; @A2010RIGAFTJSPACS; @JZ2018AOGWOFSCPJSAFJSSC]. 
+On `yn4`, it outperforms all four AntGenSA algorithms (complex hybrids of three algorithms including SA and EAs) in&nbsp;[@HRSCVGBTVMR2019AHSAFJSSP] in mean and best result quality.
+So while we are not shooting for solving the JSSP outstandingly well using very complicated algorithms, our simple take on the problem seems to work.
+
 In [@fig:jssp_progress_sa_log], we compare the progress over time of our Simulated Annealing setups with those of the best hill climber with restarts.
 We find a very significant difference on three of the four problem instancee.
 The higher similarity of the end result distribution on `la24` results from the fact that even `hcr_256+5%_nswap` produces schedules which are less than 5% longer than the best possible one (objective function lower bound) in median.
