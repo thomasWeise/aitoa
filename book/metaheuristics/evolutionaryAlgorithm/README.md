@@ -111,7 +111,7 @@ The bigger setting 4096 for&nbsp;$\mu$ and&nbsp;$\lambda$ tends to work better, 
 It is quite common in optimization that different problem instances may require different setups to achieve the best performance.
 The`nswap` operator again works better than `1swap`.
 
-The best solution quality for `abz7` delivered by `ea4096_1swap` is better than the best result found by the old Fast Simulated Annealing algorithm which was improved in [@AKZ2016FSAHWQFSJSSP], and both `ea4096_1swap` and `ea4096_nswap` find better best solutions on `la24` as well (but are slower and have worse mean results and we also did more runs).
+The best solution quality for `abz7` delivered by `ea4096_1swap` is better than the best result found by the old Fast Simulated Annealing algorithm which was improved in&nbsp;[@AKZ2016FSAHWQFSJSSP], and both `ea4096_1swap` and `ea4096_nswap` find better best solutions on `la24` as well (but are slower and have worse mean results and we also did more runs).
 Later, in [@sec:simulatedAnnealing], we will introduce Simulated Annealing.  
 
 The Gantt charts of the median solutions of `ea4096_nswap` are illustrated in [@fig:jssp_gantt_ea4096_nswap_med].

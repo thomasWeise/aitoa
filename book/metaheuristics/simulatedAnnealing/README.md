@@ -210,7 +210,7 @@ We also tested the Simulated Annealing setups with the unary `nswap` operator, b
 
 If we compare our `sa_e_20_4e-7_1swap` with the related work, we find its best and mean solution quality on `abz7` surpass those of the four Genetic Algorithms in&nbsp;[@JPDS2014CAODRIGAFJSSP] as well as those of the original Fast Simulated Annealing algorithm and its improved version HFSAQ from&nbsp;[@AKZ2016FSAHWQFSJSSP].
 The best result is better than the one of the TGA in&nbsp;[@AZ2015AEAGAFSTJSSP].
-Its mean and best results of `sa_e_20_4e-7_1swap` on `la24` outperform all algorithms from [@JPDS2014CAODRIGAFJSSP; @A2010RIGAFTJSPACS; @JZ2018AOGWOFSCPJSAFJSSC]. 
+Its mean and best results of `sa_e_20_4e-7_1swap` on `la24` outperform all algorithms from [@JPDS2014CAODRIGAFJSSP; @A2010RIGAFTJSPACS; @JZ2018AOGWOFSCPJSAFJSSC] and the mean results are also better than the results of the aLSGA in&nbsp;[@A2015ALSGAFTJSSPWIA]. 
 On `yn4`, it outperforms all four AntGenSA algorithms (complex hybrids of three algorithms including SA and EAs) in&nbsp;[@HRSCVGBTVMR2019AHSAFJSSP] in mean and best result quality.
 So while we are not shooting for solving the JSSP outstandingly well using very complicated algorithms, our simple take on the problem seems to work.
 
