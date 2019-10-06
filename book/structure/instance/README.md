@@ -7,6 +7,7 @@ While an optimization problem is the general blueprint of the tasks, e.g., the g
 
 \text.block{definition}{instance}{A concrete instantiation of all information that are relevant from the perspective of solving an optimization problems is called a *problem instance*&nbsp;$\instance$.}
 
+The problem instance is the input of the optimization algorithms.
 A problem instance is related to an optimization problem in the same way an object/instance is related to its `class` in an object-oriented programming language like Java or a `struct` in&nbsp;C.
 The `class` defines which member variables exists and what their valid ranges are.
 An instance of the class is a piece of memory which holds concrete values for each member variable.
@@ -16,28 +17,44 @@ An instance of the class is a piece of memory which holds concrete values for ea
 #### JSSP Instance Structure
 
 So how can we characterize a JSSP instance&nbsp;$\instance$?
-In the most basic scenario&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP], our factory has&nbsp;$\jsspMachines\in\naturalNumbersO$ machines.^[where&nbsp;$\naturalNumbersO$ stands for the natural numbers greater than&nbsp;0, i.e., 1, 2, 3, &hellip;]
+In the a basic and yet general scenario&nbsp;[@GLLRK1979OAAIDSASAS; @LLRKS1993SASAAC; @L1982RRITTOMS; @T199BFBSP], our factory has&nbsp;$\jsspMachines\in\naturalNumbersO$ machines.^[where&nbsp;$\naturalNumbersO$ stands for the natural numbers greater than&nbsp;0, i.e., 1, 2, 3, &hellip;]
 At each point in time, a machine can either work on exactly one job or do nothing (be idle).
 There are&nbsp;$\jsspJobs\in\naturalNumbersO$ jobs that we need to schedule to these machines.
 For the sake of simplicity and for agreement between our notation here, the Java source code, and the example instances that we will use, we reference jobs and machines with zero-based indices from&nbsp;$0\dots(\jsspJobs-1)$ and&nbsp;$0\dots(\jsspMachines-1)$, respectively.
 
 Each of the&nbsp;$\jsspJobs$ jobs is composed of&nbsp;$\jsspMachines$ sub-jobs, one for each machine.
-The sub-job&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ must be executed on machine $\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}\in 0\dots(\jsspMachines-1)$ and doing so needs&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\in\naturalNumbersZ$ time units for completion.^[$\naturalNumbersZ$ stands for the natural numbers including zero, i.e., 0, 1, 2, &hellip;]
-This setup also allows us to represent the situation illustrated in [@fig:jssp_sketch], where a certain job&nbsp;$\jsspJobIndex$ does not need to be executed on a machine&nbsp;$\jsspMachineIndex'$.
-We then can simply set the required time&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ to&nbsp;0 for the sub-job&nbsp;$\jsspMachineIndex$ with&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}=\jsspMachineIndex'$.
-We can also model problems where all jobs need to be processed by exactly the same machines in exactly the same sequence.
+Each job may need to pass through these machines in a different order.
+The sub-job&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ must be executed on machine $\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}\in 0\dots(\jsspMachines-1)$ and doing so needs&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\in\naturalNumbersZ$ time units for completion.
+
+This definition at first seems strange, but upon closer inspection is quite versatile.
+Assume that we have a factory that produces exactly one product, but different customers may order different quantities.
+Here, we would have JSSP instances where all jobs need to be processed by exactly the same machines in exactly the same sequence.
 In this case&nbsp;$\jsspSubJobMachine{\jsspJobIndex_1}{\jsspMachineIndex}=\jsspSubJobMachine{\jsspJobIndex_2}{\jsspMachineIndex}$ would hold for all jobs&nbsp;$\jsspJobIndex_1$ and&nbsp;$\jsspJobIndex_2$ and all sub-job indices&nbsp;$\jsspMachineIndex$.
-In other words, the JSSP described here already encompasses a wide variety of real-world production situations.
+The jobs would pass through all machines in the same order but may have different processing times (due to the different quantities).
+
+We may also have scenarios where customers can order different types of products, say the same liquid soap, but either in bottles or big cannisters.
+Then, different machines may be needed for different orders.
+This is similar to the situation illustrated in [@fig:jssp_sketch], where a certain job&nbsp;$\jsspJobIndex$ does not need to be executed on a machine&nbsp;$\jsspMachineIndex'$.
+We then can simply set the required time&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ to&nbsp;0 for the sub-job&nbsp;$\jsspMachineIndex$ with&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}=\jsspMachineIndex'$.
+
+In other words, the JSSP instance structure described here already encompasses a wide variety of real-world production situations.
+This means that if we can build an algorithm which can solve this general type of JSSP well, it can also automatically solve the above-mentioned special cases.
 
 #### Sources for JSSP Instances
 
 In order to practically play around with optimization algorithms, we need some concrete instances of the JSSP.
 Luckily, the optimization community provides "benchmark instances" for many different optimization problems.
 Such common, well-known instances are important, because they allow researchers to compare their algorithms.
-Therefore, Beasley&nbsp;[@B1990OLDTPBEM] manages the  [*OR-Library*](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/jobshopinfo.html), a collection of example instances for many optimization problems from the field of operations research (including the JSSP).
-An even more comprehensive [set of JSSP instances](http://jobshop.jjvh.nl/) is provided by van&nbsp;Hoorn&nbsp;[@vH2015JSIAS; @vH2018TCSOBOBIOTJSSP], where also state-of-the-art results are listed.
+The eight classical and most commonly used sets of benchmark instances are published in&nbsp;[@FT1963PLCOLJSSR; @ABZ1988TSBPFJSS; @AC1991ACSOTJSSP; @SWV1992NSSFSPWATJSS; @YN1992AGAATLSJSI; @L1998RCPSAEIOHSTS; @DMU1998BFSSP; @T199BFBSP].
+Their data can be found (sometimes partially) in several repositories in the internet, such as
 
-We will try to solve real JSSP instances which are contained in both of these collections.
+- the [*OR&#8209;Library*](http://people.brunel.ac.uk/~mastjjb/jeb/orlib/jobshopinfo.html) managed by Beasley&nbsp;[@B1990OLDTPBEM],
+- the comprehensive [set of JSSP instances](http://jobshop.jjvh.nl/) provided by van&nbsp;Hoorn&nbsp;[@vH2015JSIAS; @vH2018TCSOBOBIOTJSSP], where also state-of-the-art results are listed,
+- [Oleg Shylo's Page](http://optimizizer.com/jobshop.php)&nbsp;[@S2019JSSPH], which, too, contains up-to-date experimental results,
+- [Éric Taillard's Page](http://mistic.heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/ordonnancement.html), or, finally,
+- my own repository [jsspInstancesAndResults](https://github.com/thomasWeise/jsspInstancesAndResults)&nbsp;[@W2019JRDAIOTJSSP], where I collect all the problem instances and many results from existing works.
+
+We will try to solve JSSP instances obtained from these collections.
 They will serve as illustrative example of how to approach optimization problems.
 In order to keep the example and analysis simple, we will focus on only four instances, namely
 
@@ -46,15 +63,15 @@ In order to keep the example and analysis simple, we will focus on only four ins
 3. instance `swv15` by Storer et&nbsp;al.&nbsp;[@SWV1992NSSFSPWATJSS] with 50&nbsp;jobs and 10&nbsp;machines, and
 4. instance `yn4` by Yamada and Nakano&nbsp;[@YN1992AGAATLSJSI] with 20&nbsp;jobs and 20&nbsp;machines.
 
-These instances are contained in text files available at <http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/jobshop1.txt> and <http://jobshop.jjvh.nl/>.
+These instances are contained in text files available at <http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/jobshop1.txt>, <https://raw.githubusercontent.com/thomasWeise/jsspInstancesAndResults/master/data-raw/instance-data/instance_data.txt>, and in <http://jobshop.jjvh.nl/>.
 
 #### File Format and `demo` Instance
 
 For the sake of simplicity, we created one additional, smaller instance to describe the format of these files, as illustrated in [@fig:jssp_demo_instance].
 
-![The meaning of the text representing our `demo` instance of the JSSP, as an example of the format used in the OR-Library.](\relative.path{demo_instance.svgz}){#fig:jssp_demo_instance width=90%}
+![The meaning of the text representing our `demo` instance of the JSSP, as an example of the format used in the OR&#8209;Library.](\relative.path{demo_instance.svgz}){#fig:jssp_demo_instance width=90%}
 
-In the simple text format used in OR-Library, several problem instances can be contained in one file.
+In the simple text format used in OR&#8209;Library, several problem instances can be contained in one file.
 Each problem instance&nbsp;$\instance$ is starts and ends with a line of several `+` characters.
 The next line is a short description or title of the instance.
 In the third line, the number&nbsp;$\jsspJobs$ of jobs is specified, followed by the number&nbsp;$\jsspMachines$ of machines.
