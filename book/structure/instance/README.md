@@ -52,7 +52,7 @@ Their data can be found (sometimes partially) in several repositories in the int
 - the comprehensive [set of JSSP instances](http://jobshop.jjvh.nl/) provided by van&nbsp;Hoorn&nbsp;[@vH2015JSIAS; @vH2018TCSOBOBIOTJSSP], where also state-of-the-art results are listed,
 - [Oleg Shylo's Page](http://optimizizer.com/jobshop.php)&nbsp;[@S2019JSSPH], which, too, contains up-to-date experimental results,
 - [Éric Taillard's Page](http://mistic.heig-vd.ch/taillard/problemes.dir/ordonnancement.dir/ordonnancement.html), or, finally,
-- my own repository [jsspInstancesAndResults](https://github.com/thomasWeise/jsspInstancesAndResults)&nbsp;[@W2019JRDAIOTJSSP], where I collect all the problem instances and many results from existing works.
+- my own repository [jsspInstancesAndResults](https://github.com/thomasWeise/jsspInstancesAndResults)&nbsp;[@W2019JRDAIOTJSSP], where I collect all the above problem instances and many results from existing works.
 
 We will try to solve JSSP instances obtained from these collections.
 They will serve as illustrative example of how to approach optimization problems.
@@ -95,4 +95,4 @@ This structure of a JSSP instance can be represented by the simple Java class gi
 \repo.listing{lst:JSSPInstance}{Excerpt from a Java class for representing the data of a JSSP instance.}{java}{src/main/java/aitoa/examples/jssp/JSSPInstance.java}{}{relevant}
 
 Here, the two-dimensional array&nbsp;`jobs` directly receives the data from sub-job lines in the text files, i.e., each row stands for a job and contains machine IDs and processing times in an alternating sequence.
-The actual source file of the class `JSSPInstance` accompanying our book also contains additional code, e.g., for reading such data from the text file, which we have omitted here as it is unimportant for the understanding of the scenario.
+The actual source file of the class `JSSPInstance` accompanying our book also contains additional code, e.g., for reading such data from the text file, which we have omitted here as it is unimportant for the understanding of the scenario. 

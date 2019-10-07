@@ -12,8 +12,10 @@ We call them *candidate solutions*.
 Basically, the input of an optimization algorithm is the problem instance&nbsp;$\instance$ and the output would be (at least) one candidate solution&nbsp;$\solspel\in\solutionSpace$.
 This candidate solution is the choice that the optimization process proposes to the human operator.
 It therefore holds all the data that the human operator needs to take action, in a for that the human operator can understand, interpret, and execute.
+During the optimization process, many such candidate solutions may be created and compared to find and return the best of them.
+
 From the programmer's perspective, the solution space is again a data structure, e.g., a `class` in Java.
-We want to return one instantiation of this data structure to the user when solving an optimization problem.
+An instance of this data structure is the candidate solution.
 
 ### Example: Job Shop Scheduling
 
@@ -23,7 +25,7 @@ Hence, a candidate solution should tell us what to do, i.e., how to process the 
 
 #### Idea: Gantt Chart {#sec:jssp:gantt}
 
-This is basically what a [Gantt chart](http://en.wikipedia.org/wiki/Gantt_chart)&nbsp;[@W2003GCACA; @K2000SORCP] is about, as illustrated in [@fig:gantt_demo_without_makespan].
+This is basically what [Gantt chart](http://en.wikipedia.org/wiki/Gantt_chart)&nbsp;[@W2003GCACA; @K2000SORCP] are for, as illustrated in [@fig:gantt_demo_without_makespan].
 A Gantt chart defines what each of our&nbsp;$\jsspMachines$ machines has to do at each point in time.
 The sub-jobs of each job are assigned to time windows on their corresponding machines.
 
