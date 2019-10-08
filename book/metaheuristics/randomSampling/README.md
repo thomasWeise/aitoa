@@ -1,28 +1,31 @@
 ## Random Sampling {#sec:randomSampling}
 
-If we have our optimization problem and its components properly defined according to [@sec:structure], then we have the proper tools to solve the problem.
+If we have our optimization problem and its components properly defined according to [@sec:structure], then we already have the proper tools to solve the problem.
 We know
 
 - how a solution can internally be represented as "point"&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ ([@sec:searchSpace]),
 - how we can map such a point&nbsp;$\sespel\in\searchSpace$ to a candidate solution&nbsp;$\solspel$ in the solution space&nbsp;$\solutionSpace$ ([@sec:solutionSpace]) via the representation mapping&nbsp;$\repMap:\searchSpace\mapsto\solutionSpace$ ([@sec:searchSpace]), and
 - how to rate a candidate solution&nbsp;$\solspel\in\solutionSpace$ with the objective function&nbsp;$\objf$ ([@sec:objectiveFunction]).
 
-Basically, all what we need now is to somehow "create" a point&nbsp;$\sespel$ in the search space.
+The only question left for us to answer is how to "create" a point&nbsp;$\sespel$ in the search space.
 We can then apply&nbsp;$\repMap(\sespel)$ and get a candidate solution&nbsp;$\solspel$ whose quality we can assess via&nbsp;$\objf(\solspel)$.
-If we look at the problem as a black box ([@sec:blackbox]), i.e., don't really know what "makes a candidate solution good," then the best we can do is just create the solutions randomly.
+Let us look at the problem as a black box ([@sec:blackbox]).
+In other words, we do not really know what "makes" a candidate solution good.
+Hence, we do not know how to "create" a good solution either.
+Then the best we can do is just create the solutions randomly.
 
 ### Ingredient: Nullary Search Operation for the JSSP
 
 For this purpose, we need to implement the nullary search operation from [@lst:INullarySearchOperator].
 We create a new search operator which needs no input and returns a point in the search space.
 Recall that our representation ([@sec:jsspSearchSpace]) requires that each index&nbsp;$\jsspJobIndex\in 0\dots(\jsspJobs-1)$ of the&nbsp;$\jsspJobs$ must occur exactly&nbsp;$\jsspMachines$ times in the integer array of length&nbsp;$\jsspMachines*\jsspJobs$, where&nbsp;$\jsspMachines$ is the number of machines in the JSSP instance.
-In [@lst:JSSPNullaryOperator], we achieve this by first creating the sequence&nbsp;$(\jsspJobs-1,\jsspJobs-2,\dots,0)$ and then copy it&nbsp;$\jsspMachines$ times in the destination array `dest`.
+In [@lst:JSSPNullaryOperator], we achieve this by first creating the sequence&nbsp;$(\jsspJobs-1,\jsspJobs-2,\dots,0)$ and then copying it&nbsp;$\jsspMachines$ times in the destination array `dest`.
 We then randomly shuffle `dest` by applying the [Fisher–Yates shuffle](http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle) algorithm [@FY1948STFBAAMR; @K1969SA], which simply brings the array into an entirely random order.
 
 \repo.listing{lst:JSSPNullaryOperator}{An excerpt of the implementation of the nullary search operation interface [@lst:INullarySearchOperator] for the JSSP, which will create one random point in the search space.}{java}{src/main/java/aitoa/examples/jssp/JSSPNullaryOperator.java}{}{relevant}
 
 By calling the `apply` method of our implemented operator, it will create one random point in the search space.
-We can then pass this point through the representation mapping that we already implemented in [@lst:JSSPRepresentationMapping] and have a Gantt diagram.
+We can then pass this point through the representation mapping that we already implemented in [@lst:JSSPRepresentationMapping] and get a Gantt diagram.
 Easily we then obtain the quality, i.e., makespan, of this candidate solution as the right-most edge of any an job assignment in the diagram, as defined in [@sec:jsspObjectiveFunction].
 
 ### Single Random Sample
@@ -30,10 +33,10 @@ Easily we then obtain the quality, i.e., makespan, of this candidate solution as
 #### The Algorithm
 
 Now that we have all ingredients ready, we can test the idea.
-In [@lst:SingleRandomSample], we implement this algorithm `1rs` which creates exactly one random point&nbsp;$\sespel$ in the search space.
+In [@lst:SingleRandomSample], we implement this algorithm (here called `1rs`) which creates exactly one random point&nbsp;$\sespel$ in the search space.
 It then takes this point and passes it to the evaluation function of our black-box `process`, which will perform the representation mapping&nbsp; $\solspel=\repMap(\sespel)$ and compute the objective value&nbsp;$\objf(\solspel)$.
-It makes sense to implement this function in such a way that it automatically remembers the best candidate solution it encountered.
-Then, we do not need to take care of this in our algorithm, which makes the implementation so short.
+Internally, we implemented this function in such a way that it automatically remembers the best candidate solution it ever has evaluated.
+Thus, we do not need to take care of this in our algorithm, which makes the implementation so short.
 
 \repo.listing{lst:SingleRandomSample}{An excerpt of the implementation of an algorithm which creates a single random candidate solution.}{java}{src/main/java/aitoa/algorithms/SingleRandomSample.java}{}{relevant}
 
@@ -54,17 +57,17 @@ We therefore execute our program 101&nbsp;times and the results are summarized i
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_1rs_med.svgz}){#fig:jssp_gantt_1rs_med width=84%}
 
-What we can find in [@tbl:singleRandomSampleJSSP] is that the makespan of best solution that any of the 101&nbsp;runs has delivered for each of the four JSSP instances is between 60% and 100% longer than the lower bound.
+What we can find in [@tbl:singleRandomSampleJSSP] is that the makespan of the best solution that any of the 101&nbsp;runs has delivered for each of the four JSSP instances is between 60% and 100% longer than the lower bound.
 The [arithmetic mean](http://en.wikipedia.org/wiki/Arithmetic_mean) and [median](http://en.wikipedia.org/wiki/Median) of the solution qualities are even between 10% and 20% worse.
 In the Gantt charts of the median solutions depicted in [@fig:jssp_gantt_1rs_med], we can find big gaps between the sub-jobs.
-This all is expected.
+This is completely reasonable.
 After all, we just create a single random solution.
 We can hardly assume that doing all jobs of a JSSP in a random order would even be good idea.
 
 But we also notice more.
-The time&nbsp;*t(med)* that the top-50% of the runs need to get their result is approximately&nbsp;0s.
+The median time&nbsp;*t(med)* until the runs stop improving is approximately&nbsp;0s.
 The reason is that we only perform one single objective function evaluation per run, i.e., 1&nbsp;FE.
-Creating, mapping, and evaluating a solution can be very fast, actually within a few milliseconds.
+Creating, mapping, and evaluating a solution can be very fast, it can happen within milliseconds.
 However, we had originally planned to use up to three minutes for optimization.
 Hence, almost all of our time budget remains unused.
 At the same time, we already know that that there is a 10-20% difference between the best and the median solution quality among the 101&nbsp;random solutions we created.
@@ -103,8 +106,12 @@ Let us now compare the performance of this iterated random sampling with our ini
 Its best, mean, and median result quality are significantly better.
 Since creating random points in the search space is so fast that we can sample many more than 101&nbsp;candidate solutions, even the median and mean result quality of the&nbsp;`rs` algorithm are better than the best quality obtainable with&nbsp;`1rs`.
 Matter of fact, each run of our&nbsp;`rs` algorithm can create and test several million candidate solutions within the three minute time window, i.e., perform several million FEs.
-Furthermore, the standard deviation of the results becomes lower as well.
+By remembering the best of millions of created solutions, what we effectively do is we exploit the variance of the quality of the random solutions.
+As a result, the standard deviation of the results becomes lower.
 This means that this algorithm has a more reliable performance, we are more likely to get results close to the mean or median performance when we use&nbsp;`rs` compared to&nbsp;`1rs`.
+Actually, if we would have infinite time for each run (instead of three minutes), then each run would eventually guess the optimal solutions.
+The variance would become zero and the mean, median, and best solution would all converge to this global optimum.
+Alas, we only have three minutes, so we are still far from this goal.
 
 |$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
@@ -131,7 +138,7 @@ We are also still relatively far away from the lower bounds of the objective fun
 
 ![The progress of the&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_rs_log.svgz}){#fig:jssp_progress_rs_log width=84%}
 
-Another new feature of our&nbsp;`rs` algorithm is that it is truly an Anytime Algorithm ([@sec:anytimeAlgorithm]).
+Another new feature of our&nbsp;`rs` algorithm is that it truly is an Anytime Algorithm ([@sec:anytimeAlgorithm]).
 It begins with an entirely random solution and tries to find better solutions as time goes by.
 Let us take a look at [@fig:jssp_progress_rs_log], which illustrates how the solution quality of the runs improves over time.
 At first glance, this figure looks quite nice.
@@ -155,3 +162,7 @@ And this makes a lot of sense here.
 On one hand, the maximal possible improvement of the solution quality is bounded by the global optimum &ndash; once we have obtained it, we cannot improve the quality further, even if we invest infinitely much of an resource.
 On the other hand, in most practical problems, the amount of solutions that have a certain quality gets smaller and smaller, the closer said quality is to the optimal one.
 This is actually what we see in [@fig:jssp_progress_rs_log]: The chance of randomly guessing a solution of quality&nbsp;$F$ becomes the smaller the better (smaller)&nbsp;$F$ is.
+
+From the diagrams we can also see that random sampling is not a good method to solve the JSSP.
+It will not matter very much if we have three minutes, six minutes, or one hour.
+In the end, the improvements we would get by investing more time would probably become smaller and smaller. 
