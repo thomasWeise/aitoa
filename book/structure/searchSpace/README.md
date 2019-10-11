@@ -75,7 +75,7 @@ We use a string of length&nbsp;$\jsspMachines*\jsspJobs=20$ denoting the priorit
 We *know* the order of the sub-jobs per job as part of the problem instance data&nbsp;$\instance$.
 We therefore do not need to encode it.
 This means that we just include each job's id&nbsp;$\jsspMachines=5$ times in the string.
-This was the original idea: The encoding represents the order in which we assign the $\jsspJobs$&nbsp;jobs, and each job must be picked $\jssoMachines$&nbsp;times.
+This was the original idea: The encoding represents the order in which we assign the $\jsspJobs$&nbsp;jobs, and each job must be picked $\jsspMachines$&nbsp;times.
 Our search space is thus somehow similar to the set&nbsp;$\mathSpace{P}(\jsspJobs*\jsspMachines)$ of permutations of&nbsp;$\jsspJobs*\jsspMachines$ objects mentioned earlier, but instead of permutations, we have *permutations with repetitions*.
 
 ![Illustration of the first four steps of the representation mapping of an example point in the search space to a candidate solution.](\relative.path{demo_mapping.svgz}){#fig:jssp_mapping_demo width=99%}
