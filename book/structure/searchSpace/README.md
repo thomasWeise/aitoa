@@ -36,6 +36,7 @@ Being injective is therefore a good feature for&nbsp;$\repMap$.
 
 The mapping&nbsp;$\repMap$ also does not necessarily need to be [surjective](http://en.wikipedia.org/wiki/Surjective_function), i.e., there can be candidate solutions&nbsp;$\solspel\in\solutionSpace$ for which no&nbsp;$\sespel\in\searchSpace$ with $\repMap(\sespel)=\solspel$ exists.
 However, such solutions then can never be discovered.
+If the optimal solution would reside in the set of such solutions to which no point in the search space can be mapped, then, well, it could not be found by the optimization process.
 Being surjective is therefore a good feature for&nbsp;$\repMap$.
 
 \repo.listing{lst:IRepresentationMapping}{A general interface for representation mappings.}{java}{src/main/java/aitoa/structure/IRepresentationMapping.java}{}{relevant}
@@ -49,15 +50,23 @@ Side note: An implementation of `map` will overwrite whatever contents were stor
 
 In our JSSP example, we have developed the class `JSSPCandidateSolution` given in [@lst:JSSPCandidateSolution] to represent the data of a Gantt chart (candidate solution).
 It can easily be interpreted by the user and we have defined a suitable objective function for it in [@lst:JSSPMakespanObjectiveFunction].
-Yet, it is not that clear how we can efficiently create such solutions, especially feasible ones, let alone how to *search* in the space of Gantt charts.
+Yet, it is not that clear how we can efficiently create such solutions, especially feasible ones, let alone how to *search* in the space of Gantt charts.^[Of course, there are many algorithms that can do that and we could discover one if we think about it for a bit, but here we take the educational route where we investigate the full scenario with $\searchSpace\neq\solutionSpace$.]
 What we would like to have is a *search space*&nbsp;$\searchSpace$, which can represent the possible candidate solutions of the problem in a more machine-tangible, algorithm-friendly way.
-While comprehensive overviews about different such search spaces for the JSSP can be found in [@CGT1996ATSOJSSPUGAIR, @W2013GAFSSPAS; @A2010RIGAFTJSPACS], we here focus only on one single idea which I find particularly appealing. 
+While comprehensive overviews about different such search spaces for the JSSP can be found in [@CGT1996ATSOJSSPUGAIR, @W2013GAFSSPAS; @A2010RIGAFTJSPACS, @YN1997GAFJSSP], we here develop only one single idea which I find particularly appealing. 
 
 #### Idea: 1-dimensional Encoding
 
-One idea is to encode the two-dimensional structure&nbsp;$\solutionSpace$ in a simple linear string of integer numbers.
-The numbers could identify the order in which jobs should be assigned to machines.
-If we process such a string from the beginning to the end and step-by-step assign the jobs, we would get a feasible Gantt chart as result.
+Imagine you would like to construct a Gantt chart as candidate solution for a given JSSP instance.
+How would you do that?
+Well, we know that each of the $\jsspJobs$&nbsp;jobs has $\jsspMachines$&nbsp;sub-jobs, one for each machine.
+We could simply begin by choosing one job and placing its first sub-job on the machine to which it belongs, i.e., write it into the Gantt chart.
+Then we again pick a job, take the first not-yet-scheduled sub-job of this job, and "add" it to the end of the row of its corresponding machine in the Gantt chart.
+Of course, we cannot pick a job whose sub-jobs all have already be assigned.
+We can continue doing this until all jobs are assigned &ndash; and we will get a valid solution.
+
+This solution is defined by the order in which we chose the jobs.
+Such an order can be described as a simple, linear string of job IDs, i.e., of integer numbers.
+If we process such a string from the beginning to the end and step-by-step assign the jobs, we get a feasible Gantt chart as result.
 
 The encoding and corresponding representation mapping can best be described by an example.
 In the demo instance, we have&nbsp;$\jsspMachines=5$ machines and&nbsp;$\jsspJobs=4$ jobs.
@@ -65,11 +74,12 @@ Each job has&nbsp;$\jsspMachines=5$ sub-jobs that must be distributed to the mac
 We use a string of length&nbsp;$\jsspMachines*\jsspJobs=20$ denoting the priority of the sub-jobs.
 We *know* the order of the sub-jobs per job as part of the problem instance data&nbsp;$\instance$.
 We therefore do not need to encode it.
-This means that we just include each job's id&nbsp;$\jsspMachines=5$ times in the string.^[Our search space is thus somehow similar to the set&nbsp;$\mathSpace{P}(\jsspJobs*\jsspMachines)$ of permutations of&nbsp;$\jsspJobs*\jsspMachines$ objects mentioned earlier, but adapted to the needs of our problem.]
-This encoding has the mathematical name "permutation with repetition" and was first used for the JSSP by Bierwirth&nbsp;[@B1995AGPATJSSWGA; @BMK1996OPRFSP].
+This means that we just include each job's id&nbsp;$\jsspMachines=5$ times in the string.
+This was the original idea: The encoding represents the order in which we assign the $\jsspJobs$&nbsp;jobs, and each job must be picked $\jssoMachines$&nbsp;times.
+Our search space is thus somehow similar to the set&nbsp;$\mathSpace{P}(\jsspJobs*\jsspMachines)$ of permutations of&nbsp;$\jsspJobs*\jsspMachines$ objects mentioned earlier, but instead of permutations, we have *permutations with repetitions*.
 
 ![Illustration of the first four steps of the representation mapping of an example point in the search space to a candidate solution.](\relative.path{demo_mapping.svgz}){#fig:jssp_mapping_demo width=99%}
-
+ 
 A point&nbsp;$\sespel\in\searchSpace$ in the search space&nbsp;$\searchSpace$ for the `demo` JSSP instance would thus be an integer string of length&nbsp;20.
 As example, we chose $\sespel=(0, 2, 1, 0, 3, 1, 0, 1, 2, 3, 2, 1, 1, 2, 3, 0, 2, 0, 3, 3)$ in [@fig:jssp_mapping_demo].
 The representation mapping starts with an empty Gantt chart.
@@ -112,7 +122,7 @@ Hence, we can begin with the third sub-job at time index&nbsp;40 at machine&nbsp
 We continue this iterative processing until reaching the end of the string&nbsp;$\sespel$.
 We now have constructed the complete Gantt chart&nbsp;$\solspel$ illustrated in [@fig:jssp_mapping_demo].
 Whenever we assign a sub-job&nbsp;$\jsspJobIndex>0$ of any given job to a machine, then we already had assigned all sub-jobs at smaller indices first.
-No deadlock could occur and&nbsp;$\solspel$ must therefore be feasible.
+No deadlock can occur and&nbsp;$\solspel$ must therefore be feasible.
 
 \repo.listing{lst:JSSPRepresentationMapping}{Excerpt from a Java class for implementing the representation mapping.}{java}{src/main/java/aitoa/examples/jssp/JSSPRepresentationMapping.java}{}{relevant}
 
@@ -122,18 +132,21 @@ This is done by keeping track of time that has passed for each machine and each 
 
 #### Advantages of a very simple Encoding
 
-What did we gain by such a mapping?
-We now have a very simple data structure&nbsp;$\searchSpace$ to represent our candidate solutions.
-We have very simple rules for validating a point&nbsp;$\sespel$ in the search space:
+This is a very nice and natural way to represent Gantt charts with a much simpler data structure.
+As a result, it has been discovered by several researchers independently, the earliest being Gen et&nbsp;al.&nbsp;[@GTK1994SJSSPBGA], Bierwirth&nbsp;[@B1995AGPATJSSWGA; @BMK1996OPRFSP], and Shi et&nbsp;al.&nbsp;[@SIS1997NESFSJSPBGA], all in the 1990s.
+
+But what do we gain by using this search space and representation mapping?
+First, well, we now have a very simple data structure&nbsp;$\searchSpace$ to represent our candidate solutions.
+Second, we also have very simple rules for validating a point&nbsp;$\sespel$ in the search space:
 If it contains the numbers&nbsp;$0\dots (\jsspJobs-1)$ each exactly&nbsp;$\jsspMachines$ times, it represents a feasible candidate solution.
 
-Indeed, the candidate solution corresponding to a valid point from the search space will always be *feasible*&nbsp;[@B1995AGPATJSSWGA].
+Third, the candidate solution corresponding to a valid point from the search space will always be *feasible*&nbsp;[@B1995AGPATJSSWGA].
 The mapping&nbsp;$\repMap$ will ensure that the order of the sub-jobs per job is always observed.
 We do not need to worry about the issue of deadlocks mentioned in [@sec:solutionSpace:feasibility].
 We know from [@tbl:jsspSolutionSpaceTable], that the vast majority of the possible Gantt charts for a given problem may be infeasible &ndash; and now we do no longer need to worry about that. 
 Our mapping also makes sure of the more trivial constraints, such as that each machine will process at most one job at a time and that all sub-jobs are eventually processed.
 
-We could also modify our representation mapping&nbsp;$\repMap$ to adapt to more complicated and constraint versions of the JSSP if need be:
+Finally, we also could modify our representation mapping&nbsp;$\repMap$ to adapt to more complicated and constraint versions of the JSSP if need be:
 For example, imagine that it would take a job- and machine-dependent time requirement for carrying a job from one machine to another, then we could facilitate this by changing&nbsp;$\repMap$ so that it adds this time to the starting time of the job.
 If there was a job-dependent setup time for each machine&nbsp;[@ANCK2008ASOSPWSTOC], which could be different if job&nbsp;1 follows job&nbsp;0 instead of job&nbsp;2, then this could be facilitated easily as well.
 If our sub-jobs would be assigned to "machine types" instead of "machines" and there could be more than one machine per machine type, then the representation mapping could assign the sub-jobs to the next machine of their type which becomes idle.
@@ -145,7 +158,7 @@ Additionally, it became very easy to indirectly create and modify candidate solu
 
 #### Size of the Search Space
 
-It is relatively easy to compute the size&nbsp;$\left|\searchSpace\right|$ of our proposed search space&nbsp;$\searchSpace$.
+It is relatively easy to compute the size&nbsp;$\left|\searchSpace\right|$ of our proposed search space&nbsp;$\searchSpace$&nbsp;[@SIS1997NESFSJSPBGA].
 We do not need to make any assumptions regarding "no useless waiting time", as in [@sec:solutionSpace:size], since this is not possible by default.
 Each element&nbsp;$\sespel\in\searchSpace$ is a [permutation of a multiset](http://en.wikipedia.org/wiki/Permutation#Permutations_of_multisets) where each of the&nbsp;$\jsspJobs$ elements occurs exactly&nbsp;$\jsspMachines$ times.
 This means that the size of the search space can be computed as given in [@eq:jssp_search_space_size].
@@ -182,4 +195,4 @@ We now find the drawback of our encoding: There is some redundancy in our mappin
 If we would exchange the first three numbers in the example string in [@fig:jssp_mapping_demo], we would obtain the same Gantt chart, as jobs&nbsp;0, 1, and&nbsp;2 start at different machines.
 
 As said before, we should avoid redundancy in the search space.
-However, here we will stick with our proposed mapping because it is very simple, it solves the problem of feasibility of candidate solutions, and it allows us to relatively easily introduce and discuss many different approaches, algorithms, and sub-algorithms.
+However, here we will stick with our proposed mapping because it is very simple, it solves the problem of feasibility of candidate solutions, and it allows us to relatively easily introduce and discuss many different approaches, algorithms, and sub-algorithms. 
