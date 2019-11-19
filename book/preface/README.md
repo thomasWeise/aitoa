@@ -14,12 +14,12 @@ We try to improve the algorithms step-by-step, moving from very simple approache
 We will partially sacrifice the formal and abstract structure of&nbsp;[@WGOEB] and introduce concepts "as they come," with the goal to increase the accessibility of the ideas.
 
 ```
-@book {aitoa,
+@book{aitoa,
   author    = {Thomas Weise},
   title     = {An Introduction to Optimization Algorithms},
   year      = {2018--\meta.year},
   publisher = {Institute of Applied Optimization ({IAO}),
-               Faculty of Computer Science and Technology,
+               School of Artificial Intelligence and Big Data,
                Hefei University},
   address   = {Hefei, Anhui, China},
   url       = {http://thomasweise.github.io/aitoa/},
