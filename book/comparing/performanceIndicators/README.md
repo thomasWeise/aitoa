@@ -14,9 +14,9 @@ This means we have two measurable performance dimensions, namely:
 If we want to break down performance to single-valued performance indicators, this leads us to two possible choices&nbsp;[@HAFR2010RPBBOB2ES; @FHRA2015CDR1], which are:
 
 1. the solution quality we can get within a pre-defined time and
-2. the time we need to get reach a pre-defined solution quality.
+2. the time we need to reach a pre-defined solution quality.
 
-We illustrate these two options, which corresponds to define vertical and horizontal cuts through the performance diagrams, respectively, in [@fig:performance_indicators_cuts].
+We illustrate these two options, which corresponds to define vertical and horizontal cuts through the progress diagrams, respectively, in [@fig:performance_indicators_cuts].
 
 ![Illustration of the two basic forms to measure performance from raw data, based on a fraction of the actual experimental results illustrated in [@fig:jssp_progress_rs_hc_1swap_log] and inspired by&nbsp;[@HAFR2010RPBBOB2ES; @FHRA2015CDR1].](\relative.path{performance_indicators_cuts.svgz}){#fig:performance_indicators_cuts width=84%}
 
@@ -43,7 +43,7 @@ It has the advantage that the number of algorithm steps or seconds needed to sol
 We can then make statements such as "Algorithm&nbsp;$\mathcal{B}$ is ten times faster than algorithm&nbsp;$\mathcal{A}$ [in solving this problem]."
 An improvement in the objective value, as we could measure in the vertical cut approach, has no such interpretable meaning, since we do not know whether it is hard or easy to, for instance, squeeze out 10 more time units of makespan in a JSSP instance.
 
-The "vertical cuts" idea is applied, for instance, in the [COCO Framework](http://coco.lri.fr/) for benchmarking numerical optimization algorithms&nbsp;[@HAFR2010RPBBOB2ES; @FHRA2015CDR1].
+The "horizontal cuts" idea is applied, for instance, in the [COCO Framework](http://coco.lri.fr/) for benchmarking numerical optimization algorithms&nbsp;[@HAFR2010RPBBOB2ES; @FHRA2015CDR1].
 
 One disadvantage of this method is that we cannot guarantee that a run will reach the specified goal quality.
 Maybe sometimes the algorithm will get trapped in a local optimum before that. 

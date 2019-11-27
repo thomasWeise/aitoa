@@ -18,7 +18,7 @@ This has several *advantages*:
 
 - Clock time is a quantity which makes physical sense and which is intuitive clear to us.
 - In applications, we often have well-defined computational budgets and thus need to know how much time our processes really need.
-- Results in many research works reported report the consumed runtime, so there is a wide basis for comparisons.
+- Many research works report the consumed runtime, so there is a wide basis for comparisons.
 - If you want to publish your own work, you should report the runtime that your implementation of your algorithm needs as well.
 - If we measure the runtime of your algorithm implementation, it will include everything that the code you are executing does.
 If your code loads files, allocates data structures, or does complicated calculations &ndash; everything will be included in the measurement.
@@ -27,8 +27,8 @@ If your code loads files, allocates data structures, or does complicated calcula
 But reporting the clock time consumed by an algorithm implementation also has *disadvantages*:
 
 - The measured time strongly depends on your computer and system configuration.
-A measured runtime reported twenty years ago are basically useless now, unless they differ from current measurements very significantly / by orders of magnitudes.
-- Runtimes measured on different machines or on different system setups are therefore inherently incomparable or, at least, it is easy to make mistakes here.
+Runtimes measured on different machines or on different system setups are therefore inherently incomparable or, at least, it is easy to make mistakes here.
+Measured runtimes reported twenty years ago are basically useless now, unless they differ from current measurements very significantly, by orders of magnitudes.
 - Runtime measurements also are measurements based on a given *implementation*, not *algorithm*.
 An algorithm implemented in the `C` programming language may perform very different compared to the very same algorithm implemented in `Java`.
 An algorithm implementation using a hash map to store and retrieve certain objects may perform entirely different from the same algorithm implemented using a sorted list.
@@ -66,12 +66,12 @@ But measuring time in function evaluations also has some *disadvantages*, namely
 
 - There is no guaranteed relationship between FEs and real time.
 - An algorithm may have hidden complexities which are not "appearing" in the FEs.
-For instance, an algorithm could necessitate a length pre-processing procedure before sampling even the first point from the search space.
+For instance, an algorithm could necessitate a lengthy pre-processing procedure before sampling even the first point from the search space.
 This would not be visible in the FE counter, because, well, it is not an FE.
 The same holds for the selection step in an Evolutionary Algorithm (realized as sorting in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo]).
 Although this is probably a very fast procedure, it will be outside of what we can measure with FEs. 
 - A big problem is that one function evaluation can have extremely different actual time requirements and [algorithmic complexity](http://en.wikipedia.org/wiki/Analysis_of_algorithms#Orders_of_growth) in different algorithms.
-For instance, it is known that in a Traveling Salesman Problem&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV] with $n$&nbsp;cities, some algorithms can create an evaluate a new candidate solution within a *constant* number of steps, i.e., in&nbsp;$\bigO{1}$, while others need a number of steps growing quadratically with&nbsp;$n$, i.e., are in&nbsp;$\bigO{n^2}$&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP].
+For instance, it is known that in a Traveling Salesman Problem&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV] with $n$&nbsp;cities, some algorithms can create an evaluate a new candidate solution from an existing one within a *constant* number of steps, i.e., in&nbsp;$\bigO{1}$, while others need a number of steps growing quadratically with&nbsp;$n$, i.e., are in&nbsp;$\bigO{n^2}$&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP].
 If an algorithm of the former type can achieve the same quality as an algorithm of the latter type, we could consider it as better even if it would need ten times as many FEs.
 Hence, FEs are only fair measurements for comparing two algorithms if they take approximately the same time in both of them.
 - Time measured in FEs is harder to comprehend in the context of parallelization and distribution of algorithms.

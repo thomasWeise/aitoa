@@ -44,13 +44,13 @@ The following measures can be taken to ensure that your experimental results are
 
 1. Always use self-explaining formats like plain text files to store your results.
 2. Create one file for each run of your experiment and *automatically* store at least the following information&nbsp;[@W2017FSDFTSTFOAB; @WCTLTCMY2014BOAAOSFFTTSP]:
-	 i. The algorithm name and all parameter settings of the algorithm.
-	 ii. The relevant measurements.
-	 iii. The [seed](http://en.wikipedia.org/wiki/Random_seed) of the pseudo-random number generator used.
-	 iv. Information about the problem instance on which the algorithm was applied.
-	 v. Short comments on how the above is to be interpreted.
-	 vi. Maybe information about the computer system your code runs on, maybe the Java version, etc.
-	 vii. Maybe even your contact information.
+	 i. the algorithm name and all parameter settings of the algorithm,
+	 ii. the relevant measurements, i.e., the logged data,
+	 iii. the [seed](http://en.wikipedia.org/wiki/Random_seed) of the pseudo-random number generator used,
+	 iv. information about the problem instance on which the algorithm was applied,
+	 v. short comments on how the above is to be interpreted,
+	 vi. maybe information about the computer system your code runs on, maybe the Java version, etc., and
+	 vii. maybe even your contact information.
 This way, you or someone else can, next year, or in ten years from now, read your results and get a clear understanding of "what is what."
 Ask yourself: If I put my data on my website and someone else downloads it, does every single file contain sufficient information to understand its content?
 3. Store the files and the compiled binaries of your code in a self-explaining directory structure&nbsp;[@W2017FSDFTSTFOAB; @WCTLTCMY2014BOAAOSFFTTSP].
@@ -69,6 +69,8 @@ In other words, you should be able to repeat the experiments in this book and ge
 There might be differences if Java changes the implementation of their RNG or if your computer is significantly faster or slower than mine, though.
 5. Ensure that all random seeds in your experiments are generated in a deterministic way in your code.
 This can be a proof that you did not perform [cherry picking](http://en.wikipedia.org/wiki/Cherry_picking) during your experiments, i.e., that you did not conduct 1000 runs and picked only the 101 where your newly-invented method works best.
+In other words, the seeds should come from a reproducible sequence, say the same random number generator, but seeded with the MD5 checksum of the instance name.
+This would also mean that two algorithms applied to the same instance have the same random seed and may therefore start at the same random point.
 6. Clearly document and comment your code.
 In particular, comment the contracts of each method such that you can properly verify them in unit tests.
 Never say "I document the code when I am finished with my work."
