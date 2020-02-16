@@ -177,7 +177,7 @@ Of course, we will remember the **best ever encountered** candidate solution ove
 \repo.listing{lst:HillClimberWithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts, which remembers the best-so-far solution and tries to find better solutions in its neighborhood but restarts if it seems to be trapped in a local optimum.}{java}{src/main/java/aitoa/algorithms/HillClimberWithRestarts.java}{}{relevant}
 
 Now this algorithm &ndash; implemented in [@lst:HillClimberWithRestarts] &ndash; is a bit more elaborate.
-Basically, we embedd the original hill climber into a loop.
+Basically, we embed the original hill climber into a loop.
 This hill climber will stop after a certain number of unsuccessful search steps, which then leads to a new round in the outer loop.
 The problem that we have is that we do not know which "certain number" is right.
 If we pick it too low, then the algorithm will restart before it actually converges to a local optimum.
