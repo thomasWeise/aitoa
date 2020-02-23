@@ -46,12 +46,7 @@ Of course, since the algorithm is *randomized*, it may give us a different resul
 In order to understand what kind of solution qualities we can expect, we hence have to run it a couple of times and compute result statistics.
 We therefore execute our program 101&nbsp;times and the results are summarized in [@tbl:singleRandomSampleJSSP], which describes them using simple statistics whose meanings are discussed in-depth in [@sec:statisticalMeasures].
 
-|$\instance$|$\lowerBound(\objf)$|best|mean|med|sd|med(t)|med(FEs)|
-|:-:|--:|--:|--:|--:|--:|--:|--:
-|`abz7`|656|1131|1334|1326|106|0s|1|
-|`la24`|935|1487|1842|1814|165|0s|1|
-|`swv15`|2885|5935|6600|6563|346|0s|1|
-|`yn4`|929|1754|2036|2039|125|0s|1|
+\relative.input{jssp_1rs_results.md}
 
 : The results of the single random sample algorithm&nbsp;`1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound(\objf)$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, the standard deviation *sd* of the result quality, as well as the median time&nbsp;*med(t)* and FEs&nbsp;*med(FEs)* until a run was finished. {#tbl:singleRandomSampleJSSP}
 
@@ -92,8 +87,8 @@ The algorithm can be described as follows:
 5. If&nbsp;$\obspel$ is better than best-so-far-objective value, then
     a. Set best-so-far objective value to&nbsp;$\obspel$.
     b. Store&nbsp;$\solspel$ in a special variable and remember it.
-6. If termination criterion is not met, return to point&nbsp;1.
-7. Return best-so-far objective value and best solution to the user.
+6. If the termination criterion is not met, return to point&nbsp;1.
+7. Return the best-so-far objective value and the best solution to the user.
 
 In actual program code, points&nbsp;3 to&nbsp;5 can be encapsulate by a wrapper around the objective function.
 This reduces a lot of potential programming mistakes and makes the code much shorter.
@@ -113,16 +108,7 @@ Actually, if we would have infinite time for each run (instead of three minutes)
 The variance would become zero and the mean, median, and best solution would all converge to this global optimum.
 Alas, we only have three minutes, so we are still far from this goal.
 
-|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
-|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|`1rs`|1131|1334|1326|106|**0**s|**1**|
-|||`rs`|**895**|**945**|**948**|**12**|77s|8'246'019|
-|`la24`|935|`1rs`|1487|1842|1814|165|**0**s|**1**|
-|||`rs`|**1154**|**1206**|**1207**|**15**|81s|17'287'329|
-|`swv15`|2885|`1rs`|5935|6600|6563|346|**0**s|**1**|
-|||`rs`|**4988**|**5165**|**5174**|**49**|85s|5'525'082|
-|`yn4`|929|`1rs`|1754|2036|2039|125|**0**s|**1**|
-|||`rs`|**1459**|**1496**|**1498**|**15**|83s|6'549'694|
+\relative.input{jssp_rs_results.md}
 
 : The results of the single random sample algorithm&nbsp;`1rs` and the random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:randomSamplingJSSP}
 
