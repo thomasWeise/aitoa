@@ -1,4 +1,4 @@
-|$\inst.id$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
+|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
 |:-:|--:|:--|--:|--:|--:|--:|--:|--:|
 |`abz7`|656|`1rs`|``1rs``|1131|1334|1326|106|**0s**|**1**|
 |||`rs`|``rs``|**895**|**947**|**949**|**12**|85s|6'512'505|
