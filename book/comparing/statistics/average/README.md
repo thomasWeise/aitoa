@@ -41,9 +41,9 @@ Its appearance has led to a complete change in the average computed based on the
 ![Illustrative example for outliers in our JSSP experiment: sometimes the first function evaluation takes unusually long, although this did not have an impact on the end result.](\relative.path{outlier_first_fe_time.svgz}){#fig:outlier_first_fe_time width=80%}
 
 We often call such odd values outliers&nbsp;[@G1969PFDOOIS; @M1992ITE].
-They may be important, real data, e.g., represent some unusual side-effect in a clinical trial of a new medicine.
+They may be important information, e.g., represent some unusual side-effect in a clinical trial of a new medicine.
 However, they also often represent measurement errors or observations which have been been disturbed by unusual effects.
-In our experiments on the JSSP, for instance, a run with surprisingly bad performance may occur when, for whatever reason, the operating system was busy with other things (e.g., updating itself) during the run and thus took away much of the 3&nbsp;minute computation budget.
+In our experiments on the JSSP, for instance, a run with surprisingly bad performance may occur when, for whatever reason, the operating system was busy with other things (e.g., updating itself) during the run and thus took away much of the three minutes of computational budget.
 [@fig:outlier_first_fe_time] illustrates that this situation may be possible in our JSSP experiment.
 On rare occasions, the time needed for creating and evaluating the first candidate solution was much longer than usual.
 This may have been caused by some management procedures inside the Java Virtual Machine executing our experiments.
@@ -65,7 +65,14 @@ Thus, the result distribution might be skewed, too.
 
 #### Summary
 
-Take-away message: It makes sense to prefer the median over the mean, because:
+Both the arithmetic mean and median carry useful information.
+The median tells us about the values we are most likely to encounter if we perform an experiment and is robust against outliers and unusual behaviors.
+The mean tells us about the average performance if we perform the experiment many times.
+It also incorporates information about odd, rarely occurring situations.
+If the outcome in such situations is bad, then it is good having this information.
+If the rare outcomes that skew the mean are surprisingly good, however, this may mislead us into believing that the algorithm performs better than what it actually does.
+
+In summary, it often makes sense to prefer the median over the mean, because:
 
 - The median it is a more robust against outliers than the arithmetic mean.
 - The arithmetic mean is useful especially for symmetric distributions while it does not really represent an intuitive average for skewed distributions while the median is, per definition, suitable for both kinds of distributions.
@@ -77,4 +84,8 @@ I thus could always pick a candidate solution of median quality for illustration
 There is no guarantee whatsoever that a solution of mean quality exists in an experiment.
 
 It should be noted that it is very common in literature to report arithmetic means of results.
-While I personally think we should emphasize reporting medians over means, I suggest to report both to be on the safe side &ndash; as we did in our JSSP experiments.
+While I personally think we should emphasize reporting medians over means, if we need to pick one.
+But there is no need to just pick one:
+I suggest to report both to be on the safe side &ndash; as we did in our JSSP experiments.
+Indeed, personally, the maybe best idea would be to consider both the mean and median value and then take the worst of the two.
+This should provide a conservative and robust outlook on algorithm performance. 

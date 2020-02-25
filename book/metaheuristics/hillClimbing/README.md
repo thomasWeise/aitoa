@@ -4,8 +4,11 @@ Our first algorithm, random sampling, was not very efficient.
 It does not make any use of the information it "sees" during the optimization process.
 Each search step consists of creating an entirely new, entirely random candidate solution.
 Each search step is thus independent of all prior steps.
+If the problem that we try to solve is entirely without structure, then this is already the best we can do.
+But our JSSP problem is not without structure.
+Actually, most reasonable optimization problems have a lot of structure &ndash; and we should try to somehow make use of the information gained from sampling candidate solutions.
 
-Local search algorithms&nbsp;[@HS2005SLSFAA; @WGOEB] offer an alternative.
+Local search algorithms&nbsp;[@HS2005SLSFAA; @WGOEB] offer one idea to do that.
 They remember the current best point&nbsp;$\bestSoFar{\sespel}$ in the search space&nbsp;$\searchSpace$.
 In every step, a local search algorithm investigates a point&nbsp;$\sespel$ similar to&nbsp;$\bestSoFar{\sespel}$.
 If it is better, it is accepted as the new best-so-far solution.
@@ -14,7 +17,8 @@ Otherwise, it is discarded.
 \text.block{definition}{causality}{Causality means that small changes in the features of an object (or candidate solution) also lead to small changes in its behavior (or objective value).}
 
 Local search exploits a property of many optimization problems called *causality*&nbsp;[@R1973ES; @R1994ES; @WCT2012EOPABT; @WZCN2009WIOD].
-The idea is that if we have a good candidate solution, then there may exist similar solutions which are better.
+If we have two points in the search space that only differ a tiny bit, then they likely map to similar schedules, which, in turn, likely have similar makespans.
+This means that if we have a good candidate solution, then there may exist similar solutions which are better.
 We hope to find one of them and then continue trying to do the same from there.
 
 ### Ingredient: Unary Search Operation for the JSSP {#sec:hillClimbingJssp1Swap}
