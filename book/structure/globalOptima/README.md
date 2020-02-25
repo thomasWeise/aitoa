@@ -1,4 +1,4 @@
-## Global Optima and Lower Quality Bounds
+## Global Optima and the Lower Bound of the Objective Function
 
 We now know the three key-components of an optimization problem.
 We are looking for a candidate solution&nbsp;$\globalOptimum{\solspel}\in\solutionSpace$ that has the best objective value&nbsp;$\objf(\globalOptimum{\solspel})$ for a given problem instance&nbsp;$\instance$.
@@ -35,7 +35,7 @@ Developing a good (meta-)heuristic algorithm, which cannot provide guaranteed op
 If we apply an approximation algorithm, then we do not have the guarantee that the solution we get is optimal.
 We often do not even know if the best solution we currently have is optimal or not.
 In some cases, we be able to compute a *lower bound*&nbsp;$\lowerBound(\objf)$ for the objective value of an optimal solution, i.e., we know "It is not possible that any solution can have a quality better than $\lowerBound(\objf)$, but we may not know whether a solution actually exists that has quality&nbsp;$\lowerBound(\objf)$."
-This is not useful for solving the problem, but it can tell us whether our method for solving the problem is good.
+This is not directly useful for solving the problem, but it can tell us whether our method for solving the problem is good.
 For instance, if we have developed an algorithm for approximately solving a given problem and we *know* that the qualities of the solutions we get are close to a the lower bound, then we know that our algorithm is good.
 We then know that improving the result quality of the algorithm may be hard, maybe even impossible, and probably not worthwhile.
 However, if we cannot produce solutions as good as or close to the lower quality bound, this does not necessarily mean that our algorithm is bad.
@@ -57,19 +57,25 @@ For instance, we know that a job&nbsp;$\jsspJobIndex$ needs at least as long to 
 It is clear that no schedule can complete faster then the longest job.
 Furthermore, we know that the makespan of the optimal schedule also cannot be shorter than the latest "finishing time" of any machine&nbsp;$\jsspMachineIndex$.
 This finishing time is at least as big as the sum&nbsp;$\jsspMachineRuntime{\jsspMachineIndex}$ of the runtimes of all the sub-jobs assigned to this machine.
-But it may also include a least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$, namely if the sub-jobs for machine&nbsp;$\jsspMachineIndex$ never come first in their job.
+But it may also include a least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$:
+If the sub-jobs for machine&nbsp;$\jsspMachineIndex$ never come first in their job, then for each job, we need to sum up the runtimes of the sub-jobs coming before the one on machine&nbsp;$\machineIndex$.
+The least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$ is then the smallest of these sums.
 Similarly, there is a least idle time&nbsp;$\jsspMachineEndIdle{\jsspMachineIndex}$ at the end if these sub-jobs never come last in their job.
 As lower bound for the fastest schedule that could theoretically exist, we therefore get:
 
 $$ \lowerBound(\objf) = \max\left\{\max_{\jsspJobIndex}\left\{ \sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\right\} \;,\; \max_{\jsspMachineIndex} \left\{ \jsspMachineStartIdle{\jsspMachineIndex}+\jsspMachineRuntime{\jsspMachineIndex} +\jsspMachineEndIdle{\jsspMachineIndex}\right\}\right\} $$ {#eq:jsspLowerBound}
 
 More details are given in [@sec:appendix:jssp:lowerBounds] and [@T199BFBSP].
+Often, we may not have such lower bounds, but it does never hurt to think about them, because it will provide us with some more understanding about the nature of the problem we are trying to solve.
 
-Of course, we cannot know whether a schedule exists that can achieve this lower bound makespan.
+Even if we have a lower bound for the objective function, we can usually not know whether any solution of that quality actually exists.
+In other words, we do not know whether it is actually possible to find a schedule whose makespan equals the lower bound.
 There simply may not be any way to arrange the jobs such that no sub-job stalls any other sub-job.
-This is why the value&nbsp;$\lowerBound(\objf)$ is a lower bound: we know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
+This is why the value&nbsp;$\lowerBound(\objf)$ is called lower bound:
+We know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
 
 However, if our algorithms produce solutions with a quality close to&nbsp;$\lowerBound(\objf)$, we know that we are doing well.
+Also, if we would actually find a solution with that makespan, then we would know that we have perfectly solved the problem.
 The lower bounds for the makespans of our example problems are illustrated in [@tbl:jsspLowerBoundsTable].
 
 |name|$\jsspJobs$|$\jsspMachines$|$\lowerBound(\objf)$|$\lowerBound(\objf)^{\star}$|source for&nbsp;$\lowerBound(\objf)^{\star}$

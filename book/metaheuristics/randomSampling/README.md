@@ -10,7 +10,7 @@ We know
 The only question left for us to answer is how to "create" a point&nbsp;$\sespel$ in the search space.
 We can then apply&nbsp;$\repMap(\sespel)$ and get a candidate solution&nbsp;$\solspel$ whose quality we can assess via&nbsp;$\objf(\solspel)$.
 Let us look at the problem as a black box ([@sec:blackbox]).
-In other words, we do not really know what "makes" a candidate solution good.
+In other words, we do not really know structures and features "make" a candidate solution good.
 Hence, we do not know how to "create" a good solution either.
 Then the best we can do is just create the solutions randomly.
 
@@ -24,7 +24,7 @@ We then randomly shuffle `dest` by applying the Fisher–Yates shuffle algorithm
 
 \repo.listing{lst:JSSPNullaryOperator}{An excerpt of the implementation of the nullary search operation interface [@lst:INullarySearchOperator] for the JSSP, which will create one random point in the search space.}{java}{src/main/java/aitoa/examples/jssp/JSSPNullaryOperator.java}{}{relevant}
 
-By calling the `apply` method of our implemented operator, it will create one random point in the search space.
+The `apply` method of our implemented operator creates one random point in the JSSP search space.
 We can then pass this point through the representation mapping that we already implemented in [@lst:JSSPRepresentationMapping] and get a Gantt diagram.
 Easily we then obtain the quality, i.e., makespan, of this candidate solution as the right-most edge of any an job assignment in the diagram, as defined in [@sec:jsspObjectiveFunction].
 
@@ -52,12 +52,13 @@ We therefore execute our program 101&nbsp;times and the results are summarized i
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_1rs_med.svgz}){#fig:jssp_gantt_1rs_med width=84%}
 
-What we can find in [@tbl:singleRandomSampleJSSP] is that the makespan of the best solution that any of the 101&nbsp;runs has delivered for each of the four JSSP instances is between 60% and 100% longer than the lower bound.
+What we can find in [@tbl:singleRandomSampleJSSP] is that the makespan of the best solution that any of the 101&nbsp;runs has delivered for each of the four JSSP instances is roughly between 60% and 100% longer than the lower bound.
 The arithmetic mean and median of the solution qualities are even between 10% and 20% worse.
 In the Gantt charts of the median solutions depicted in [@fig:jssp_gantt_1rs_med], we can find big gaps between the sub-jobs.
+
 This is completely reasonable.
 After all, we just create a single random solution.
-We can hardly assume that doing all jobs of a JSSP in a random order would even be good idea.
+We can hardly assume that doing all jobs of a JSSP in a random order would be good idea.
 
 But we also notice more.
 The median time&nbsp;*t(med)* until the runs stop improving is approximately&nbsp;0s.
@@ -90,7 +91,7 @@ The algorithm can be described as follows:
 6. If the termination criterion is not met, return to point&nbsp;1.
 7. Return the best-so-far objective value and the best solution to the user.
 
-In actual program code, points&nbsp;3 to&nbsp;5 can be encapsulate by a wrapper around the objective function.
+In actual program code, points&nbsp;3 to&nbsp;5 can again be encapsulate by a wrapper around the objective function.
 This reduces a lot of potential programming mistakes and makes the code much shorter.
 This is what we did with the implementations of the black-box process interface `IBlackBoxProcess` given in [@lst:IBlackBoxProcess].
 
@@ -104,6 +105,7 @@ Matter of fact, each run of our&nbsp;`rs` algorithm can create and test several 
 By remembering the best of millions of created solutions, what we effectively do is we exploit the variance of the quality of the random solutions.
 As a result, the standard deviation of the results becomes lower.
 This means that this algorithm has a more reliable performance, we are more likely to get results close to the mean or median performance when we use&nbsp;`rs` compared to&nbsp;`1rs`.
+
 Actually, if we would have infinite time for each run (instead of three minutes), then each run would eventually guess the optimal solutions.
 The variance would become zero and the mean, median, and best solution would all converge to this global optimum.
 Alas, we only have three minutes, so we are still far from this goal.

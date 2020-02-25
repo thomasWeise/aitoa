@@ -50,7 +50,7 @@ Side note: An implementation of `map` will overwrite whatever contents were stor
 
 In our JSSP example, we have developed the class `JSSPCandidateSolution` given in [@lst:JSSPCandidateSolution] to represent the data of a Gantt chart (candidate solution).
 It can easily be interpreted by the user and we have defined a suitable objective function for it in [@lst:JSSPMakespanObjectiveFunction].
-Yet, it is not that clear how we can efficiently create such solutions, especially feasible ones, let alone how to *search* in the space of Gantt charts.^[Of course, there are many algorithms that can do that and we could discover one if we think about it for a bit, but here we take the educational route where we investigate the full scenario with $\searchSpace\neq\solutionSpace$.]
+Yet, it is not that clear how we can efficiently create such solutions, especially feasible ones, let alone how to *search* in the space of Gantt charts.^[Of course, there are many algorithms that can do that and we could discover one if we would seriously think about it, but here we take the educational route where we investigate the full scenario with $\searchSpace\neq\solutionSpace$.]
 What we would like to have is a *search space*&nbsp;$\searchSpace$, which can represent the possible candidate solutions of the problem in a more machine-tangible, algorithm-friendly way.
 While comprehensive overviews about different such search spaces for the JSSP can be found in [@CGT1996ATSOJSSPUGAIR;@W2013GAFSSPAS;@A2010RIGAFTJSPACS;@YN1997GAFJSSP], we here develop only one single idea which I find particularly appealing. 
 

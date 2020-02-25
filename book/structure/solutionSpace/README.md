@@ -68,7 +68,7 @@ If we allow arbitrary useless waiting times between jobs, then we could create a
 Let us therefore assume that no time is wasted by waiting unnecessarily.
 
 There are&nbsp;$\jsspJobs!=\prod_{\jsspJobIndex=1}^{\jsspJobs} \jsspJobIndex$ possible ways to arrange $\jsspJobs$&nbsp;jobs on one machine.
-$\jsspJobs!$, called the factorial of&nbsp;$\jsspJobs$, is the number of different [permutations](http://en.wikipedia.org/wiki/Permutation) (or orderings) of&nbsp;$\jsspJobs$ objects.
+$\jsspJobs!$, called the factorial of&nbsp;$\jsspJobs$, is the number of different permutations (or orderings) of&nbsp;$\jsspJobs$ objects.
 If we have three jobs $a$, $b$, and $c$, then there are $3!=1*2*3=6$ possible permutations, namely $(a,b,c)$, $(a,c,b)$, $(b,a,c)$, $(b, c, a)$, $(c, a, b)$, and $(c, b, a)$.
 Each permutation would equal one possible sequence in which we can process the jobs on *one* machine.
 If we have three jobs and one machine, then six is the number of possible different Gantt charts that do not waste time.

@@ -23,6 +23,8 @@ Whether, which, and how such such operators are used depends on the nature of th
 
 Search operators are often *randomized*, which means invoking the same operator with the same input multiple times may yield different results.
 This is why [@lst:INullarySearchOperator;@lst:IUnarySearchOperator;@lst:IBinarySearchOperator] all accept an instance of [`java.util.Random`](http://docs.oracle.com/javase/8/docs/api/java/util/Random.html), a pseudorandom number generator.
+
+Operators that take existing points in the search space as input tend to sample new points which, in some sort, are similar to their inputs.
 They allow us to define proximity-based relationships over the search space, such as the common concept of neighborhoods.
 
 \text.block{definition}{neighborhood}{A unary operator&nbsp;$\searchOp:\searchSpace\mapsto\searchSpace$ defines a *neighborhood* relationship over a search space where a point&nbsp;$\sespel_1\in\searchSpace$ is called a *neighbor* of a point&nbsp;$\sespel_2\in\searchSpace$ are called neighbors if and only if&nbsp;$\sespel_1$ could be the result of an application of&nbsp;$\searchOp$ to&nbsp;$\sespel_2$.}

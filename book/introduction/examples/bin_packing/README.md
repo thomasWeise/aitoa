@@ -10,7 +10,7 @@ If you need to fill the container four times, then you have to drive back and fo
 
 ![A sketch illustrating a packing problem.](\relative.path{packing.svgz}){#fig:packing width=70%}
 
-Such bin packing problems exist in many variants and are very related to [cutting stock problems](https://en.wikipedia.org/wiki/Cutting_stock_problem)&nbsp;[@DF1992CAPIPADATAB].
+Such bin packing problems exist in many variants and are very related to cutting stock problems&nbsp;[@DF1992CAPIPADATAB].
 They can be one-dimensional&nbsp;[@DIM2016BPACSPMMAEA], for example if we want to transport dense/heavy objects with a truck where the maximum load weight is limiting factor while there is enough space capacity.
 This is similar to having a company which puts network cables into people's homes and therefore bulk purchases reels with 100m of cables each.
 Of course, each home needs a different required total length of cables and we want to cut our cables such that we need as few reels as possible.
