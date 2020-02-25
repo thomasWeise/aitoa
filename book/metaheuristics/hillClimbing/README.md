@@ -121,9 +121,9 @@ The Gantt charts of the median solutions of `hc_1swap` are illustrated in [@fig:
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`hc_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hc_1swap_med.svgz}){#fig:jssp_gantt_hc_1swap_med width=84%}
 
-![The progress of the&nbsp;`hc_1swap` and&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_rs_hc_1swap_log.svgz}){#fig:jssp_progress_rs_hc_1swap_log width=84%}
+![The progress of the&nbsp;`hc_1swap` and&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hc_1swap_log.svgz}){#fig:jssp_progress_hc_1swap_log width=84%}
 
-[@fig:jssp_progress_rs_hc_1swap_log] shows how both&nbsp;`hc_1swap` and&nbsp;`rs` progress over time.
+[@fig:jssp_progress_hc_1swap_log] shows how both&nbsp;`hc_1swap` and&nbsp;`rs` progress over time.
 It should be noted that I designed the experiments in such a way that there were 101 different initial solutions and the runs of the hill climber and random sampling started *at the same points*.
 On the logarithmically scaled plots, this is almost invisible.
 The runs of the two different algorithms separate almost immediately.
@@ -153,7 +153,7 @@ Of course, we will remember the **best ever encountered** candidate solution ove
 
 #### The Algorithm {#sec:hillClimberWithRestartAlgo}
 
-1. Set counter&nbsp;$C$ of unsuccessful search steps to&nbsp;$0$, initialize limit&nbsp;$L$ for the maximally allowed unsuccessful search steps.
+1. Set counter&nbsp;$C$ of unsuccessful search steps to&nbsp;$0$.
 2. Set the overall-best objective value&nbsp;$\obspel_B$ to infinity and the overall-best candidate solution&nbsp;$\solspel_B$ to `NULL`. 
 3. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
 4. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.

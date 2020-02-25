@@ -130,14 +130,14 @@ Another new feature of our&nbsp;`rs` algorithm is that it truly is an Anytime Al
 It begins with an entirely random solution and tries to find better solutions as time goes by.
 Let us take a look at [@fig:jssp_progress_rs_log], which illustrates how the solution quality of the runs improves over time.
 At first glance, this figure looks quite nice.
-For each of the four problem instances we investigate, our algorithms steadily and nicely improve the solution quality.
+For each of the four problem instances we investigate, our algorithm steadily and nicely improves the solution quality.
 Each single line (one per run) keeps slowly going down, which means that the makespan (objective value) of its best-so-far solution decreases steadily.
 
 However, upon closer inspection, we notice that the time axes in the plots are logarithmically scaled.
 The first of the equally-spaces axis tick marks is at 1s, the second one at 10s, the third one at 100s, and so on.
 The progress curves plotted over these logarithmically scaled axes seem to progress more or less like straight linear lines, maybe even slower.
 A linear progress over a logarithmic time scale could mean, for instance, that we may make the same improvements in the time intervals $1s\dots 9s$, $10s\dots 99s$, $100s\dots 999s$, and so on.
-In other words: We are getting slower and slower.
+In other words, the algorithm improves the solution quality slower and slower.
 
 This is the first time we witness a manifestation of a very basic law in optimization.
 When trying to solve a problem, we need to invest resources, be it software development effort, research effort, computational budget, or expenditure for hardware, etc.
@@ -148,9 +148,10 @@ This is exactly the *Law of Diminishing Returns*&nbsp;[@SN2001M] known from the 
 
 And this makes a lot of sense here.
 On one hand, the maximal possible improvement of the solution quality is bounded by the global optimum &ndash; once we have obtained it, we cannot improve the quality further, even if we invest infinitely much of an resource.
-On the other hand, in most practical problems, the amount of solutions that have a certain quality gets smaller and smaller, the closer said quality is to the optimal one.
+On the other hand, in most practical problems, the amount of solutions that have a certain quality gets the smaller the closer said quality is to the optimal one.
 This is actually what we see in [@fig:jssp_progress_rs_log]: The chance of randomly guessing a solution of quality&nbsp;$F$ becomes the smaller the better (smaller)&nbsp;$F$ is.
 
 From the diagrams we can also see that random sampling is not a good method to solve the JSSP.
 It will not matter very much if we have three minutes, six minutes, or one hour.
-In the end, the improvements we would get by investing more time would probably become smaller and smaller. 
+In the end, the improvements we would get by investing more time would probably become smaller and the amount of time we need to invest to get any improvement would keep to increase.
+The fact that random sampling can be parallelized perfectly does not help much here, as we would need to provide an exponentially increasing number of processors to keep improving the solution quality. 

@@ -18,7 +18,7 @@ If we want to break down performance to single-valued performance indicators, th
 
 We illustrate these two options, which corresponds to define vertical and horizontal cuts through the progress diagrams, respectively, in [@fig:performance_indicators_cuts].
 
-![Illustration of the two basic forms to measure performance from raw data, based on a fraction of the actual experimental results illustrated in [@fig:jssp_progress_rs_hc_1swap_log] and inspired by&nbsp;[@HAFR2010RPBBOB2ES; @FHRA2015CDR1].](\relative.path{performance_indicators_cuts.svgz}){#fig:performance_indicators_cuts width=84%}
+![Illustration of the two basic forms to measure performance from raw data, based on a fraction of the actual experimental results illustrated in [@fig:jssp_progress_hc_1swap_log] and inspired by&nbsp;[@HAFR2010RPBBOB2ES; @FHRA2015CDR1].](\relative.path{performance_indicators_cuts.svgz}){#fig:performance_indicators_cuts width=84%}
 
 ### Vertical Cuts: Best Solution Quality Reached within Given Time
 
