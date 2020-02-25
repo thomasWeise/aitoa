@@ -22,7 +22,7 @@ This has several *advantages*:
 - If you want to publish your own work, you should report the runtime that your implementation of your algorithm needs as well.
 - If we measure the runtime of your algorithm implementation, it will include everything that the code you are executing does.
 If your code loads files, allocates data structures, or does complicated calculations &ndash; everything will be included in the measurement.
-- If we can [parallelize](http://en.wikipedia.org/wiki/Parallel_computing) or even [distribute](http://en.wikipedia.org/wiki/Distributed_computing) our algorithms, clock time measurements still make sense.
+- If we can parallelize or even distribute our algorithms, clock time measurements still make sense.
 
 But reporting the clock time consumed by an algorithm implementation also has *disadvantages*:
 
@@ -56,8 +56,8 @@ If we re-implement an algorithm published 50 years ago, it should still consume 
 - If you want to publish your research work, you should probably report the consumed FEs as well. 
 - In many optimization processes, the steps included in an FE are the most time consuming ones.
 Then, the actual consumed runtime is proportional to the consumed FEs and "performing more FEs" roughly equals to "needing more runtime."
-- Measured FEs are something like an empirical, simplified version of algorithmic [time complexity](http://en.wikipedia.org/wiki/Time_complexity).
-FEs are inherently close to theoretical computer science, roughly equivalent to "algorithm steps," which are the basis for [theoretical runtime analysis](http://en.wikipedia.org/wiki/Analysis_of_algorithms).
+- Measured FEs are something like an empirical, simplified version of algorithmic time complexity.
+FEs are inherently close to theoretical computer science, roughly equivalent to "algorithm steps," which are the basis for theoretical runtime analysis.
 For example, researchers who are good at Maths can go an derive things like bounds for the "expected number of FEs" to solve a problem for certain problems and certain algorithms.
 Doing this with clock time would neither be possible nor make sense.
 But with FEs, it can sometimes be possible to compare experimental with theoretical results.
@@ -70,7 +70,7 @@ For instance, an algorithm could necessitate a lengthy pre-processing procedure 
 This would not be visible in the FE counter, because, well, it is not an FE.
 The same holds for the selection step in an Evolutionary Algorithm (realized as sorting in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo]).
 Although this is probably a very fast procedure, it will be outside of what we can measure with FEs. 
-- A big problem is that one function evaluation can have extremely different actual time requirements and [algorithmic complexity](http://en.wikipedia.org/wiki/Analysis_of_algorithms#Orders_of_growth) in different algorithms.
+- A big problem is that one function evaluation can have extremely different actual time requirements and algorithmic complexity in different algorithms.
 For instance, it is known that in a Traveling Salesman Problem&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV] with $n$&nbsp;cities, some algorithms can create an evaluate a new candidate solution from an existing one within a *constant* number of steps, i.e., in&nbsp;$\bigO{1}$, while others need a number of steps growing quadratically with&nbsp;$n$, i.e., are in&nbsp;$\bigO{n^2}$&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP].
 If an algorithm of the former type can achieve the same quality as an algorithm of the latter type, we could consider it as better even if it would need ten times as many FEs.
 Hence, FEs are only fair measurements for comparing two algorithms if they take approximately the same time in both of them.

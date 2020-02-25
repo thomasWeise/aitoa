@@ -27,7 +27,7 @@ We will partially sacrifice the formal and abstract structure of&nbsp;[@WGOEB] a
 }
 ```
 
-We use concrete examples and algorithm implementations written in [Java](http://en.wikipedia.org/wiki/Java_(programming_language)).
+We use concrete examples and algorithm implementations written in Java.
 All source code is freely available in the repository *[thomasWeise/aitoa-code](\repo.name)* on [GitHub](http://www.github.com).
 Often, we will just look at certain portions of the code, maybe parts of a class, where we omit methods or member variables, or even just snippets from functions.
 Each source code listing is accompanied by a *(src)* link in the caption linking to the current full version of the file in the GitHub repository.

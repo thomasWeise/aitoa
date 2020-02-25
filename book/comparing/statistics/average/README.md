@@ -1,16 +1,16 @@
 ### Averages: Arithmetic Mean vs. Median
 
 Assume that we have obtained a sample&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ of $n$&nbsp;observations from an experiment, e.g., we have measured the quality of the best discovered solutions of 101 independent runs of an optimization algorithm.
-We usually want to get reduce this set of numbers to a single value which can give us an impression of what the "[average](http://en.wikipedia.org/wiki/Average) outcome" (or result quality is).
+We usually want to get reduce this set of numbers to a single value which can give us an impression of what the "average outcome" (or result quality is).
 Two of the most common options for doing so, for estimating the "center" of a distribution, are to either compute the *arithmetic mean* or the *median*.
 
 #### Mean and Median
 
-\text.block{definition}{arithmeticMean}{The [arithmetic mean](http://en.wikipedia.org/wiki/Arithmetic_mean) $\mean(A)$ is an estimate of the [expected value](http://en.wikipedia.org/wiki/Expected_value) of a data sample $A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$. It is computed as the sum of all&nbsp;$n$ elements&nbsp;$\arrayIndex{a}{i}$ in the sample data&nbsp;$A$ divided by the total number&nbsp;$n$ of values.}
+\text.block{definition}{arithmeticMean}{The arithmetic mean $\mean(A)$ is an estimate of the [expected value](http://en.wikipedia.org/wiki/Expected_value) of a data sample $A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$. It is computed as the sum of all&nbsp;$n$ elements&nbsp;$\arrayIndex{a}{i}$ in the sample data&nbsp;$A$ divided by the total number&nbsp;$n$ of values.}
 
 $$ \mean(A) = \frac{1}{n} \sum_{i=0}^{n-1} \arrayIndex{a}{i} $$
  
-\text.block{definition}{median}{The [median](http://en.wikipedia.org/wiki/Median) $\median(A)$ is the value separating the bigger half from the lower half of a data sample or distribution. It is the value right in the middle of a *sorted* data sample $A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ where $\arrayIndex{a}{i-1}\leq \arrayIndex{a}{i} \; \forall i \in 1\dots (n-1)$.}
+\text.block{definition}{median}{The median $\median(A)$ is the value separating the bigger half from the lower half of a data sample or distribution. It is the value right in the middle of a *sorted* data sample $A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ where $\arrayIndex{a}{i-1}\leq \arrayIndex{a}{i} \; \forall i \in 1\dots (n-1)$.}
 
 $$ \median(A) = \left\{\begin{array}{ll}
 \arrayIndex{a}{\frac{n-1}{2}} & \text{if }n\text{ is odd}\\
@@ -40,7 +40,7 @@ Its appearance has led to a complete change in the average computed based on the
 
 ![Illustrative example for outliers in our JSSP experiment: sometimes the first function evaluation takes unusually long, although this did not have an impact on the end result.](\relative.path{outlier_first_fe_time.svgz}){#fig:outlier_first_fe_time width=80%}
 
-We often call such odd values [outliers](http://en.wikipedia.org/wiki/Outlier)&nbsp;[@G1969PFDOOIS; @M1992ITE].
+We often call such odd values outliers&nbsp;[@G1969PFDOOIS; @M1992ITE].
 They may be important, real data, e.g., represent some unusual side-effect in a clinical trial of a new medicine.
 However, they also often represent measurement errors or observations which have been been disturbed by unusual effects.
 In our experiments on the JSSP, for instance, a run with surprisingly bad performance may occur when, for whatever reason, the operating system was busy with other things (e.g., updating itself) during the run and thus took away much of the 3&nbsp;minute computation budget.
@@ -67,8 +67,8 @@ Thus, the result distribution might be skewed, too.
 
 Take-away message: It makes sense to prefer the median over the mean, because:
 
-- The median it is a more [robust](http://en.wikipedia.org/wiki/Robust_statistics) against outliers than the arithmetic mean.
-- The arithmetic mean is useful especially for symmetric distributions while it does not really represent an intuitive average for [skewed distributions](http://en.wikipedia.org/wiki/Skewness) while the median is, per definition, suitable for both kinds of distributions.
+- The median it is a more robust against outliers than the arithmetic mean.
+- The arithmetic mean is useful especially for symmetric distributions while it does not really represent an intuitive average for skewed distributions while the median is, per definition, suitable for both kinds of distributions.
 - Median values are either actually measured outcomes (if we have an odd number of observations) or are usually very close to such (if we have an even number of observations), while arithmetic means may not be similar to any measurement.
 
 The later point is obvious in our example above: $\mean(B)=533$ is far away from any of the actual samples in&nbsp;$B$.

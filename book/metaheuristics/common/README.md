@@ -6,7 +6,7 @@ Before we delve into our first algorithms, let us first take a look on some thin
 
 \text.block{definition}{anytimeAlgorithm}{An *anytime algorithm* is an algorithm which can produce an approximate result during almost any time of its execution.}
 
-All metaheuristics &ndash; and many other optimization and machine learning methods &ndash; are [anytime algorithms](http://en.wikipedia.org/wiki/Anytime_algorithm)&nbsp;[@BD1989STDPP2].
+All metaheuristics &ndash; and many other optimization and machine learning methods &ndash; are anytime algorithms&nbsp;[@BD1989STDPP2].
 The idea behind anytime algorithms is that they start with (potentially bad) guess about what a good solution would be.
 During their course, they try to improve their approximation quality, by trying to produce better and better candidate solutions.
 At any point in time, we can extract the current best guess about the optimum.
@@ -25,7 +25,7 @@ Its value is returned when the algorithm stops.
 
 Often, metaheuristics make randomized choices.
 In cases where it is not clear whether doing "A" or doing "B" is better, it makes sense to simply flip a coin and do "A" if it is heads and "B" if it is tails.
-That our search operator interfaces in [@lst:INullarySearchOperator;@lst:IUnarySearchOperator;@lst:IBinarySearchOperator] all accept a [pseudorandom number generator](http://en.wikipedia.org/wiki/Pseudorandom_number_generator) as parameter is one manifestation of this issue.
+That our search operator interfaces in [@lst:INullarySearchOperator;@lst:IUnarySearchOperator;@lst:IBinarySearchOperator] all accept a pseudorandom number generator as parameter is one manifestation of this issue.
 Random number generators are objects which provide functions that can return numbers from certain ranges, say from $[0,1)$ or an integer interval.
 Whenever we call such a function, it may return any value from the allowed range, but we do not know which one it will be.
 Also, the returned value should be independent from those returned before, i.e., from known the past random numbers, we should *not* be able to guess the next one.
@@ -56,7 +56,7 @@ We first need to consider what an optimization needs as input.
 Obviously, in the most common case, these are all the items we have discussed in the previous section, ranging from the termination criterion over the search operators and the representation mapping to the objective function.
 Let us therefore define an interface that can provide all these components with corresponding "getter methods".
 We call this interface `IBlackBoxProcess<X,Y>` from which an excerpt is given in [@lst:IBlackBoxProcess].
-It is [generic](http://en.wikipedia.org/wiki/Generics_in_Java), meaning it allows us to provide a search space&nbsp;$\searchSpace$ as type parameter&nbsp;`X` and a solution space&nbsp;$\solutionSpace$ via the type parameter&nbsp;`Y`.
+It is generic, meaning it allows us to provide a search space&nbsp;$\searchSpace$ as type parameter&nbsp;`X` and a solution space&nbsp;$\solutionSpace$ via the type parameter&nbsp;`Y`.
 
 \repo.listing{lst:IBlackBoxProcess}{A generic interface for representing black-box processes to an optimization algorithm.}{java}{src/main/java/aitoa/structure/IBlackBoxProcess.java}{}{relevant}
 
@@ -72,7 +72,7 @@ All in all, this interface allows us to
 5. represent a termination criterion based on the above information (e.g., maximum FEs, maximum runtime, reaching a goal objective value), and
 7. log the improvements that the algorithm makes to a text file, so that we can use them to make tables and draw diagrams.
 
-Along with the interface class `IBlackBoxProcess`, we also provide a [builder](http://en.wikipedia.org/wiki/Builder_pattern) for instantiation.
+Along with the interface class `IBlackBoxProcess`, we also provide a builder for instantiation.
 The actual implementation behind this interface does not matter here.
 It is clear what it does, and the actual code is simple and not contributing to the understand of the algorithms or processes.
 Thus, you do not need to bother with it, just the assumption that an object implementing `IBlackBoxProcess` has the abilities listed above shall suffice here.

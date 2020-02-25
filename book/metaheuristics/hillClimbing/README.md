@@ -5,7 +5,7 @@ It does not make any use of the information it "sees" during the optimization pr
 Each search step consists of creating an entirely new, entirely random candidate solution.
 Each search step is thus independent of all prior steps.
 
-[Local search algorithms](http://en.wikipedia.org/wiki/Local_search_(optimization))&nbsp;[@HS2005SLSFAA; @WGOEB] offer an alternative.
+Local search algorithms&nbsp;[@HS2005SLSFAA; @WGOEB] offer an alternative.
 They remember the current best point&nbsp;$\bestSoFar{\sespel}$ in the search space&nbsp;$\searchSpace$.
 In every step, a local search algorithm investigates a point&nbsp;$\sespel$ similar to&nbsp;$\bestSoFar{\sespel}$.
 If it is better, it is accepted as the new best-so-far solution.
@@ -65,7 +65,7 @@ Often, the chance to find a really good solution by iteratively sampling the nei
 
 #### The Algorithm
 
-[Stochastic](http://en.wikipedia.org/wiki/Stochastic_hill_climbing) Hill Climbing](http://en.wikipedia.org/wiki/Hill_climbing)&nbsp;[@RN2002AI; @S2008TADM; @WGOEB] is the simplest implementation of local search.
+Stochastic Hill Climbing&nbsp;[@RN2002AI; @S2008TADM; @WGOEB] is the simplest implementation of local search.
 It is also sometimes called localized random search&nbsp;[@S2003ITSSAO].
 It proceeds as follows:
 
@@ -300,8 +300,8 @@ We will store the job-id originally stored at index&nbsp;$\beta$ at index&nbsp;$
 
 This three-job swap will take place with probability $0.5*0.5=0.25$.
 Similarly, a four-job-swap will happen with half of that probability, and so on.
-In other words, we have something like a [Bernoulli process](http://en.wikipedia.org/wiki/Bernoulli_process), where we decide whether or not to do another iteration by flipping a fair coin, where each choice has probability&nbsp;0.5.
-The number of iterations will therefore be [geometrically distributed](http://en.wikipedia.org/wiki/Geometric_distribution) with an expectation of two job swaps.
+In other words, we have something like a Bernoulli process, where we decide whether or not to do another iteration by flipping a fair coin, where each choice has probability&nbsp;0.5.
+The number of iterations will therefore be geometrically distributed with an expectation of two job swaps.
 Of course, we only have&nbsp;$\jsspMachines$ different job-ids in a finite-length array&nbsp;$\sespel'$, so this is only an approximation.
 Generally, this operator will most often apply small changes and sometimes bigger steps.
 The bigger the search step, the less likely will it be produced.

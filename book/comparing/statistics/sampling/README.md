@@ -2,9 +2,9 @@
 
 One issues we need to clarify first is that there is a difference between a probability distribution and data sample.
 
-\text.block{definition}{probabilityDistribution}{A *[probability distribution](http://en.wikipedia.org/wiki/Probability_distribution)*&nbsp;$F$ is an assignment of probabilities of occurrence to different possible outcomes in an experiment.}
+\text.block{definition}{probabilityDistribution}{A *probability distribution*&nbsp;$F$ is an assignment of probabilities of occurrence to different possible outcomes in an experiment.}
 
-\text.block{definition}{sample}{A *[random sample](http://en.wikipedia.org/wiki/Sample_(statistics))* of length&nbsp;$k\geq 1$ is a set of $k$&nbsp;independent observations of an experiment following a random distribution&nbsp;$F$.}
+\text.block{definition}{sample}{A *random sample* of length&nbsp;$k\geq 1$ is a set of $k$&nbsp;independent observations of an experiment following a random distribution&nbsp;$F$.}
 
 \text.block{definition}{observation}{An *observation* is a measured outcome of an experiment or random variable.}
 
@@ -49,12 +49,12 @@ Think about throwing an ideal dice.
 Each number from one to six has the same probability to occur, i.e., the probability $\frac{1}{6}=0.166\overline{6}$.
 If we throw a dice a single time, we will get one number.
 If we throw it twice, we see two numbers.
-Let&nbsp;$f_i$ be the [relative frequency](http://en.wikipedia.org/wiki/Frequency_(statistics)) of each number in $k=\text{\# throws}$ of the dice, i.e., $f_i=\frac{\text{number of times we got }i}{k}$.
+Let&nbsp;$f_i$ be the relative frequency of each number in $k=\text{\# throws}$ of the dice, i.e., $f_i=\frac{\text{number of times we got }i}{k}$.
 The more often we throw the dice, the more similar should&nbsp;$f_i$ get to&nbsp;$\frac{1}{6}$, as illustrated in [@tbl:diceThrow] for a simulated experiments with of many dice throws.
 
 As can be seen in [@tbl:diceThrow], the first ten or so dice throws tell us very little about the actual probability of each result.
 However, when we throw the dice many times, the observed relative frequencies become more similar to what we expect.
-This is called the [Law of Large Numbers](http://en.wikipedia.org/wiki/Law_of_large_numbers) &ndash; and it holds for the application of optimization algorithms too.
+This is called the Law of Large Numbers &ndash; and it holds for the application of optimization algorithms too.
 
 There are two take-away messages from this section:
 
@@ -62,4 +62,4 @@ There are two take-away messages from this section:
 It is a good rule of thumb to always perform at least 20 independent runs.
 In our experiments on the JSSP, for instance, we did 101 runs per problem instance.
 
-2. We can *[estimate](http://en.wikipedia.org/wiki/Estimation_statistics)* the performance indicators of our algorithms or their implementations via experiments, but we do not know their true value.   
+2. We can *estimate* the performance indicators of our algorithms or their implementations via experiments, but we do not know their true value.   

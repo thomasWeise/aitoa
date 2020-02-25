@@ -42,7 +42,7 @@ The feature that makes optimization problems with more decision variables *much*
 
 ![An illustration of how genes in biology could exhibit epistatic and pleiotropic interactions in an (entirely fictional) dinosaur.](\relative.path{pleiotropy_and_epistasis.svgz}){#fig:pleiotropy_and_epistasis}
 
-In biology, [epistasis](https://en.wikipedia.org/wiki/Epistasis) is defined as a form of interaction between different genes&nbsp;[@P1998TLOGIA].
+In biology, epistasis is defined as a form of interaction between different genes&nbsp;[@P1998TLOGIA].
 The interaction between genes is epistatic if the effect on the fitness of resulting from altering one gene depends on the allelic state of other genes&nbsp;[@L1935PTAIPAIOAABV].
 
 \text.block{definition}{epistasis}{In optimization, *epistasis* is the dependency of the contribution of one decision variable to the value of the objective functions on the value of other decision variables&nbsp;[@WCT2012EOPABT; @WZCN2009WIOD; @D1991EVAVOGH; @A1996NKFL; @NV1996EOFAIS].}
@@ -51,7 +51,7 @@ A representation has minimal epistasis when every decision variable is independe
 Then, the optimization problem is separable and can be solved by finding the best value for each decision variable separately.
 A problem is maximally epistatic (or non-separable&nbsp;[@HRMSA2008PFNSAICP]) when no proper subset of decision variables is independent of any other decision variable&nbsp;[@NV1996EOFAIS].
 
-Another related biological phenomenon is *[pleiotropy](https://en.wikipedia.org/wiki/Pleiotropy)*, which means that a single gene is responsible for multiple phenotypical traits&nbsp;[@H2010EAROEIEC].
+Another related biological phenomenon is *pleiotropy*, which means that a single gene is responsible for multiple phenotypical traits&nbsp;[@H2010EAROEIEC].
 Like epistasis, pleiotropy can sometimes lead to unexpected improvements but often is harmful.
 Both effects are sketched in [@fig:pleiotropy_and_epistasis].
 

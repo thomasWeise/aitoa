@@ -3,15 +3,15 @@
 The average gives us a good impression about the central value or location of a distribution.
 It does not tell us much about the range of the data.
 We do not know whether the data we have measured is very similar to the median or whether it may differ very much from the mean.
-For this, we can compute a measure of [dispersion](http://en.wikipedia.org/wiki/Statistical_dispersion), i.e., a value that tells us whether the observations are stretched and spread far or squeezed tight around the center.
+For this, we can compute a measure of dispersion, i.e., a value that tells us whether the observations are stretched and spread far or squeezed tight around the center.
 
 #### Variance, Standard Deviation, and Quantiles 
 
-\text.block{definition}{variance}{The [variance](http://en.wikipedia.org/wiki/Variance) is the expectation of the squared deviation of a random variable from its mean. The variance&nbsp;$\variance(A)$ of a data sample&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ with $n$&nbsp;observations can be estimated as:}
+\text.block{definition}{variance}{The variance is the expectation of the squared deviation of a random variable from its mean. The variance&nbsp;$\variance(A)$ of a data sample&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ with $n$&nbsp;observations can be estimated as:}
 
 $$ \variance(A) = \frac{1}{n-1} \sum_{i=0}^{n-1} \left(\arrayIndex{a}{i} - \mean(A)\right)^2 $$
 
-\text.block{definition}{standardDeviation}{The statistical estimate&nbsp;$\stddev(A)$ of the [standard deviation](http://en.wikipedia.org/wiki/Standard_deviation) of a data sample&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ with $n$&nbsp;observations is the square root of the estimated variance&nbsp;$\variance(A)$.}
+\text.block{definition}{standardDeviation}{The statistical estimate&nbsp;$\stddev(A)$ of the standard deviation of a data sample&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ with $n$&nbsp;observations is the square root of the estimated variance&nbsp;$\variance(A)$.}
 
 $$ \stddev(A) = \sqrt{\variance(A)} $$
 
@@ -41,7 +41,7 @@ The `R`&nbsp;programming language widely used in statistics applies [@eq:quantil
 In an ideally-sized data sample, the number of elements minus 1, i.e., $n-1$, would be a multiple of $q$.
 In this case, the $k$^th^ cut point would directly be located at index&nbsp;$h=(n-1)\frac{k}{q}$.
 Both in [@eq:quantiles] and in the formula for the median [@eq:median], this is included the first of the two alternative options.
-Otherwise, both [@eq:median] and [@eq:quantiles] [interpolate linearly](http://en.wikipedia.org/wiki/Linear_interpolation) between the elements at the two closest indices, namely $\lfloor h\rfloor$ and $\lfloor h\rfloor + 1$.   
+Otherwise, both [@eq:median] and [@eq:quantiles] interpolate linearly between the elements at the two closest indices, namely $\lfloor h\rfloor$ and $\lfloor h\rfloor + 1$.   
 
 $$\begin{array}{rcl}
 h&=&(n-1)\frac{k}{q}\\ 

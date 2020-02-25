@@ -49,7 +49,7 @@ Later populations are more likely to find better solutions, but require more com
 By parallelizing them, I thus could utilize this power without needed to wait longer.
 
 However, there is a limit to the speed-up we can achieve with either parallelization or distribution.
-[Amdahl's Law](http://en.wikipedia.org/wiki/Amdahl's_law)&nbsp;[@A1967VOTSPATALSCC], in particular with the refinements by Kalfa&nbsp;[@K1988B] shows that we can get at most a sub-linear speed-up.
+Amdahl's Law&nbsp;[@A1967VOTSPATALSCC], in particular with the refinements by Kalfa&nbsp;[@K1988B] shows that we can get at most a sub-linear speed-up.
 On the one hand, only a certain fraction of a program can be parallelized and each parallel block has a minimum required execution time (e.g., a block must take at least as long as one single CPU instruction).
 On the other hand, communication and synchronization between the&nbsp;$\nu$ involved threads or processes is required, and the amount of it grows with their number&nbsp;$\nu$.
 There is a limit value for the number of parallel processes&nbsp;$\nu$ above which no further runtime reduction can be achieved.

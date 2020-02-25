@@ -6,7 +6,7 @@ They will be the most important element of the transition of our industry to sma
 
 ![Examples for applications of optimization, computational intelligence, machine learning techniques in five fields of smart manufacturing: the production itself, the delivery of the products, the management of the production, the products and services, and the sales level.](\relative.path{intelligent_manufacturing.svgz}){#fig:intelligent_manufacturing width=99%}
 
-[Optimization](http://en.wikipedia.org/wiki/Mathematical_optimization) and [Operations Research](http://en.wikipedia.org/wiki/Operations_research) provide us with algorithms that propose good solutions to such a wide range of questions.
+Optimization and Operations Research provide us with algorithms that propose good solutions to such a wide range of questions.
 Usually, it is applied in scenarios where we can choose from many possible options.
 The goal is that the algorithms propose solutions which minimize (at least) one resource requirement, be it costs, energy, space, etc.
 If they can do this well, they also offer another important advantage: Solutions that minimize resource consumption are often not only cheaper from an immediate economic perspective, but also better for the environment, i.e., with respect to ecological considerations.

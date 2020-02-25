@@ -25,7 +25,7 @@ Hence, a candidate solution should tell us what to do, i.e., how to process the 
 
 #### Idea: Gantt Chart {#sec:jssp:gantt}
 
-This is basically what [Gantt chart](http://en.wikipedia.org/wiki/Gantt_chart)&nbsp;[@W2003GCACA; @K2000SORCP] are for, as illustrated in [@fig:gantt_demo_without_makespan].
+This is basically what Gantt chart&nbsp;[@W2003GCACA; @K2000SORCP] are for, as illustrated in [@fig:gantt_demo_without_makespan].
 A Gantt chart defines what each of our&nbsp;$\jsspMachines$ machines has to do at each point in time.
 The sub-jobs of each job are assigned to time windows on their corresponding machines.
 
@@ -68,7 +68,7 @@ If we allow arbitrary useless waiting times between jobs, then we could create a
 Let us therefore assume that no time is wasted by waiting unnecessarily.
 
 There are&nbsp;$\jsspJobs!=\prod_{\jsspJobIndex=1}^{\jsspJobs} \jsspJobIndex$ possible ways to arrange $\jsspJobs$&nbsp;jobs on one machine.
-$\jsspJobs!$, called the [factorial](http://en.wikipedia.org/wiki/Factorial) of&nbsp;$\jsspJobs$, is the number of different [permutations](http://en.wikipedia.org/wiki/Permutation) (or orderings) of&nbsp;$\jsspJobs$ objects.
+$\jsspJobs!$, called the factorial of&nbsp;$\jsspJobs$, is the number of different [permutations](http://en.wikipedia.org/wiki/Permutation) (or orderings) of&nbsp;$\jsspJobs$ objects.
 If we have three jobs $a$, $b$, and $c$, then there are $3!=1*2*3=6$ possible permutations, namely $(a,b,c)$, $(a,c,b)$, $(b,a,c)$, $(b, c, a)$, $(c, a, b)$, and $(c, b, a)$.
 Each permutation would equal one possible sequence in which we can process the jobs on *one* machine.
 If we have three jobs and one machine, then six is the number of possible different Gantt charts that do not waste time.
@@ -102,7 +102,7 @@ Imagine a JSSP with&nbsp;$\jsspJobs=2$ jobs and&nbsp;$\jsspMachines=2$ machines.
 There are&nbsp;$(2!)^2=(1*2)^2=4$ possible Gantt charts.
 Assume that the first job needs to first be processed by machine&nbsp;0 and then by machine&nbsp;1, while the second job first needs to go to machine&nbsp;1 and then to machine&nbsp;0.
 A Gantt chart which assigns the first job first to machine&nbsp;1 and the second job first to machine&nbsp;$0$ cannot be executed in practice, i.e., is *infeasible*, as such an assignment does not honor the precedence constraints of the jobs.
-Instead, it contains a [deadlock](http://en.wikipedia.org/wiki/Deadlock).
+Instead, it contains a deadlock.
 
 ![Two different JSSP instances with&nbsp;$\jsspMachines=2$ machines and&nbsp;$\jsspJobs=2$ jobs, one of which has only three feasible candidate solutions while the other has four.](\relative.path{jssp_feasible_gantt.svgz}){#fig:jssp_feasible_gantt width=90%}
 

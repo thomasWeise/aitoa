@@ -20,7 +20,7 @@ For this purpose, we need to implement the nullary search operation from [@lst:I
 We create a new search operator which needs no input and returns a point in the search space.
 Recall that our representation ([@sec:jsspSearchSpace]) requires that each index&nbsp;$\jsspJobIndex\in 0\dots(\jsspJobs-1)$ of the&nbsp;$\jsspJobs$ must occur exactly&nbsp;$\jsspMachines$ times in the integer array of length&nbsp;$\jsspMachines*\jsspJobs$, where&nbsp;$\jsspMachines$ is the number of machines in the JSSP instance.
 In [@lst:JSSPNullaryOperator], we achieve this by first creating the sequence&nbsp;$(\jsspJobs-1,\jsspJobs-2,\dots,0)$ and then copying it&nbsp;$\jsspMachines$ times in the destination array `dest`.
-We then randomly shuffle `dest` by applying the [Fisher–Yates shuffle](http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle) algorithm [@FY1948STFBAAMR; @K1969SA], which simply brings the array into an entirely random order.
+We then randomly shuffle `dest` by applying the Fisher–Yates shuffle algorithm [@FY1948STFBAAMR; @K1969SA], which simply brings the array into an entirely random order.
 
 \repo.listing{lst:JSSPNullaryOperator}{An excerpt of the implementation of the nullary search operation interface [@lst:INullarySearchOperator] for the JSSP, which will create one random point in the search space.}{java}{src/main/java/aitoa/examples/jssp/JSSPNullaryOperator.java}{}{relevant}
 
@@ -53,7 +53,7 @@ We therefore execute our program 101&nbsp;times and the results are summarized i
 ![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_1rs_med.svgz}){#fig:jssp_gantt_1rs_med width=84%}
 
 What we can find in [@tbl:singleRandomSampleJSSP] is that the makespan of the best solution that any of the 101&nbsp;runs has delivered for each of the four JSSP instances is between 60% and 100% longer than the lower bound.
-The [arithmetic mean](http://en.wikipedia.org/wiki/Arithmetic_mean) and [median](http://en.wikipedia.org/wiki/Median) of the solution qualities are even between 10% and 20% worse.
+The arithmetic mean and median of the solution qualities are even between 10% and 20% worse.
 In the Gantt charts of the median solutions depicted in [@fig:jssp_gantt_1rs_med], we can find big gaps between the sub-jobs.
 This is completely reasonable.
 After all, we just create a single random solution.
@@ -142,7 +142,7 @@ When trying to solve a problem, we need to invest resources, be it software deve
 If you invest a certain amount&nbsp;$a$ of one of these resources, you may be lucky to improve the solution quality that you can get by, say, $b$&nbsp;units.
 Investing&nbsp;$2a$ of the resources, however, will rarely lead to an improvement by $2b$&nbsp;units.
 Instead, the improvements will become smaller and smaller the more you invest.
-This is exactly the *[Law of Diminishing Returns](http://en.wikipedia.org/wiki/Diminishing_returns)*&nbsp;[@SN2001M] known from the field of economics.
+This is exactly the *Law of Diminishing Returns*&nbsp;[@SN2001M] known from the field of economics.
 
 And this makes a lot of sense here.
 On one hand, the maximal possible improvement of the solution quality is bounded by the global optimum &ndash; once we have obtained it, we cannot improve the quality further, even if we invest infinitely much of an resource.

@@ -10,7 +10,7 @@ However, we can apply several measures to find potential errors.
 
 ### Unit Testing
 
-A very important tool that should be applied when developing a new optimization method is [unit testing](http://en.wikipedia.org/wiki/Unit_testing).
+A very important tool that should be applied when developing a new optimization method is unit testing.
 Here, the code is divided into units, each of which can be tested separately.
 
 In this book, we try to approach optimization in a structured way and have defined several interfaces for the components of an optimization and the representation in [@sec:structure].
@@ -21,7 +21,7 @@ Such unit tests can be executed automatically.
 Whenever we compile our software after changing code, we can also run all the tests again.
 This way, we are very likely to spot a lot of errors before they mess up our experiments.
 
-In the Java programming language, the software framework [JUnit](http://en.wikipedia.org/wiki/JUnit) provides an infrastructure for such testing.
+In the Java programming language, the software framework JUnit provides an infrastructure for such testing.
 In the example codes of our book, in the folder [src/test/java](\repo.name/tree/master/src/test/java/aitoa), we provide JUnit tests for general implementations of our interfaces as well as for the classes we use in our JSSP experiment.
 
 Here, the encapsulation of different aspects of black-box optimization comes in handy.
@@ -46,7 +46,7 @@ The following measures can be taken to ensure that your experimental results are
 2. Create one file for each run of your experiment and *automatically* store at least the following information&nbsp;[@W2017FSDFTSTFOAB; @WCTLTCMY2014BOAAOSFFTTSP]:
 	 i. the algorithm name and all parameter settings of the algorithm,
 	 ii. the relevant measurements, i.e., the logged data,
-	 iii. the [seed](http://en.wikipedia.org/wiki/Random_seed) of the pseudo-random number generator used,
+	 iii. the seed of the pseudo-random number generator used,
 	 iv. information about the problem instance on which the algorithm was applied,
 	 v. short comments on how the above is to be interpreted,
 	 vi. maybe information about the computer system your code runs on, maybe the Java version, etc., and
@@ -57,7 +57,7 @@ Ask yourself: If I put my data on my website and someone else downloads it, does
 I prefer having a base folder with the binaries that also contains a folder `results`.
 `results` then contains one folder with a short descriptive name for each algorithm setup, which, in turn, contain one folder with the name of each problem instance.
 The problem instance folders then contain one text file per run.
-After you are done with all experiments and evaluation, such folders lend them self for compression, say in the [`tar`](http://en.wikipedia.org/wiki/Tar_(computing)).[`xz`](http://en.wikipedia.org/wiki/Xz) format, for long-term archiving.
+After you are done with all experiments and evaluation, such folders lend them self for compression, say in the `tar.xz` format, for long-term archiving.
 4. Write your code such that you can specify the random seeds.
 This  allows to easily repeat selected runs or whole experiments.
 All random decisions of an algorithm depend on the random number generator (RNG).
@@ -68,7 +68,7 @@ Even if my optimization method is randomized, it will then make the same "random
 In other words, you should be able to repeat the experiments in this book and get more or less identical results.
 There might be differences if Java changes the implementation of their RNG or if your computer is significantly faster or slower than mine, though.
 5. Ensure that all random seeds in your experiments are generated in a deterministic way in your code.
-This can be a proof that you did not perform [cherry picking](http://en.wikipedia.org/wiki/Cherry_picking) during your experiments, i.e., that you did not conduct 1000 runs and picked only the 101 where your newly-invented method works best.
+This can be a proof that you did not perform cherry picking during your experiments, i.e., that you did not conduct 1000 runs and picked only the 101 where your newly-invented method works best.
 In other words, the seeds should come from a reproducible sequence, say the same random number generator, but seeded with the MD5 checksum of the instance name.
 This would also mean that two algorithms applied to the same instance have the same random seed and may therefore start at the same random point.
 6. Clearly document and comment your code.
@@ -79,12 +79,12 @@ Because you won't.
 Prepare it with the same care and diligence you want to see your name associated with.
 8. If you are conducting research work, consider to publish both your code and data online:
 	 a. For code, several free platforms such as [GitHub](http://www.github.com) or [bitbucket](http://bitbucket.org/) exist.
-These platforms often integrate with free [continuous integration](http://en.wikipedia.org/wiki/Continuous_integration) platforms, which can automatically compile your code and run your unit tests when you make a change.
+These platforms often integrate with free continuous integration platforms, which can automatically compile your code and run your unit tests when you make a change.
 	 b. For results, there, too, are free platforms such as [zenodo](http://zenodo.org/).
 Using such online repositories also protects us from losing data.
 This is also a great way to show what you are capable of to potential employers&hellip;
 9. If your code depends on external libraries or frameworks, consider using an automated dependency management and build tool.
-For the code associated with this book, I use [Apache Maven](http://en.wikipedia.org/wiki/Apache_Maven), which ensures that my code is compiled using the correct dependencies (e.g., the right JUnit version) and that the unit tests are executed on each built.
+For the code associated with this book, I use Apache Maven, which ensures that my code is compiled using the correct dependencies (e.g., the right JUnit version) and that the unit tests are executed on each built.
 If I or someone else wants to use the code later again, the chances are good that the build tool can find the same, right versions of all required libraries.  
 
 From the above, I think it should have become clear that reproducibility is nothing that we can consider after we have done the experiments.

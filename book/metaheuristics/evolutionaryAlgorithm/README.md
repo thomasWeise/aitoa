@@ -8,7 +8,7 @@ Now we will look at a third concept to prevent premature convergence: Instead of
 
 ### Evolutionary Algorithm without Recombination {#sec:evolutionaryAlgorithmWithoutRecombination}
 
-Today, there exists a wide variant of [Evolutionary Algorithms](http://en.wikipedia.org/wiki/Evolutionary_algorithm) (EAs)&nbsp;[@WGOEB; @BFM1997EA; @G1989GA; @DJ2006ECAUA; @M1996GADSEP; @M1998GA; @CWM2012VOEAFRWA; @S2003ITSSAO].
+Today, there exists a wide variant of Evolutionary Algorithms (EAs)&nbsp;[@WGOEB; @BFM1997EA; @G1989GA; @DJ2006ECAUA; @M1996GADSEP; @M1998GA; @CWM2012VOEAFRWA; @S2003ITSSAO].
 We will begin with a very simple, yet efficient variant: the $(\mu+\lambda)$&nbsp;EA without recombination.[^EA:no:recombination]
 This algorithm always remembers the best&nbsp;$\mu\in\naturalNumbersO$ points in the search space found so far.
 In each step, it derives&nbsp;$\lambda\in\naturalNumbersO$ new points from them by applying the unary search operator.
@@ -60,7 +60,7 @@ For each new point to be created during the reproduction step, we apply a search
 Therefore, the index&nbsp;$p$ identifies the point to be used as source for sampling the next new solution.
 By incrementing&nbsp;$p$ before each application of the search operator, we try to make sure that each of the selected points is used approximately equally often to create new solutions.
 Of course, $\mu$ and&nbsp;$\lambda$ can be different (often&nbsp;$\lambda>\mu$), so if we would just keep increasing&nbsp;$p$ for&nbsp;$\lambda$ times, it could exceed&nbsp;$\mu$.
-We thus performing a [modulo division](http://en.wikipedia.org/wiki/Modulo_operation) with&nbsp;$\mu$, i.e., set&nbsp;$p$ to the remainder of the division with&nbsp;$\mu$, which makes sure that&nbsp;$p$ will be in&nbsp;$0\dots(\mu-1)$.
+We thus performing a modulo division with&nbsp;$\mu$, i.e., set&nbsp;$p$ to the remainder of the division with&nbsp;$\mu$, which makes sure that&nbsp;$p$ will be in&nbsp;$0\dots(\mu-1)$.
 
 If $\mu\neq\lambda$, then the best solutions in&nbsp;$P$ tend to be used more often, since they may "survive" selection several times and often be at the front of&nbsp;$P$.
 This means that, in our algorithm, they would be used more often as input to the search operator.
@@ -333,10 +333,10 @@ Now, our EAs are randomized as well.
 On `yn4`, setup `ea4096_nswap_5` has a median end result quality of 1058, while `ea4096_nswap` (without binary operator) achieves 1067, a difference of 0.8%.
 If our binary operator would have no impact whatsoever, we could theoretically still this results or any other from [@tbl:eaCrHCJSSP], just because of the randomness in the algorithms.
 It is simply not possible to decide, without further investigation, whether results and algorithm behaviors that overlap as much as those in [@fig:jssp_progress_ea_cr_log] are actually different or not.
-The "further investigation" which allows us to make this decision is called [significance test](http://en.wikipedia.org/wiki/Statistical_hypothesis_testing) and it is discussed in-depth in [@sec:testForSignificance] as part of our investigation on how to compare algorithms.
+The "further investigation" which allows us to make this decision is called significance test and it is discussed in-depth in [@sec:testForSignificance] as part of our investigation on how to compare algorithms.
 
 In order to see whether two different setups also behave differently, we compare their two sets of 101 end results on each of the problem instances.
-For this purpose, we use the [Mann-Whitney U test](http://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test)), as prescribed in [@sec:nonParametricTests] and compare the end results of the two setups `ea4096_nswap` and `ea4096_nswap_5`:
+For this purpose, we use the Mann-Whitney U test, as prescribed in [@sec:nonParametricTests] and compare the end results of the two setups `ea4096_nswap` and `ea4096_nswap_5`:
 
 | &nbsp;
 | On instance `abz7`, we obtain 0.0016 as $p$-value.

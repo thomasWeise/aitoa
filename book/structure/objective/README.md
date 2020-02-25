@@ -21,8 +21,8 @@ In other words, if&nbsp;$\objf$ is the objective function of a minimization prob
 
 From the perspective of a Java programmer, the general concept of objective functions can be represented by the interface given in [@lst:IObjectiveFunction].
 The `evaluate` function of this interface accepts one instance of the solution space class&nbsp;`Y` and returns a `double` value.
-`double`s are [floating point numbers](http://en.wikipedia.org/wiki/Floating-point_arithmetic) in Java, i.e., represent a subset of the real numbers.
-We keep the interface [generic](http://en.wikipedia.org/wiki/Generics_in_Java), so that we can implement it for arbitrary solution spaces.
+`double`s are floating point numbers in Java, i.e., represent a subset of the real numbers.
+We keep the interface generic, so that we can implement it for arbitrary solution spaces.
 Any actual objective function would then be an implementation of that interface.
 
 \repo.listing{lst:IObjectiveFunction}{A generic interface for objective functions.}{java}{src/main/java/aitoa/structure/IObjectiveFunction.java}{}{relevant}
@@ -30,7 +30,7 @@ Any actual objective function would then be an implementation of that interface.
 ### Example: Job Shop Scheduling {#sec:jsspObjectiveFunction}
 
 As stated in [@sec:jsspExample], our goal is to complete the production jobs as soon as possible.
-This means that we want to minimize the [makespan](http://en.wikipedia.org/wiki/Makespan), the time when the last job finishes.
+This means that we want to minimize the makespan, the time when the last job finishes.
 Obviously, the smaller this value, the earlier we are done with all jobs, the better is the plan.
 As illustrated in [@fig:gantt_demo_with_makespan], the makespan is the time index of the right-most edge of any of the machine rows/schedules in the Gantt chart.
 In the figure, this happens to be the end time&nbsp;230 of the last sub-job of job&nbsp;0, executed on machine&nbsp;4.

@@ -28,7 +28,7 @@ Implementing this concept is a little bit more complicated than creating the sim
 Instead, such an enumerating unary operator for a black-box metaheuristic may create any number of points.
 Moreover, if one of the new points already maps to a candidate solutions which can improve upon the current best solution, then maybe we wish to terminate the enumeration process at that point.
 
-Such behavior can be realized by following a [visitor design pattern](http://en.wikipedia.org/wiki/Visitor_pattern).
+Such behavior can be realized by following a visitor design pattern.
 An enumerating unary operator will receive a point&nbsp;$\sespel$ in the search space and a call-back function from the optimization process.
 Every time it creates a neighbor&nbsp;$\sespel'$ of&nbsp;$\sespel$, it will invoke the call-back function and pass&nbsp;$\sespel'$ to it.
 If the function returns, say `true`, then the enumeration will be terminated, while it is continued for `false`.

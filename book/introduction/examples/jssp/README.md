@@ -20,7 +20,7 @@ We will introduce the JSSP in detail in [@sec:jsspInstance].
 ![Illustrative sketch of a JSSP scenario with four jobs where four different types of shoe should be produced, which require different workshops ("machines") to perform different production steps.](\relative.path{jssp_sketch.svgz}){#fig:jssp_sketch width=70%}
 
 The three examples we have discussed so far are, actually, quite related.
-They all fit into the broad area of [smart manufacturing](http://en.wikipedia.org/wiki/Smart_manufacturing)&nbsp;[@DEPBS2012SMMIADDP; @HPO2016DPFI4S].
+They all fit into the broad area of smart manufacturing&nbsp;[@DEPBS2012SMMIADDP; @HPO2016DPFI4S].
 The goal of smart manufacturing is to optimize development, production, and logistics in the industry.
 Therefore, computer control is applied to achieve high levels of adaptability in the multi-phase process of creating a product from raw material.
 The manufacturing processes and maybe even whole supply chains are networked.

@@ -35,12 +35,12 @@ Unfortunately, it is impossible to make any useful statement about my winning pr
 
 What you can do is use make the opposite hypothesis&nbsp;$H_0$: I did not cheat, the coin is fair and both of us have winning probability&nbsp;$q=0.5$.
 Under this assumption you can compute the probability that I would win at least $m=128$&nbsp;times out of $n=160$&nbsp;coin tosses.
-Flipping a coin $n$&nbsp;times is a [Bernoulli process](http://en.wikipedia.org/wiki/Bernoulli_process).
+Flipping a coin $n$&nbsp;times is a Bernoulli process.
 The probability&nbsp;$\probability[k|n]$ to win *exactly* $k$&nbsp;times in $n$&nbsp;coin tosses is then: 
 
 $$ \probability[k|n] = \binom{n}{k} q^k (1-q)^{n-k} = \binom{n}{k} 0.5^k 0.5^{n-k} = \binom{n}{k} 0.5^n = \binom{n}{k} \frac{1}{2^n} $$
 
-where $\binom{n}{k}=\frac{n!}{k!(n-k)!}$ is the [binomial coefficient](http://en.wikipedia.org/wiki/Binomial_coefficient) "$n$&nbsp;over&nbsp;$k$".
+where $\binom{n}{k}=\frac{n!}{k!(n-k)!}$ is the binomial coefficient "$n$&nbsp;over&nbsp;$k$".
 Of course, if winning 128&nbsp;times would be an indication of cheating, winning even more often would have been, too.
 Hence we compute the probability&nbsp;$\probability[k\geq m|n]$ for me to win *at least* $m$&nbsp;times if we had played with a fair coin, which is:
 
@@ -61,7 +61,7 @@ If you reject the hypothesis&nbsp;$H_0$, your probability $p=\probability[k\geq 
 If you reject&nbsp;$H_0$ and accept&nbsp;$H_1$, $p$ would be your probability to be wrong.
 Normally, you would set yourself beforehand a limit&nbsp;$\alpha$, say&nbsp;$\alpha=0.01$ and if&nbsp;$p$ is less than that, you will risk accusing me.
 Since $p \ll \alpha$, you therefore can be confident to assume that the coin was fixed.
-The calculation that we performed here, actually, is called the *[binomial test](http://en.wikipedia.org/wiki/Binomial_test)*.
+The calculation that we performed here, actually, is called the *binomial test*.
 
 ### The Concept of Many Statistical Tests
 
@@ -112,7 +112,7 @@ Since I could have taken the measurements in any possible way, if $H_0$ is true,
 If $H_0$ is true, then the outcome that we observed should not be very unlikely, not very surprising.
 If the observation that $\mean(A)-\mean(B)\geq 2.5$ would, however, have a very low probability to occur under&nbsp;$H_0$, then we can probably reject it.
 
-From high school [combinatorics](https://en.wikipedia.org/wiki/Binomial_coefficient#Combinatorics_and_statistics), we know that there are $\binom{10}{4}=210$ different ways of drawing 4&nbsp;elements from&nbsp;$O$.
+From high school combinatorics, we know that there are $\binom{10}{4}=210$ different ways of drawing 4&nbsp;elements from&nbsp;$O$.
 Whenever we draw 4&nbsp;elements from&nbsp;$O$ to form a potential set&nbsp;$B'$.
 This leaves the remaining 6&nbsp;elements for a potential set&nbsp;$A'$, meaning $\binom{10}{6}=210$ as well.
 Any of these 210 possible divisions of&nbsp;$O$ would have had the same probability to occur in our experiment &ndash; if $H_0$ holds.
@@ -132,7 +132,7 @@ $H_0$&nbsp;may or may not be true, and the same holds for&nbsp;$H_1$.
 We just do not have enough experimental evidence to reach a conclusion.
 Thus, we need to be conservative, which here means to not reject&nbsp;$H_0$ and not accept&nbsp;$H_1$. 
 
-This here just was an example for a [Randomization Test](http://en.wikipedia.org/wiki/Resampling_(statistics)#Permutation_tests)&nbsp;[@BLB2008VMIDBS; @E1995RT].
+This here just was an example for a Randomization Test&nbsp;[@BLB2008VMIDBS; @E1995RT].
 It exemplifies how many statistical (non-parametric) tests work.
 
 The number of all possible divisions the joint sets&nbsp;$O$ of measurements grows very quickly with the size of&nbsp;$O$.
@@ -153,11 +153,11 @@ Hence, we are on the safe side if we do not use parametric tests.
 Non-Parametric tests, on the other hand, are more robust in that make very few assumptions about the distributions behind the data.
 Examples include
 
-- the Wilcoxon rank sum test with continuity correction (also called [Mann-Whitney U test](http://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test))&nbsp;[@B1972CCSURS; @SC1988NSFTBS; @HW1973NSM; @MW1947OATOWOOTRVISLTTO],
-- [Fisher's Exact Test](http://en.wikipedia.org/wiki/Fisher%27s_exact_test)&nbsp;[@F1922OTIOCFCTATCOP],
-- the [Sign Test](http://en.wikipedia.org/wiki/Sign_test)&nbsp;[@G2003SFNEIDSDWIWMEST; @SC1988NSFTBS],
-- the [Randomization Test](http://en.wikipedia.org/wiki/Resampling_(statistics)#Permutation_tests)&nbsp;[@BLB2008VMIDBS; @E1995RT], and
-- [Wilcoxon's Signed Rank Test](http://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test)&nbsp;[@W1945ICBRM].
+- the Wilcoxon rank sum test with continuity correction (also called Mann-Whitney U test&nbsp;[@B1972CCSURS; @SC1988NSFTBS; @HW1973NSM; @MW1947OATOWOOTRVISLTTO],
+- Fisher's Exact Test&nbsp;[@F1922OTIOCFCTATCOP],
+- the Sign Test&nbsp;[@G2003SFNEIDSDWIWMEST; @SC1988NSFTBS],
+- the Randomization Test&nbsp;[@BLB2008VMIDBS; @E1995RT], and
+- Wilcoxon's Signed Rank Test&nbsp;[@W1945ICBRM].
 
 They tend to work similar to the examples given above.
 When comparing optimization methods, we should always apply non-parametric tests.
@@ -174,7 +174,7 @@ Good significance thresholds&nbsp;$\alpha$ are&nbsp;0.02 or&nbsp;0.01.
 
 We do not just compare two algorithms on a single problem instance.
 Instead, we may have multiple algorithms and several problem instances.
-In this case, we need to perform [multiple comparisons](http://en.wikipedia.org/wiki/Multiple_comparisons_problem) and thus apply $N>1$&nbsp;statistical tests.
+In this case, we need to perform multiple comparisons and thus apply $N>1$&nbsp;statistical tests.
 Before we begin this procedure, we will define a significance threshold&nbsp;$\alpha$, say 0.01.
 In each single test, we check one hypothesis, e.g., "this algorithm is better than that one" and estimate a certain probability&nbsp;$p$ to err.
 If $p<\alpha$, we can accept the hypothesis.
@@ -192,7 +192,7 @@ Also, we often compare more than two algorithms.
 For $k$&nbsp;algorithms on a single problem instance, we would already have $N=k(k-1)/2$&nbsp;pairwise comparisons.
 
 In all cases with $N>1$, we therefore need to use an adjusted significance level&nbsp;$\alpha'$ in order to ensure that the overall probability to make wrong conclusions stays below&nbsp;$\alpha$.
-The most conservative &ndash; and therefore my favorite &ndash; way to do so is to apply the [Bonferroni correction](http://en.wikipedia.org/wiki/Bonferroni_correction)&nbsp;[@D1961MCAM].
+The most conservative &ndash; and therefore my favorite &ndash; way to do so is to apply the Bonferroni correction&nbsp;[@D1961MCAM].
 It defines: 
 
 $$ \alpha' = \alpha/N $$
