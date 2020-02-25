@@ -58,7 +58,7 @@ It is clear that no schedule can complete faster then the longest job.
 Furthermore, we know that the makespan of the optimal schedule also cannot be shorter than the latest "finishing time" of any machine&nbsp;$\jsspMachineIndex$.
 This finishing time is at least as big as the sum&nbsp;$\jsspMachineRuntime{\jsspMachineIndex}$ of the runtimes of all the sub-jobs assigned to this machine.
 But it may also include a least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$:
-If the sub-jobs for machine&nbsp;$\jsspMachineIndex$ never come first in their job, then for each job, we need to sum up the runtimes of the sub-jobs coming before the one on machine&nbsp;$\machineIndex$.
+If the sub-jobs for machine&nbsp;$\jsspMachineIndex$ never come first in their job, then for each job, we need to sum up the runtimes of the sub-jobs coming before the one on machine&nbsp;$\jsspMachineIndex$.
 The least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$ is then the smallest of these sums.
 Similarly, there is a least idle time&nbsp;$\jsspMachineEndIdle{\jsspMachineIndex}$ at the end if these sub-jobs never come last in their job.
 As lower bound for the fastest schedule that could theoretically exist, we therefore get:

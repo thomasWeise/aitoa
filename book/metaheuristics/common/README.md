@@ -106,4 +106,3 @@ These classes implement the methods that an `IBlackBoxProcess` implementation ne
 \repo.listing{lst:JSSPSolutionSpace}{An excerpt of the implementation of the `ISpace` interface for the solution space for the JSSP problem.}{java}{src/main/java/aitoa/examples/jssp/JSSPSolutionSpace.java}{}{relevant}
 
 With the exception of the search operators, which we will introduce "when they are needed," we have already discussed how the other components needed to solve a JSSP can be realized in [@sec:jssp:gantt], [@sec:jsspSearchSpace], [@sec:jsspObjectiveFunction], and [@sec:jssp:termination].
- 
