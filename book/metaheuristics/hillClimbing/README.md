@@ -16,14 +16,14 @@ Otherwise, it is discarded.
 
 \text.block{definition}{causality}{Causality means that small changes in the features of an object (or candidate solution) also lead to small changes in its behavior (or objective value).}
 
-Local search exploits a property of many optimization problems called *causality*&nbsp;[@R1973ES; @R1994ES; @WCT2012EOPABT; @WZCN2009WIOD].
-If we have two points in the search space that only differ a tiny bit, then they likely map to similar schedules, which, in turn, likely have similar makespans.
+Local search exploits a property of many optimization problems which is called *causality*&nbsp;[@R1973ES; @R1994ES; @WCT2012EOPABT; @WZCN2009WIOD].
+If we have two points in the search space that only differ a little bit, then they likely map to similar schedules, which, in turn, likely have similar makespans.
 This means that if we have a good candidate solution, then there may exist similar solutions which are better.
 We hope to find one of them and then continue trying to do the same from there.
 
 ### Ingredient: Unary Search Operation for the JSSP {#sec:hillClimbingJssp1Swap}
 
-So the question arises how we can create a candidate solution which is similar to, but also slightly different from, one we already have?
+So the question arises how we can create a candidate solution which is similar to, but also slightly different from, one that we already have?
 Our search algorithms are working in the search space&nbsp;$\searchSpace$.
 So we need one operation which accepts an existing point&nbsp;$\sespel\in\searchSpace$ and produces a slightly modified copy of it as result.
 In other words, we need to implement a unary search operator!
@@ -37,9 +37,12 @@ Such a&nbsp;`1swap` operator can be implemented as follows:
 1. Make a copy&nbsp;$\sespel'$ of the input point&nbsp;$\sespel$ from the search space.
 2. Pick a random index&nbsp;$i$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
 3. Pick a random index&nbsp;$j$ from $0\dots(\jsspMachines*\jsspJobs-1)$.
-4. If the values at indexes&nbsp;$i$ and&nbsp;$j$ in&nbsp;$\sespel'$ are the same, then go back to point&nbsp;3. (Swapping the same values makes no sense, since then the value of&nbsp;$\sespel'$ and&nbsp;$\sespel$ would be the same at the end, so also their mappings&nbsp;$\repMap(\sespel)$ and&nbsp;$\repMap(\sespel')$ would be the same, i.e., we would actually not make a "move".)
+4. If the values at indexes&nbsp;$i$ and&nbsp;$j$ in&nbsp;$\sespel'$ are the same, then go back to point&nbsp;3.
 5. Swap the values at indexes&nbsp;$i$ and&nbsp;$j$ in&nbsp;$\sespel'$.
 6. Return the now modified copy&nbsp;$\sespel'$ of&nbsp;$\sespel$.
+
+Point&nbsp;4 is important since swapping the same values makes no sense, as we would then get&nbsp;$\sespel'=\sespel$.
+Then, also the mappings&nbsp;$\repMap(\sespel)$ and&nbsp;$\repMap(\sespel')$ would be the same, i.e., we would actually not make a "move".
 
 \repo.listing{lst:JSSPUnaryOperator1Swap}{An excerpt of the `1swap` operator for the JSSP, an implementation of the unary search operation interface [@lst:IUnarySearchOperator]. `1swap` swaps two jobs in our encoding of Gantt diagrams.}{java}{src/main/java/aitoa/examples/jssp/JSSPUnaryOperator1Swap.java}{}{relevant}
 
@@ -61,9 +64,9 @@ The new candidate solution&nbsp;$\repMap(\sespel')$ thus has a longer makespan o
 
 In other words, our application of&nbsp;`1swap` in [@fig:jssp_unary_1swap_demo] has led us to a worse solution.
 This will happen most of the time.
-As soon as we have a good solution, the solutions similar to it tend to be worse.
+As soon as we have a good solution, the solutions similar to it tend to be worse in average and the number of even better solutions in the neighborhood tends to get smaller.
 However, if we would have been at&nbsp;$\sespel'$ instead, an application of `1swap` could well have resulted in&nbsp;$\sespel$.
-Often, the chance to find a really good solution by iteratively sampling the neighborhoods of good solutions is higher than trying to randomly guessing them (as `rs` does) &nbsp; even if most of our samples are worse.
+In summary, the chance to find a really good solution by iteratively sampling the neighborhoods of good solutions is higher than trying to randomly guessing them (as `rs` does) &nbsp; even if most of our samples are worse.
 
 ### Stochastic Hill Climbing Algorithm
 
@@ -82,7 +85,7 @@ It proceeds as follows:
     b. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
     c. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
     d. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$.
-6. Return best-so-far objective value and best solution to the user.
+6. Return the best-so-far objective value and the best solution to the user.
 
 This algorithm is implemented in [@lst:HillClimber] and we will refer to it as&nbsp;`hc`.
 
@@ -90,19 +93,10 @@ This algorithm is implemented in [@lst:HillClimber] and we will refer to it as&n
 
 #### Results on the JSSP {#sec:hc_1swap:jssp:results}
 
-We now apply our&nbsp;`hc` algorithm together with the `1swap` to the JSSP.
+We now plug our unary operator `1swap` into our&nbsp;`hc` algorithm and apply it to the JSSP.
 We will refer to this setup as `hc_1swap` and present its results with those of&nbsp;`rs` in [@tbl:hillClimbing1SwapJSSP].
 
-|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
-|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|`hc_1swap`|**717**|**800**|**798**|28|**0**s|16'978|
-|||`rs`|895|945|948|**12**|77s|8'246'019|
-|`la24`|935|`hc_1swap`|**999**|**1095**|**1086**|56|**0**s|6612|
-|||`rs`|1154|1206|1207|**15**|81s|17'287'329|
-|`swv15`|2885|`hc_1swap`|**3837**|**4108**|**4108**|137|**1**s|104'598|
-|||`rs`|4988|5165|5174|**49**|85s|5'525'082|
-|`yn4`|929|`hc_1swap`|**1109**|**1222**|**1220**|48|**0**s|31'789|
-|||`rs`|1459|1496|1498|**15**|83s|6'549'694|
+\relative.input{jssp_hc_1swap_results.md}
 
 : The results of the hill climber `hc_1swap` in comparison with those of random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hillClimbing1SwapJSSP}
 
@@ -110,25 +104,30 @@ The hill climber outperforms random sampling in almost all aspects.
 It produces better mean, median, and best solutions.
 Actually, its median and mean solutions are better than the best solutions discovered by&nbsp;`rs`.
 Furthermore, it finds its solutions much much faster.
-The time consumed until convergence is not more than one seconds and the number of consumed FEs to find the best solutions per run is between 7000 and 105'000, i.e., between one 50^th^ and one 2500^th^ of the number of FEs needed by&nbsp;`rs`.
+The median time `med(t)` consumed until the algorithm converges is not more than one seconds.
+The median number of consumed FEs `med(FEs)` to find the best solutions per run is between 7000 and 105'000, i.e., between one 50^th^ and one 2500^th^ of the number of FEs needed by&nbsp;`rs`.
 
 It may be interesting to know that this simple `hc_1swap` algorithm can already achieve some remotely acceptable performance.
-For instance, on instance `abz7`, it delivers better best and mean results than all four Genetic Algorithms (GAs) presented in&nbsp;[@JPDS2014CAODRIGAFJSSP] and on `la24`, only one of the four (GA&#8209;PR) has a better best result and all lose in terms of mean result.
-On this instance, `hc_1swap` finds a better best solution than all six GAs in [@A2010RIGAFTJSPACS] and better mean results than four of them.
+For instance, on instance `abz7`, it delivers better best and mean results than all four Genetic Algorithms (GAs) presented in&nbsp;[@JPDS2014CAODRIGAFJSSP].
+On `la24`, only one of the four (GA&#8209;PR) has a better best result and all lose in terms of mean result.
+On this instance, `hc_1swap` finds a better best solution than all six GAs in [@A2010RIGAFTJSPACS] and better mean results than five of them.
 In [@sec:evolutionaryAlgorithm], we will later introduce Evolutionary Algorithms, to which GAs belong.
 
-The Gantt charts of the median solutions of `hc_1swap` are illustrated in [@fig:jssp_gantt_hc_1swap_med] are also more compact than those in [@fig:jssp_gantt_rs_med].
-
 ![The Gantt charts of the median solutions obtained by the&nbsp;`hc_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hc_1swap_med.svgz}){#fig:jssp_gantt_hc_1swap_med width=84%}
+
+The Gantt charts of the median solutions of `hc_1swap` are illustrated in [@fig:jssp_gantt_hc_1swap_med].
+They are more compact than those discovered by `rs` and illustrated in [@fig:jssp_gantt_rs_med].
 
 ![The progress of the&nbsp;`hc_1swap` and&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hc_1swap_log.svgz}){#fig:jssp_progress_hc_1swap_log width=84%}
 
 [@fig:jssp_progress_hc_1swap_log] shows how both&nbsp;`hc_1swap` and&nbsp;`rs` progress over time.
-It should be noted that I designed the experiments in such a way that there were 101 different initial solutions and the runs of the hill climber and random sampling started *at the same points*.
+It should be noted that I designed the experiments in such a way that there were 101 different random seeds per instance.
+For each instance, all algorithms use the same random seeds, i.e., the hill climber and random sampling start with the same initial solutions.
 On the logarithmically scaled plots, this is almost invisible.
 The runs of the two different algorithms separate almost immediately.
 We already knew from [@tbl:hillClimbing1SwapJSSP] that&nbsp;`hc_1swap` converges very quickly.
-After initial phases with quick progress, it stops making any further progress.
+After initial phases with quick progress, it stops making any further progress, usually before 1000&nbsp;milliseconds have been consumed.
+This fits well to the values `med(t)` given in [@tbl:hillClimbing1SwapJSSP].
 With the exception of instance&nbsp;`la24`, there is much space between the runs of&nbsp;`rs` and&nbsp;`hc_1swap`.
 We can also see again that there is more variance in the end results of&nbsp;`hc_1swap` compared to those of&nbsp;`rs`, as they are spread wider in the vertical direction.
 
