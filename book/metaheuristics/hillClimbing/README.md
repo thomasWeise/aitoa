@@ -391,3 +391,7 @@ The $p$-value of $3.57\!\cdot\!10^{-3}$ on `la24` is already fairly small but st
 ### Summary
 
 In this section, we have learned about our first "reasonable" optimization method.
+The stochastic Hill Climbing algorithm always remembers the best-so-far point in the search space.
+In each step, it applies the unary operator to obtain a similar but slightly different point.
+If it is better, then it becomes the new best-so-far point.
+Otherwise, it is forgotten.

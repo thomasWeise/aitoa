@@ -155,3 +155,22 @@ From the diagrams we can also see that random sampling is not a good method to s
 It will not matter very much if we have three minutes, six minutes, or one hour.
 In the end, the improvements we would get by investing more time would probably become smaller and the amount of time we need to invest to get any improvement would keep to increase.
 The fact that random sampling can be parallelized perfectly does not help much here, as we would need to provide an exponentially increasing number of processors to keep improving the solution quality. 
+
+### Summary
+
+With random sampling, we now have a very primitive way to tackle optimization problems.
+In each step, the algorithm generates a new, entirely random candidate solution.
+It remembers the best solution that it encounters and, after its computational budget is exhausted, returns it to the user.
+
+Obviously, this algorithm cannot be very efficient.
+But we already also learned one method to improve the result quality and reliability of optimization methods: restarts.
+Restarting an optimization can be beneficial if the following conditions are met:
+
+1. If we have a budget limitation, then most of the improvements made by the algorithm must happen early during the run.
+   If the algorithm already uses its budget well can keep improving even close to its end, then it makes no sense to stop and restart.
+   The budget must be large enough so that multiple runs of the algorithm can complete or at least deliver reasonable results.
+2. Different runs of the algorithm must generate results of different quality.
+   A restarted algorithm is still *the same* algorithm.
+   It just exploits this variance, i.e., we will get something close to the best result of multiple runs.
+   If the different runs deliver bad results anyway, doing multiple runs will not solve the problem.
+ 
