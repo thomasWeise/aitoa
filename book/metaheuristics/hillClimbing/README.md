@@ -94,11 +94,11 @@ This algorithm is implemented in [@lst:HillClimber] and we will refer to it as&n
 #### Results on the JSSP {#sec:hc_1swap:jssp:results}
 
 We now plug our unary operator `1swap` into our&nbsp;`hc` algorithm and apply it to the JSSP.
-We will refer to this setup as `hc_1swap` and present its results with those of&nbsp;`rs` in [@tbl:hillClimbing1SwapJSSP].
+We will refer to this setup as `hc_1swap` and present its results with those of&nbsp;`rs` in [@tbl:jssp_hc_1swap_results].
 
 \relative.input{jssp_hc_1swap_results.md}
 
-: The results of the hill climber `hc_1swap` in comparison with those of random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hillClimbing1SwapJSSP}
+: The results of the hill climber `hc_1swap` in comparison with those of random sampling algorithm&nbsp;`rs`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_hc_1swap_results}
 
 The hill climber outperforms random sampling in almost all aspects.
 It produces better mean, median, and best solutions.
@@ -125,36 +125,38 @@ It should be noted that I designed the experiments in such a way that there were
 For each instance, all algorithms use the same random seeds, i.e., the hill climber and random sampling start with the same initial solutions.
 On the logarithmically scaled plots, this is almost invisible.
 The runs of the two different algorithms separate almost immediately.
-We already knew from [@tbl:hillClimbing1SwapJSSP] that&nbsp;`hc_1swap` converges very quickly.
+We already knew from [@tbl:jssp_hc_1swap_results] that&nbsp;`hc_1swap` converges very quickly.
 After initial phases with quick progress, it stops making any further progress, usually before 1000&nbsp;milliseconds have been consumed.
-This fits well to the values `med(t)` given in [@tbl:hillClimbing1SwapJSSP].
+This fits well to the values `med(t)` given in [@tbl:jssp_hc_1swap_results].
 With the exception of instance&nbsp;`la24`, there is much space between the runs of&nbsp;`rs` and&nbsp;`hc_1swap`.
 We can also see again that there is more variance in the end results of&nbsp;`hc_1swap` compared to those of&nbsp;`rs`, as they are spread wider in the vertical direction.
 
 ### Stochastic Hill Climbing with Restarts {#sec:stochasticHillClimbingWithRestarts}
 
 We now are in the same situation as with the&nbsp;`1rs` algorithm:
-There is some variance between the results and most of the "action" takes place in a short time compared to our total computational budget (1s vs. 3min).
+There is some variance between the results and most of the "action" takes place in a short time compared to our total computational budget (1&nbsp;second vs. 3&nbsp;minutes).
 Back in [@sec:randomSamplingAlgo] we made use of this situation by simply repeating&nbsp;`1rs` until the computational budget was exhausted, which we called the `rs`&nbsp;algorithm.
 Now the situation is a bit different, however.
 `1rs`&nbsp;creates exactly one solution and is finished, whereas our hill climber does not actually finish.
-It keeps creating modified copies of the current best solution, only that these happen to not be better.
+It keeps creating modified copies of the current best solution, only that these eventually do not mark improvements anymore.
 The algorithm has converged into a *local optimum*.
 
 \text.block{definition}{localOptimum}{A *local optimum* is a point&nbsp;$\localOptimum{\sespel}$ in the search space which maps to a better candidate solution than any other points in its neighborhood (see \text.ref{neighborhood}).}
 
 \text.block{definition}{prematureConvergence}{An optimization process has prematurely converged if it has not yet discovered the global optimum but can no longer improve its approximation quality.&nbsp;[@WCT2012EOPABT; @WZCN2009WIOD]}
 
-Of course, our hill climber does not really know that it is trapped in a local optimum, that it has *prematurely converged*.
-However, we can try to guess it: If there has not been any improvement for many steps, then the current-best candidate solution is probably a local optimum.
+Due to the black-box nature of our basic hill climber algorithm, it is not really possible to know when the complete neighborhood of the current best solution has already been tested.
+Under the black-box assumption, we thus cannot know whether or not the algorithm is trapped in a local optimum and has *prematurely converged*.
+However, we can try to guess it:
+If there has not been any improvement for a high number&nbsp;$L$ of steps, then the current-best candidate solution is probably a local optimum.
 If that happens, we just restart at a new random point in the search space.
 Of course, we will remember the **best ever encountered** candidate solution over all restarts and return it to the user in the end.
 
 #### The Algorithm {#sec:hillClimberWithRestartAlgo}
 
 1. Set counter&nbsp;$C$ of unsuccessful search steps to&nbsp;$0$.
-2. Set the overall-best objective value&nbsp;$\obspel_B$ to infinity and the overall-best candidate solution&nbsp;$\solspel_B$ to `NULL`. 
-3. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
+2. Set the overall-best objective value&nbsp;$\obspel_B$ to&nbsp;$+\infty$ and the overall-best candidate solution&nbsp;$\solspel_B$ to `NULL`. 
+3. Create a random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
 4. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
 5. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
 6. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
@@ -165,80 +167,72 @@ Of course, we will remember the **best ever encountered** candidate solution ove
     c. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
     d. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then
         i. store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$,
-        ii. $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and
+        ii. store $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and
         iii. set&nbsp;$C$ to&nbsp;$0$.
         iv. If $\obspel'<\obspel_B$, then set&nbsp;$\obspel_B$ to&nbsp;$\obspel'$ and store&nbsp;$\solspel_B=\repMap{\sespel'}$.
         
        otherwise
       
         i. increment&nbsp;$C$ by&nbsp;$1$
-        ii. if $C\geq L$ then
-            (1) Maybe: increase&nbsp;$L$ (see later).
-            (2) Go back to step&nbsp;3.
+        ii. if $C\geq L$ then go back to step&nbsp;3.
 9. Return **best ever encountered** objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B$ to the user.
 
 \repo.listing{lst:HillClimberWithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts, which remembers the best-so-far solution and tries to find better solutions in its neighborhood but restarts if it seems to be trapped in a local optimum.}{java}{src/main/java/aitoa/algorithms/HillClimberWithRestarts.java}{}{relevant}
 
 Now this algorithm &ndash; implemented in [@lst:HillClimberWithRestarts] &ndash; is a bit more elaborate.
 Basically, we embed the original hill climber into a loop.
-This hill climber will stop after a certain number of unsuccessful search steps, which then leads to a new round in the outer loop.
+This hill climber will stop after a certain number&nbsp;$L$ of unsuccessful search steps, which then leads to a new round in the outer loop.
+In combination with the `1swap` operator, we refer to this algorithm as `hcr_L_1swap`, where `L` is to be replaced with the actual value of the parameter&nbsp;$L$.
+
 The problem that we have is that we do not know which "certain number" is right.
 If we pick it too low, then the algorithm will restart before it actually converges to a local optimum.
 If we pick it too much, we waste runtime and do fewer restarts than what we could do.
-To deal with this dilemma, we can slowly increase the number of allowed unsuccessful search moves.
+
+If we do not know which value for a parameter is reasonable, we can always do an experiment to investigate.
+Here, we test the powers of two from $2^7=128$ to $2^{18}=262'144$.
+For each value, we plot the scaled median result quality over the 101&nbsp;runs in [@fig:jssp_hcr_1swap_med_over_l].
+
+![The median result quality of the&nbsp;`hcr_1swap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the restart limit parameter&nbsp;$L$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_hcr_1swap_med_over_l.svgz}){#fig:jssp_hcr_1swap_med_over_l width=84%}
+
+From the plot, we can confirm our expectations:
+Small numbers of&nbsp;$L$ perform bad and high numbers of&nbsp;$L$ cannot really improve above the basic hill climber (which is equivalent to having $L\rightarrow+\infty$).
+For different problem instances, different values of&nbsp;$L$ perform good, but&nbsp;$L\approx2^{14}=16'384$ seems to be a reasonable choice for three of the four instances.
 
 #### Results on the JSSP
 
-In [@tbl:hillClimbing1SwapRSJSSP] we present the performance indicators of the two versions of our hill climber with restarts in comparison with the plain hill climber.
-We implement `hcr_256_1swap`, which begins at a new random point in the search space after&nbsp;$L=256$ applications of the unary operator to the same current-best solution did not yield any improvement.
-`hcr_256+5%_1swap` does the same, but increases&nbsp;$L$ by 5% after each restart, i.e., initially waits 256 steps, then $round(1.05*256)=267$ steps, then 280, and so on.
-Of course, the actual search procedure of both algorithms is still the same as the one of the plain hill climber `hc_1swap`.
-What we can expect is therefore mainly an utilization of the variance in the end results and the time "wasted" after `hc_1swap` has converged.
+The performance indicators of three settings of our hill climber with restarts in comparison with the plain hill climber are listed in [@tbl:jssp_hcr_1swap_results].
+We know that $L=2^{14}$ seems a reasonable setting.
+Additionally, we also list the adjacent setups, i.e., give the results for $L\in\{2^{13},2^{14},2^{15}\}$.
 
-|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
-|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|`hc_1swap`|**717**|800|798|28|**0**s|16'978|
-|||`hcr_256_1swap`|738|765|766|**7**|82s|22'881'557|
-|||`hcr_256+5%_1swap`|723|**742**|**743**|7|21s|5'681'591|
-|`la24`|935|`hc_1swap`|999|1095|1086|56|**0**s|6612|
-|||`hcr_256_1swap`|975|1001|1002|**6**|91s|49'588'742|
-|||`hcr_256+5%_1swap`|**970**|**997**|**998**|9|6s|3'470'368|
-|`swv15`|2885|`hc_1swap`|3837|4108|4108|137|**1**s|104'598|
-|||`hcr_256_1swap`|4069|4173|4177|**32**|92s|15'351'798|
-|||`hcr_256+5%_1swap`|**3701**|**3850**|**3857**|40|60s|9'874'102|
-|`yn4`|929|`hc_1swap`|1109|1222|1220|48|**0**s|31'789|
-|||`hcr_256_1swap`|1153|1182|1184|**12**|90s|18'843'991|
-|||`hcr_256+5%_1swap`|**1095**|**1129**|**1130**|14|22s|4'676'669|
+\relative.input{jssp_hcr_1swap_results.md}
 
-: The results of the hill climber `hc_1swap` with restarts. `hcr_256_1swap` restarts after 256 unsuccessful search moves, `hcr_256+5%_1swap` does the same but increases the allowed number of unsuccessful moves by 5% after each restart. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hillClimbing1SwapRSJSSP}
+: The results of the hill climber `hcr_L_1swap` with restarts for values of&nbsp;$L$ from $2 {13}$, $2^{14}$, and $2^{15}$. `hcr_L_1swap` restarts after $L$&nbsp;unsuccessful search moves. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_hcr_1swap_results}
 
-[@tbl:hillClimbing1SwapRSJSSP] shows us that the restarted algorithms offer improved median and mean results.
-The standard deviation of their end results is also reduced, so they have become more reliable.
-Also, their median time until they converge is now higher, which means that we make better use of our computational budget.
-The best solution from all 101 runs they discover does not necessarily improve, which makes sense because they are still essentially the same algorithms.
-Slowly increasing the time until restart turns out to be a good idea: `hcr_256+5%_1swap` outperforms `hcr_256_1swap` in almost all aspects.
+[@tbl:jssp_hcr_1swap_results] shows us that the restarted algorithms `hcr_L_1swap` almost always provide better best, mean, and median solutions than `hc_1swap`.
+Only the overall best result of `hcr_8192_1swap` on `abz7` is worse than for `hc_1swap` &ndash; on all other instances and for all other quality metrics, `hc_1swap` loses.
 
-This could also mean that waiting 256 steps until a restart is not enough, of course.
-If this was an actual, practical application scenario we should experiment with more settings.
-For the sake of demonstrating the basic ideas in this book, however, we will not do that.
+The standard deviations of the end results of the variants with restarts are also always smaller, meaning that these algorithms perform more reliably.
+Their median time until they converge is now higher, which means that we make better use of our computational budget.
 
-The best result of our still quite basic `hcr_256_1swap` and `hcr_256+5%_1swap` for instance `la24` can both surpass the best result (982) delivered by the Gray Wolf Optimization algorithm in&nbsp;[@JZ2018AOGWOFSCPJSAFJSSC]. 
+The median and mean result of the three listed setups of our very basic `hcr_L_1swap` algorithms for instance `la24` are already better than the best result (982) delivered by the Grey Wolf Optimization algorithm proposed in&nbsp;[@JZ2018AOGWOFSCPJSAFJSSC]. 
 
-![The Gantt charts of the median solutions obtained by the `hcr_256+5%_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hcr_256_5_1swap_med.svgz}){#fig:jssp_gantt_hcr_256_5_1swap_med width=84%}
+![The Gantt charts of the median solutions obtained by the `hcr_16384_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hcr_16384_1swap_med.svgz}){#fig:jssp_gantt_hcr_16384_1swap_med width=84%}
 
-![The progress of the algorithms `rs`, `hc_1swap`, `hcr_256_1swap`, and `hcr_256+5%_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_rs_hc_hcr_1swap_log.svgz}){#fig:jssp_progress_rs_hc_hcr_1swap_log width=84%}
+![The progress of the algorithms `rs`, `hc_1swap`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hcr_1swap_log.svgz}){#fig:jssp_progress_hcr_1swap_log width=84%}
 
-The average solutions discovered by `hcr_256+5%_1swap`, illustrated in [@fig:jssp_gantt_hcr_256_5_1swap_med], again show less wasted time.
+The median solutions discovered by `hcr_16384_1swap`, illustrated in [@fig:jssp_gantt_hcr_16384_1swap_med], again show less wasted time.
 The scheduled jobs again move a bit closer together.
 
-From the progress diagrams plotted in [@fig:jssp_gantt_hcr_256_5_1swap_med], we can see that the algorithm versions with restart initially behave exactly the same as the "normal" hill climber.
+From the progress diagrams plotted in [@fig:jssp_progress_hcr_1swap_log], we can see that the algorithm version with restart initially behave very similar to the "original" hill climber.
 They should do that, because until they do their first restart, the are identical to `hc_1swap`.
-However, when `hc_1swap` has converged and stops making improvements, `hcr_256_1swap` and `hcr_256+5%_1swap` still continue to make progress.
-On all problem instances except `la24`, `hcr_256+5%_1swap` provides visible better end results compared to `hcr_256_1swap` as well, confirming the findings from [@tbl:hillClimbing1SwapRSJSSP].
+However, when `hc_1swap` has converged and stops making improvements, `hcr_16384_1swap` still continues to make progress.
+
+Of course, our way of finding the right value for the restart parameter&nbsp;$L$ was rather crude.
+But even with such a coarse way of algorithm configuration, we managed to get rather good results. 
 
 ### Hill Climbing with a Different Unary Operator {#sec:hillClimbingWithDifferentUnaryOperator}
 
-With our restart method could significantly improve the results of the hill climber.
+With our restart method, we could significantly improve the results of the hill climber.
 It directly addressed the problem of premature convergence, but it tried to find a remedy for its symptoms, not its cause.
 
 One cause for this problem in our hill climber is the design of unary operator.
@@ -246,8 +240,9 @@ One cause for this problem in our hill climber is the design of unary operator.
 Since the solutions are encoded as integer arrays of length&nbsp;$\jsspMachines*\jsspJobs$, there are&nbsp;$\jsspMachines*\jsspJobs$ choices to pick the index of the first job to be swapped.
 Since we swap only with *different* jobs and each job appears&nbsp;$\jsspMachines$ times in the encoding, this leaves&nbsp;$\jsspMachines*(\jsspJobs-1)$ choices for the second swap index.
 We can also ignore equivalent swaps, e.g., exchanging the jobs at indexes $(10,5)$ and $(5,10)$ would result in the same outcome.
-In total, from any given point in the search space, `1swap` may reach&nbsp;$0.5*\jsspMachines*\jsspJobs*\jsspMachines*(\jsspJobs-1)=0.5*(\jsspMachines^2 \jsspJobs^2-\jsspJobs)$ different other points (some of which may still actually encode the same candidate solutions).
-These are only tiny fractions of the big search space (remember [@tbl:jsspSearchSpaceTable]?).
+In total, from any given point in the search space, `1swap` may reach&nbsp;$0.5*\jsspMachines*\jsspJobs*\jsspMachines*(\jsspJobs-1)=0.5*(\jsspMachines^2 \jsspJobs^2-\jsspJobs)$ different other points.
+Some of these points may still actually encode the same candidate solutions, i.e., identical schedules.
+In other words, the neighborhood spanned by our `1swap` operator equals only a tiny fraction of the big search space (remember [@tbl:jsspSearchSpaceTable]).
 
 This has two implications:
 
@@ -255,15 +250,17 @@ This has two implications:
    If the neighborhood spanned by the operator was larger, it would contain more, potentially better solutions.
    Hence, it would take longer for the optimization process to reach a point where no improving move can be discovered anymore.
 2. Assume that there is no better solution in the `1swap` neighborhood of the current best point in the search space.
-   There might still be a much better, similar solution which could, for instance, require swapping three or four jobs &ndash; but the algorithm will never find it, because it can only swap two jobs.
-   If the search operator would permit such moves, the hill climber may discover this better solution.
+   There might still be a much better, similar solution.
+   Finding it could, for instance, require swapping three or four jobs &ndash; but the `hc_1swap` algorithm will never find it, because it can only swap two jobs.
+   If the search operator would permit such moves, then even the plain hill climber may discover this better solution.
 
-Now we need to think about how we could define a new unary operator which can access a larger neighborhood.
+So let us try to think about how we could define a new unary operator which can access a larger neighborhood.
 Here we first should consider the extreme cases.
 On the one hand, we have `1swap` which samples from a relatively small neighborhood.
-The other extreme could be to use our nullary operator as unary operator: It would return an entirely random point from the search space&nbsp;$\searchSpace$ and ignore its input.
-It would span&nbsp;$\searchSpace$ as its neighborhood and uniformly sample from it, effectively turning the hill climber into random sampling.
-From this thought experiment we know that unary operators which indiscriminately sample from very large neighborhoods are not very good ideas, as they are "too random."
+The other extreme could be to use our nullary operator as unary operator:
+It would return an entirely random point from the search space&nbsp;$\searchSpace$ and ignore its input.
+It would have&nbsp;$\searchSpace$ as the neighborhood and uniformly sample from it, effectively turning the hill climber into random sampling.
+From this thought experiment we know that unary operators which indiscriminately sample from very large neighborhoods are probably not very good ideas, as they are "too random."
 They also make less use of the causality of the search space, as they make large steps and their produced outputs are very different from their inputs.
 What we would like is an operator that often creates outputs very similar to its input (like `1swap`), but also from time to time samples points a bit farther away in the search space.
 
@@ -289,13 +286,13 @@ We define the `nswap` operator for the JSSP as follows and implement it in [@lst
 7. Store the first-swapped job-id&nbsp;$f$ in&nbsp;$\arrayIndex{\sespel'}{i}$.
 8. Return the now modified copy&nbsp;$\sespel'$ of&nbsp;$\sespel$.
     
-The idea of this operator is that we will perform at least one iteration of the loop (*point&nbsp;5*).
-If we would do exactly one iteration, then we would pick two indices&nbsp;$i$ and&nbsp;$j$, then we will pick two indices where different job-ids are stored, as&nbsp;$l$ must be different from&nbsp;$f$ (*point&nbsp;c* and&nbsp;*d*).
-We would then would swap the jobs at these indices (*points&nbsp;f*, *g*, and&nbsp;*7*).
-So in the case of exactly one iteration of the main loop, this operator behaves exactly the same as&nbsp;`1swap`.
+Here, the idea is that we will perform at least one iteration of the loop (*point&nbsp;5*).
+If we would do exactly one iteration, then we would pick two indices&nbsp;$i$ and&nbsp;$j$ where different job-ids are stored, as&nbsp;$l$ must be different from&nbsp;$f$ (*point&nbsp;c* and&nbsp;*d*).
+We would then swap the jobs at these indices (*points&nbsp;f*, *g*, and&nbsp;*7*).
+In the case of exactly one iteration of the main loop, this operator behaves exactly the same as&nbsp;`1swap`.
 This takes place with a probability of&nbsp;0.5 (*point&nbsp;a*).
 
-If we do two iterations, i.e., pick `TRUE` the first time we arrive at *point&nbsp;a* and `FALSE` the second time, then we swap three job ids-instead.
+If we do two iterations, i.e., pick `TRUE` the first time we arrive at *point&nbsp;a* and `FALSE` the second time, then we swap three job-ids instead.
 Let us say we picked indices&nbsp;$\alpha$ at *point&nbsp;2*, $\beta$ at *point&nbsp;b*, and&nbsp;$\gamma$ when arriving the second time at&nbsp;*b*.
 We will store the job-id originally stored at index&nbsp;$\beta$ at index&nbsp;$\alpha$, the job originally stored at index&nbsp;$\gamma$ at index&nbsp;$\beta$, and the job-id from index&nbsp;$\gamma$ to index&nbsp;$\alpha$.
 *Condition&nbsp;c* prevents index&nbsp;$\beta$ from referencing the same job-id as index&nbsp;$\alpha$ and index&nbsp;$\gamma$ from referencing the same job-id as what was originally stored at index&nbsp;$\beta$.
@@ -308,62 +305,89 @@ The number of iterations will therefore be geometrically distributed with an exp
 Of course, we only have&nbsp;$\jsspMachines$ different job-ids in a finite-length array&nbsp;$\sespel'$, so this is only an approximation.
 Generally, this operator will most often apply small changes and sometimes bigger steps.
 The bigger the search step, the less likely will it be produced.
-The operator therefore can make use of the *causality* while &ndash; at least theoreticaly &ndash; being able to escape from any local optimum.
+The operator therefore can make use of the *causality* while &ndash; at least theoretically &ndash; being able to escape from any local optimum.
 
 #### Results on the JSSP
 
-Let us now compare the end results that our hill climbers can achieve using either the `1swap` or the new `nswap` operator after three minutes of runtime on my little laptop computer in [@tbl:hillClimbingNSwapRSJSSP].
+Let us now compare the end results that our hill climbers can achieve using either the `1swap` or the new `nswap` operator after three minutes of runtime on my laptop computer in [@tbl:jssp_hc_nswap_results].
 
-|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
-|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|`hc_1swap`|717|800|798|28|**0**s|16978|
-|||`hc_nswap`|724|757|757|17|30s|8145596|
-|||`hcr_256_1swap`|738|765|766|7|82s|22881557|
-|||`hcr_256_nswap`|756|774|774|**6**|101s|27375920|
-|||`hcr_256+5%_1swap`|723|742|743|7|21s|5681591|
-|||`hcr_256+5%_nswap`|**707**|**733**|**734**|7|64s|17293038|
-|`la24`|935|`hc_1swap`|999|1095|1086|56|**0**s|6612|
-|||`hc_nswap`|**945**|1017|1015|29|21s|11123744|
-|||`hcr_256_1swap`|975|1001|1002|**6**|91s|49588742|
-|||`hcr_256_nswap`|986|1008|1008|7|100s|52711888|
-|||`hcr_256+5%_1swap`|970|997|998|9|6s|3470368|
-|||`hcr_256+5%_nswap`|**945**|**981**|**984**|9|57s|29246097|
-|`swv15`|2885|`hc_1swap`|3837|4108|4108|137|**1**s|104598|
-|||`hc_nswap`|**3599**|3867|3859|113|70s|11559667|
-|||`hcr_256_1swap`|4069|4173|4177|32|92s|15351798|
-|||`hcr_256_nswap`|4118|4208|4214|**29**|95s|15746919|
-|||`hcr_256+5%_1swap`|3701|3850|3857|40|60s|9874102|
-|||`hcr_256+5%_nswap`|3645|**3804**|**3811**|44|91s|14907737|
-|`yn4`|929|`hc_1swap`|1109|1222|1220|48|**0**s|31789|
-|||`hc_nswap`|1087|1160|1156|33|63s|13111115|
-|||`hcr_256_1swap`|1153|1182|1184|12|90s|18843991|
-|||`hcr_256_nswap`|1163|1198|1199|**11**|91s|18700214|
-|||`hcr_256+5%_1swap`|1095|1129|1130|14|22s|4676669|
-|||`hcr_256+5%_nswap`|**1081**|**1117**|**1119**|14|55s|11299461|
+\relative.input{jssp_hc_nswap_results.md}
 
-: The results of the hill climbers `hc_1swap` and `hc_nswap` with and without restarts. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:hillClimbingNSwapRSJSSP}
+: The results of the hill climbers `hc_1swap` and `hc_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_hc_nswap_results}
 
-When comparing two setups which only differ in the unary operator, we find that in most cases, `nswap` performs better when applied without restarts (`hc_*`) or with restarts after increasing periods of time (`hcr_256+5%_*`).
-Indeed, all the best results we have obtained so far stem from `nswap` setups and the setups with best mean and median performance use `nswap` as well.
-When being restarted, the standard deviations of their results are similar to those with `1swap`, meaning that these setups are similarly reliable.
-Interestingly, for instance `la24`, the makespan of the best discovered solution is now only 1% longer than the lower bound (945 vs. 935).
-For instance `swv15`, however, there is still a 20% gap.
+From [@tbl:jssp_hc_nswap_results], we find that `hc_nswap` performs almost always better than `hc_1swap`.
+Only on instance `abz7`, `hc_1swap` finds the better best solution.
+For all other instances, `hc_nswap` has better best, mean, and median results.
+It also converges much later and often performs 7&nbsp;to 15&nbsp;million function evaluations and consumes 14% to&nbsp;25% of the three minute budget before it cannot improve anymore.
+Still, the hill climber `hcr_16384_1swap` using the `1swap` operator with restarts tends to outperform `hc_nswap`.  
 
-As can be seen when comparing the hill climbers without restart, the `nswap` operator needs longer to converge because half of its steps are bigger than those of `1swap`.
-It utilizes the causality in the search space a bit less.
-This may be the reason why `hcr_256_1swap` tends to be better than `hcr_256_nswap` while `hcr_256+5%_nswap` outperforms `hcr_256+5%_1swap` &nbsp; the restarts happen too early for `nswap`.
-The setups with `nswap` tend to converge later, both in terms of runtime med(t) and med(FEs).
+![The progress of the hill climbers with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hc_nswap_log.svgz}){#fig:jssp_progress_hc_nswap_log width=84%}
 
-[@fig:jssp_progress_hc_1swap_nswap_rs_log] illustrates the progress of the hill climbers with the `1swap` and `nswap` operators.
-While there is quite an improvement when comparing the non-restarting algorithms, the difference between `hcr_256+5%_1swap` and `hcr_256+5%_nswap` does not look that big.
-From [@tbl:hillClimbingNSwapRSJSSP] we know that the `nswap` operator here can squeeze out around 1% of solution quality.
-The Gantt charts of the median solutions obtained with `hcr_256+5%_nswap` setup, illustrated in [@fig:jssp_gantt_hcr_256_5_nswap_med], do thus look similar to those obtained with `hcr_256+5%_1swap` in [@fig:jssp_gantt_hcr_256_5_1swap_med], although there are some slight differences.
-Although 1% savings in makespan does not look much, but in a practical application, even a small improvement can mean a lot of benefit.
+[@fig:jssp_progress_hc_nswap_log] illustrates the progress of the hill climbers with the `1swap` and `nswap` operators.
+While `hc_1swap` stops improving even before one second has elapsed, `hc_nswap` can still improve after ten seconds.
+However, these late improvements are small and occur infrequently.
+It may be that the algorithm arrives in local optima from which it can only escape with complicated muti-swap moves, which are harder to discover by chance.
+
+### Combining Bigger Neighborhood with Restarts
 
 Both restarts and the idea of allowing bigger search steps with small probability are intended to decrease the chance of premature convergence, while the latter one also can investigate more solutions similar to the current best one.
-We have seen that both measures work separately and in this case, we were lucky that they also work hand-in-hand.
-This is not necessarily always the case, in optimization sometimes two helpful measures combined may lead to worse results, as we can see when comparing `hcr_256_1swap` with `hcr_256_nswap`.
+We have seen that both measures work separately.
+The fact that `hc_nswap` improves more and more slowly towards the end of the computational budget means that it may make sense to combine both ideas, restarts and larger neighborhoods.
 
-![The progress of the hill climbers (without and with restarts) with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hc_1swap_nswap_rs_log.svgz}){#fig:jssp_progress_hc_1swap_nswap_rs_log width=84%}
+We plug the `nswap` operator into the hill climber with restarts and obtain algorithm `hcr_L_nswap`.
+We perform the same experiment to find the right setting for the restart limit&nbsp;$L$ as for the `hcr_L_1swap` algorithm and illustrate the results in [@fig:jssp_hcr_nswap_med_over_l].
 
-![The Gantt charts of the median solutions obtained by the&nbsp;`hcr_256+5%_nswap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hcr_256_5_nswap_med.svgz}){#fig:jssp_gantt_hcr_256_5_nswap_med width=84%}
+![The median result quality of the&nbsp;`hcr_nswap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the restart limit parameter&nbsp;$L$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_hcr_nswap_med_over_l.svgz}){#jssp_hcr_nswap_med_over_l width=84%}
+
+The "sweet spot" for the number of unsuccessful FEs before a restart has increased compared to before.
+This makes sense, because we already know that `nswap` can keep improving longer.
+
+#### Results on the JSSP
+
+\relative.input{jssp_hcr_nswap_results.md}
+
+: The results of the hill climber `hcr_L_nswap` with restarts. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_hcr_nswap_results}
+
+From [@tbl:jssp_hcr_nswap_results], where we print the results of `hcr_32768_nswap` and `hcr_65536_nswap`, we can find that the algorithm version with restarts clearly performs better in average than the one without.
+However, it does not always find the best solution, as can be seen on instance `swv15`, where `hc_nswap` finds a schedule of length&nbsp;3602.
+The differences between `hcr_16384_1swap` and `hcr_L_nswap`, however, are quite small.
+If we compare the progress over time of `hcr_16384_1swap` and `hcr_65536_nswap`, then the latter seems to have a slight edge over the former &ndash; but only by about half of a percent.
+This small difference is almost indistinguishable in the progress diagram [@fig:jssp_progress_hcr_nswap_log].
+
+![The progress of the hill climbers with restarts with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hcr_nswap_log.svgz}){#fig:jssp_progress_hcr_nswap_log=84%}
+
+#### Testing for Significance {#sec:hcTestForSignificance}
+
+Still, even small improvements can have a big economical impact.
+Saving 0.5% of 10'000'000&nbsp;RMB is still 50'000&nbsp;RMB.
+The problem is knowing whether such small improvements are true improvements *or* artifacts of the randomness in the algorithm.
+
+In order to understand the latter situation, consider the following thought experiment.
+Assume you have a completely unbiased, uniform source of true random real numbers from the interval&nbsp;$[0,1)$.
+You draw 500&nbsp;such numbers, i.e., have a list&nbsp;$A$ containing 500&nbsp;numbers, each from&nbsp;$[0,1)$.
+Now you repeat the experiment and get another such list&nbsp;$B$.
+Since the numbers stem from a random source, we can expect that&nbsp;$A\neq B$.
+If we compute the medians&nbsp;$A$ and&nbsp;$B$, they are likely to be different as well.
+Actually, I just did exactly this in the `R`&nbsp;programming language and got `median(A)=0.5101432` and `median(B)=0.5329007`.
+Does this mean that the generator producing the numbers in&nbsp;$A$ creates somehow smaller numbers than the generator from which the numbers in&nbsp;$B$ stem?
+Obviously not, because we sampled the numbers from the same source.
+Also, every time I would repeat this experiment, I would get different results.
+
+So how do we know whether or not the sources of&nbsp;$A$ and&nbsp;$B$ are truly different?
+Well, we cannot really know for sure.
+But we can we can make a statement which is wrong with at most a given probability.
+This is called statistical testing, and we discuss it in detail in [@sec:testForSignificance].
+Thus, in order to see whether the observed small performance difference of the `hcr` setups is indeed "real" or just random jitter, we compare their sets of 101&nbsp;end results on each of the problem instances.
+For this purpose, we use the Mann-Whitney U test, as prescribed in [@sec:nonParametricTests].
+
+\relative.input{jssp_hcr_comparison.md}
+
+: The end results of `hcr_16384_1swap` and `hcr_65536_nswap` compared with a Mann-Whitney U test with Bonferroni correction and significance level&nbsp;$\apha=0.02$ on the four JSSP instances. The columns indicate the $p$-values and the verdict (`?` for insignificant). {#tbl:jssp_hcr_comparison}
+
+[@tbl:jssp_hcr_comparison] tells us that, at least on `swv15` and `yn4`, the hill climber with restarts using the `nswap` operator indeed can outperform the one using the `1swap` operator.
+For `abz7`, there certainly is no significant difference.
+The $p$-value of $3.57\!\cdot\!10^{-3}$ on `la24` is already fairly small but still above the Bonferroni-corrected $\alpha'=7.14\!\cdot\!10^{-4}$.
+
+### Summary
+
+In this section, we have learned about our first "reasonable" optimization method.
