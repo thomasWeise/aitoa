@@ -400,3 +400,24 @@ The performance of hill climbing depends very much on the unary search operator.
 If the operator samples from a very small neighborhood only, like our `1swap` operator does, then the hill climber might quickly get trapped in a local optimum.
 A local optimum here is a point in the search space which is surrounded by a neighborhood that does not contain any better solution.
 If this is the case, the two conditions for doing efficient restarts may be fulfilled: quick convergence and variance of result quality.
+
+The question when to restart then arises, as we usually cannot find out if we are actually trapped in a local optimum or whether the improving move (application of the unary operator) just has not been discovered yet. 
+The most primitive solution is to simply set a limit&nbsp;$L$ for the maximum number of moves without improvement that are permitted.
+
+Our `hcr_L_1swap was born.
+We configured&nbsp;$L$ in a small experiment and found that $L=16384$ seemed to be reasonable.
+The setup `hcr_16384_1swap` performed much better than `hc_1swap`.
+
+A second idea to improve the hill climber was to use a unary operator spanning a larger neighborhood, but which still most often sampled solutions similar to current one.
+The `nswap` operator gave better results than than the `1swap` operator in the basic hill climber.
+The take-away message is that different search operators may (well, obviously) deliver different performance and thus, testing some different operators can always be a good idea.
+
+Finally, we tried to combine our two improvements, restarts and better operator, into the `hcr_L_nswap` algorithm.
+Here we learned the lesson that performance improvements do not necessarily add up.
+If we have a method that can deliver an improvement of 10% of solution quality and combine it with another one delivering 15%, we may not get an overall 25% improvement.
+Indeed, our `hcr_65536_nswap` algorithm only performed a bit better than `hcr_16384_1swap`.
+
+From this chapter, we also learned one more lesson:
+Many optimization algorithms have parameters.
+Our hill climber had two: the unary operator and the restart limit&nbsp;$L$.
+Configuring these parameters well can lead to significant improvements.
