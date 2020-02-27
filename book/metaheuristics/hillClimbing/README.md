@@ -382,7 +382,7 @@ For this purpose, we use the Mann-Whitney U test, as prescribed in [@sec:nonPara
 
 \relative.input{jssp_hcr_comparison.md}
 
-: The end results of `hcr_16384_1swap` and `hcr_65536_nswap` compared with a Mann-Whitney U test with Bonferroni correction and significance level&nbsp;$\apha=0.02$ on the four JSSP instances. The columns indicate the $p$-values and the verdict (`?` for insignificant). {#tbl:jssp_hcr_comparison}
+: The end results of `hcr_16384_1swap` and `hcr_65536_nswap` compared with a Mann-Whitney U test with Bonferroni correction and significance level&nbsp;$\alpha=0.02$ on the four JSSP instances. The columns indicate the $p$-values and the verdict (`?` for insignificant). {#tbl:jssp_hcr_comparison}
 
 [@tbl:jssp_hcr_comparison] tells us that, at least on `swv15` and `yn4`, the hill climber with restarts using the `nswap` operator indeed can outperform the one using the `1swap` operator.
 For `abz7`, there certainly is no significant difference.
@@ -391,7 +391,12 @@ The $p$-value of $3.57\!\cdot\!10^{-3}$ on `la24` is already fairly small but st
 ### Summary
 
 In this section, we have learned about our first "reasonable" optimization method.
-The stochastic Hill Climbing algorithm always remembers the best-so-far point in the search space.
+The stochastic hill climbing algorithm always remembers the best-so-far point in the search space.
 In each step, it applies the unary operator to obtain a similar but slightly different point.
 If it is better, then it becomes the new best-so-far point.
 Otherwise, it is forgotten.
+
+The performance of hill climbing depends very much on the unary search operator.
+If the operator samples from a very small neighborhood only, like our `1swap` operator does, then the hill climber might quickly get trapped in a local optimum.
+A local optimum here is a point in the search space which is surrounded by a neighborhood that does not contain any better solution.
+If this is the case, the two conditions for doing efficient restarts may be fulfilled: quick convergence and variance of result quality.
