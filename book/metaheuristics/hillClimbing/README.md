@@ -113,10 +113,10 @@ On `la24`, only one of the four (GA&#8209;PR) has a better best result and all l
 On this instance, `hc_1swap` finds a better best solution than all six GAs in [@A2010RIGAFTJSPACS] and better mean results than five of them.
 In [@sec:evolutionaryAlgorithm], we will later introduce Evolutionary Algorithms, to which GAs belong.
 
-![The Gantt charts of the median solutions obtained by the&nbsp;`hc_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hc_1swap_med.svgz}){#fig:jssp_gantt_hc_1swap_med width=84%}
-
 The Gantt charts of the median solutions of `hc_1swap` are illustrated in [@fig:jssp_gantt_hc_1swap_med].
 They are more compact than those discovered by `rs` and illustrated in [@fig:jssp_gantt_rs_med].
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`hc_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hc_1swap_med.svgz}){#fig:jssp_gantt_hc_1swap_med width=84%}
 
 ![The progress of the&nbsp;`hc_1swap` and&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hc_1swap_log.svgz}){#fig:jssp_progress_hc_1swap_log width=84%}
 
@@ -189,14 +189,16 @@ If we pick it too low, then the algorithm will restart before it actually conver
 If we pick it too much, we waste runtime and do fewer restarts than what we could do.
 
 If we do not know which value for a parameter is reasonable, we can always do an experiment to investigate.
+Since the order of magnitude of the proper value for&nbsp;$L$ is not yet clear, it makes sense to test exponentially increasing numbers.
 Here, we test the powers of two from $2^7=128$ to $2^{18}=262'144$.
 For each value, we plot the scaled median result quality over the 101&nbsp;runs in [@fig:jssp_hcr_1swap_med_over_l].
-
-![The median result quality of the&nbsp;`hcr_1swap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the restart limit parameter&nbsp;$L$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_hcr_1swap_med_over_l.svgz}){#fig:jssp_hcr_1swap_med_over_l width=84%}
+In this diagram, the horizontal axis is logarithmically scaled.
 
 From the plot, we can confirm our expectations:
 Small numbers of&nbsp;$L$ perform bad and high numbers of&nbsp;$L$ cannot really improve above the basic hill climber (which is equivalent to having $L\rightarrow+\infty$).
 For different problem instances, different values of&nbsp;$L$ perform good, but&nbsp;$L\approx2^{14}=16'384$ seems to be a reasonable choice for three of the four instances.
+
+![The median result quality of the&nbsp;`hcr_1swap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the restart limit parameter&nbsp;$L$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_hcr_1swap_med_over_l.svgz}){#fig:jssp_hcr_1swap_med_over_l width=84%}
 
 #### Results on the JSSP
 
@@ -354,7 +356,7 @@ The differences between `hcr_16384_1swap` and `hcr_L_nswap`, however, are quite 
 If we compare the progress over time of `hcr_16384_1swap` and `hcr_65536_nswap`, then the latter seems to have a slight edge over the former &ndash; but only by about half of a percent.
 This small difference is almost indistinguishable in the progress diagram [@fig:jssp_progress_hcr_nswap_log].
 
-![The progress of the hill climbers with restarts with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hcr_nswap_log.svgz}){#fig:jssp_progress_hcr_nswap_log=84%}
+![The progress of the hill climbers with restarts with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hcr_nswap_log.svgz}){#fig:jssp_progress_hcr_nswap_log width=84%}
 
 #### Testing for Significance {#sec:hcTestForSignificance}
 
@@ -384,9 +386,15 @@ For this purpose, we use the Mann-Whitney U test, as prescribed in [@sec:nonPara
 
 : The end results of `hcr_16384_1swap` and `hcr_65536_nswap` compared with a Mann-Whitney U test with Bonferroni correction and significance level&nbsp;$\alpha=0.02$ on the four JSSP instances. The columns indicate the $p$-values and the verdict (`?` for insignificant). {#tbl:jssp_hcr_comparison}
 
-[@tbl:jssp_hcr_comparison] tells us that, at least on `swv15` and `yn4`, the hill climber with restarts using the `nswap` operator indeed can outperform the one using the `1swap` operator.
+From [@tbl:jssp_hcr_comparison] we know that if we would claim "`hcr_16384_1swap` tends to produce results with large makspan than `hcr_65536_nswap` on `abz7`," then, from our experimental data, we can estimate our chance to be wrong to be about 30%.
+In other words, making that claim would be quite a gamble and we can conclude that here, the differences we observed in the experiment are not statistically significant (marked with `?` in the table).
+However, if we would claim the same for `swv15`, our chance to be wrong is about $1\!\cdot\!10^{-10}$, i.e., very small.
+So on `swv15`, we find that `hcr_65536_nswap` very likely performs better.
+
+In summary, [@tbl:jssp_hcr_comparison] tells us that, at least on `swv15` and `yn4`, the hill climber with restarts using the `nswap` operator indeed can outperform the one using the `1swap` operator.
 For `abz7`, there certainly is no significant difference.
 The $p$-value of $3.57\!\cdot\!10^{-3}$ on `la24` is already fairly small but still above the Bonferroni-corrected $\alpha'=7.14\!\cdot\!10^{-4}$.
+Thus, it would make sense to prefer `hcr_65536_nswap` over `hcr_16384_1swap`, although we would not gain that much.
 
 ### Summary
 
@@ -404,9 +412,12 @@ If this is the case, the two conditions for doing efficient restarts may be fulf
 The question when to restart then arises, as we usually cannot find out if we are actually trapped in a local optimum or whether the improving move (application of the unary operator) just has not been discovered yet. 
 The most primitive solution is to simply set a limit&nbsp;$L$ for the maximum number of moves without improvement that are permitted.
 
-Our `hcr_L_1swap was born.
+Our `hcr_L_1swap` was born.
 We configured&nbsp;$L$ in a small experiment and found that $L=16384$ seemed to be reasonable.
 The setup `hcr_16384_1swap` performed much better than `hc_1swap`.
+It should be noted that our experiment used for configuration was not very thorough, but it should suffice at this stage.
+We can also note that it showed that different settings of $L$ are better for different instances.
+This is probably related to the corresponding search space size &ndash; but we will not investigate this any further here.
 
 A second idea to improve the hill climber was to use a unary operator spanning a larger neighborhood, but which still most often sampled solutions similar to current one.
 The `nswap` operator gave better results than than the `1swap` operator in the basic hill climber.

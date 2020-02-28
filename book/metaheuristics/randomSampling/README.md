@@ -46,15 +46,13 @@ Of course, since the algorithm is *randomized*, it may give us a different resul
 In order to understand what kind of solution qualities we can expect, we hence have to run it a couple of times and compute result statistics.
 We therefore execute our program 101&nbsp;times and the results are summarized in [@tbl:singleRandomSampleJSSP], which describes them using simple statistics whose meanings are discussed in-depth in [@sec:statisticalMeasures].
 
-\relative.input{jssp_1rs_results.md}
-
-: The results of the single random sample algorithm&nbsp;`1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound(\objf)$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, the standard deviation *sd* of the result quality, as well as the median time&nbsp;*med(t)* and FEs&nbsp;*med(FEs)* until a run was finished. {#tbl:singleRandomSampleJSSP}
-
-![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_1rs_med.svgz}){#fig:jssp_gantt_1rs_med width=84%}
-
 What we can find in [@tbl:singleRandomSampleJSSP] is that the makespan of the best solution that any of the 101&nbsp;runs has delivered for each of the four JSSP instances is roughly between 60% and 100% longer than the lower bound.
 The arithmetic mean and median of the solution qualities are even between 10% and 20% worse.
 In the Gantt charts of the median solutions depicted in [@fig:jssp_gantt_1rs_med], we can find big gaps between the sub-jobs.
+
+\relative.input{jssp_1rs_results.md}
+
+: The results of the single random sample algorithm&nbsp;`1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound(\objf)$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, the standard deviation *sd* of the result quality, as well as the median time&nbsp;*med(t)* and FEs&nbsp;*med(FEs)* until a run was finished. {#tbl:singleRandomSampleJSSP}
 
 This is completely reasonable.
 After all, we just create a single random solution.
@@ -69,6 +67,8 @@ Hence, almost all of our time budget remains unused.
 At the same time, we already know that that there is a 10-20% difference between the best and the median solution quality among the 101&nbsp;random solutions we created.
 The standard deviation&nbsp;$sd$ of the solution quality also is always above 100&nbsp;time units of makespan.
 So why don't we try to make use of this variance and the high speed of solution creation?
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_1rs_med.svgz}){#fig:jssp_gantt_1rs_med width=84%}
 
 ### Random Sampling Algorithm  {#sec:randomSamplingAlgo}
 
@@ -122,9 +122,9 @@ We are also still relatively far away from the lower bounds of the objective fun
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_rs_med.svgz}){#fig:jssp_gantt_rs_med width=84%}
 
-#### Progress over Time and the Law of Diminishing Returns
-
 ![The progress of the&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_rs_log.svgz}){#fig:jssp_progress_rs_log width=84%}
+
+#### Progress over Time and the Law of Diminishing Returns
 
 Another new feature of our&nbsp;`rs` algorithm is that it truly is an Anytime Algorithm ([@sec:anytimeAlgorithm]).
 It begins with an entirely random solution and tries to find better solutions as time goes by.
