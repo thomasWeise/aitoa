@@ -2,9 +2,10 @@
 
 We now already have one more or less functional, basic optimization method &ndash; the hill climber.
 Different from the random sampling approach, it makes use of some knowledge gathered during the optimization process, namely the best-so-far point in the search space.
-However, only using this point led to the danger of premature convergence, which we tried to battle with two approaches, namely restarts and the search operator `nswap` spanning a larger neighborhood from which we sampled in a non-uniform way.
+However, only using this single point led to the danger of premature convergence, which we tried to battle with two approaches, namely restarts and the search operator `nswap` spanning a larger neighborhood from which we sampled in a non-uniform way.
 These concepts can be transfered rather easily to may different kinds of optimization problems.
-Now we will look at a third concept to prevent premature convergence: Instead of just remembering and utilizing one single point from the search space during our search, we will work on an array of points!
+Now we will look at a third concept to prevent premature convergence:
+Instead of just remembering and utilizing one single point from the search space during our search, we will work on an array of points!
 
 ### Evolutionary Algorithm without Recombination {#sec:evolutionaryAlgorithmWithoutRecombination}
 

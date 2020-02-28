@@ -28,13 +28,15 @@ We will partially sacrifice the formal and abstract structure of&nbsp;[@WGOEB] a
 ```
 
 We use concrete examples and algorithm implementations written in Java.
+While originally written just for educational purposes, the code now has reached sufficient maturity to even allow real experiments.
 All source code is freely available in the repository *[thomasWeise/aitoa-code](\repo.name)* on [GitHub](http://www.github.com).
 Often, we will just look at certain portions of the code, maybe parts of a class, where we omit methods or member variables, or even just snippets from functions.
 Each source code listing is accompanied by a *(src)* link in the caption linking to the current full version of the file in the GitHub repository.
 If you discover an error in any of the examples, please [file an issue](http://github.com/\repo.name/issues).
 
 This book is written using our automated book writing environment, which integrates GitHub, [Travis CI](http://www.travis-ci.org), and [docker](http://www.docker.com)-[hub](http://hub.docker.com).
-The text of the book is actively written and available in the repository *[thomasWeise/aitoa](http://github.com/thomasWeise/aitoa)* on GitHub.
+Many of the charts and tables in the book have been generated with `R`&nbsp;scripts, whose source code is available in the [aitoaEvaluate](http://github.com/thomasWeise/aitoaEvaluate) on GitHub, too.
+The text of the book itself is actively written and available in the repository *[thomasWeise/aitoa](http://github.com/thomasWeise/aitoa)* on GitHub.
 There, you can also submit *[issues](http://github.com/thomasWeise/aitoa/issues)*, such as change requests, suggestions, errors or typos, or you can inform me that something is unclear, so that I can improve the book.
 
 | &nbsp;
