@@ -1,4 +1,4 @@
-### Averages: Arithmetic Mean vs. Median
+### Averages: Arithmetic Mean vs. Median {#sec:meanVsMedian}
 
 Assume that we have obtained a sample&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n-1})$ of $n$&nbsp;observations from an experiment, e.g., we have measured the quality of the best discovered solutions of 101 independent runs of an optimization algorithm.
 We usually want to get reduce this set of numbers to a single value which can give us an impression of what the "average outcome" (or result quality is).

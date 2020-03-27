@@ -121,14 +121,22 @@ They are more compact than those discovered by `rs` and illustrated in [@fig:jss
 ![The median of the progress of the&nbsp;`hc_1swap` and&nbsp;`rs` algorithm over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). Different from [@fig:jssp_progress_rs_log], we do not plot the single runs but only shade areas between quantiles.](\relative.path{jssp_progress_hc_1swap_log.svgz}){#fig:jssp_progress_hc_1swap_log width=84%}
 
 [@fig:jssp_progress_hc_1swap_log] shows how both&nbsp;`hc_1swap` and&nbsp;`rs` progress over time.
+In [@fig:jssp_progress_rs_log], we plotted every individual run.
+This time, we plot the median (see [@sec:meanVsMedian]) of achieved quality at each time step as thick line.
+In the background, we plot the whole range of the values as semi-transparent region.
+The more runs fall into one region, the stronger we plot the color:
+In the outer borders of the lightest color shade mark the range between the maximum and minimum run.
+The next stronger-shaded region contains about 95% of the runs.
+Then follow by 68% of the runs while the strongest-shaded region holds half of the runs.
+
 It should be noted that I designed the experiments in such a way that there were 101 different random seeds per instance.
 For each instance, all algorithms use the same random seeds, i.e., the hill climber and random sampling start with the same initial solutions.
-On the logarithmically scaled plots, this is almost invisible.
-The runs of the two different algorithms separate almost immediately.
+Still, the runs of the two different algorithms separate almost immediately.
+ 
 We already knew from [@tbl:jssp_hc_1swap_results] that&nbsp;`hc_1swap` converges very quickly.
 After initial phases with quick progress, it stops making any further progress, usually before 1000&nbsp;milliseconds have been consumed.
 This fits well to the values `med(t)` given in [@tbl:jssp_hc_1swap_results].
-With the exception of instance&nbsp;`la24`, there is much space between the runs of&nbsp;`rs` and&nbsp;`hc_1swap`.
+With the exception of instance&nbsp;`la24`, where two runs of the hill climber performed exceptionally bad, there is much space between the runs of&nbsp;`rs` and&nbsp;`hc_1swap`.
 We can also see again that there is more variance in the end results of&nbsp;`hc_1swap` compared to those of&nbsp;`rs`, as they are spread wider in the vertical direction.
 
 ### Stochastic Hill Climbing with Restarts {#sec:stochasticHillClimbingWithRestarts}
