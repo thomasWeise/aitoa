@@ -257,7 +257,7 @@ One cause for this problem in our hill climber is the design of unary operator.
 Since the solutions are encoded as integer arrays of length&nbsp;$\jsspMachines*\jsspJobs$, there are&nbsp;$\jsspMachines*\jsspJobs$ choices to pick the index of the first job to be swapped.
 Since we swap only with *different* jobs and each job appears&nbsp;$\jsspMachines$ times in the encoding, this leaves&nbsp;$\jsspMachines*(\jsspJobs-1)$ choices for the second swap index.
 We can also ignore equivalent swaps, e.g., exchanging the jobs at indexes $(10,5)$ and $(5,10)$ would result in the same outcome.
-In total, from any given point in the search space, `1swap` may reach&nbsp;$0.5*\jsspMachines*\jsspJobs*\jsspMachines*(\jsspJobs-1)=0.5*(\jsspMachines^2 \jsspJobs^2-\jsspJobs)$ different other points.
+In total, from any given point in the search space, `1swap` may reach&nbsp;$0.5*\jsspMachines*\jsspJobs*\jsspMachines*(\jsspJobs-1)=0.5*\jsspMachines^2(\jsspJobs^2-\jsspJobs)$ different other points.
 Some of these points may still actually encode the same candidate solutions, i.e., identical schedules.
 In other words, the neighborhood spanned by our `1swap`&nbsp;operator equals only a tiny fraction of the big search space (remember [@tbl:jsspSearchSpaceTable]).
 
