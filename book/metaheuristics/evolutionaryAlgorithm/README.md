@@ -1,16 +1,16 @@
 ## Evolutionary Algorithm {#sec:evolutionaryAlgorithm}
 
-We now already have one more or less functional, basic optimization method &ndash; the hill climber.
+We now already have one functional, basic optimization method &ndash; the hill climber.
 Different from the random sampling approach, it makes use of some knowledge gathered during the optimization process, namely the best-so-far point in the search space.
-However, only using this single point led to the danger of premature convergence, which we tried to battle with two approaches, namely restarts and the search operator `nswap` spanning a larger neighborhood from which we sampled in a non-uniform way.
-These concepts can be transfered rather easily to may different kinds of optimization problems.
+However, only using this single point led to the danger of premature convergence, which we tried to battle with two approaches, namely restarts and the search operator `nswap`, spanning a larger neighborhood from which we sampled in a non-uniform way.
+These concepts can be transfered rather easily to many different kinds of optimization problems.
 Now we will look at a third concept to prevent premature convergence:
 Instead of just remembering and utilizing one single point from the search space during our search, we will work on an array of points!
 
 ### Evolutionary Algorithm without Recombination {#sec:evolutionaryAlgorithmWithoutRecombination}
 
 Today, there exists a wide variant of Evolutionary Algorithms (EAs)&nbsp;[@WGOEB; @BFM1997EA; @G1989GA; @DJ2006ECAUA; @M1996GADSEP; @M1998GA; @CWM2012VOEAFRWA; @S2003ITSSAO].
-We will begin with a very simple, yet efficient variant: the $(\mu+\lambda)$&nbsp;EA without recombination.[^EA:no:recombination]
+We will here discuss a simple yet efficient variant: the $(\mu+\lambda)$&nbsp;EA without recombination.[^EA:no:recombination]
 This algorithm always remembers the best&nbsp;$\mu\in\naturalNumbersO$ points in the search space found so far.
 In each step, it derives&nbsp;$\lambda\in\naturalNumbersO$ new points from them by applying the unary search operator.
 
@@ -27,7 +27,7 @@ The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm works as follows:
     b. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
     c. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 4. Repeat until the termination criterion is met:
-    d. Sort the array&nbsp;$P$ according to the objective values such that the records with better associated objective value&nbsp;$\obspel$ are located at smaller indices. For minimization problems, this means elements with smaller objective values come first.
+    d. Sort the array&nbsp;$P$ according to the objective values such that the records&nbsp;$r$ with better associated objective value&nbsp;$\elementOf{r}{\obspel}$ are located at smaller indices. This means that elements with better objective values come first.
     e. Shuffle the first&nbsp;$\mu$ elements of&nbsp;$P$ randomly.
     f. Set the first source index&nbsp;$p=-1$.
     g. For index&nbsp;$i$ ranging from&nbsp;$\mu$ to&nbsp;$\mu+\lambda-1$ do
@@ -35,7 +35,7 @@ The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm works as follows:
         ii. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the unary search operator to the point stored at index&nbsp;$p$.
         iii. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
         iv. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
-5. Return the candidate solution corresponding to the best record in&nbsp;$P$ to the user.
+5. Return the candidate solution corresponding to the best record in&nbsp;$P$ (i.e., the best-ever encountered solution) to the user.
 
 \repo.listing{lst:EAwithoutCrossover}{An excerpt of the implementation of the Evolutionary Algorithm algorithm **without** crossover.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,withoutcrossover}
 
@@ -46,7 +46,7 @@ Basically, it starts out by creating and evaluating&nbsp;$\mu+\lambda$ random ca
 
 \text.block{definition}{populationEA}{The array of solutions under investigation in an EA is called *population*.}
 
-In each generation, the&nbsp;$\mu$ best points in the population&nbsp;$P$ are retained and the other&nbsp;$\lambda$ solutions are overwritten.
+In each generation, the&nbsp;$\mu$ best points in the population&nbsp;$P$ are retained and the other&nbsp;$\lambda$ solutions are overwritten with newly sampled points.
 
 \text.block{definition}{selectionEA}{The *selection* step in an Evolutionary Algorithm picks the set of points in the search space from which new points should be derived. This usually involves choosing a smaller number&nbsp;$\mu\in\naturalNumbersO$ of points from a larger array&nbsp;$P$.&nbsp;[@WGOEB; @BT1995ACOSSUIGA; @CDC1996AOSAAMCA; @BFM1997EA; @M1998GA]}
 
@@ -55,62 +55,64 @@ This way, the best&nbsp;$\mu$ solutions end up at the front of the array on the 
 The worse&nbsp;$\lambda$ solutions are at index&nbsp;$\mu$ to&nbsp;$\mu+\lambda-1$.
 These are overwritten by sampling points from the neighborhood of the&nbsp;$\mu$ selected solutions by applying the unary search operator (which, in the context of EAs, is often called *mutation* operator).
 
+\text.block{definition}{parentsEA}{The selected points in an Evolutionary Algorithm are called *parents*.}
+
+\text.block{definition}{offspringEA}{The points in an Evolutionary Algorithm that are sampled from the neighborhood of the parents by applying search operators are called *offspring*.}
+
 \text.block{definition}{reproductionEA}{The *reproduction* step in an Evolutionary Algorithm uses the selected&nbsp;$\mu\in\naturalNumbersO$ points from the search space to derive&nbsp;$\lambda\in\naturalNumbersO$ new points.}
 
 For each new point to be created during the reproduction step, we apply a search operator to one of the selected&nbsp;$\mu$ points.
 Therefore, the index&nbsp;$p$ identifies the point to be used as source for sampling the next new solution.
 By incrementing&nbsp;$p$ before each application of the search operator, we try to make sure that each of the selected points is used approximately equally often to create new solutions.
 Of course, $\mu$ and&nbsp;$\lambda$ can be different (often&nbsp;$\lambda>\mu$), so if we would just keep increasing&nbsp;$p$ for&nbsp;$\lambda$ times, it could exceed&nbsp;$\mu$.
-We thus performing a modulo division with&nbsp;$\mu$, i.e., set&nbsp;$p$ to the remainder of the division with&nbsp;$\mu$, which makes sure that&nbsp;$p$ will be in&nbsp;$0\dots(\mu-1)$.
+We thus perform a modulo division with&nbsp;$\mu$, i.e., set&nbsp;$p$ to the remainder of the division with&nbsp;$\mu$, which makes sure that&nbsp;$p$ will be in&nbsp;$0\dots(\mu-1)$.
 
 If $\mu\neq\lambda$, then the best solutions in&nbsp;$P$ tend to be used more often, since they may "survive" selection several times and often be at the front of&nbsp;$P$.
 This means that, in our algorithm, they would be used more often as input to the search operator.
-To make our algorithm more fair, we randomly shuffle the selected&nbsp;$\mu$ points (*point&nbsp;f*) &ndash; their actual order does not matter, as they have already been selected.
+To make our algorithm more fair, we randomly shuffle the selected&nbsp;$\mu$ points (*point&nbsp;f*).
+This does not change the fact that they have been selected.
 
-#### Results on the JSSP
+#### The Right Setup {#sec:eaNoCrSetup}
 
 After implementing the $(\mu+\lambda)$&nbsp;EA as discussed above, we already have all the ingredients ready to apply to the JSSP.
 We need to decide which values for&nbsp;$\mu$ and&nbsp;$\lambda$ we want to use.
 The configuration of EAs is a whole research area itself.
-Here, let us just set&nbsp;$\mu=\lambda$ and test the values 16, 32, 64, 512, 2048, and 4096.
-We find that the two fairly large values 2048 and 4096 give the best results, so we will focus on them.
-We will call the corresponding setups `ea2048` and `ea4096`, respectively.
-As unary search operators, we test again `1swap` and `nswap`.
-The results are given in [@tbl:eaNoCrHCJSSP], together with those of our best hill climber with restarts `hcr_256+5%_nswap`.
+The question arises which values for $\mu$ and $\lambda$ are reasonable.
+Without investigating whether this is the best idea, let us set $\mu=\lambda$ here, so we only have two parameters to worry about: $\mu$ and the unary search operator.
+We already have two unary search operators.
+Let us call our algorithms of this type `ea_mu_unary`, where `mu` will stand for the value of&nbsp;$\mu$ and&nbsp;$\lambda$ and `unary` can be either `1swap` or `nswap`.
+We no therefore do a similar experiment as in [@sec:hillClimberWithRestartSetup] in order to find the right parameters. 
 
-|$\instance$|$\lowerBound(\objf)$|setup|best|mean|med|sd|med(t)|med(FEs)|
-|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|`hcr_256+5%_nswap`|707|733|734|**7**|64s|17'293'038|
-|||`ea2048_1swap`|695|719|718|13|**11**s|2'581'614|
-|||`ea2048_nswap`|694|714|714|12|18s|4'271'587|
-|||`ea4096_1swap`|**688**|716|716|12|19s|4'416'129|
-|||`ea4096_nswap`|692|**711**|**710**|10|34s|7'888'233|
-|`la24`|935|`hcr_256+5%_nswap`|945|981|984|**9**|57s|29'246'097|
-|||`ea2048_1swap`|945|983|983|16|**2**s|927'000|
-|||`ea2048_nswap`|943|980|984|15|3s|1'329'883|
-|||`ea4096_1swap`|941|980|978|14|5s|1'897'387|
-|||`ea4096_nswap`|**938**|**976**|**975**|13|6s|2'512'530|
-|`swv15`|2885|`hcr_256+5%_nswap`|3645|3804|3811|**44**|**91**s|14'907'737|
-|||`ea2048_1swap`|3395|3535|3530|78|128s|19'290'521|
-|||`ea2048_nswap`|**3374**|**3521**|**3517**|70|157s|22'976'339|
-|||`ea4096_1swap`|3397|3533|3533|54|171s|25'073'630|
-|||`ea4096_nswap`|3421|3543|3539|46|178s|25'678'144|
-|`yn4`|929|`hcr_256+5%_nswap`|1081|1117|1119|**14**|55s|11'299'461|
-|||`ea2048_1swap`|1032|1082|1082|22|**26**s|4'792'622|
-|||`ea2048_nswap`|1034|1074|1073|19|41s|7'514'890|
-|||`ea4096_1swap`|**1020**|1076|1074|21|39s|6'907'692|
-|||`ea4096_nswap`|1034|**1068**|**1067**|18|56s|9'976'531|
+![The median result quality of the&nbsp;`ea_mu_unary` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the population size parameter&nbsp;$\mu=\lambda$ and the two unary search operators `1swap` and `nswap`. The best values of&nbsp;$\mu$ for each operator and instance are marked with bold symbols.](\relative.path{jssp_ea_nocr_med_over_mu.svgz}){#fig:jssp_ea_nocr_med_over_mu width=84%}
 
-: The results of the Evolutionary Algorithms without crossover in comparison to the best hill climber with restarts setup `hcr_256+5%_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:eaNoCrHCJSSP}
+In [@fig:jssp_ea_nocr_med_over_mu], we illustrate this experiment.
+Regarding $\mu$ and $\lambda$, we observe the same situation as with the restarts parameters hill climber.
+There is a "sweet spot" somewhere between small and large population sizes.
+For small values of $\mu$, the algorithm may land in a local optimum too quickly, whereas for large values, it may not be able to perform sufficiently many generations to arrive at a good solution.
+The setting $\mu=\lambda=16'384$ seems to work well for instances `abz7`, `la25`, and `yn4`.
+Interestingly, instance `swv15` behaves different: here, a $\mu=\lambda=1024$ works best.
+It is quite common in optimization that different problem instances may require different setups to achieve the best performance &ndash; but here we see it very pronounced
 
-[@tbl:eaNoCrHCJSSP] shows us that we can improve the best, mean, and median solution quality that we can get within three minutes of runtime by at least three percent when using our EA setups instead of the hill climber.
-The exception is case `la24`, where the hill climber already came close to the lower bound of the makespan.
-Here, the best solution encountered now has a makespan which is only 0.3% longer than what is theoretically possible.
-Nevertheless, we find quite a tangible improvement in case `swv15`.
+Regarding the choice of the unary search operator:
+With the exception of problem `swv15`, both operators provide the same median result quality.
+In the other setups, if one of the two is better, it is most of the time `nswap`.
 
-The bigger setting 4096 for&nbsp;$\mu$ and&nbsp;$\lambda$ tends to work better, except for instance&nbsp;`swv15`, where 2048 gives us better results.
-It is quite common in optimization that different problem instances may require different setups to achieve the best performance.
-The`nswap` operator again works better than `1swap`.
+Therefore, we will consider the two setups `ea_16384_nswap` and `ea_1024_nswap` when evaluating the performance of our Evolutionary Algorithms.
+
+#### Results on the JSSP
+
+Let us now compare the results of the best two EA setups with those that we obtained with the hill climber.
+
+\relative.input{jssp_ea_nocr_results.md}
+
+: The results of the Evolutionary Algorithm `ea_mu_nswap` without crossover in comparison with the best hill climber `hc_nswap` and the best hill climber with restarts `hcr_65536_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_ea_nocr_results}
+
+[@jssp_ea_nocr_results] shows us that we can improve the best, mean, and median solution quality that we can get within three minutes of runtime when using our either of the two EA setups instead of the hill climber.
+The exception is case `la24`, where the hill climber already came close to the lower bound of the makespan and has a better best solution than `ea_16384_nswap`.
+Here, the best solution encountered now has a makespan which is only 0.7% longer than what is theoretically possible.
+Nevertheless, we find quite a tangible improvement in case `swv15` on `ea_1024_nswap`.
+
+// todo
 
 The best solution quality for `abz7` delivered by `ea4096_1swap` is better than the best result found by the old Fast Simulated Annealing algorithm which was improved in&nbsp;[@AKZ2016FSAHWQFSJSSP], and both `ea4096_1swap` and `ea4096_nswap` find better best solutions on `la24` as well (but are slower and have worse mean results and we also did more runs).
 Later, in [@sec:simulatedAnnealing], we will introduce Simulated Annealing.  

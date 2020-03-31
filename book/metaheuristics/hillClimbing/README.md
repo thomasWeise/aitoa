@@ -199,6 +199,8 @@ The problem that we have is that we do not know which value of&nbsp;$L$ is right
 If we pick it too low, then the algorithm will restart before it actually converges to a local optimum, i.e., stop while it could still improve.
 If we pick it too high, we waste runtime and do fewer restarts than what we could do.
 
+#### The Right Setup {#sec:hillClimberWithRestartSetup}
+
 If we do not know which value for a parameter is reasonable, we can always do an experiment to investigate.
 Since the order of magnitude of the proper value for&nbsp;$L$ is not yet clear, it makes sense to test exponentially increasing numbers.
 Here, we test the powers of two from $2^7=128$ to $2^{18}=262'144$.
