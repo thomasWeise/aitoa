@@ -112,37 +112,53 @@ The exception is case `la24`, where the hill climber already came close to the l
 Here, the best solution encountered now has a makespan which is only 0.7% longer than what is theoretically possible.
 Nevertheless, we find quite a tangible improvement in case `swv15` on `ea_1024_nswap`.
 
-// todo
+Our `ea_16384_nswap` outperforms the four Evolutionary Algorithms from&nbsp;[@JPDS2014CAODRIGAFJSSP] both in terms of mean and best result quality on `abz7` and `la24`.
+It does the same for HIMGA-Mutation, the worst of the four HIMGA variants introduced in&nbsp;[@K2015ANHIMGAFJSSP], for `abz7`, `la24`, and `yn4`.
+It obtains better results than the PABC from&nbsp;[@SMM2018PABCPFJSSP] on `swv15`.
+On `la24`, both in terms of mean and best result, it outperforms also all six EAs from&nbsp;[@A2010RIGAFTJSPACS], both versions of the EA in&nbsp;[@ODP2010STJSPWARKGAWIP], and the LSGA from&nbsp;[@OV2004LSGAFTJSSP]. 
+The best solution quality for `abz7` delivered by `ea_16384_nswap` is better than the best result found by the old Fast Simulated Annealing algorithm which was improved in&nbsp;[@AKZ2016FSAHWQFSJSSP].
 
-The best solution quality for `abz7` delivered by `ea4096_1swap` is better than the best result found by the old Fast Simulated Annealing algorithm which was improved in&nbsp;[@AKZ2016FSAHWQFSJSSP], and both `ea4096_1swap` and `ea4096_nswap` find better best solutions on `la24` as well (but are slower and have worse mean results and we also did more runs).
-Later, in [@sec:simulatedAnnealing], we will introduce Simulated Annealing.  
+![The Gantt charts of the median solutions obtained by the&nbsp;`ea_16384_nswap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_ea_16384_nocr_nswap_med.svgz}){#fig:jssp_gantt_ea_16384_nocr_nswap_med width=84%}
 
-The Gantt charts of the median solutions of `ea4096_nswap` are illustrated in [@fig:jssp_gantt_ea4096_nswap_med].
-More interesting are the progress diagrams of `ea4096_nswap`, `ea2048_nswap`, and&nbsp;`hcr_256+5%_nswap` in [@fig:jssp_progress_ea_nocr_hc_log].
+![The median of the progress of the&nbsp;`ea_16384_nswap`, `ea_1024_nswap`, `hcr_65536_nswap`, and&nbsp;`hc_nswap` algorithms over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_ea_nocr_nswap_log.svgz}){#fig:jssp_progress_ea_nocr_nswap_log width=84%}
+
+The Gantt charts of the median solutions of `ea_16384_nswap` are illustrated in [@fig:jssp_gantt_ea_16384_nocr_nswap_med].
+They appear only a bit denser than those in [@fig:jssp_gantt_hcr_16384_1swap_med].
+
+More interesting are the progress diagrams of the `ea_16384_nswap`, `ea_1024_nswap`, `hcr_65536_nswap`, and&nbsp;`hc_nswap` algorithms given in [@fig:jssp_progress_ea_nocr_nswap_log].
 Here we find big visual differences between the way the EAs and hill climbers proceed.
-The EAs spend the first 100ms to discover some basins of attraction of local optima before speeding up.
-The larger the population, the longer it takes them until this happens.
+The EAs spend the first 10 to 1000&nbsp;ms to discover some basins of attraction of local optima before speeding up.
+The larger the population, the longer it takes them until this happens:
+The difference between `ea_16384_nswap`, is very obvious `ea_1024_nswap` in this respect.
 It is interesting to notice that the two problems where the EAs visually outperform the hill climber the most, `swv15` and `yn4`, are also those with the largest search spaces (see [@tbl:jsspSearchSpaceTable]).
-`la24`, however, which already can "almost be solved" by the hill climber and where there are the smallest differences in perfomance, is the smallest instance.
+`la24`, however, which already can "almost be solved" by the hill climber and where there are the smallest differences in performance, is the smallest instance.
 The population used by the EA seemingly guards against premature convergence and allows it to keep progressing for a longer time.
 
-![The Gantt charts of the median solutions obtained by the&nbsp;`ea4096_nswap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_ea4096_nswap_med.svgz}){#fig:jssp_gantt_ea4096_nswap_med width=84%}
-
-![The progress of the&nbsp;`ea4096_nswap`, `ea2048_nswap`, and&nbsp;`hcr_256+5%_nswap` algorithms over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_ea_nocr_hc_log.svgz}){#fig:jssp_progress_ea_nocr_hc_log width=84%}
+We also notice that &ndash; for the first time in our endeavor to solve the JSSP &ndash; runtime is the limiting factor.
+If we would have 20&nbsp;minutes instead of three, then we could not expect much improvement from the hill climbers.
+Even with restarts, they already improve very slowly towards the end of the computational budget.
+Tuning their parameter, e.g., increasing the time until a restart is performance, will probably not help.
+However, we can clearly see that `ea_16384_nswap` has not converged on neither `abz7`, `swv15`, nor on `yn4` after the three minutes.
+Its median curve is still clearly pointing downwards.
+And even if it had converged:
+If we had a larger computational budget, we could increase the population size.
+The reason why the performance for larger populations in [@fig:jssp_ea_nocr_med_over_mu] gets worse is very likely the limited time budget.
 
 #### Exploration versus Exploitation {#sec:ea:exploration:exploitation}
 
-Naturally, we may ask why the population is helpful in the search.
-First of all, we can consider it as a "generalized" version of the Hill Climber.
-If we would set&nbsp;$\mu=1$ and&nbsp;$\lambda=1$, then we would always remember the best solution we had so far and, in each generation, derive one new solution from it.
-This is the hill climber.
+Naturally, when discussing EAs, we may ask why the population is helpful in the search.
+While we now have some anecdotal evidence that this is the case, we may also think about this more philosophically.
+Let us therefore do a thought experiment.
+If we would set&nbsp;$\mu=1$ and&nbsp;$\lambda=1$, then the EA would always remember the best solution we had so far and, in each generation, derive one new solution from it.
+If it is better, it will replace the remembered solution.
+Such an EA is actually a hill climber.
 
-Now imagine what would happen if we would set&nbsp;$\mu$ to infinity.
+Now imagine what would happen if we would set&nbsp;$\mu$ to infinity instead.
 We then would remember each and every point in the search space we would have ever visited during the search.
 We would not perform any actual selection, as we would always select all points.
 Our search would not be steered in any direction, there would not be any *bias* or preference for better solutions.
 Due to the fairness of our algorithm when it comes to selecting "parent" points for sampling, each of the past solutions would have the same chance to be the input to the unary search operator to produce the next point to visit.
-In other words, the EA would be some wierd version of random sampling.
+In other words, the EA would be some weird version of random sampling.
 
 The parameter&nbsp;$\mu$ basically allows us to "tune" between these two behaviors&nbsp;[@WWCTL2016GVLSTIOPSOEAP]!
 If we pick it small, our algorithm becomes more "greedy".
@@ -161,7 +177,7 @@ The hill climber only used the information in current-best solution as guide for
 Now we have a set of&nbsp;$\mu$ selected points from the search space.
 These points have, well, been selected.
 At least after some time has passed in our optimization process, "being selected" means "being good".
-If you compare the Gantt charts of the median solutions of `ea4096_nswap` ([@fig:jssp_gantt_ea4096_nswap_med]) and `hcr_256+5%_nswap` ([@fig:jssp_gantt_hcr_256_5_1swap_med]), you can see some good solutions, which, however, do differ in some details.
+If you compare the Gantt charts of the median solutions of `ea4096_nswap` ([@fig:jssp_gantt_ea_16384_nocr_nswap_med]) and `hcr_256+5%_nswap` ([@fig:jssp_gantt_hcr_256_5_1swap_med]), you can see some good solutions, which, however, do differ in some details.
 Wouldn't it be nice if we could take two good solutions and derive a solution "in between," a new solution which is similar to both of its "parents"?
 
 This is the idea of the binary search operator (also often referred to as *recombination* or *crossover* operator).
@@ -312,7 +328,7 @@ So we need to carefully analyze whether the small improvements that our binary o
 ![The progress of the&nbsp;`ea4096_nswap` setup without binary operator compared to those of `ea4096_nswap_5` and&nbsp;`ea4096_nswap_30`, which apply the binary operator in 5% and 30% of the reproduction steps, over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_ea_cr_log.svgz}){#fig:jssp_progress_ea_cr_log width=84%}
 
 Indeed, if we look at the progress of the setups `ea4096_nswap`, `ea4096_nswap_5`, and `ea4096_nswap_30` over time (illustrated in [@fig:jssp_progress_ea_cr_log]), we find that they look quite similar.
-Also the schedules of median quality obtained by `ea4096_nswap_5` and plotted in [@fig:jssp_gantt_ea4096_nswap_5_med] do not look very different from those of `ea4096_nswap` shown in [@fig:jssp_gantt_ea4096_nswap_med].
+Also the schedules of median quality obtained by `ea4096_nswap_5` and plotted in [@fig:jssp_gantt_ea4096_nswap_5_med] do not look very different from those of `ea4096_nswap` shown in [@fig:jssp_gantt_ea_16384_nocr_nswap_med].
 Of course, applying an operator only 5% of the time, which here seems to be the better choice, will probably not change the algorithm behavior very much.
 Furthermore, in instance `la24`, we are already very close to lower bound defining the best possible solution quality that can theoretically be reached.
 

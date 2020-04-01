@@ -235,7 +235,7 @@ In other words, even with such a simple algorithm we can already achieve results
 
 ![The Gantt charts of the median solutions obtained by the `hcr_16384_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hcr_16384_1swap_med.svgz}){#fig:jssp_gantt_hcr_16384_1swap_med width=84%}
 
-![The progress of the algorithms `rs`, `hc_1swap`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hcr_1swap_log.svgz}){#fig:jssp_progress_hcr_1swap_log width=84%}
+![The Median of the progress of the algorithms `rs`, `hc_1swap`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_hcr_1swap_log.svgz}){#fig:jssp_progress_hcr_1swap_log width=84%}
 
 The median solutions discovered by `hcr_16384_1swap`, illustrated in [@fig:jssp_gantt_hcr_16384_1swap_med], again show less wasted time.
 The scheduled jobs again move a bit closer together.
@@ -340,7 +340,7 @@ For all other instances, `hc_nswap` has better best, mean, and median results.
 It also converges much later and often performs 7&nbsp;to 15&nbsp;million function evaluations and consumes 14% to&nbsp;25% of the three minute budget before it cannot improve anymore.
 Still, the hill climber `hcr_16384_1swap` using the `1swap` operator with restarts tends to outperform `hc_nswap`.  
 
-![The progress of the hill climbers with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hc_nswap_log.svgz}){#fig:jssp_progress_hc_nswap_log width=84%}
+![Median of the progress of the hill climbers with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_hc_nswap_log.svgz}){#fig:jssp_progress_hc_nswap_log width=84%}
 
 [@fig:jssp_progress_hc_nswap_log] illustrates the progress of the hill climbers with the `1swap` and `nswap` operators.
 Initially, both algorithms behave very similar in median.
@@ -375,7 +375,7 @@ The differences between `hcr_16384_1swap` and `hcr_L_nswap`, however, are quite 
 If we compare the progress over time of `hcr_16384_1swap` and `hcr_65536_nswap`, then the latter seems to have a slight edge over the former &ndash; but only by about half of a percent.
 This small difference is almost indistinguishable in the progress diagram [@fig:jssp_progress_hcr_nswap_log].
 
-![The progress of the hill climbers with restarts with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_hcr_nswap_log.svgz}){#fig:jssp_progress_hcr_nswap_log width=84%}
+![Median of the progress of the hill climbers with restarts with the `1swap` and `nswap` operators over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_hcr_nswap_log.svgz}){#fig:jssp_progress_hcr_nswap_log width=84%}
 
 #### Testing for Significance {#sec:hcTestForSignificance}
 
