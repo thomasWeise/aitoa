@@ -107,7 +107,7 @@ Let us now compare the results of the best two EA setups with those that we obta
 
 : The results of the Evolutionary Algorithm `ea_mu_nswap` without crossover in comparison with the best hill climber `hc_nswap` and the best hill climber with restarts `hcr_65536_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_ea_nocr_results}
 
-[@jssp_ea_nocr_results] shows us that we can improve the best, mean, and median solution quality that we can get within three minutes of runtime when using our either of the two EA setups instead of the hill climber.
+[@tbl:jssp_ea_nocr_results] shows us that we can improve the best, mean, and median solution quality that we can get within three minutes of runtime when using our either of the two EA setups instead of the hill climber.
 The exception is case `la24`, where the hill climber already came close to the lower bound of the makespan and has a better best solution than `ea_16384_nswap`.
 Here, the best solution encountered now has a makespan which is only 0.7% longer than what is theoretically possible.
 Nevertheless, we find quite a tangible improvement in case `swv15` on `ea_1024_nswap`.
