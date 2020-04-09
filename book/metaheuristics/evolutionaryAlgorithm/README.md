@@ -486,14 +486,15 @@ Especially on instance `swv15`, the new algorithm performs much better than `ea_
 Most remarkable is that we can even solve instance `la24` to optimality once.
 The median solutions of our new algorithm variant are illustrated in [@fig:jssp_gantt_eac_4_0d05_nswap_med].
 Compared to [@fig:jssp_gantt_ea_16384_nocr_nswap_med], the result on `swv15` has improved: especially the upper-left and lower-right corners of the Gantt chart, where only few jobs are scheduled, have visibly become smaller.
-We plot the discovered optimal solution for `la24` in [@fig:jssp_gantt_eac_4_0d05_nswap_la24_min].
-Comparing it with the median solution for `la24` in [@fig:jssp_gantt_eac_4_0d05_nswap_med], time was saved, e.g., by arranging the jobs in the top-left corner in a tighter pattern. 
-
-![One *optimal* Gantt charts for instance `la24`, discovered by the&nbsp;`eac_4_5%_nswap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_eac_4_0d05_nswap_la24_min.svgz}){#fig:jssp_gantt_eac_4_0d05_nswap_la24_min width=84%}
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`eac_4_5%_nswap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_eac_4_0d05_nswap_med.svgz}){#fig:jssp_gantt_eac_4_0d05_nswap_med width=84%}
 
 ![The median of the progress of the&nbsp;`eac_4_5%_nswap` in comparison to the `ea_8192_5%_nswap` and&nbsp;`hcr_65536_nswap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_eac_nswap_log.svgz}){#fig:jssp_progress_eac_nswap_log width=84%}
+
+We plot the discovered optimal solution for `la24` in [@fig:jssp_gantt_eac_4_0d05_nswap_la24_min].
+Comparing it with the median solution for `la24` in [@fig:jssp_gantt_eac_4_0d05_nswap_med], time was saved, e.g., by arranging the jobs in the top-left corner in a tighter pattern. 
+
+![One *optimal* Gantt charts for instance `la24`, discovered by the&nbsp;`eac_4_5%_nswap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_eac_4_0d05_nswap_la24_min.svgz}){#fig:jssp_gantt_eac_4_0d05_nswap_la24_min width=84%}
 
 From the progress charts plotted in [@fig:jssp_progress_eac_nswap_log], we can confirm that `eac_4_5%_nswap` indeed behaves more similar to the hill climber `hcr_65536_nswap` than to the other EA `ea_8192_5%_nswap`.
 This is due to its small population size.
