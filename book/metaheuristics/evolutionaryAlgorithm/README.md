@@ -350,7 +350,7 @@ As the end of this section, let me point out that binary search operators are a 
 On one of the most well-known classical optimization problems, the Traveling Salesman Problem mentioned already back in the introduction in [@sec:intro:logistics], they are part of the most efficient algorithms&nbsp;[@TWO2014GAPCGFTAT;@NK2013APGAUEACFTTSP;@W2016BNMDPCADIM;@SWT2017BABHFTTSPCEACAPC].
 It also has theoretically been proven that a binary operator can speed-up optimization on some problems&nbsp;[@DHK2008CCPBUIEC].
 
-### Ingredient: Diversity Preservation
+### Ingredient: Diversity Preservation {#sec:ea:diversity}
 
 In [@sec:ea:exploration:exploitation], we asked why a population is helpful for optimization.
 Our answer was that there are two opposing goals in metaheuristic optimization:
@@ -384,7 +384,7 @@ Our EA has become a weird hill climber.
 If we would want that, then we would have implemented a hill climber, i.e., a local search, instead.
 In order to enable global exploration and to allow for the binary search operators to work, it makes sense to try to preserve the *diversity* in the population&nbsp;[@S2018TBOPDIEAASORRA].
 
-Now there exist quite a few ideas how to do that&nbsp;[@S2012NIEA; @CLM2013EAEIEAAS; @ST2016DOCAPCASOMFPDIEO].
+Now there exist quite a few ideas how to do that&nbsp;[@S2012NIEA; @CLM2013EAEIEAAS; @ST2016DOCAPCASOMFPDIEO] and we also discuss some concepts later in [@sec:prematureConvergence:diversity].
 Many of them are focused on penalizing candidate solutions which are too similar to others in the selection step.
 Similarity could be measured via computing the distance in the search space, the distance in the solution space, the difference of the objective values.
 The penalty could be achieved by using a so-called *fitness* as basis for selection instead of the objective value.
@@ -396,7 +396,7 @@ In a diversity-preserving EA, we could add a penalty value to this base fitness 
 Let us now test whether a diversity preserving strategy can be helpful in an EA.
 We will only investigate one very simple approach:
 Avoiding objective value duplicates&nbsp;[@S2012NIEA; @FHN2007RAOSDM].
-In the rest of this section, we will call this method *clearing*, as it can be viewed as the strictest possible variant of the clearing&nbsp;[@P1996ACPAANMFGA] applied in the objective space.
+In the rest of this section, we will call this method *clearing*, as it can be viewed as the strictest possible variant of the clearing&nbsp;[@P1996ACPAANMFGA; @P1997AEHCTFS] applied in the objective space.
 
 Put simply, we will ensure that all individuals that "survive" selection have different objective values.
 If two good solutions have the same objective value, we will discard one of them.
@@ -420,15 +420,15 @@ If $u=1$, we cannot apply the binary operator regardless of the crossover rate&n
 4. Repeat until the termination criterion is met:
     d. Sort the array&nbsp;$P$ according to the objective values such that the records&nbsp;$r$ with better associated objective value&nbsp;$\elementOf{r}{\obspel}$ are located at smaller indices. This means that elements with better objective values come first.
     e. Process&nbsp;$P$ from front to end and delete all records with already-visited objective value. The number of remaining records be&nbsp;$w$. Set the number&nbsp;$u$ of selected records to $u=\min\{w,\mu\}$.     
-    f. Shuffle the **first&nbsp;$u$** elements of&nbsp;$P$ randomly.
+    f. Shuffle the **first&nbsp;$u$ elements** of&nbsp;$P$ randomly.
     g. Set the first source index&nbsp;$p=-1$.
-    h. For index&nbsp;$i$ ranging **from&nbsp;$u$** to&nbsp;$\mu+\lambda-1$ do
+    h. For index&nbsp;$i$ ranging **from&nbsp;$u$ to**&nbsp;$\mu+\lambda-1$ do
         i. Set the source index&nbsp;$p$ **to&nbsp;$p=\modulo{(p+1)}{u}$**, i.e., make sure that every one of **the&nbsp;$u$ selected** points is used approximately the same number of times.
         ii. Draw a random number&nbsp;$c$ uniformly distributed in&nbsp;$[0,1)$.
-        iii. **If&nbsp;$u>1$** and&nbsp;$c$ is less than the crossover rate&nbsp;$cr$, then we apply the binary operator:
-             A. Randomly choose another index&nbsp;$p2$ **from $0\dots(u-1)$** such that&nbsp;$p2\neq p$.
+        iii. **If&nbsp;$u>1$ and**&nbsp;$c$ is less than the crossover rate&nbsp;$cr$, then we apply the binary operator:
+             A. Randomly choose another index&nbsp;$p2$ **from $0\dots(u-1)$ such** that&nbsp;$p2\neq p$.
              B. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_2(\elementOf{\arrayIndex{P}{p}}{\sespel}, \elementOf{\arrayIndex{P}{p2}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the binary search operator to the points stored at index&nbsp;$p$ and&nbsp;$p2$.
-        iv. else, i.e., $c\geq cr$, then we apply the unary operator:
+        iv. else, i.e., $c\geq cr$ **or $u=1$,** we apply the unary operator:
             C. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the unary search operator to the point stored at index&nbsp;$p$.
         v. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
         vi. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
@@ -443,7 +443,7 @@ Since $P$ is sorted, this means that the record at (zero-based) index&nbsp;$k$ i
 As a result, the number&nbsp;$u$ of records with unique objective value may be less than&nbsp;$\mu$ (while always being greater or equal to&nbsp;1).
 Therefore, we need to adjust the parts of the algorithm where parent solutions are selected for generating offsprings.
 Also, we generate $\mu+\lambda-u$ offspring, to again obtain a total of $\mu+\lambda$ elements.
-All such changes are marked with **bold face** in the pseudo-code above.  
+All such changes are **emphasized** in the pseudo-code above.  
 
 In the actual implementation in [@lst:EAWithClearing], we do not delete the records but move them to the end of the list, so we can re-use them later.
 We also stop processing&nbsp;$P$ as soon as we have&nbsp;$\mu$ unique records, as it does not really matter whether un-selected records are unique.
@@ -463,8 +463,14 @@ If not, then the number&nbsp;$u$ of selected records would always be less than&n
 
 Since this time smaller population sizes may be interesting, we investigate all powers of&nbsp;2 for $\mu=\lambda$ from&nbsp;4 to&nbsp;65'536.
 In [@fig:jssp_eac_med_over_mu], we find that the `eac_mu_5%_nswap` behave entirely different from those of `ea_mu_5%_nswap`.
-Interestingly, $\mu=\lambda=4$ seems to be the right choice.
-It leads to the best performance on `abz7` and `swv15`, while being only a tiny bit worse than the best choices on `la24` and `yn4`.
+If clearing is applied, $\mu=\lambda=4$ seems to be the right choice.
+This setup has the best performance on `abz7` and `swv15`, while being only a tiny bit worse than the best choices on `la24` and `yn4`.
+Larger populations lead to worse results at the end of the computational budget of three minutes.
+
+Why could this be?
+One possible reason could be that maybe not very many different candidate solutions are required.
+If only few are needed and we can maintain sufficiently many in a small population, then the advantage of the small population is that we can do many more iterations within the same computational budget.
+
 This very small population size means that an EA with clearing in the objective space should be configured quite similar to a hill climber!   
 
 #### Results on the JSSP
@@ -473,7 +479,41 @@ We can now investigate whether our results have somewhat improved.
 
 \relative.input{jssp_eac_results.md}
 
-: The results of the Evolutionary Algorithm `ea_4_5%_nswap` in comparison to `ea_8192_5%_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_eac_results}
+: The results of the Evolutionary Algorithm `eac_4_5%_nswap` in comparison to `ea_8192_5%_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_eac_results}
 
-[@tbl:jssp_eac_results] shows that our EA with recombination and clearing in the objective space outperforms the EA without clearing on every single instance in terms of best, mean, and median result quality!
+[@tbl:jssp_eac_results] shows that our EA with recombination and clearing in the objective space outperforms the EA without clearing on every single instance in terms of best, mean, and median result quality.
+Especially on instance `swv15`, the new algorithm performs much better than `ea_8192_5%_nswap`.
+Most remarkable is that we can even solve instance `la24` to optimality once.
+The median solutions of our new algorithm variant are illustrated in [@fig:jssp_gantt_eac_4_0d05_nswap_med].
+Compared to [@fig:jssp_gantt_ea_16384_nocr_nswap_med], the result on `swv15` has improved: especially the upper-left and lower-right corners of the Gantt chart, where only few jobs are scheduled, have visibly become smaller.
+We plot the discovered optimal solution for `la24` in [@fig:jssp_gantt_eac_4_0d05_nswap_la24_min].
+Comparing it with the median solution for `la24` in [@fig:jssp_gantt_eac_4_0d05_nswap_med], time was saved, e.g., by arranging the jobs in the top-left corner in a tighter pattern. 
 
+![One *optimal* Gantt charts for instance `la24`, discovered by the&nbsp;`eac_4_5%_nswap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_eac_4_0d05_nswap_la24_min.svgz}){#fig:jssp_gantt_eac_4_0d05_nswap_la24_min width=84%}
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`eac_4_5%_nswap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_eac_4_0d05_nswap_med.svgz}){#fig:jssp_gantt_eac_4_0d05_nswap_med width=84%}
+
+![The median of the progress of the&nbsp;`eac_4_5%_nswap` in comparison to the `ea_8192_5%_nswap` and&nbsp;`hcr_65536_nswap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_eac_nswap_log.svgz}){#fig:jssp_progress_eac_nswap_log width=84%}
+
+From the progress charts plotted in [@fig:jssp_progress_eac_nswap_log], we can confirm that `eac_4_5%_nswap` indeed behaves more similar to the hill climber `hcr_65536_nswap` than to the other EA `ea_8192_5%_nswap`.
+This is due to its small population size.
+However, unlike the hill climber, its progress curve keeps going down for a longer time.
+After only 0.1&nbsp;seconds, it keeps producing better results in median.
+
+We can confirm that even the simple and rather crude pruning in the objective space can significantly improve the performance of our EA.
+We did not test any sophisticated diversity preservation method.
+We also did not re-evaluate which crossover rate&nbsp;$cr$ and which unary operator (`1swap` or `nswap`) works best in this scenario.
+This means that we might be able to squeeze out more performance, but we will leave it at this.
+
+### Summary  
+
+In this chapter, we have introduced Evolutionary Algorithms as methods for global optimization.
+We have learned the two key concepts that distinguish them from local search: the use of a *population of solutions* and of a *binary search operator*.
+We found that even the former alone can already outperform the simple hill climber with restarts.
+While we were a bit unlucky with our choice of the binary operator, our idea did work at least a bit.
+
+We then noticed that populations are only useful if they are *diverse*.
+If all the elements in the population are very similar, then the binary operator stops working and the EA has converged.
+From our experiments with the hill climber, we already know premature convergence to a local optimum as something that should be avoided.   
+It therefore makes sense to try adding a method for enforcing diversity as another ingredient into the algorithm.
+Our experiments with a very crude diversity enhancing method &ndash; only allowing one solution per unique objective value in the population &ndash; confirmed that this can lead to better results.

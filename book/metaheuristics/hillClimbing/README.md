@@ -358,7 +358,7 @@ The fact that `hc_nswap` improves more and more slowly towards the end of the co
 We plug the `nswap` operator into the hill climber with restarts and obtain algorithm `hcr_L_nswap`.
 We perform the same experiment to find the right setting for the restart limit&nbsp;$L$ as for the `hcr_L_1swap` algorithm and illustrate the results in [@fig:jssp_hcr_nswap_med_over_l].
 
-![The median result quality of the&nbsp;`hcr_nswap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the restart limit parameter&nbsp;$L$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_hcr_nswap_med_over_l.svgz}){#jssp_hcr_nswap_med_over_l width=84%}
+![The median result quality of the&nbsp;`hcr_nswap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the restart limit parameter&nbsp;$L$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_hcr_nswap_med_over_l.svgz}){#fig:jssp_hcr_nswap_med_over_l width=84%}
 
 The "sweet spot" for the number of unsuccessful FEs before a restart has increased compared to before.
 This makes sense, because we already know that `nswap` can keep improving longer.

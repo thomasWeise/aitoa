@@ -7,7 +7,7 @@ Almost always, one of the two algorithms will have better results.
 What does this mean?
 
 It means that one of the two algorithms is better &ndash; with a certain probability.
-We could get the results we get either because $\mathcal{A}$ is really better than $\mathcal{B}$ or &ndash; as mentioned in [@sec:eaTestForSignificance] &ndash; by pure coincidence, as artifact from the randomness of our algorithms. 
+We could get the results we get either because $\mathcal{A}$ is really better than $\mathcal{B}$ or &ndash; as mentioned in [@sec:hcTestForSignificance] &ndash; by pure coincidence, as artifact from the randomness of our algorithms. 
 
 If we say "$\mathcal{A}$ is better than $\mathcal{B}$" because this is what we saw in our experiments, we have a certain probabilitys&nbsp;$p$ to be wrong.
 Strictly speaking, the statement "$\mathcal{A}$ is better than $\mathcal{B}$" makes only sense if we can give an upper bound&nbsp;$\alpha$ for the error probability.
@@ -26,7 +26,7 @@ We flip a coin.
 If it shows up as heads, then you win 1&nbsp;RMB and if it is tails, you give me 1&nbsp;RMB instead.
 We play 160&nbsp;times and I win 128&nbsp;times, as illustrated in [@fig:coin_toss]. 
 
-![The results of our coin tossing game, where I win 128&nbsp;times (red) and you only 32&nbsp;times (green).](\relative.path{coin_toss.svgz}){#fig:coin_toss width=74%} 
+![The results of our coin tossing game, where I win 128&nbsp;times (red) and you only 32&nbsp;times (green).](\relative.path{coin_toss.svgz}){#fig:coin_toss width=58%} 
 
 This situation makes you suspicious, as it seems unlikely to you that I would win four times as often as you with a fair coin.
 You wonder if I cheated on you, i.e., if used a "fixed" coin with a winning probability different from 0.5.

@@ -70,17 +70,18 @@ In a $(2+1)$-EA, we preserve two solutions and, in average, the neighborhood of 
 We sacrifice speed for a higher chance of getting better results.
 Populations mark a trade-off.
  
-#### Diversity Preservation
+#### Diversity Preservation {#sec:prematureConvergence:diversity}
 
 If we have already chosen to use a population of solutions, as mentioned in the previous section, we can add measures to preserve the diversity of solutions in it.
 Of course, a population is only useful if it consists of different elements.
 A population that has collapsed to only include copies of the same point from the search space is not better than performing hill climbing and preserving only that one single current best solution.
-In other words, only that part of the $\mu$&nbsp;elements of the population is effective that contains different points in the search space. 
-Several techniques have been developed to increase and preserve the diversity in the population, including:
+In other words, only that part of the $\mu$&nbsp;elements of the population is effective that contains different points in the search space.
+Several techniques have been developed to increase and preserve the diversity in the population&nbsp;[@S2012NIEA; @CLM2013EAEIEAAS; @ST2016DOCAPCASOMFPDIEO], including:
 
 1. Sharing and Niching&nbsp;[@H1975GA; @SK1998FSANMR; @DY1996ENMHINFSAISC] are techniques that decrease the fitness of a solution if it is similar to the other solutions in the population.
    In other words, if solutions are similar, their chance to survive is decreased and different solutions, which are worse from the perspective of the objective function, can remain in the population.
 2. Clearing&nbsp;[@P1996ACPAANMFGA; @P1997AEHCTFS] takes this idea one step further and only allows the best solution within a certain radius survive.
+   We plugged a variant of this idea with radius&nbsp;0 into an Evolutionary Algorithm in [@sec:ea:diversity] and found that it indeed improves the performance.
 
 #### Sometimes Accepting Worse Solutions
 

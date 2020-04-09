@@ -51,7 +51,7 @@ Such an array stores three numbers for each of the&nbsp;$\jsspJobs$ sub-jobs to 
 
 \repo.listing{lst:JSSPCandidateSolution}{Excerpt from a Java class for representing the data of a candidate solution to a JSSP.}{java}{src/main/java/aitoa/examples/jssp/JSSPCandidateSolution.java}{}{relevant}
 
-![An example how the internal `int[][]` data of the `JSSPCandidateSolution` class maps to a Gantt chart.](\relative.path{jssp_candidate_solution_structure.svgz}){#jssp_candidate_solution_structure width=80%}
+![An example how the internal `int[][]` data of the `JSSPCandidateSolution` class maps to a Gantt chart.](\relative.path{jssp_candidate_solution_structure.svgz}){#fig:jssp_candidate_solution_structure width=80%}
 
 Of course, we would not strictly need a class for that, as we could as well use the integer array `int[][]` directly.
 
