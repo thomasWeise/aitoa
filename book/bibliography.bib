@@ -17,6 +17,7 @@
 @string { winter = "{Winter}" }
 
 %% journals
+@string { acs = "{{ACM} Computing Surveys}" }
 @string { adm = "{Annals of Discrete Mathematics}" }
 @string { ai = "{Applied Intelligence -- The International Journal of Research on Intelligent Systems for Real Life Complex Problems}" }
 @string { aiss = "{Advances in Information Sciences and Service Sciences {(AISS)}}" }
@@ -36,6 +37,7 @@
 @string { ijcopi = "{International Journal of Combinatorial Optimization Problems and Informatics ({IJCOPI})}" }
 @string { ijoc = "{{INFORMS} Journal on Computing}" }
 @string { itevc = "{{IEEE} Transactions on Evolutionary Computation ({TEVC})}" }
+@string { is = "{Information Sciences}" }
 @string { jacm = "{Journal of the {ACM} ({JACM})}" }
 @string { jasa = "{Journal of the American Statistical Association ({J AM STAT ASSOC})}" }
 @string { jcst = "{Journal of Computer Science and Technology ({JCST})}"}
@@ -58,6 +60,7 @@
 @string { sa = "{Scientific American}" }
 @string { scimag = "{Science Magazine}" }
 @string { tas = "{The American Statistician}" }
+@string { tcs = "{Theoretical Computer Science}" }
 @string { tjocp = "{The Journal of Chemical Physics}" }
 @string { tpami = "{{IEEE} Transactions on Pattern Analysis and Machine Intelligence ({TPAMI})}" }
 @string { tm = "{Technometrics}" }
@@ -556,6 +559,20 @@
 }
 
 
+@article{CLM2013EAEIEAAS,
+  author = {Matej {\v{C}}repin{\v{s}}ek and Shih{-}Hsi Liu and Marjan Mernik},
+  title = {Exploration and Exploitation in Evolutionary Algorithms: {A} Survey},
+  journal = acs,
+  volume = {45},
+  number = {3},
+  pages = {35:1--35:33},
+  year = {2013},
+  doi = {10.1145/2480741.2480752},
+  month = jul,
+  url = {https://www.researchgate.net/publication/243055445}
+}
+
+
 @article{CPPG2000LPDEABN,
   author = {Erick {Cant{\'{u}}-Paz} and Martin Pelikan and David Edward Goldberg},
   title = {Linkage Problem, Distribution Estimation, and Bayesian Networks},
@@ -716,6 +733,19 @@
 }
 
 
+@inproceedings{DHK2008CCPBUIEC,
+  author = {Benjamin Doerr and Edda Happ and Christian Klein},
+  editor = {Conor Ryan and Maarten Keijzer},
+  title = {Crossover can provably be useful in Evolutionary Computation},
+  booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference {(GECCO'08)}, } # jul # {~12-16, 2008, {Atlanta}, {GA}, {USA}},
+  pages = {539--546},
+  publisher = {{ACM}},
+  year = {2008},
+  doi = {10.1145/1389095.1389202},
+  url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.185.4305&rep=rep1&type=pdf}
+}
+
+
 @article{DIM2016BPACSPMMAEA,
   author = {Maxence Delorme and Manuel Iori and Silvano Martello},
   title = {Bin Packing and Cutting Stock Problems: Mathematical Models and Exact Algorithms},
@@ -871,6 +901,19 @@
   pages = {87--94},
   year = {1922},
   url = {http://hdl.handle.net/2440/15173}
+}
+
+
+@inproceedings{FHN2007RAOSDM,
+  author = {Tobias Friedrich and Nils Hebbinghaus and Frank Neumann},
+  editor = {Hod Lipson},
+  title = {Rigorous Analyses of Simple Diversity Mechanisms},
+  booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference {(GECCO'07)}, } # jul # {~7-11, 2007, {London}, {England}},
+  pages = {1219--1225},
+  publisher = {{ACM}},
+  year = {2007},
+  doi = {10.1145/1276958.1277194},
+  url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.217.2494&rep=rep1&type=pdf}
 }
 
 
@@ -1798,7 +1841,8 @@
   editor = {Keisoku Jid{\={o}} and Seigyo Gakkai},
   publisher = {{IEEE} Computer Society Press},
   address = {Los Alamitos, CA, USA},
-  isbn = {0-7803-2902-3}
+  isbn = {0-7803-2902-3},
+  url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.8027&rep=rep1&type=pdf}
 }
 
 
@@ -2000,6 +2044,20 @@
 }
 
 
+@incollection{S2012NIEA,
+  author = {Ofer M. Shir},
+  editor = {Grzegorz Rozenberg and Thomas B{\"{a}}ck and Joost N. Kok},
+  title = {Niching in Evolutionary Algorithms},
+  booktitle = {Handbook of Natural Computing},
+  pages = {1035--1069},
+  publisher = {Springer},
+  address = {Berlin/Heidelberg, Germany},
+  year = {2012},
+  doi = {10.1007/978-3-540-92910-9_32},
+  isbn = {978-3-540-92909-3}
+}
+
+
 @book{S2018ITCAPOPMASM,
   title = {Introduction to Cutting and Packing Optimization: Problems, Modeling Approaches, Solution Methods},
   author = {Guntram Scheithauer},
@@ -2019,6 +2077,23 @@
   url = {http://optimizizer.com/jobshop.php},
   month = aug,
   year = {2019}
+}
+
+
+@incollection{S2018TBOPDIEAASORRA,
+  author = {Dirk Sudholt},
+  title = {The Benefits of Population Diversity in Evolutionary Algorithms: A Survey of Rigorous Runtime Analyses},
+  booktitle = {Theory of Evolutionary Computation: Recent Developments in Discrete Optimization},
+  editor = {Benjamin Doerr and Frank Neumann}
+  pages = {359--404},
+  series = ncs,
+  isbn = {978-3-030-29413-7},
+  doi = {10.1007/978-3-030-29414-4_8},
+  publisher = {Springer},
+  address = {Cham, Switzerland},
+  chapter = {8},
+  url = {https://arxiv.org/pdf/1801.10087.pdf},
+  note = {arXiv:1801.10087v1 [cs.NE] 30~Jan~2018}
 }
 
 
@@ -2080,6 +2155,30 @@
   address = {Boston, MA, USA},
   publisher = {McGraw-Hill Education (ISE Editions)},
   isbn = {0071-180664}
+}
+
+
+@article{ST2016DOCAPCASOMFPDIEO,
+  author = {Giovanni Squillero and Alberto Paolo Tonda},
+  title = {Divergence of Character and Premature Convergence: {A} Survey of Methodologies for Promoting Diversity in Evolutionary Optimization},
+  journal = is,
+  volume = {329},
+  pages = {782--799},
+  year = {2016},
+  doi = {10.1016/j.ins.2015.09.056},
+  month = feb
+}
+
+
+@inproceedings{SWT2017BABHFTTSPCEACAPC,
+  author = {Danilo Sipoli Sanches and L. Darrell Whitley and Renato Tin{\'{o}}s},
+  editor = {Peter A. N. Bosman},
+  title = {Building a Better Heuristic for the Traveling Salesman Problem: Combining Edge Assembly Crossover and Partition Crossover},
+  booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference {(GECCO'17)}, } # jul # {~15-19, 2017, {Berlin}, {Germany}},
+  pages = {329--336},
+  publisher = {{ACM}},
+  year = {2017},
+  doi = {10.1145/3071178.3071305},
 }
 
 
@@ -2153,6 +2252,19 @@
   address = {Hefei, Anhui, China},
   year = {2010},
   month = jan # {~8}
+}
+
+
+@inproceedings{TWO2014GAPCGFTAT,
+  author = {Renato Tin{\'{o}}s and L. Darrell Whitley and Gabriela Ochoa},
+  editor = {Dirk V. Arnold},
+  title = {Generalized Asymmetric Partition Crossover {(GAPX)} for the Asymmetric {TSP}},
+  booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference {(GECCO'14)}, } # jul # {~12-16, 2014, {Vancouver}, {BC}, {Canada}},
+  pages = {501--508},
+  publisher = {{ACM}},
+  year = {2014},
+  doi = {10.1145/2576768.2598245},
+  url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.639.704&rep=rep1&type=pdf}
 }
 
 
@@ -2276,6 +2388,20 @@
   address = {Atlanta, GA, USA},
   year = {2003},
   url = {http://www.tsp.gatech.edu/concorde/benchmarks/bench99.html}
+}
+
+
+@article{W2008PSVROASEA,
+  author = {Carsten Witt},
+  title = {Population Size versus Runtime of a Simple Evolutionary Algorithm},
+  journal = tcs,
+  volume = {403},
+  number = {1},
+  pages = {104--120},
+  year = {2008},
+  month = aug,
+  doi = {10.1016/j.tcs.2008.05.011},
+  url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.67.6556&rep=rep1&type=pdf}
 }
 
 

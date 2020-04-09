@@ -5,11 +5,11 @@ Different from the random sampling approach, it makes use of some knowledge gath
 However, only using this single point led to the danger of premature convergence, which we tried to battle with two approaches, namely restarts and the search operator `nswap`, spanning a larger neighborhood from which we sampled in a non-uniform way.
 These concepts can be transfered rather easily to many different kinds of optimization problems.
 Now we will look at a third concept to prevent premature convergence:
-Instead of just remembering and utilizing one single point from the search space during our search, we will work on an array of points!
+Instead of just remembering and utilizing only one single point from the search space in each iteration of our algorithm, we will now work on an array of points!
 
 ### Evolutionary Algorithm without Recombination {#sec:evolutionaryAlgorithmWithoutRecombination}
 
-Today, there exists a wide variant of Evolutionary Algorithms (EAs)&nbsp;[@WGOEB; @BFM1997EA; @G1989GA; @DJ2006ECAUA; @M1996GADSEP; @M1998GA; @CWM2012VOEAFRWA; @S2003ITSSAO].
+Today, there exists a wide variety of different Evolutionary Algorithms (EAs)&nbsp;[@WGOEB; @BFM1997EA; @G1989GA; @DJ2006ECAUA; @M1996GADSEP; @M1998GA; @CWM2012VOEAFRWA; @S2003ITSSAO].
 We will here discuss a simple yet efficient variant: the $(\mu+\lambda)$&nbsp;EA without recombination.[^EA:no:recombination]
 This algorithm always remembers the best&nbsp;$\mu\in\naturalNumbersO$ points in the search space found so far.
 In each step, it derives&nbsp;$\lambda\in\naturalNumbersO$ new points from them by applying the unary search operator.
@@ -115,7 +115,7 @@ Nevertheless, we find quite a tangible improvement in case `swv15` on `ea_1024_n
 Our `ea_16384_nswap` outperforms the four Evolutionary Algorithms from&nbsp;[@JPDS2014CAODRIGAFJSSP] both in terms of mean and best result quality on `abz7` and `la24`.
 It does the same for HIMGA-Mutation, the worst of the four HIMGA variants introduced in&nbsp;[@K2015ANHIMGAFJSSP], for `abz7`, `la24`, and `yn4`.
 It obtains better results than the PABC from&nbsp;[@SMM2018PABCPFJSSP] on `swv15`.
-On `la24`, both in terms of mean and best result, it outperforms also all six EAs from&nbsp;[@A2010RIGAFTJSPACS], both versions of the EA in&nbsp;[@ODP2010STJSPWARKGAWIP], and the LSGA from&nbsp;[@OV2004LSGAFTJSSP]. 
+On `la24`, both in terms of mean and best result, it outperforms also all six EAs from&nbsp;[@A2010RIGAFTJSPACS], both variants of the EA in&nbsp;[@ODP2010STJSPWARKGAWIP], and the LSGA from&nbsp;[@OV2004LSGAFTJSSP]. 
 The best solution quality for `abz7` delivered by `ea_16384_nswap` is better than the best result found by the old Fast Simulated Annealing algorithm which was improved in&nbsp;[@AKZ2016FSAHWQFSJSSP].
 
 The Gantt charts of the median solutions of `ea_16384_nswap` are illustrated in [@fig:jssp_gantt_ea_16384_nocr_nswap_med].
@@ -133,8 +133,8 @@ The population used by the EA seemingly guards against premature convergence and
 We also notice that &ndash; for the first time in our endeavor to solve the JSSP &ndash; runtime is the limiting factor.
 If we would have 20&nbsp;minutes instead of three, then we could not expect much improvement from the hill climbers.
 Even with restarts, they already improve very slowly towards the end of the computational budget.
-Tuning their parameter, e.g., increasing the time until a restart is performance, will probably not help.
-However, we can clearly see that `ea_16384_nswap` has not converged on neither `abz7`, `swv15`, nor on `yn4` after the three minutes.
+Tuning their parameter, e.g., increasing the time until a restart is performance, would probably not help then either.
+However, we can clearly see that `ea_16384_nswap` has not fully converged on neither `abz7`, `swv15`, nor on `yn4` after the three minutes.
 Its median curve is still clearly pointing downwards.
 And even if it had converged:
 If we had a larger computational budget, we could increase the population size.
@@ -154,19 +154,23 @@ If it is better, it will replace the remembered solution.
 Such an EA is actually a hill climber.
 
 Now imagine what would happen if we would set&nbsp;$\mu$ to infinity instead.
-We then would remember each and every point in the search space we would have ever visited during the search.
-We would not perform any actual selection, as we would always select all points.
-Our search would not be steered in any direction, there would not be any *bias* or preference for better solutions.
-Due to the fairness of our algorithm when it comes to selecting "parent" points for sampling, each of the past solutions would have the same chance to be the input to the unary search operator to produce the next point to visit.
-In other words, the EA would be some weird version of random sampling.
+We would not even complete one single generation.
+Instead, if $\mu\rightarrow\infty$, it would also take infinitely long to finish creating the first population of random solutions.
+This does not even require infinity&nbsp;$\mu$ &ndash; $\mu$ just needs to be large enough so that the complete computational budget (in our case, three minutes) is consumed before creating the initial, random candidate solutions is completed.
+In other words, the EA would then equal random sampling.
 
 The parameter&nbsp;$\mu$ basically allows us to "tune" between these two behaviors&nbsp;[@WWCTL2016GVLSTIOPSOEAP]!
 If we pick it small, our algorithm becomes more "greedy".
-It will investigate (*exploit*) the neighborhood current best solutions more eagerly, which means that it will trace down local optima faster but be trapped more easily in local optima as well.
+It will spend more time investigating (*exploiting*) the neighborhood of the current best solutions.
+It will trace down local optima faster but be trapped more easily in local optima as well.
+
 If we set&nbsp;$\mu$ to a larger value, we will keep more not-that-great solutions in its population.
 The algorithm spends more time *exploring* the neighborhoods of solutions which do not look that good, but from which we might eventually reach better results.
 The convergence is slower, but we are less likely to get trapped in a local optimum.
-This is known as the dilemma of "Exploration versus Exploitation"&nbsp;[@ES1998EA; @WCT2012EOPABT; @WZCN2009WIOD; @WGOEB].
+
+The question on which of the two to focus is known as the dilemma of "Exploration versus Exploitation"&nbsp;[@ES1998EA; @CLM2013EAEIEAAS; @WCT2012EOPABT; @WZCN2009WIOD; @WGOEB].
+To make matters worse, theorists have proofed that there are scenarios where only a small population can perform well, while there are other scenarios where only a large population works well&nbsp;[@W2003ROCFTB].
+In other words, if we apply an EA, we always need to do at least some rudimentary tuning of&nbsp;$\mu$ and&nbsp;$\lambda$.
 
 ### Ingredient: Binary Search Operator
 
@@ -239,9 +243,9 @@ We now want to utilize this new operator in our EA.
 The algorithm now has two ways to create new offspring solutions: either via the unary operator (mutation, in EA-speak) or via the binary operator (recombination in EA-speak).
 We modify the original EA as follows.
 
-#### The Algorithm (with Recombination)
+#### The Algorithm (with Recombination) {#sec:evolutionaryAlgorithmWithRecombinationImpl}
 
-We introduce a new paramter&nbsp;$cr\in[0,1]$, the so-called "crossover rate".
+We introduce a new paramerter&nbsp;$cr\in[0,1]$, the so-called "crossover rate".
 It is used whenever we want to derive a new points in the search space from existing ones.
 It denotes the probability that we apply the binary operator (while we will otherwise apply the unary operator, i.e., with probability&nbsp;$1-cr$).
 The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm with recombination works as follows:
@@ -270,7 +274,7 @@ The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm with recombination works a
 
 \repo.listing{lst:EAwithCrossover}{An excerpt of the implementation of the Evolutionary Algorithm algorithm **with** crossover.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,withcrossover}
 
-This algorithm, implemented in [@lst:EAwithCrossover] only differs from the version in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo] by choosing whether to use the unary or binary operator to sample new points from the search space (*steps&nbsp;A*, *B*, and&nbsp;*C*).
+This algorithm, implemented in [@lst:EAwithCrossover] only differs from the variant in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo] by choosing whether to use the unary or binary operator to sample new points from the search space (*steps&nbsp;A*, *B*, and&nbsp;*C*).
 If&nbsp;$cr$ is the probability to apply the binary operator and we draw a random number&nbsp;$c$ which is uniformly distributed in&nbsp;$[0,1)$, then the probability that $c<cr$ is exactly&nbsp;$cr$ (see *point&nbsp;iii*).
 
 #### The Right Setup {#sec:eaCrSetup}
@@ -284,9 +288,8 @@ We will stick with `nswap` as unary operator and keep $\mu=\lambda$.
 
 ![The median result quality of the&nbsp;`ea_mu_cr_nswap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the population size parameter&nbsp;$\mu=\lambda$ and the crossover rates in&nbsp;$\{0, 0.05, 0.3, 0.98\}$. The best values of&nbsp;$\mu$ for each crossover rate and instance are marked with bold symbols.](\relative.path{jssp_ea_cr_med_over_cr.svgz}){#fig:jssp_ea_cr_med_over_cr width=84%}
 
-From [@fig:jssp_ea_cr_med_over_cr], we get mixed signals.
-Very obvious is that the large crossover rate&nbsp;$cr=0.98$ is performing much worse than using no crossover at all ($cr=0$) on all instances.
-Smaller rates $cr\in\{0.05,0.3\}$ tend to be sometimes better and sometimes worse than&nbsp;$cr=0$, but there is no spectacular improvement.
+From [@fig:jssp_ea_cr_med_over_cr], we immediately find that the large crossover rate&nbsp;$cr=0.98$ is performing much worse than using no crossover at all ($cr=0$) on all instances.
+Smaller rates $cr\in\{0.05,0.3\}$ tend to be sometimes better and sometimes worse than&nbsp;$cr=0$, but there is no big improvement.
 On instance `swv15`, the binary operator does not really help.
 On instance `la24`, $cr=0.05$ performs best on mid-sized populations, while there is no distinguishable difference between $cr=0.05$ and $cr=0$ for large populations.
 On `abz7` and `yn4`, $cr=0.05$ always seems to be a good choice.
@@ -316,7 +319,7 @@ If we would have let the algorithms longer, maybe the setups using the binary op
 By the way: It is very important to *always* test the $cr=0$ rate!
 Only by doing this, we can find whether our binary operator is designed properly.
 It is a common fallacy to assume that an operator which we have designed to combine good characteristics from different solutions *will actually do that*.
-If the algorithm setups with $cr=0$ would be better than those that use the binary operator, it is a clear indication that we are doing something wrong.
+If the algorithm setups with $cr=0$ would be better than those that use the binary operator, it would be a clear indication that we are doing something wrong.
 So we need to carefully analyze whether the small improvements that our binary operator can provide are actually *significant*.
 We therefore apply the same statistical approach as already used in [@sec:hcTestForSignificance] and later discussed in detail in [@sec:testForSignificance].
 
@@ -331,9 +334,146 @@ Not enough for us to claim that our particular recombination operator is a very 
 
 ![The median of the progress of the&nbsp;`ea_8192_5%_nswap`, `ea_8192_nswap`, and&nbsp;`ea_16384_nswap` algorithms over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_ea_cr_nswap_log.svgz}){#fig:jssp_progress_ea_cr_nswap_log width=84%}
 
-If we look at [@fig:fig:jssp_progress_ea_cr_nswap_log], we can confirm that using the binary `sequence` operator at the low 5% rate does make some visible difference in how the median solution quality over time changes.
+If we look at [@fig:jssp_progress_ea_cr_nswap_log], we can confirm that using the binary `sequence` operator at the low 5% rate does make some visible difference in how the median solution quality over time changes.
 On `abz7`, it clearly improves faster in the setup with recombination.
 On `la24` and `yn4`, there also is a small advantage during the phase when the algorithm improves the fastest.
 On `swv15`, the opposite is the case.
 In all four scenarios, there is not a huge difference in the end results, but in case of `abz7`, `la24`, and `yn4`, a slight advantage at the end of the runs of 
 `ea_8192_5%_nswap` is visible.  
+
+In summary, it seems that using our binary operator is reasonable.
+Different from what we may have hoped for (and which would have been very nice for this book&hellip;), it does not improve the results by much.
+We could try to design a different recombination operator in the hope to get better results, similar to what we did with the unary operator by moving from `1swap` to `nswap`.
+We will not do this here &ndash; the interested reader is invited to do that by herself as an exercise.
+
+As the end of this section, let me point out that binary search operators are a hot and important research topic right now.
+On one of the most well-known classical optimization problems, the Traveling Salesman Problem mentioned already back in the introduction in [@sec:intro:logistics], they are part of the most efficient algorithms&nbsp;[@TWO2014GAPCGFTAT;@NK2013APGAUEACFTTSP;@W2016BNMDPCADIM;@SWT2017BABHFTTSPCEACAPC].
+It also has theoretically been proven that a binary operator can speed-up optimization on some problems&nbsp;[@DHK2008CCPBUIEC].
+
+### Ingredient: Diversity Preservation
+
+In [@sec:ea:exploration:exploitation], we asked why a population is helpful for optimization.
+Our answer was that there are two opposing goals in metaheuristic optimization:
+On the one hand, we want to get results *quickly* and, hence, want that the algorithms quickly trace down to the bottom of the basins around optima.
+On the other hand, we want to get *good* results, i.e., better local optima, preferably global optima.
+A smaller population is good for the former and forsters exploitation.
+A larger population is good for the latter, as it invests more time on exploration.
+
+Well.
+Not necessarily.
+Imagine we discover a good local optimum, a solution better than everything else we have in the population.
+Great.
+It will survive selection and we will derive offspring solutions from it.
+Since it is a local optimum, these will probably be worse.
+They might also encode the same solution as the parent, which is entirely possible in our JSSP scenario.
+But even if they are worse, they maybe just good enough to survive the next round of selection.
+Then, their (better) parent will also survive.
+We will thus get more offspring from this parent.
+But also offsprings from its surviving offsprings.
+And some of these may again be the same as the parent.
+If this process keeps continuing, the population may slowly be filling with copies of that very good local optimum.
+The larger our population, the longer it will take, of course.
+But unless we somehow encounter a different, similarly good or even better solution, it will probably happen eventually.
+
+What does this mean?
+Recombination of two identical points in the search space should yield the very same point as output, i.e., the binary operator will become useless.
+This would leave only the unary operator as possible source of randomness.
+We then practical have one point in the search space to which only the unary operator is applied.
+Our EA has become a weird hill climber. 
+
+If we would want that, then we would have implemented a hill climber, i.e., a local search, instead.
+In order to enable global exploration and to allow for the binary search operators to work, it makes sense to try to preserve the *diversity* in the population&nbsp;[@S2018TBOPDIEAASORRA].
+
+Now there exist quite a few ideas how to do that&nbsp;[@S2012NIEA; @CLM2013EAEIEAAS; @ST2016DOCAPCASOMFPDIEO].
+Many of them are focused on penalizing candidate solutions which are too similar to others in the selection step.
+Similarity could be measured via computing the distance in the search space, the distance in the solution space, the difference of the objective values.
+The penalty could be achieved by using a so-called *fitness* as basis for selection instead of the objective value.
+In our original EA, the fitness would be the same as the objective value.
+In a diversity-preserving EA, we could add a penalty value to this base fitness for each solution based on the distance to the other solutions.
+
+### Evolutionary Algorithm with Clearing in the Objective Space
+
+Let us now test whether a diversity preserving strategy can be helpful in an EA.
+We will only investigate one very simple approach:
+Avoiding objective value duplicates&nbsp;[@S2012NIEA; @FHN2007RAOSDM].
+In the rest of this section, we will call this method *clearing*, as it can be viewed as the strictest possible variant of the clearing&nbsp;[@P1996ACPAANMFGA] applied in the objective space.
+
+Put simply, we will ensure that all individuals that "survive" selection have different objective values.
+If two good solutions have the same objective value, we will discard one of them.
+This way, we will ensure that our population remains diverse.
+No single candidate solution can take over the population.  
+
+
+#### The Algorithm (with Recombination and Clearing)
+
+We can easily extend our $(\mu+\lambda)$&nbsp;EA with recombination from [@sec:evolutionaryAlgorithmWithRecombinationImpl] to remove duplicates of the objective value.
+We need to consider that a full population of $\mu+\lambda$ individuals may contain less than $\mu$ different objective values.
+Thus, in the selection step, we may obtain $1\leq u \leq \mu$ elements, where $u$ can be different in each generation.
+If $u=1$, we cannot apply the binary operator regardless of the crossover rate&nbsp;$cr$.
+
+1. $I\in\searchSpace\times\realNumbers$ be a data structure that can store one point&nbsp;$\sespel$ in the search space and one objective value&nbsp;$\obspel$.
+2. Allocate an array&nbsp;$P$ of length&nbsp;$\mu+\lambda$ instances of&nbsp;$I$.
+3. For index&nbsp;$i$ ranging from&nbsp;$0$ to&nbsp;$\mu+\lambda-1$ do
+    a. Store a randomly chosen point from the search space in $\elementOf{\arrayIndex{P}{i}}{\sespel}$.
+    b. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
+    c. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
+4. Repeat until the termination criterion is met:
+    d. Sort the array&nbsp;$P$ according to the objective values such that the records&nbsp;$r$ with better associated objective value&nbsp;$\elementOf{r}{\obspel}$ are located at smaller indices. This means that elements with better objective values come first.
+    e. Process&nbsp;$P$ from front to end and delete all records with already-visited objective value. The number of remaining records be&nbsp;$w$. Set the number&nbsp;$u$ of selected records to $u=\min\{w,\mu\}$.     
+    f. Shuffle the **first&nbsp;$u$** elements of&nbsp;$P$ randomly.
+    g. Set the first source index&nbsp;$p=-1$.
+    h. For index&nbsp;$i$ ranging **from&nbsp;$u$** to&nbsp;$\mu+\lambda-1$ do
+        i. Set the source index&nbsp;$p$ **to&nbsp;$p=\modulo{(p+1)}{u}$**, i.e., make sure that every one of **the&nbsp;$u$ selected** points is used approximately the same number of times.
+        ii. Draw a random number&nbsp;$c$ uniformly distributed in&nbsp;$[0,1)$.
+        iii. **If&nbsp;$u>1$** and&nbsp;$c$ is less than the crossover rate&nbsp;$cr$, then we apply the binary operator:
+             A. Randomly choose another index&nbsp;$p2$ **from $0\dots(u-1)$** such that&nbsp;$p2\neq p$.
+             B. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_2(\elementOf{\arrayIndex{P}{p}}{\sespel}, \elementOf{\arrayIndex{P}{p2}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the binary search operator to the points stored at index&nbsp;$p$ and&nbsp;$p2$.
+        iv. else, i.e., $c\geq cr$, then we apply the unary operator:
+            C. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the unary search operator to the point stored at index&nbsp;$p$.
+        v. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
+        vi. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
+5. Return the candidate solution corresponding to the best record in&nbsp;$P$ to the user.
+
+\repo.listing{lst:EAWithClearing}{An excerpt of the implementation of the Evolutionary Algorithm algorithm with crossover and clearing.}{java}{src/main/java/aitoa/algorithms/EAWithClearing.java}{}{relevant}
+
+This algorithm, implemented in [@lst:EAWithClearing] differs from the variant in [@sec:evolutionaryAlgorithmWithRecombinationImpl] mainly in *step&nbsp;e*.
+There, the sorted population&nbsp;$P$ is processed from beginning to end.
+Whenever an objective value is found in a record which has already been encountered, the record is removed.
+Since $P$ is sorted, this means that the record at (zero-based) index&nbsp;$k$ is deleted if and only if $k>0$ and $\elementOf{\arrayIndex{P}{k}}{\obspel}=\elementOf{\arrayIndex{P}{k-1}}{\obspel}$.
+As a result, the number&nbsp;$u$ of records with unique objective value may be less than&nbsp;$\mu$ (while always being greater or equal to&nbsp;1).
+Therefore, we need to adjust the parts of the algorithm where parent solutions are selected for generating offsprings.
+Also, we generate $\mu+\lambda-u$ offspring, to again obtain a total of $\mu+\lambda$ elements.
+All such changes are marked with **bold face** in the pseudo-code above.  
+
+In the actual implementation in [@lst:EAWithClearing], we do not delete the records but move them to the end of the list, so we can re-use them later.
+We also stop processing&nbsp;$P$ as soon as we have&nbsp;$\mu$ unique records, as it does not really matter whether un-selected records are unique.
+This is slightly more efficient, but would be harder to write in pseudo-code.
+
+We will name setups of this algorithm in the same manner as those of the original EA, except that we start the names with the prefix `eac_` instead of `ea_`.
+
+#### The Right Setup
+
+With the simple diversity-preservation mechanism in place, we may wonder which population sizes are good.
+It is easy to see that findings from [@sec:eaNoCrSetup], where we found that $\mu=\lambda=16'384$ is reasonable, may longer hold:
+We know from [@sec:jssp:lowerBounds] of the makespan for any solution on the JSSP instance `abz7` is&nbsp;656.
+It can be doubted whether it is even possible to generate $16'384$ schedules with different makespans.
+If not, then the number&nbsp;$u$ of selected records would always be less than&nbsp;$\mu$, which would make choosing a large&nbsp;$\mu$ useless.
+
+![The median result quality of the&nbsp;`ea[c]_mu_5%_nswap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the population size parameter&nbsp;$\mu=\lambda$, with and without clearing. The best values of&nbsp;$\mu$ for each operator and instance are marked with bold symbols.](\relative.path{jssp_eac_med_over_mu.svgz}){#fig:jssp_eac_med_over_mu width=84%}
+
+Since this time smaller population sizes may be interesting, we investigate all powers of&nbsp;2 for $\mu=\lambda$ from&nbsp;4 to&nbsp;65'536.
+In [@fig:jssp_eac_med_over_mu], we find that the `eac_mu_5%_nswap` behave entirely different from those of `ea_mu_5%_nswap`.
+Interestingly, $\mu=\lambda=4$ seems to be the right choice.
+It leads to the best performance on `abz7` and `swv15`, while being only a tiny bit worse than the best choices on `la24` and `yn4`.
+This very small population size means that an EA with clearing in the objective space should be configured quite similar to a hill climber!   
+
+#### Results on the JSSP
+
+We can now investigate whether our results have somewhat improved.
+
+\relative.input{jssp_eac_results.md}
+
+: The results of the Evolutionary Algorithm `ea_4_5%_nswap` in comparison to `ea_8192_5%_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_eac_results}
+
+[@tbl:jssp_eac_results] shows that our EA with recombination and clearing in the objective space outperforms the EA without clearing on every single instance in terms of best, mean, and median result quality!
+
