@@ -248,13 +248,17 @@ For simplicity, we refer to it as `sa_exp_20_2_1swap`.
 
 : The results of the Simulated Annealing setup `sa_exp_20_2_1swap` in comparison with the best EA, `eac_4_5%_nswap`, and the hill climber with restarts&nbsp;`hcr_16384_1swap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_sa_results}
 
-In [@jssp_sa_results], we compare results of the Simulated Annealing setup `sa_exp_20_2_1swap` to those of our best EA, `eac_4_5%_nswap`, and the hill climber with restarts&nbsp;`hcr_16384_1swap`. 
+In [@fig:jssp_sa_results], we compare results of the Simulated Annealing setup `sa_exp_20_2_1swap` to those of our best EA, `eac_4_5%_nswap`, and the hill climber with restarts&nbsp;`hcr_16384_1swap`. 
 Simulated Annealing is better than these three algorithms in terms of the best, mean, and median result on almost all instances.
 Only on `la24`, `eac_4_5%_nswap` can win in terms of the best discovered solution, which already was the optimum.
 Our SA setup also is more reliable than the other algorithms, its standard deviation and only on `la24`, the standard deviation&nbsp;$sd$ of its final result quality is not the lowest.
 
 We know that on `la24`, $\epsilon=2\!\cdot\!10^{-7}$ is not the best choice for SA and smaller values would perform better there.
 Oddly enough, in the experiment, it are the settings $\epsilon=4\!\cdot\!10^{-7}$ and $\epsilon=8\!\cdot\!10^{-7}$, not listed in the table, which also discovered a globally optimal solution on that instance.
+
+![The Gantt charts of the median solutions obtained by the `sa_exp_20_2_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_sa_exp_20_2_1swap_med.svgz}){#fig:jssp_gantt_sa_exp_20_2_1swap_med width=84%}
+
+![The median of the progress of the algorithms `sa_exp_20_2_1swap`, `ea_8192_5%_nswap`, `eac_4_5%_nswap`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_sa_log.svgz}){#fig:jssp_progress_sa_log width=84%}
 
 If we compare our `sa_exp_20_2_1swap` with the related work, we find its best and mean solution quality on `abz7` surpass those of the original Fast Simulated Annealing algorithm and its improved version HFSAQ from&nbsp;[@AKZ2016FSAHWQFSJSSP].
 Its mean and best results of `sa_exp_20_2_1swap` on `la24` outperform the algorithms proposed in&nbsp;[@JZ2018AOGWOFSCPJSAFJSSC; @A2015ALSGAFTJSSPWIA; @JPDS2014CAODRIGAFJSSP; @A2010RIGAFTJSPACS; @ODP2010STJSPWARKGAWIP; @OV2004LSGAFTJSSP]. 
@@ -264,10 +268,6 @@ Our algorithms are not very complicated, but these comparisons indicate that the
 
 We plot the Gantt charts of the median result of `sa_exp_20_2_1swap`  in [@fig:jssp_gantt_sa_exp_20_2_1swap_med].
 Especially on instance `swv15`, changes are visible in comparison to the results produced by `eac_4_5%_nswap` and illustrated in [@fig:jssp_gantt_eac_4_0d05_nswap_med].
-
-![The Gantt charts of the median solutions obtained by the `sa_exp_20_2_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_sa_exp_20_2_1swap_med.svgz}){#fig:jssp_gantt_sa_exp_20_2_1swap_med width=84%}
-
-![The median of the progress of the algorithms `sa_exp_20_2_1swap`, `ea_8192_5%_nswap`, `eac_4_5%_nswap`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_sa_log.svgz}){#fig:jssp_progress_sa_log width=84%}
 
 In [@fig:jssp_progress_sa_log], we plot the progress of `sa_exp_20_2_1swap` over time in comparison to `ea_8192_5%_nswap`, `eac_4_5%_nswap`, and `hcr_16384_1swap`.
 Especially for `swv15` and `yn4`, we find that `sa_exp_20_2_1swap` converges towards end results that are very visibly better than the other algorithms. 
