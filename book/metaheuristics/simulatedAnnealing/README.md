@@ -192,8 +192,8 @@ We can now solve [@eq:simulatedAnnealingP] again to get the end temperature&nbsp
 $$ \begin{array}{rl}
 P_e =& e^{-\frac{\Delta E}{T(\iteration)}}\\
 1/16'384 =& e^{-\frac{1}{T_e}}\\
-\ln{1/16'384}=& -\frac{1}{T_e}\\
-T_e=&-\frac{1}{\ln{1/16'384}}\\
+\ln{(1/16'384)}=& -\frac{1}{T_e}\\
+T_e=&-\frac{1}{\ln{(1/16'384)}}\\
 T_e\approx&0.103
 \end{array} $$
  
@@ -218,8 +218,6 @@ T(30'000'000) =& 20 * (1 - \epsilon) ^ {30'000'000 - 1} \\
 
 We can conclude, for an exponential temperature schedule, settings for&nbsp;$\epsilon$ somewhat between $10^{-7}$ and $2\!\cdot\!10^{-7}$ seem to be a reasonable choice if the start temperature&nbsp;$T_s$ is set to&nbsp;20.
 
-![The temperature progress of six exponential temperature schedules (top) plus their probabilities to accept solutions with objective values worse by&nbsp;1, 3, or&nbsp;10 than the current solution.](\relative.path{sa_temperature_schedules.svgz}){#fig:sa_temperature_schedules width=96%}
-
 In [@fig:sa_temperature_schedules], we illustrate the behavior of the exponential temperature schedule for starting temperature&nbsp;$T_s=20$ and the six values $5\!\cdot\!10^{-8}$, $1\!\cdot\!10^{-7}$, $1.5\!\cdot\!10^{-7}$, $2\!\cdot\!10^{-7}$, $4\!\cdot\!10^{-7}$, and&nbsp;$8\!\cdot\!10^{-7}$.
 The sub-figure on top shows how the temperature declines over the performed objective value evaluations.
 Starting at&nbsp;$T_s=20$ it reaches close to zero for $\epsilon\geq 1.5\!\cdot\!10^{-7}$ after about $\iteration=30'000'000$&nbsp;FEs.
@@ -228,6 +226,8 @@ The next three sub-figures show how the probability to accept candidate solution
 This decrease is, of course, the direct result of the temperature decrease.
 Solutions with larger&nbsp;$\Delta E$ clearly have a lower probability of being accepted.
 The larger&nbsp;$\epsilon$, the earlier and faster does the acceptance probability decrease. 
+
+![The temperature progress of six exponential temperature schedules (top) plus their probabilities to accept solutions with objective values worse by&nbsp;1, 3, or&nbsp;10 than the current solution.](\relative.path{sa_temperature_schedules.svgz}){#fig:sa_temperature_schedules width=91%}
 
 ![The median result quality of the&nbsp;`sa_exp_20_epsilon_1swap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the parameter&nbsp;$\epsilon$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_sa_1swap_med_over_epsilon.svgz}){#fig:jssp_sa_1swap_med_over_epsilon width=84%}
 
