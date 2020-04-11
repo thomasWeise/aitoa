@@ -248,7 +248,7 @@ For simplicity, we refer to it as `sa_exp_20_2_1swap`.
 
 : The results of the Simulated Annealing setup `sa_exp_20_2_1swap` in comparison with the best EA, `eac_4_5%_nswap`, and the hill climber with restarts&nbsp;`hcr_16384_1swap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_sa_results}
 
-In [@fig:jssp_sa_results], we compare results of the Simulated Annealing setup `sa_exp_20_2_1swap` to those of our best EA, `eac_4_5%_nswap`, and the hill climber with restarts&nbsp;`hcr_16384_1swap`. 
+In [@tbl:jssp_sa_results], we compare results of the Simulated Annealing setup `sa_exp_20_2_1swap` to those of our best EA, `eac_4_5%_nswap`, and the hill climber with restarts&nbsp;`hcr_16384_1swap`. 
 Simulated Annealing is better than these three algorithms in terms of the best, mean, and median result on almost all instances.
 Only on `la24`, `eac_4_5%_nswap` can win in terms of the best discovered solution, which already was the optimum.
 Our SA setup also is more reliable than the other algorithms, its standard deviation and only on `la24`, the standard deviation&nbsp;$sd$ of its final result quality is not the lowest.
