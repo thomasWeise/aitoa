@@ -180,6 +180,10 @@ Both `hc2r_1swapU` and `hcr_16384_1swap` perform random job swaps in each step.
 `hcr_16384_1swap` may try the same move multiple times and performs a restart after&nbsp;$L=16'384$ unsuccessfuly steps.
 The fact that both algorithms perform so very similar probably means that the restart setting of $L=16'384$ for `hcr_16384_1swap` is probably a rather good choice.
 
+It is also clearly visible that `hc2r_1swap` is initially slower than the other two algorithms, although its end result is still similar.
+This shows that enumerating the neighborhood of a solution in a random fashion is better than doing it always in the same deterministic way.
+This supports the idea of doing things in a randomized way if no clear advantage of a deterministic approach is visible.
+
 The question arises why we would bother with the `hc2r`-type hill climbers if we seemingly can get the exact same behavior from a stochastic hill climber with restarts.
 One answer is the fact that we found a method to actually *know* whether a solution is an optimum instead of having to guess.
 Another answer is that we need one parameter less.
