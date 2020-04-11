@@ -142,7 +142,7 @@ Our algorithm has four parameters:
 - the unary search operator (in our case, we could use `1swap` or `nswap`).
 
 We will only consider `1swap` as choice for the unary operator and focus on the exponential temperature schedule.
-We have two more parameters to set: $T_s$ and $\epsilon$ and thus refer to the settings of this algorithm with the naming scheme&nbsp;`sa_exp_Ts_ε_1swap`.
+We have two more parameters to set: $T_s$ and $\epsilon$ and thus refer to the settings of this algorithm with the naming scheme&nbsp;`sa_exp_Ts_epsilon_1swap`.
  
 At first glance, it seems entirely unclear how what to do with these parameters.
 However, we may get some ideas about their rough ranges if we consider Simulated Annealing as an improved hill climber.
@@ -229,7 +229,7 @@ This decrease is, of course, the direct result of the temperature decrease.
 Solutions with larger&nbsp;$\Delta E$ clearly have a lower probability of being accepted.
 The larger&nbsp;$\epsilon$, the earlier and faster does the acceptance probability decrease. 
 
-![The median result quality of the&nbsp;`sa_exp_20_ε_1swap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the parameter&nbsp;$\epsilon$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_sa_1swap_med_over_epsilon.svgz}){#fig:jssp_sa_1swap_med_over_epsilon width=84%}
+![The median result quality of the&nbsp;`sa_exp_20_epsilon_1swap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the parameter&nbsp;$\epsilon$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_sa_1swap_med_over_epsilon.svgz}){#fig:jssp_sa_1swap_med_over_epsilon width=84%}
 
 In [@fig:jssp_sa_1swap_med_over_epsilon], we illustrate the normalized median result quality that can be obtained by Simulated Annealing with starting temperature&nbsp;$T_s=20$, exponential schedule, and `1swap` operator for different values of the parameter&nbsp;$\epsilon$, including those from [@fig:sa_temperature_schedules].
 Interestingly, it turns out that $\epsilon=2$ is the best choice for the instances `abz7`, `swv15`, and `yn4` &nbsp; which is surprisingly close to what we could expect from our calculation.
