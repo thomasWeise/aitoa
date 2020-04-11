@@ -334,16 +334,14 @@ Not enough for us to claim that our particular recombination operator is a very 
 
 ![The median of the progress of the&nbsp;`ea_8192_5%_nswap`, `ea_8192_nswap`, and&nbsp;`ea_16384_nswap` algorithms over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_ea_cr_nswap_log.svgz}){#fig:jssp_progress_ea_cr_nswap_log width=84%}
 
-If we look at [@fig:jssp_progress_ea_cr_nswap_log], we can confirm that using the binary `sequence` operator at the low 5% rate does make some visible difference in how the median solution quality over time changes.
-On `abz7`, it clearly improves faster in the setup with recombination.
-On `la24` and `yn4`, there also is a small advantage during the phase when the algorithm improves the fastest.
-On `swv15`, the opposite is the case.
-In all four scenarios, there is not a huge difference in the end results, but in case of `abz7`, `la24`, and `yn4`, a slight advantage at the end of the runs of 
-`ea_8192_5%_nswap` is visible.  
+If we look at [@fig:jssp_progress_ea_cr_nswap_log], we can confirm that using the binary `sequence` operator at the low 5% rate does make some difference in how the median solution quality over time changes, although only a small one.
+On `abz7`, `ea_8192_5%_nswap` improves faster than the setup without recombination.
+On `la24` and `yn4`, there may be a small advantage during the phase when the algorithm improves the fastest, but this could also be caused by the randomness of the search.
+On `swv15`, there is a similarly small disadvantage of `ea_8192_5%_nswap`. 
 
 In summary, it seems that using our binary operator is reasonable.
 Different from what we may have hoped for (and which would have been very nice for this book&hellip;), it does not improve the results by much.
-We could try to design a different recombination operator in the hope to get better results, similar to what we did with the unary operator by moving from `1swap` to `nswap`.
+We now could try to design a different recombination operator in the hope to get better results, similar to what we did with the unary operator by moving from `1swap` to `nswap`.
 We will not do this here &ndash; the interested reader is invited to do that by herself as an exercise.
 
 As the end of this section, let me point out that binary search operators are a hot and important research topic right now.
