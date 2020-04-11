@@ -262,7 +262,7 @@ Oddly enough, in the experiment, it are the settings $\epsilon=4\!\cdot\!10^{-7}
 
 If we compare our `sa_exp_20_2_1swap` with the related work, we find its best and mean solution quality on `abz7` surpass those of the original Fast Simulated Annealing algorithm and its improved version HFSAQ from&nbsp;[@AKZ2016FSAHWQFSJSSP].
 Its mean and best results of `sa_exp_20_2_1swap` on `la24` outperform the algorithms proposed in&nbsp;[@JZ2018AOGWOFSCPJSAFJSSC; @A2015ALSGAFTJSSPWIA; @JPDS2014CAODRIGAFJSSP; @A2010RIGAFTJSPACS; @ODP2010STJSPWARKGAWIP; @OV2004LSGAFTJSSP]. 
-On `yn4`, it outperforms all four AntGenSA algorithms (complex hybrids of three algorithms including SA and EAs) in&nbsp;[@HRSCVGBTVMR2019AHSAFJSSP] in mean and best result quality.
+On `yn4`, it outperforms all four AntGenSA algorithms (complex hybrids of three algorithms including SA and EAs) from&nbsp;[@HRSCVGBTVMR2019AHSAFJSSP] in mean and best result quality.
 Since this is an educational book, we are not really aiming for solving the JSSP outstandingly well and only use a very small set of instances.
 Our algorithms are not very complicated, but these comparisons indicate that they are at least somewhat working.
 

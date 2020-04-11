@@ -26,7 +26,7 @@ Both of these issues can be mitigated by one simple idea:
 Let each new point, before it enters the population, become the starting point of a local search that runs until it converges and then enter the result of this local search into the population instead.
 This is already the concept of a Memetic Algorithm.
 
-As a result, the first generation of the MA performs exactly the same as a Hill Climber with restarts [@sec:hc2WithRestarts].
+As a result, the first generation of the MA performs exactly the same as a Hill Climber with restarts [@sec:hillClimbing2Algo].
 The inputs of the binary search operator will then not just be selected points, they will be local optima (with respect to the neighborhood spanned by the unary operator). 
 Actually, we can omit the unary operator in the MA as it is already used in the local search and always apply the binary operator to generate new points.
 In the following generations, the local search will then refine the combinations of local optima.

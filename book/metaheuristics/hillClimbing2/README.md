@@ -159,7 +159,7 @@ Its implementation in [@lst:HillClimber2WithRestarts] is therefore also shorter 
 It should be noted that both new hill climbers can only be applied in scenarios where we actually can enumerate the neighborhoods of the current best solutions efficiently.
 In other words, we pay for a potential gain of search efficiency by a reduction of the types of problems we can process.
 
-#### Results on the JSSP
+### Results on the JSSP
 
 \relative.input{jssp_hc2r_results.md}
 
@@ -173,6 +173,17 @@ This setup was found to perform well in [@sec:hillClimberWithRestartSetup].
 We find that `hc2r_1swapU` tends to have the edge over `hc2r_1swap`, except for instance `swv15`, where it does perform worse.
 Also, `hc2r_1swapU` and `hcr_16384_1swap` deliver very similar results, which also means that it performs worse than our Evolutionary Algorithms or Simulated Annealing.
 
-The question why we would bother with the `hc2r`-type hill climbers if we seemingly can get the exact same behavior from a stochastic hill climber with restarts.
-One answer is that we need one parameter less.
-We retain the black-box ability of the algorithm but have zero parameters (except the choice of the unary search operator), as opposed to the EA and SA algorithms which each have three ($\mu$, $\lambda$, $cr$ and temperature schedule, $T_s$, $\epsilon$, respectively). 
+In [@fig:jssp_progress_hc2r_log], we plot the progress of the `hc2r_1swap`, `hc2r_1swapU`, and `hcr_16384_1swap` algorithms over time.
+It is very surprising to see that the median of best-so-far solution qualities of `hc2r_1swapU` and `hcr_16384_1swap` are almost identical during the whole three minute computational budget and on all four JSSP instances.
+Both `hc2r_1swapU` and `hcr_16384_1swap` perform random job swaps in each step.
+`hc2r_1swapU` avoids trying the same move twice and will restart when it has arrived in a local optimum.
+`hcr_16384_1swap` may try the same move multiple times and performs a restart after&nbsp;$L=16'384$ unsuccessfuly steps.
+The fact that both algorithms perform so very similar probably means that the restart setting of $L=16'384$ for `hcr_16384_1swap` is probably a rather good choice.
+
+The question arises why we would bother with the `hc2r`-type hill climbers if we seemingly can get the exact same behavior from a stochastic hill climber with restarts.
+One answer is the fact that we found a method to actually *know* whether a solution is an optimum instead of having to guess.
+Another answer is that we need one parameter less.
+We retain the black-box ability of the algorithm but have zero parameters (except the choice of the unary search operator), as opposed to the EA and SA algorithms which each have three ($\mu$, $\lambda$, $cr$ and temperature schedule, $T_s$, $\epsilon$, respectively).
+
+![The median of the progress of the algorithms `hc2r_1swap`, `hc2r_1swapU`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_hc2r_log.svgz}){#fig:jssp_progress_hc2r_log width=84%}
+ 
