@@ -235,7 +235,7 @@ In other words, even with such a simple algorithm we can already achieve results
 
 ![The Gantt charts of the median solutions obtained by the `hcr_16384_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_hcr_16384_1swap_med.svgz}){#fig:jssp_gantt_hcr_16384_1swap_med width=84%}
 
-![The Median of the progress of the algorithms `rs`, `hc_1swap`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_hcr_1swap_log.svgz}){#fig:jssp_progress_hcr_1swap_log width=84%}
+![The median of the progress of the algorithms `rs`, `hc_1swap`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_hcr_1swap_log.svgz}){#fig:jssp_progress_hcr_1swap_log width=84%}
 
 The median solutions discovered by `hcr_16384_1swap`, illustrated in [@fig:jssp_gantt_hcr_16384_1swap_med], again show less wasted time.
 The scheduled jobs again move a bit closer together.

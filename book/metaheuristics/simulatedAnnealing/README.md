@@ -18,11 +18,11 @@ Maybe we can escape from a local optimum without discarding the entirety good so
 
 Simulated Annealing (SA)&nbsp;[@KGV1983OBSA; @C1985TATTTSPAESA; @DPSW1982MCTICO; @P1970AMCMFTASOCTOCOP] is a local search which provides another approach to escape local optima&nbsp;[@WGOEB; @S2003ITSSAO].
 The algorithm is inspired by the idea of simulating the thermodynamic process of *annealing* using statistical mechanics, hence the naming&nbsp;[@MRRTT1953EOSCBFCM].
-Instead of restarting the algorithm when reaching a local optima, it tries to preserve the parts of the current best solution by permitting search steps towards worsening objective values. 
+Instead of restarting the algorithm when reaching a local optimum, it tries to preserve the parts of the current best solution by permitting search steps towards worsening objective values. 
 This algorithm therefore introduces three principles:
 
 1. Worse candidate solutions are sometimes accepted, too.
-2. The probability&nbsp;$P$ of accepting them is decreases with increasing differences&nbsp;$\Delta E$ of the objective values to the current best solution.
+2. The probability&nbsp;$P$ of accepting them is decreases with increasing differences&nbsp;$\Delta E$ of their objective values to the current best solution.
 3. The probability also decreases with the number of performed search steps.
 
 This basic idea is realized as follows.
@@ -46,11 +46,12 @@ If the new solution is worse ($\Delta E > 0$), the acceptance probability then
 1. gets smaller the larger $\Delta E$ is and
 2. gets smaller the smaller the so-called "temperature" $T\geq 0$ is.
 
-Both the temperature&nbsp;$T>0$ and the objective value difference&nbsp;$\Delta E>0$ enter [@eq:simulatedAnnealingP] in an exponential term and the two above points follow from $e^{-a}<e^{-b}\forall a>b$ and $e^{-a}\in[0,1]\forall a>0$.     
+Both the temperature&nbsp;$T>0$ and the objective value difference&nbsp;$\Delta E>0$ enter [@eq:simulatedAnnealingP] in the exponential term and the two above points follow from $e^{-a}<e^{-b}\forall a>b$.
+We also have $e^{-a}\in[0,1]\forall a>0$, so it can be used as probability value.
 
-The temperature decreases and approaches zero with the algorithm iteration&nbsp;$\iteration$, i.e., the performed objective function evaluations.
+The temperature will be changed automatically such that it decreases and approaches zero with the number&nbsp;$\iteration$ of algorithm iterations, i.e., the performed objective function evaluations.
 The optimization process is initially "hot."
-Then, the search progresses wildly any may accept even significantly worse solutions.
+Then, the search progresses may accept even significantly worse solutions.
 As the process "cools" down, the search tends to accept fewer and fewer worse solutions and more likely such which are only a bit worse.
 Eventually, at temperature&nbsp;$T=0$, the algorithm only accepts better solutions. 
 In other words, $T$ is actually a monotonously decreasing function $T(\iteration)$ called the "temperature schedule" and it holds that $\lim_{\iteration\rightarrow\infty} T(\iteration) = 0$.
@@ -59,10 +60,10 @@ In other words, $T$ is actually a monotonously decreasing function $T(\iteration
 
 The temperature schedule&nbsp;$T(\iteration)$ determines how the temperature changes over time (where time is measured in algorithm steps&nbsp;$\iteration$).
 It begins with an start temperature&nbsp;$T_s$ at $\iteration=1$.
-Then, the temperature is the highest, which means that the algorithm is more likely to accept worse solutions.
+This temperature is the highest, which means that the algorithm is more likely to accept worse solutions.
 It will then behave a bit similar to a random walk and put more emphasis on exploring the search space than on improving the objective value.
-As time goes by and $\iteration$&nbsp;increases, $T(\iteration)$ decreases and may even reach&nbsp;0 eventually.
-Once $T$ gets small enough, then Simulated Annealing will behave exactly like a hill climber and only accepts a new solution if it is better than the best-so-far solution.
+As time goes by and $\iteration$&nbsp;increases, $T(\iteration)$&nbsp;decreases and may even reach&nbsp;0 eventually.
+Once $T$&nbsp;gets small enough, then Simulated Annealing will behave exactly like a hill climber and only accepts a new solution if it is better than the current solution.
 This means the algorithm tunes itself from an initial exploration phase to strict exploitation.
 
 Consider the following perspective:
@@ -73,40 +74,18 @@ The Simulated Annealing algorithm allows for a smooth transition of a random sea
 
 The ingredient needed for this tuning, the temperature schedule, can be expressed as a class implementing exactly one simple function that translates an iteration index&nbsp;$\iteration$ to a temperature&nbsp;$T(\iteration)$, as defined in [@lst:temperatureSchedule].
 
-If we want to apply Simulated Annealing to a given problem, we would like that the probability to accept worse solutions declines smoothly during the optimization process.
-It should not go down close to 0 too quickly, because then we essentially have a hill climber.
-It should also not stay too high for too long, because then we waste too much time investigating worse solutions.
-This means that the right temperature schedule to select will depend on the problem (namely, the range of the objective values) and the computational budget at hand.
-
-Our SA is basically an improved hill climber and, here, we want to solve the JSSP with it.
-We therefore consider how many iterations the `hc_1swap` from [@sec:hc_1swap:jssp:results] performed within the three minutes of runtime.
-The median total steps range from about 30&nbsp;million on `swv15` to 97&nbsp;million on `abz7`.
-We also know that our objective function is discrete and reasonable values for $\Delta E$ are maybe somewhere in the range of&nbsp;1 to&nbsp;10.
-This rough estimate of scale can be can be seen if we look at the differences between the best or median solutions of different algorithm settings in our previous experiments.
-Hence, we should select temperature schedules that tune the probability of accepting such slightly worse solutions gracefully from relatively high to close-to-zero within 30&nbsp;million algorithms steps.
-But how can we do that?
-
-Two common ways to decrease the temperature over time are the *exponential* and the *logarithmic* temperature schedules, examples for both of which with the desired properties are illustrated in [@fig:sa_temperature_schedules].  
-
-![The temperature progress of six example temperature schedules (top) plus their probabilities to accept solutions with objective values worse by&nbsp;1, 3, or&nbsp;5 than the current solution.](\relative.path{sa_temperature_schedules.svgz}){#fig:sa_temperature_schedules width=96%}
+The two most common temperature schedule implementations may be the *exponential* and the *logarithmic* schedule.
 
 #### Exponential Temperature Schedule
 
 In an exponential temperature schedule, the temperature decreases exponentially with time (as the name implies).
 It follows [@eq:sa:temperatureSchedule:exp] and is implemented in [@lst:temperatureSchedule:exp].
 Besides the start temperature&nbsp;$T_s$, it has a parameter&nbsp;$\epsilon\in(0,1)$ which tunes the speed of the temperature decrease.
+Higher values of $\epsilon$ lead to a faster temperature decline.
 
 $$ T(\iteration) = T_s * (1 - \epsilon) ^ {\iteration - 1} $$ {#eq:sa:temperatureSchedule:exp}
 
 \repo.listing{lst:temperatureSchedule:exp}{An excerpt of the exponential temperature schedules.}{java}{src/main/java/aitoa/algorithms/TemperatureSchedule.java}{}{exponential}
-
-Higher values of $\epsilon$ lead to a faster temperature decline.
-In [@fig:sa_temperature_schedules], we choose the values $\epsilon\in\{2*10^{-7}, 4^{-7}, 8*10^{-7}\}$ and a starting temperature of&nbsp;$T_s=20$.
-As can be seen, they yield a nice and smooth decline of the probabilities to accept solutions slightly worse than the current solution.
-The probability curves corresponding to the exponential schedules eventually effectively become&nbsp;0 after about half of the predicted 30&nbsp;million steps. 
-Notice that we chose the starting temperature&nbsp;$T_s$ and the parameter&nbsp;$\epsilon$ in such a way that solutions which are "reasonably worse" in our JSSP scenario are acceptable for a reasonable time in our optimization process, based on our knowledge of the range of objective values that may occur and the number of algorithm steps that will probably be performed.
-The values of&nbsp;$T_s$ and&nbsp;$\epsilon$ are not chosen arbitrarily!
-They play an important role in the algorithm.
 
 #### Logarithmic Temperature Schedule
 
@@ -114,19 +93,15 @@ The logarithmic temperature schedule will prevent the temperature from becoming 
 Compared to the exponential schedule, it will thus longer retain a higher probability to accept worse solutions.
 It obeys [@eq:sa:temperatureSchedule:log] and is implemented in [@lst:temperatureSchedule:log]..
 It, too, has the parameters&nbsp;$\epsilon\in(0,\infty)$ and&nbsp;$T_s$.
+Larger values of $\epsilon$ again lead to a faster temperature decline.
 
 $$ T(\iteration) = \frac{T_s}{\ln{\left(\epsilon(\iteration-1)+e\right)}} $$ {#eq:sa:temperatureSchedule:log}
 
 \repo.listing{lst:temperatureSchedule:log}{An excerpt of the logarithmic temperature schedules.}{java}{src/main/java/aitoa/algorithms/TemperatureSchedule.java}{}{logarithmic}
 
-Larger values of $\epsilon$ again lead to a faster temperature decline and we investigated logarithmic schedules with $\epsilon=1$ for three starting temperatures&nbsp;$T_s\in\{5,10,20\}$ in [@fig:sa_temperature_schedules].
-Compared to our selected exponential schedules, the temperatures decline earlier but then remain at a higher value.
-This means that the probability to accept worse candidates in logarithmic schedules remains almost constant (and above&nbsp;0) after some time.
-Notice again that the settings of&nbsp;$T_s$ and&nbsp;$\epsilon$ are not arbitrary, they are selected so that the probability curve gives a not-too-high and not-too-low acceptance probability to solutions which are not too much worse than the current best solution.
-
 ### The Algorithm
 
-Now that we have temperature schedules, we can completely define our SA algorithm and implement it in [@lst:SimulatedAnnealing]. 
+Now that we have the blueprints for temperature schedules, we can completely define our SA algorithm and implement it in [@lst:SimulatedAnnealing]. 
 
 1. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
 2. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
@@ -157,79 +132,179 @@ However, the runtime one would need to invest to actually "cash in" on this prom
 In [@sec:approximationOfTheOptimum] we discussed that we are using metaheuristics because for many problems, we can only guarantee to find the global optimum if we invest a runtime growing exponentially with the problem scale (i.e., proportional to the size of the solution space).
 So while we have a proof that SA will eventually find a globally optimal solution, this proof is not applicable in any practical scenario and we instead use SA as what it is: a metaheuristic that will hopefully give us good *approximate* solutions in *reasonable* time.
 
+### The Right Setup {#sec:sa:right_setup}
+
+Our algorithm has four parameters:
+
+- the start temperature&nbsp;$T_s$,
+- the parameter&nbsp;$\epsilon$,
+- the type of temperature schedule to use (here, logarithmic or exponential), and
+- the unary search operator (in our case, we could use `1swap` or `nswap`).
+
+We will only consider `1swap` as choice for the unary operator and focus on the exponential temperature schedule.
+We have two more parameters to set: $T_s$ and $\epsilon$ and thus refer to the settings of this algorithm with the naming scheme&nbsp;`sa_exp_Ts_ε_1swap`.
+ 
+At first glance, it seems entirely unclear how what to do with these parameters.
+However, we may get some ideas about their rough ranges if we consider Simulated Annealing as an improved hill climber.
+Then, we can get some leads from our prior experiments with that algorithm.
+
+\relative.input{jssp_hc1_swap_sa_params.md}
+
+: The median of total performed function evaluations and the standard deviation *sd* of the final result qualities of the hill climber `hc_1swap`. {#tbl:jssp_hc1_swap_sa_params}
+
+In [@tbl:jssp_hc1_swap_sa_params], we print the standard deviation&nbsp;*sd* of the final result qualities that our `hc_1swap` algorithm achieved on our four JSSP instances.
+This tells us something about how far the different local optima at which `hc_1swap` can get stuck are apart in terms of objective value.
+The value of&nbsp;*sd* ranges from&nbsp;28 on&nbsp;`abz7` to&nbsp;137 on&nbsp;`swv15`.
+The median standard deviation over all four instances is about&nbsp;50.
+Thus, accepting a solution which is worse by 50 units of makespan, i.e., with $\Delta E\approx 50$, should be possible at the beginning of the optimization process. 
+
+How likely should accepting such a value be?
+Unfortunately, we are again stuck at making an arbitrary choice &ndash; but at least we can make a choice from within a well-defined region:
+Probabilities must be in $[0,1]$ and can be understood relatively intuitively, whereas it was a priori unclear in what range reasonable "temperatures" would be located.
+Let us define that the probability&nbsp;$P_{50}$ to accept a candidate solution which is 50&nbsp;makespan units worse than the current one, i.e., $\Delta E = 50$, should be&nbsp;$P_{50}=0.1$ at the beginning of the search.
+In other words, there should be a 10% chance to accept such a solution at $\iteration=1$.
+At $\iteration=1$, $T(\iteration)=T_s$ for both temperature schedules.
+We can now solve [@eq:simulatedAnnealingP] for&nbsp;$T_s$:
+
+$$ \begin{array}{rl}
+P_{50} =& e^{-\frac{\Delta E}{T(\iteration)}}\\
+0.1 =& e^{-\frac{50}{T_s}}\\
+\ln{0.1}=& -\frac{50}{T_s}\\
+T_s=&-\frac{50}{\ln{0.1}}\\
+T_s\approx&21.7
+\end{array} $$
+
+A starting temperature&nbsp;$T_s$ of approximately&nbsp;$T_s=20$ seems therefore suitable in our scenario.
+Of course, we just got there using very simplified and coarse estimates.
+If we would have chosen $P_{50}=0.5$, we would have gotten $T_s\approx 70$ and if we additionally went with the maximum standard deviation&nbsp;137, instead of the median one, we would obtain $T_s\approx200$.
+But at least we have a first understanding of the range where we will probably find good values for&nbsp;$T_s$.
+
+But what about the&nbsp;$\epsilon$ parameters?
+In order to get an idea for how to set it, we first need to know a proper end temperature&nbsp;$T_e$, i.e., the temperature which should be reached by the end of the run.
+
+Maybe here our previous findings from back when we tried to restart the hill climber can come in handy.
+In [@sec:hillClimberWithRestartSetup], we learned that it makes sense to restart the hill climber after $L=16'384$ unsuccessful search steps.
+So maybe a terminal state for our Simulated Annealing could be a scenario where the probability&nbsp;$P_e$ of accepting a candidate solution which is $\Delta E=1$ makespan unit worse than the current one should be $P_e=1/16'384$?
+This choice would mean that the Simulated Annealing algorithm then converges to the `hcr_16384_1swap` algorithm towards the end of the computational budget.
+
+We can now solve [@eq:simulatedAnnealingP] again to get the end temperature&nbsp;$T_e$:
+
+$$ \begin{array}{rl}
+P_e =& e^{-\frac{\Delta E}{T(\iteration)}}\\
+1/16'384 =& e^{-\frac{1}{T_e}}\\
+\ln{1/16'384}=& -\frac{1}{T_e}\\
+T_e=&-\frac{1}{\ln{1/16'384}}\\
+T_e\approx&0.103
+\end{array} $$
+ 
+In other words, a final temperature of $T_e=0.1$ seems reasonable. 
+But when should it be reached?
+In [@tbl:jssp_hc1_swap_sa_params], we print the total number of function evaluations (FEs) that our `hc_1swap` algorithm performed on the different problem instances.
+We can find it generated and evaluated between 22&nbsp;million on&nbsp;`swv15` and 71&nbsp;million on&nbsp;`la24` candidate solutions.^[Notice that back in [@tbl:jssp_hc_1swap_results], we printed the median number FEs until the best solution was discovered, not until the algorithm has terminated.]
+The overall median is at about 30&nbsp;million FEs within the 3&nbsp;minute computational budget.
+In other words, after about 30&nbsp;million FEs, we should reach approximately $T_e=0.1$.
+
+We can solve [@eq:sa:temperatureSchedule:exp] for&nbsp;$\epsilon$ to configure the exponential schedule:
+
+$$ \begin{array}{rl}
+T(\iteration) =& T_s * (1 - \epsilon) ^ {\iteration - 1} \\
+T(30'000'000) =& 20 * (1 - \epsilon) ^ {30'000'000 - 1} \\
+0.1 =& 20 * (1 - \epsilon) ^ {29'999'999} \\
+0.1/20 =& (1 - \epsilon) ^ {29'999'999} \\
+0.005^{1/29'999'999} =& 1 - \epsilon \\
+\epsilon =& 1 - 0.005^{1/29'999'999}\\
+\epsilon \approx& 1.776*10^{-7}
+\end{array} $$
+
+We can conclude, for an exponential temperature schedule, settings for&nbsp;$\epsilon$ somewhat between $10^{-7}$ and $2\!\cdot\!10^{-7}$ seem to be a reasonable choice if the start temperature&nbsp;$T_s$ is set to&nbsp;20.
+
+![The temperature progress of six exponential temperature schedules (top) plus their probabilities to accept solutions with objective values worse by&nbsp;1, 3, or&nbsp;10 than the current solution.](\relative.path{sa_temperature_schedules.svgz}){#fig:sa_temperature_schedules width=96%}
+
+In [@fig:sa_temperature_schedules], we illustrate the behavior of the exponential temperature schedule for starting temperature&nbsp;$T_s=20$ and the six values $5\!\cdot\!10^{-8}$, $1\!\cdot\!10^{-7}$, $1.5\!\cdot\!10^{-7}$, $2\!\cdot\!10^{-7}$, $4\!\cdot\!10^{-7}$, and&nbsp;$8\!\cdot\!10^{-7}$.
+The sub-figure on top shows how the temperature declines over the performed objective value evaluations.
+Starting at&nbsp;$T_s=20$ it reaches close to zero for $\epsilon\geq 1.5\!\cdot\!10^{-7}$ after about $\iteration=30'000'000$&nbsp;FEs.
+For the smaller&nbsp;$\epsilon$ values, the temperature would need longer to decline, while for larger values, it declines quicklier.
+The next three sub-figures show how the probability to accept candidate solutions which are worse by $\Delta E$ units of the objective value decreases with&nbsp;$\iteration$ for&nbsp;$\Delta E\in\{1, 3, 10\}$.
+This decrease is, of course, the direct result of the temperature decrease.
+Solutions with larger&nbsp;$\Delta E$ clearly have a lower probability of being accepted.
+The larger&nbsp;$\epsilon$, the earlier and faster does the acceptance probability decrease. 
+
+![The median result quality of the&nbsp;`sa_exp_20_ε_1swap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the parameter&nbsp;$\epsilon$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_sa_1swap_med_over_epsilon.svgz}){#fig:jssp_sa_1swap_med_over_epsilon width=84%}
+
+In [@fig:jssp_sa_1swap_med_over_epsilon], we illustrate the normalized median result quality that can be obtained by Simulated Annealing with starting temperature&nbsp;$T_s=20$, exponential schedule, and `1swap` operator for different values of the parameter&nbsp;$\epsilon$, including those from [@fig:sa_temperature_schedules].
+Interestingly, it turns out that $\epsilon=2$ is the best choice for the instances `abz7`, `swv15`, and `yn4` &nbsp; which is surprisingly close to what we could expect from our calculation.
+Smaller values will make the temperature decrease more slowly and lead to too much exploration and too little exploitation, as we already know from [@fig:sa_temperature_schedules].
+They work better on instance `la24`, which is no surprise:
+From [@tbl:jssp_hc1_swap_sa_params], we know that on this instance, we can conduct more than twice as many objective value evaluations than on the others within the three minute budget.
+In other words, on `la24`, we can do enough steps to let the temperature decrease sufficiently even for smaller&nbsp;$\epsilon$.
+
 ### Results on the JSSP {#sec:saResultsOnJSSP}
 
-|$\instance$|$\lowerBound{\objf}$|setup|best|mean|med|sd|med(t)|med(FEs)|
-|:-:|--:|:--|--:|--:|--:|--:|--:|--:|
-|`abz7`|656|`hcr_256+5%_nswap`|707|733|734|7|64s|17'293'038|
-|||`ea4096_nswap_5`|685|706|706|10|**29**s|**5'933'332**|
-|||`sa_e_20_2e-7_1swap`|663|673|672|5|92s|22'456'822|
-|||`sa_e_20_4e-7_1swap`|**658**|674|675|5|55s|13'388'301|
-|||`sa_e_20_8e-7_1swap`|663|675|675|6|36s|8'625'161|
-|||`sa_l_5_1swap`|**658**|675|675|6|63s|15'745'842|
-|||`sa_l_10_1swap`|659|**672**|**671**|4|86s|21'271'077|
-|||`sa_l_20_1swap`|675|682|682|**3**|125s|30'740'378|
-|`la24`|935|`hcr_256+5%_nswap`|945|981|984|9|57s|29'246'097|
-|||`ea4096_nswap_5`|941|974|971|13|**6**s|**22'77'833**|
-|||`sa_e_20_2e-7_1swap`|938|949|946|**8**|27s|12'358'941|
-|||`sa_e_20_4e-7_1swap`|**935**|949|946|9|16s|7'135'423|
-|||`sa_e_20_8e-7_1swap`|**935**|951|950|8|9s|4'044'217|
-|||`sa_l_5_1swap`|940|956|950|13|6s|2'873'837|
-|||`sa_l_10_1swap`|938|953|950|11|7s|3'210'824|
-|||`sa_l_20_1swap`|938|**946**|**941**|10|19s|9'097'608|
-|`swv15`|2885|`hcr_256+5%_nswap`|3645|3804|3811|44|**91**s|**14'907'737**|
-|||`ea4096_nswap_5`|3440|3543|3537|51|177s|22'603'785|
-|||`sa_e_20_2e-7_1swap`|2937|**2990**|**2988**|28|148s|21'949'073|
-|||`sa_e_20_4e-7_1swap`|2941|2993|2993|28|128s|18'244'751|
-|||`sa_e_20_8e-7_1swap`|**2936**|3000|3002|28|111s|16'029'528|
-|||`sa_l_5_1swap`|2963|3032|3029|33|135s|20'087'431|
-|||`sa_l_10_1swap`|2964|3021|3018|30|141s|21'252'052|
-|||`sa_l_20_1swap`|2985|3017|3016|**12**|153s|22'596'946|
-|`yn4`|929|`hcr_256+5%_nswap`|1081|1117|1119|14|55s|11'299'461|
-|||`ea4096_nswap_5`|1017|1058|1058|18|**52**s|**8'248'627**|
-|||`sa_e_20_2e-7_1swap`|973|**985**|**985**|5|113s|20'676'041|
-|||`sa_e_20_4e-7_1swap`|**971**|987|986|7|68s|12'193'934|
-|||`sa_e_20_8e-7_1swap`|972|988|988|7|58s|10'178'219|
-|||`sa_l_5_1swap`|980|1005|1006|13|75s|13'732'297|
-|||`sa_l_10_1swap`|975|997|996|11|108s|19'850'143|
-|||`sa_l_20_1swap`|979|990|990|**4**|116s|21'108'153|
+We can now evaluate the performance of our Simulated Annealing approach on the JSSP.
+We choose the setup with exponential temperature schedule, the `1swap` operator, the starting temperature&nbsp;$T_s=20$, and the parameter&nbsp;$\epsilon=2\!\cdot\!10^{-7}$.
+For simplicity, we refer to it as `sa_exp_20_2_1swap`. 
 
-: The results of different Simulated Annealing setups compared to the best plain hill climber with restarts and the best basic EA. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:saVsHCAndEAJSSP}
+\relative.input{jssp_sa_results.md}
 
-In [@tbl:saVsHCAndEAJSSP], we now present the results of different setups of our Simulated Annealing algorithm in comparison with the hill climbers with restarts and the best pure EA setup, `ea4096_nswap_5`.
-The setups are named after the pattern `sa_e_TS_EP_unary` have an exponential temperature schedule with the start temperature $T_s=TS$ and $\epsilon=EP$.
-`sa_e_20_8e-7_1swap`, for instance, is SA with an exponential temperature schedule with $T_s=20$ and $\epsilon=8*10^{-7}$ and the `1swap` unary operator.
-The setups named after the pattern `sa_l_TS_unary` use logarithmic schedules with $\epsilon=1$, the start temperature $T_s=TS$, and the named unary operator.
+: The results of the Simulated Annealing setup `sa_exp_20_2_1swap` in comparison with the best EA, `eac_4_5%_nswap`, and the hill climber with restarts&nbsp;`hcr_16384_1swap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_sa_results}
 
-What we find from the table is that Simulated Annealing here consistently and significantly outperforms the hill climbers and the best plain EA.
-On `ab7`, `swv15`, and `yn4`, its mean and median solutions are better than the best solutions offered by these algorithms.
-Over all, instance `la24` could even be solved to optimality and on `abz7`, we are only 0.3% worse than the lower bound of the objective function.
-The median solutions of `sa_e_20_4e-7_1swap` are illustrated in [@fig:jssp_gantt_sa_e_20_4em7_1swap_med].
-For `abz7`, they are only 3% longer than the theoretical lower bound (656), 1.1% for `la24`, 4% for `swv15`, and 6% for `yan4`.
-We also tested the Simulated Annealing setups with the unary `nswap` operator, but this did not yield further improvements.
+In [@jssp_sa_results], we compare results of the Simulated Annealing setup `sa_exp_20_2_1swap` to those of our best EA, `eac_4_5%_nswap`, and the hill climber with restarts&nbsp;`hcr_16384_1swap`. 
+Simulated Annealing is better than these three algorithms in terms of the best, mean, and median result on almost all instances.
+Only on `la24`, `eac_4_5%_nswap` can win in terms of the best discovered solution, which already was the optimum.
+Our SA setup also is more reliable than the other algorithms, its standard deviation and only on `la24`, the standard deviation&nbsp;$sd$ of its final result quality is not the lowest.
 
-If we compare our `sa_e_20_4e-7_1swap` with the related work, we find its best and mean solution quality on `abz7` surpass those of the four Genetic Algorithms in&nbsp;[@JPDS2014CAODRIGAFJSSP] as well as those of the original Fast Simulated Annealing algorithm and its improved version HFSAQ from&nbsp;[@AKZ2016FSAHWQFSJSSP].
-The best result is better than the one of the TGA in&nbsp;[@AZ2015AEAGAFSTJSSP].
-Its mean and best results of `sa_e_20_4e-7_1swap` on `la24` outperform all algorithms from [@JPDS2014CAODRIGAFJSSP; @A2010RIGAFTJSPACS; @JZ2018AOGWOFSCPJSAFJSSC] and the mean results are also better than the results of the aLSGA in&nbsp;[@A2015ALSGAFTJSSPWIA]. 
+We know that on `la24`, $\epsilon=2\!\cdot\!10^{-7}$ is not the best choice for SA and smaller values would perform better there.
+Oddly enough, in the experiment, it are the settings $\epsilon=4\!\cdot\!10^{-7}$ and $\epsilon=8\!\cdot\!10^{-7}$, not listed in the table, which also discovered a globally optimal solution on that instance.
+
+If we compare our `sa_exp_20_2_1swap` with the related work, we find its best and mean solution quality on `abz7` surpass those of the original Fast Simulated Annealing algorithm and its improved version HFSAQ from&nbsp;[@AKZ2016FSAHWQFSJSSP].
+Its mean and best results of `sa_exp_20_2_1swap` on `la24` outperform the algorithms proposed in&nbsp;[@JZ2018AOGWOFSCPJSAFJSSC; @A2015ALSGAFTJSSPWIA; @JPDS2014CAODRIGAFJSSP; @A2010RIGAFTJSPACS; @ODP2010STJSPWARKGAWIP; @OV2004LSGAFTJSSP]. 
 On `yn4`, it outperforms all four AntGenSA algorithms (complex hybrids of three algorithms including SA and EAs) in&nbsp;[@HRSCVGBTVMR2019AHSAFJSSP] in mean and best result quality.
-So while we are not shooting for solving the JSSP outstandingly well using very complicated algorithms, our simple take on the problem seems to work.
+Since this is an educational book, we are not really aiming for solving the JSSP outstandingly well and only use a very small set of instances.
+Our algorithms are not very complicated, but these comparisons indicate that they are at least somewhat working.
 
-In [@fig:jssp_progress_sa_log], we compare the progress over time of our Simulated Annealing setups with those of the best hill climber with restarts.
-We find a very significant difference on three of the four problem instancee.
-The higher similarity of the end result distribution on `la24` results from the fact that even `hcr_256+5%_nswap` produces schedules which are less than 5% longer than the best possible one (objective function lower bound) in median.
+We plot the Gantt charts of the median result of `sa_exp_20_2_1swap`  in [@fig:jssp_gantt_sa_exp_20_2_1swap_med].
+Especially on instance `swv15`, changes are visible in comparison to the results produced by `eac_4_5%_nswap` and illustrated in [@fig:jssp_gantt_eac_4_0d05_nswap_med].
 
-We also find that the two SA approaches have qualitatively different behavior.
-The setup with the logarithmic schedule improves the solution quality a bit similar to the hill climber but eventually yields better results, as it can escape from local optima.
-The setup with the exponential schedule progresses initially more slowly, but at some point suddenly speeds up.
-These two behaviors fit exactly the temperature schedule and acceptance probability illustrations in [@fig:sa_temperature_schedules]:
-While the temperature and acceptance probability of the logarithmic schedule slowly decrease and remain at a slightly higher level, there is a clear phase transition in the exponential schedule.
-Both the temperature and acceptance probability remain higher for some time until they suddenly drop.
+![The Gantt charts of the median solutions obtained by the `sa_exp_20_2_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_sa_exp_20_2_1swap_med.svgz}){#fig:jssp_gantt_sa_exp_20_2_1swap_med width=84%}
+
+![The median of the progress of the algorithms `sa_exp_20_2_1swap`, `ea_8192_5%_nswap`, `eac_4_5%_nswap`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_sa_log.svgz}){#fig:jssp_progress_sa_log width=84%}
+
+In [@fig:jssp_progress_sa_log], we plot the progress of `sa_exp_20_2_1swap` over time in comparison to `ea_8192_5%_nswap`, `eac_4_5%_nswap`, and `hcr_16384_1swap`.
+Especially for `swv15` and `yn4`, we find that `sa_exp_20_2_1swap` converges towards end results that are very visibly better than the other algorithms. 
+
+We also notice that the median solution quality obtained by `sa_exp_20_2_1swap` looks very similar to the shape of the temperature curve in [@fig:sa_temperature_schedules].
+Under the exponential schedule that we use, both the temperature and acceptance probability remain high for some time until they suddenly drop.
 Interestingly, the objective value of the best-so-far solution in SA seems to follow that pattern.
+Its , it first declines slowly, then there is a sudden transition where many improvements are made, before the curve finally becomes flat.
+This relationship between the temperature and the obtained result quality shows us that configuring the SA algorithm correctly is very important.
+Had we chosen&nbsp;$\epsilon$ too small or the start temperature&nbsp;$T_s$ too high, then the quick decline could have shifted beyond our three minute budget, i.e., would not take place.
+Then the results of Simulated Annealing would have been worse than those of the other three algorithms.
+This also explains the worse results for smaller&nbsp;$\epsilon$ shown in [@fig:jssp_sa_1swap_med_over_epsilon]. 
 
-This also means: It is very important to have the right temperature schedule.
-We obtained the right temperature schedule because we know *a)*&nbsp;the reasonable range of good objective values and *b)*&nbsp;roughly how many algorithm steps we can perform within our computational budget.
+The behavior of SA is different from the hill climber and small-population EA, which do not exhibit such a transition region.
+The EA `ea_8192_5%_nswap` with the larger population also shows a transition from slow to faster decline, but there it takes longer and is much less steep.
 
-![The Gantt charts of the median solutions obtained by the&nbsp;`sa_e_20_4e-7_1swap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_sa_e_20_4em7_1swap_med.svgz}){#fig:jssp_gantt_sa_e_20_4em7_1swap_med width=84%}
+### Summary
 
-![The progress of the two Simulated Annealing setups&nbsp;`sa_e_20_4e-7_1swap` and&nbsp;`sa_l_10_1swap` compared with the
- best basic hill climber with restarts&nbsp;`hcr_256+5%_nswap`, over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis).](\relative.path{jssp_progress_sa.svgz}){#fig:jssp_progress_sa_log width=84%}
+Simulated Annealing is an optimization algorithm which tunes from exploration to exploitation during the optimization process.
+Its structure is similar to the hill climber, but different from that simple local search, it also sometimes moves to solutions which are worse than the one it currently holds.
+While it will always accept better solutions, the probability to move towards a worse solution depends on how much worse that solution is (via&nbsp;$\Delta E$) and on the number of search steps already performed.
+This later relationship is implemented by a so-called "temperature schedule":
+At any step&nbsp;$\iteration$, the algorithm has a current temperature&nbsp;$T(\iteration)$.
+The acceptance probability of a worse solution is computed based on how bad its objective value is in comparison and based on&nbsp;$T(\iteration)$.
+Two temperature schedules are most common: letting&nbsp;$T(\iteration)$ decline either logarithmically or exponentially. 
+Both have two parameters, the start temperature&nbsp;$T_s$ and&nbsp;$\epsilon$.
+
+In our experiments, we only considered the exponential schedule.
+We then faced the problem of how to set the values of these obscure parameters&nbsp;$T_s$ and&nbsp;$\epsilon$.
+We did this by using the experience we already gained from our experiments with the simple hill climber:
+We already know something about how different good solutions can be from each other.
+This provides us with the knowledge of how "deep" a local optimum may be, i.e., what kind of values we may expect for&nbsp;$\Delta E$.
+We also know roughly how many algorithm steps we can perform in our computational budget, i.e., have a rough idea of how large&nbsp;$\iteration$ can become.
+Finally, we also know roughly the number&nbsp;$L$ of function evaluations after which it made sense to restart the hill climber.
+By setting the probability to accept a solution with $\Delta E=1$ to $1/L$, we got a rough idea of temperature that may be good at the end of the runs.
+The word "rough" appeared quite often in the above text.
+It is simply not really possible to "compute" the perfect values for&nbsp;$T_s$ and&nbsp;$\epsilon$ (and we could not compute the right values for $\mu$, $\lambda$, nor $cr$ for the Evolutionary Algorithm either).
+But the roughly computed values gave us a good idea of suitable settings and we could confirm them in a small experiments.
+Using them, our Simulated Annealing algorithm performed quite well.
+The very crude calculations in [@sec:sa:right_setup] may serve as rule-of-thumb in other scenarios, too.

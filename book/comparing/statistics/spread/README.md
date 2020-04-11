@@ -38,7 +38,7 @@ $$ \probability\left[z < \quantile{k}{q}\right] \leq \frac{k}{q} \leq \probabili
 Quantiles are a generalization of the concept of the median, in that $\quantile{1}{2}=\median=\quantile{i}{2i}\forall i>0$.
 There are actually several approaches to estimate quantiles from data.
 The `R`&nbsp;programming language widely used in statistics applies [@eq:quantiles] as default&nbsp;[@BCW1988TNSLAPEFDAAG;@HF1996SQISP].
-In an ideally-sized data sample, the number of elements minus 1, i.e., $n-1$, would be a multiple of $q$.
+In an ideally-sized data sample, the number of elements minus 1, i.e., $n-1$, would be a multiple of&nbsp;$q$.
 In this case, the $k$^th^ cut point would directly be located at index&nbsp;$h=(n-1)\frac{k}{q}$.
 Both in [@eq:quantiles] and in the formula for the median [@eq:median], this is included the first of the two alternative options.
 Otherwise, both [@eq:median] and [@eq:quantiles] interpolate linearly between the elements at the two closest indices, namely $\lfloor h\rfloor$ and $\lfloor h\rfloor + 1$.   
