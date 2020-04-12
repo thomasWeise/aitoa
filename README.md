@@ -1,6 +1,6 @@
 # An Introduction to Optimization Algorithms
 
-[<img alt="Travis CI Build Status" src="https://img.shields.io/travis/thomasWeise/betAndRun/master.svg" height="20"/>](https://travis-ci.org/thomasWeise/aitoa/)
+[<img alt="Travis CI Build Status" src="http://img.shields.io/travis/thomasWeise/betAndRun/master.svg" height="20"/>](http://travis-ci.org/thomasWeise/aitoa/)
 
 ## 1. Introduction
 
@@ -20,7 +20,9 @@ The [book](http://thomasweise.github.io/aitoa/index.html) is available in the fo
 ## 2. License
 
 This book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
-The accompanying [source code package](http://github.com/thomasWeise/aitoa-code) is licensed under the MIT License.
+The experiments have been conducted using the Java programs published in repository [thomasWeise/aitoa-code](http://github.com/thomasWeise/aitoa-code), which under the MIT&nbsp;License.
+The results of these experiments are provided in the repository [thomasWeise/aitoa-data](http://github.com/thomasWeise/aitoa-data) are under the CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 license.
+Many of the graphics and diagrams in the book have been created from these data using the MIT-licensed `R` scripts in  [thomasWeise/aitoaEvaluate](http://github.com/thomasWeise/aitoaEvaluate).
 
 ## 3. Contact
 
