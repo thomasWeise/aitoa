@@ -38,6 +38,13 @@ There may be many effects which can mess up our measurements, ranging from other
 - Runtime measurements are not very precise.
 Often, clocks have resolutions only down to a few milliseconds, and within even a millisecond many action can happen on today's CPUs.
 
+There exist ideas to *mitigate* the drawback that clock times are hard to compare&nbsp;[@JMG2004EAOHFTS; @WCTLTCMY2014BOAAOSFFTTSP].
+For a specific optimization problem, one can clearly specify a simple standardized algorithm&nbsp;$\algorithmStyle{B}$, which always terminates in a relatively short time, say a simple heuristic.
+Before applying the algorithm&nbsp;$\algorithmStyle{A}$ that we actually want to investigate to an instance&nbsp;$\instance$ of the problem, we first apply&nbsp;$\algorithmStyle{B}$ to&nbsp;$\instance$ and measure the time&nbsp;$T[\algorithmStyle{B}|\instance]$ it takes on our machine.
+We then can divide the runtime&nbsp;$T[\algorithmStyle{A}|\instance]$ needed by&nbsp;$\algorithmStyle{A}|\instance$ by&nbsp;$T[\algorithmStyle{B}|\instance]$.
+We can then hope that the resulting, normalized runtime is somewhat comparable across machines.
+Of course, this is a problem-specific approach, it does not solve the other problems with measuring runtime directly, and it likely will still not generalize over different computer architectures or programming languages. 
+
 ### Consumed Function Evaluations
 
 Instead of measuring how many milliseconds our algorithm needs, we often want a more abstract measure.
@@ -71,10 +78,29 @@ This would not be visible in the FE counter, because, well, it is not an FE.
 The same holds for the selection step in an Evolutionary Algorithm (realized as sorting in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo]).
 Although this is probably a very fast procedure, it will be outside of what we can measure with FEs. 
 - A big problem is that one function evaluation can have extremely different actual time requirements and algorithmic complexity in different algorithms.
-For instance, it is known that in a Traveling Salesman Problem&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV] with $n$&nbsp;cities, some algorithms can create an evaluate a new candidate solution from an existing one within a *constant* number of steps, i.e., in&nbsp;$\bigO{1}$, while others need a number of steps growing quadratically with&nbsp;$n$, i.e., are in&nbsp;$\bigO{n^2}$&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP].
+For instance, it is known that in a Traveling Salesman Problem (TSP)&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV] with $n$&nbsp;cities, some algorithms can create an evaluate a new candidate solution from an existing one within a *constant* number of steps, i.e., in&nbsp;$\bigO{1}$, while others need a number of steps growing quadratically with&nbsp;$n$, i.e., are in&nbsp;$\bigO{n^2}$&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP].
 If an algorithm of the former type can achieve the same quality as an algorithm of the latter type, we could consider it as better even if it would need ten times as many FEs.
 Hence, FEs are only fair measurements for comparing two algorithms if they take approximately the same time in both of them.
 - Time measured in FEs is harder to comprehend in the context of parallelization and distribution of algorithms.
+
+There exists an idea to *mitigate* the problem with the different per-FE complexities:
+counting algorithm steps in a problem-specific method with a higher resolution.
+In&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP], for example, it was proposed to count the number of distance evaluations on the TSP and in&nbsp;[@HWHC2013HILSFM], bit flips are counted on the MAX-SAT problem.
+
+### Do not count generations!
+
+As discussed in \text.ref{generationEA} in [@sec:evolutionaryAlgorithmWithoutRecombination], a generation is one iteration of a population-based optimization method.
+At first glance, generations seem to be a machine-independent time measure much like FEs.
+However, measuring runtime in "generations" is a very bad thing to do.
+
+In one such generation, multiple candidate solutions are generated and evaluated.
+How many?
+This depends on the population size settings, e.g., $\mu$ and&nbsp;$\lambda$.
+So generations are not comparable across different population sizes.
+
+Even more: if we use algorithm enhancements like clearing (see [@sec:eaClearingInObjectiveSpace]), then the number of new points sampled from the search space may be different in each generation.
+In other words, the number of consumed generations does not necessarily have a relationship to FEs (and neither to the actual consumed runtime).
+Therefore, counting FEs should always be preferred over counting generations.
 
 ### Summary
 
@@ -93,3 +119,4 @@ Measuring the runtime of algorithms solving artificial problems does not make th
 
 That being said, I personally prefer to **measure both FEs and clock time**.
 This way, we are on the safe side.
+

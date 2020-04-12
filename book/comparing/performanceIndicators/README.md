@@ -2,8 +2,8 @@
 
 Unfortunately, many optimization problems are computationally hard.
 If we want to guarantee that we can solve them to optimality, this would often incur an unacceptably long runtime.
-Assume that an algorithm&nbsp;$\mathcal{A}$ can solve a problem instance in ten million years while algorithm&nbsp;$\mathcal{B}$ only needs one million.
-In a practical scenario, usually neither is useful nor acceptable and the fact that&nbsp;$\mathcal{B}$ is better than&nbsp;$\mathcal{A}$ would not matter.^[From a research perspective, it does matter, though.]
+Assume that an algorithm&nbsp;$\algorithmStyle{A}$ can solve a problem instance in ten million years while algorithm&nbsp;$\algorithmStyle{B}$ only needs one million.
+In a practical scenario, usually neither is useful nor acceptable and the fact that&nbsp;$\algorithmStyle{B}$ is better than&nbsp;$\algorithmStyle{A}$ would not matter.^[From a research perspective, it does matter, though.]
 
 As mentioned in [@sec:approximationOfTheOptimum], heuristic and metaheuristic optimization algorithms offer a trade-off between runtime and solution quality.
 This means we have two measurable performance dimensions, namely:
@@ -23,10 +23,13 @@ We illustrate these two options, which corresponds to define vertical and horizo
 ### Vertical Cuts: Best Solution Quality Reached within Given Time
 
 What we did in our simple experiments so far was mainly to focus on the quality that we could achieve within a certain time, i.e., to proceed according to the "vertical cut" scenario.
+
 In a practical application, we have a limited computational budget and what counts is the quality of the solutions that we can produce within this budget.
 The vertical cuts correspond directly to this goal.
 When creating the final version of an actual implementation of an optimization method, we will have to focus on this measure.
 Since we then will also have to measure time in clock time, this means that our results will depend on the applied hardware and software configuration as well as on the way we implemented our algorithm, down to the choice of the programming language or even compiler.
+Of course, budgets based consumed clock time are hard to compare or reproduce&nbsp;[@J2002ATGTTEAOA].
+
 The advantage of the vertical cut approach is that it can capture all of these issues, as well as performance gains from parallelization or distribution of the algorithms.
 Our results obtained with vertical cuts will, however not necessarily carry over to other system configurations or problems.
 
@@ -40,7 +43,7 @@ This could be a globally optimal quality or a threshold at which the user consid
 This approach is preferred in&nbsp;[@HAFR2010RPBBOB2ES; @FHRA2015CDR1] for benchmarking algorithms.
 
 It has the advantage that the number of algorithm steps or seconds needed to solve the problem is a meaningful and interpretable quantity.
-We can then make statements such as "Algorithm&nbsp;$\mathcal{B}$ is ten times faster than algorithm&nbsp;$\mathcal{A}$ [in solving this problem]."
+We can then make statements such as "Algorithm&nbsp;$\algorithmStyle{B}$ is ten times faster than algorithm&nbsp;$\algorithmStyle{A}$ [in solving this problem]."
 An improvement in the objective value, as we could measure in the vertical cut approach, has no such interpretable meaning, since we do not know whether it is hard or easy to, for instance, squeeze out 10 more time units of makespan in a JSSP instance.
 
 The "horizontal cuts" idea is applied, for instance, in the [COCO Framework](http://coco.lri.fr/) for benchmarking numerical optimization algorithms&nbsp;[@HAFR2010RPBBOB2ES; @FHRA2015CDR1].

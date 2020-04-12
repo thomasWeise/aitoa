@@ -1,20 +1,20 @@
 ## Testing for Significance {#sec:testForSignificance}
 
-We can now e.g., perform 20 runs each with two different optimization algorithms&nbsp;$\mathcal{A}$ and&nbsp;$\mathcal{B}$ on one problem instance and compute the median of one of the two performance measures for each set of runs.
+We can now e.g., perform 20 runs each with two different optimization algorithms&nbsp;$\algorithmStyle{A}$ and&nbsp;$\algorithmStyle{B}$ on one problem instance and compute the median of one of the two performance measures for each set of runs.
 Likely, they will be different.
 Actually, most the performance indicators in the result tables we looked at in our experiments on the JSSP were different.
 Almost always, one of the two algorithms will have better results.
 What does this mean?
 
 It means that one of the two algorithms is better &ndash; with a certain probability.
-We could get the results we get either because $\mathcal{A}$ is really better than $\mathcal{B}$ or &ndash; as mentioned in [@sec:hcTestForSignificance] &ndash; by pure coincidence, as artifact from the randomness of our algorithms. 
+We could get the results we get either because $\algorithmStyle{A}$ is really better than $\algorithmStyle{B}$ or &ndash; as mentioned in [@sec:hcTestForSignificance] &ndash; by pure coincidence, as artifact from the randomness of our algorithms. 
 
-If we say "$\mathcal{A}$ is better than $\mathcal{B}$" because this is what we saw in our experiments, we have a certain probabilitys&nbsp;$p$ to be wrong.
-Strictly speaking, the statement "$\mathcal{A}$ is better than $\mathcal{B}$" makes only sense if we can give an upper bound&nbsp;$\alpha$ for the error probability.
+If we say "$\algorithmStyle{A}$ is better than $\algorithmStyle{B}$" because this is what we saw in our experiments, we have a certain probability&nbsp;$p$ to be wrong.
+Strictly speaking, the statement "$\algorithmStyle{A}$ is better than $\algorithmStyle{B}$" makes only sense if we can give an upper bound&nbsp;$\alpha$ for the error probability.
 
 Assume that we compare two data samples&nbsp;$A=(\arrayIndex{a}{0},\arrayIndex{a}{1}, \dots, \arrayIndex{a}{n_A-1})$ and&nbsp;$B=(\arrayIndex{b}{0},\arrayIndex{b}{1}, \dots, \arrayIndex{b}{n_B-1})$.
 We observe that the elements in&nbsp;$A$ tend to be bigger than those in&nbsp;$B$, for instance, $\median(A)>\median(B)$.
-Of course, just claiming that the algorithm&nbsp;$\mathcal{A}$ from which the data sample&nbsp;$A$ stems tends to produce bigger results than&nbsp;$\mathcal{B}$ which has given us the observations in&nbsp;$B$, we would run the risk of being wrong.
+Of course, just claiming that the algorithm&nbsp;$\algorithmStyle{A}$ from which the data sample&nbsp;$A$ stems tends to produce bigger results than&nbsp;$\algorithmStyle{B}$ which has given us the observations in&nbsp;$B$, we would run the risk of being wrong.
 Instead of doing this directly, we try to compute the probability&nbsp;$p$ that our conclusion is wrong.
 If&nbsp;$p$ is lower than a small threshold&nbsp;$\alpha$, say, $\alpha=0.02$, then we can accept the conclusion.
 Otherwise, the differences are not significant and we do not make the claim.
@@ -66,23 +66,23 @@ The calculation that we performed here, actually, is called the *binomial test*.
 ### The Concept of Many Statistical Tests
 
 This is, roughly, how statistical tests work.
-We make a set of observations, for instance, we run experiments with two algorithms&nbsp;$\mathcal{A}$ and&nbsp;$\mathcal{B}$ on one problem instance and get two corresponding lists ($A$&nbsp;and&nbsp;$B$) of measurements of a performance indicator.
+We make a set of observations, for instance, we run experiments with two algorithms&nbsp;$\algorithmStyle{A}$ and&nbsp;$\algorithmStyle{B}$ on one problem instance and get two corresponding lists ($A$&nbsp;and&nbsp;$B$) of measurements of a performance indicator.
 The mean or median values of these lists will probably differ, i.e., one of the two methods will have performed better in average.
 Then again, it would be very unlikely to, say, apply two randomized algorithms to a problem instance, 100 times each, and get the same results.
 Matter of fact, it would be very unlikely to apply the same randomized algorithm to a problem instance 100 times and then again for another 100 times and get the same results again.
  
-Still, our hypothesis&nbsp;$H_1$ could be "Algorithm&nbsp;$\mathcal{A}$ is better than algorithm&nbsp;$\mathcal{B}$."
+Still, our hypothesis&nbsp;$H_1$ could be "Algorithm&nbsp;$\algorithmStyle{A}$ is better than algorithm&nbsp;$\algorithmStyle{B}$."
 Unfortunately, if that is indeed true, we cannot really know how likely it would have been to get exactly the experimental results that we got.
-Instead, we define the null hypothesis&nbsp;$H_0$ that "The performance of the two algorithms is the same," i.e., $\mathcal{A} \equiv \mathcal{B}$.
+Instead, we define the null hypothesis&nbsp;$H_0$ that "The performance of the two algorithms is the same," i.e., $\algorithmStyle{A} \equiv \algorithmStyle{B}$.
 If that would have been the case, the the data samples&nbsp;$A$ and&nbsp;$B$ would stem from the same algorithm, would be observations of the same random variable, i.e., elements from the same population.
 If we combine&nbsp;$A$ and&nbsp;$B$ to a set&nbsp;$O$, we can then wonder how likely it would be to draw two sets from&nbsp;$O$ that show the same characteristics as&nbsp;$A$ and&nbsp;$B$.
-If the probability is high, then we cannot rule out that $\mathcal{A} \equiv \mathcal{B}$.
+If the probability is high, then we cannot rule out that $\algorithmStyle{A} \equiv \algorithmStyle{B}$.
 If the probability is low, say below $\alpha=0.02$, then we can reject&nbsp;$H_0$ and confidently assume that&nbsp;$H_1$ is true and our observation was significant.
 
 ### Second Example (Randomization Test)
 
 Let us now consider a more concrete example.
-We want to compare two algorithms&nbsp;$\mathcal{A}$ and&nbsp;$\mathcal{B}$ on a given problem instance.
+We want to compare two algorithms&nbsp;$\algorithmStyle{A}$ and&nbsp;$\algorithmStyle{B}$ on a given problem instance.
 We have conducted a small experiment and measured objective values of their final runs in a few runs in form of the two data sets&nbsp;$A$ and&nbsp;$B$, respectively:
 
 - $A = (2, 5, 6, 7, 9, 10)$ and
@@ -93,13 +93,13 @@ From this, we can estimate the arithmetic means:
 - $\mean(A)=\frac{39}{6}=6.5$ and
 - $\mean(B)=\frac{16}{4}=4$.
 
-It looks like algorithm&nbsp;$\mathcal{B}$ may produce the smaller objective values.
+It looks like algorithm&nbsp;$\algorithmStyle{B}$ may produce the smaller objective values.
 But is this assumption justified based on the data we have?
 Is the difference between $\mean(A)$ and $\mean(B)$ significant at a threshold of $\alpha=2$?
 
-If&nbsp;$\mathcal{B}$ is truly better than&nbsp;$\mathcal{A}$, which is our hypothesis&nbsp;$H_1$, then we cannot calculate anything.
-Let us therefore assume as null hypothesis&nbsp;$H_0$ the observed difference did just happen by chance and, well, $\mathcal{A} \equiv \mathcal{B}$.
-Then, this would mean that the data samples&nbsp;$A$ and&nbsp;$B$ stem from the *same* algorithm (as $\mathcal{A} \equiv \mathcal{B}$).
+If&nbsp;$\algorithmStyle{B}$ is truly better than&nbsp;$\algorithmStyle{A}$, which is our hypothesis&nbsp;$H_1$, then we cannot calculate anything.
+Let us therefore assume as null hypothesis&nbsp;$H_0$ the observed difference did just happen by chance and, well, $\algorithmStyle{A} \equiv \algorithmStyle{B}$.
+Then, this would mean that the data samples&nbsp;$A$ and&nbsp;$B$ stem from the *same* algorithm (as $\algorithmStyle{A} \equiv \algorithmStyle{B}$).
 The division into the two sets would only be artificial, an artifact of our experimental design.
 Instead of having two data samples, we only have one, namely the union set&nbsp;$O$ with&nbsp;10 elements:
 
@@ -123,9 +123,9 @@ This, of course, means that in exactly these 27&nbsp;divisions, $\mean(A')\geq 6
 \repo.listing{lst:RandomizationTestExample}{An excerpt of a simple program enumerating all different four-element subsets of $O$ and counting how many have a mean at last as extreme as 6.5.}{java}{src/test/java/aitoa/bookExamples/RandomizationTestExample.java}{}{relevant}
 
 If $H_0$&nbsp;holds, there would have been a probability of $p=\frac{27}{210}=\frac{9}{70}\approx 0.1286$ that we would see arithmetic mean performances *as extreme* as we did.
-If we would reject&nbsp;$H_0$ and instead claim that&nbsp;$H_1$ is true, i.e., algorithm&nbsp;$\mathcal{B}$ is better than&nbsp;$\mathcal{A}$, then we have a 13% chance of being wrong.
+If we would reject&nbsp;$H_0$ and instead claim that&nbsp;$H_1$ is true, i.e., algorithm&nbsp;$\algorithmStyle{B}$ is better than&nbsp;$\algorithmStyle{A}$, then we have a 13% chance of being wrong.
 Since this is more than our pre-defined significance threshold of&nbsp;$\alpha=0.02$, we cannot reject&nbsp;$H_0$.
-Based on the little data we collected, we cannot be sure whether algorithm&nbsp;$\mathcal{B}$ is better or not.
+Based on the little data we collected, we cannot be sure whether algorithm&nbsp;$\algorithmStyle{B}$ is better or not.
 
 While we cannot reject&nbsp;$H_0$, this does not mean that it might not be true &ndash; actually, the $p$-value is just&nbsp;13%.
 $H_0$&nbsp;may or may not be true, and the same holds for&nbsp;$H_1$.
@@ -163,7 +163,7 @@ They tend to work similar to the examples given above.
 When comparing optimization methods, we should always apply non-parametric tests.
 
 The most suitable test in many cases is the above-mentioned **Mann-Whitney U test**.
-Here, the hypothesis&nbsp;$H_1$ is that one of the two distributions&nbsp;$\mathcal{A}$ and&nbsp;$\mathcal{B}$ producing the two measured data samples&nbsp;$A$ and&nbsp;$B$, which are compared by the test, tends to produce larger or smaller values than the other.
+Here, the hypothesis&nbsp;$H_1$ is that one of the two distributions&nbsp;$\algorithmStyle{A}$ and&nbsp;$\algorithmStyle{B}$ producing the two measured data samples&nbsp;$A$ and&nbsp;$B$, which are compared by the test, tends to produce larger or smaller values than the other.
 The null hypothesis&nbsp;$H_0$ would be that this is not true and it can be rejected if the computed $p$-values are small. 
 Doing this test manually is quite complicated and describing it is beyond the scope of this book.
 Luckily, it is implemented in many tools, e.g., as the function `wilcox.test` in the `R`&nbsp;programming language, where you can simply feed it with two lists of numbers and it returns the $p$-value.

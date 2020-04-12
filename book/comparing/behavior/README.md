@@ -36,13 +36,13 @@ When doing so, the imaginary situation illustrated in [@fig:points_vs_lines] cou
 Here, three imaginary researchers have applied three imaginary algorithms to an imaginary problem instance.
 Independently, they have chosen three different computational budgets and report the median "end results" of their algorithms.
 From the diagram on the left-hand side, *it looks as if* we have three incomparable algorithms.
-Algorithm&nbsp;$\mathcal{C}$ needs a long time, but provides the best median result quality.
-Algorithm&nbsp;$\mathcal{B}$ is faster, but we pay for it by getting worse results.
-Finally, algorithm&nbsp;$\mathcal{A}$ is the fastest, but has the worst median result quality.
-We could conclude that, if we would have much time, we would choose algorithm&nbsp;$\mathcal{C}$ while for small computational budgets, algorithm&nbsp;$\mathcal{A}$ looks best.
+Algorithm&nbsp;$\algorithmStyle{C}$ needs a long time, but provides the best median result quality.
+Algorithm&nbsp;$\algorithmStyle{B}$ is faster, but we pay for it by getting worse results.
+Finally, algorithm&nbsp;$\algorithmStyle{A}$ is the fastest, but has the worst median result quality.
+We could conclude that, if we would have much time, we would choose algorithm&nbsp;$\algorithmStyle{C}$ while for small computational budgets, algorithm&nbsp;$\algorithmStyle{A}$ looks best.
 
 In reality, the actual course of the optimization algorithms could have looked as illustrated in the diagram on the right-hand side.
-Here, we find that algorithm&nbsp;$\mathcal{C}$ is always better than algorithm&nbsp;$\mathcal{B}$, which, in turn, is always better than algorithm&nbsp;$\mathcal{A}$. 
+Here, we find that algorithm&nbsp;$\algorithmStyle{C}$ is always better than algorithm&nbsp;$\algorithmStyle{B}$, which, in turn, is always better than algorithm&nbsp;$\algorithmStyle{A}$. 
 However, we cannot get this information as only the "end results" were reported.
 
 **Takeaway-message:** Analyzing end results is normally not enough, you need to analyze the whole algorithm behavior&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP; @WWCTL2016GVLSTIOPSOEAP; @WWQLT2018ADCOAAPIBAWATCFEDASAIF].
@@ -56,8 +56,8 @@ Visualizations of the algorithm behavior over runtime can provide us important i
 ![Different algorithms may perform best at different points in time.](\relative.path{performance_cuts.svgz}){#fig:performance_cuts width=74%}
 
 [@fig:performance_cuts], for instance, illustrates a scenario where the best algorithm to choose depends on the available computational budget.
-Initially, an algorithm&nbsp;$\mathcal{B}$ produces the better median solution quality.
-Eventually, it is overtaken by another algorithm&nbsp;$\mathcal{A}$, which initially is slower but converges to better results later on.
+Initially, an algorithm&nbsp;$\algorithmStyle{B}$ produces the better median solution quality.
+Eventually, it is overtaken by another algorithm&nbsp;$\algorithmStyle{A}$, which initially is slower but converges to better results later on.
 Such a scenario would be invisible if only results for one of the two computational budgets are provided.
 
 Hence, such progress diagrams thus cannot only tell us which algorithms to choose in an actual application scenario later on, where an exact computational budget is defined.

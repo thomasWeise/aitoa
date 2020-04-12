@@ -389,7 +389,7 @@ The penalty could be achieved by using a so-called *fitness* as basis for select
 In our original EA, the fitness would be the same as the objective value.
 In a diversity-preserving EA, we could add a penalty value to this base fitness for each solution based on the distance to the other solutions.
 
-### Evolutionary Algorithm with Clearing in the Objective Space
+### Evolutionary Algorithm with Clearing in the Objective Space {#sec:eaClearingInObjectiveSpace}
 
 Let us now test whether a diversity preserving strategy can be helpful in an EA.
 We will only investigate one very simple approach:
