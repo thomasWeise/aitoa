@@ -1,6 +1,6 @@
 ## Metaheuristics: Why do we need them?
 
-The main topic of this book will be metaheuristic optimization (although I will eventually also discuss some other methods (remember: work in progress)).
+The main topic of this book will be metaheuristic optimization (although I will eventually also discuss some other methods (remember: work in progress).
 So why do we need metaheuristic algorithms?
 Why should you read this book?
 
