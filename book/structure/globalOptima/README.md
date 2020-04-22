@@ -53,24 +53,24 @@ When facing a JSSP instance&nbsp;$\instance$, we do not know whether a given Gan
 There is no direct way in which we can compute it.
 But we can, at least, compute some *lower bound*&nbsp;$\lowerBound(\objf)$ for the best possible makespan.
 
-For instance, we know that a job&nbsp;$\jsspJobIndex$ needs at least as long to complete as the sum&nbsp;$\sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ over the processing times of all of its sub-jobs.
+For instance, we know that a job&nbsp;$\jsspJobIndex$ needs at least as long to complete as the sum&nbsp;$\sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspOperationTime{\jsspJobIndex}{\jsspMachineIndex}$ over the processing times of all of its operations.
 It is clear that no schedule can complete faster then the longest job.
 Furthermore, we know that the makespan of the optimal schedule also cannot be shorter than the latest "finishing time" of any machine&nbsp;$\jsspMachineIndex$.
-This finishing time is at least as big as the sum&nbsp;$\jsspMachineRuntime{\jsspMachineIndex}$ of the runtimes of all the sub-jobs assigned to this machine.
+This finishing time is at least as big as the sum&nbsp;$\jsspMachineRuntime{\jsspMachineIndex}$ of the runtimes of all the operations assigned to this machine.
 But it may also include a least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$:
-If the sub-jobs for machine&nbsp;$\jsspMachineIndex$ never come first in their job, then for each job, we need to sum up the runtimes of the sub-jobs coming before the one on machine&nbsp;$\jsspMachineIndex$.
+If the operations for machine&nbsp;$\jsspMachineIndex$ never come first in their job, then for each job, we need to sum up the runtimes of the operations coming before the one on machine&nbsp;$\jsspMachineIndex$.
 The least initial idle time&nbsp;$\jsspMachineStartIdle{\jsspMachineIndex}$ is then the smallest of these sums.
-Similarly, there is a least idle time&nbsp;$\jsspMachineEndIdle{\jsspMachineIndex}$ at the end if these sub-jobs never come last in their job.
+Similarly, there is a least idle time&nbsp;$\jsspMachineEndIdle{\jsspMachineIndex}$ at the end if these operations never come last in their job.
 As lower bound for the fastest schedule that could theoretically exist, we therefore get:
 
-$$ \lowerBound(\objf) = \max\left\{\max_{\jsspJobIndex}\left\{ \sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\right\} \;,\; \max_{\jsspMachineIndex} \left\{ \jsspMachineStartIdle{\jsspMachineIndex}+\jsspMachineRuntime{\jsspMachineIndex} +\jsspMachineEndIdle{\jsspMachineIndex}\right\}\right\} $$ {#eq:jsspLowerBound}
+$$ \lowerBound(\objf) = \max\left\{\max_{\jsspJobIndex}\left\{ \sum_{\jsspMachineIndex=0}^{\jsspMachines-1} \jsspOperationTime{\jsspJobIndex}{\jsspMachineIndex}\right\} \;,\; \max_{\jsspMachineIndex} \left\{ \jsspMachineStartIdle{\jsspMachineIndex}+\jsspMachineRuntime{\jsspMachineIndex} +\jsspMachineEndIdle{\jsspMachineIndex}\right\}\right\} $$ {#eq:jsspLowerBound}
 
 More details are given in [@sec:appendix:jssp:lowerBounds] and [@T199BFBSP].
 Often, we may not have such lower bounds, but it does never hurt to think about them, because it will provide us with some more understanding about the nature of the problem we are trying to solve.
 
 Even if we have a lower bound for the objective function, we can usually not know whether any solution of that quality actually exists.
 In other words, we do not know whether it is actually possible to find a schedule whose makespan equals the lower bound.
-There simply may not be any way to arrange the jobs such that no sub-job stalls any other sub-job.
+There simply may not be any way to arrange the jobs such that no operation stalls any other operation.
 This is why the value&nbsp;$\lowerBound(\objf)$ is called lower bound:
 We know no solution can be better than this, but we do not know whether a solution with such minimal makespan exists.
 
@@ -96,13 +96,13 @@ Upon closer inspection, the limiting machine is the one at index&nbsp;3.
 
 We will find this by again looking at [@fig:jssp_demo_instance].
 Regardless with which job we would start here, it would need to initially wait at least&nbsp;$\jsspMachineStartIdle{3}=30$ time units.
-The reason is that no first sub-job of any job starts at machine&nbsp;3.
+The reason is that no first operation of any job starts at machine&nbsp;3.
 Job&nbsp;0 would get to machine&nbsp;3 the earliest after 50&nbsp;time units, job&nbsp;1 after&nbsp;30, job&nbsp;2 after&nbsp;62, and job&nbsp;3 after again 50&nbsp;time units.
 Also, no job in the `demo` instance finishes at machine&nbsp;3.
 Job&nbsp;0, for instance, needs to be processed by machine&nbsp;4 for 10&nbsp;time units after it has passed through machine&nbsp;3.
 Job&nbsp;1 requires 80&nbsp;more time units after finishing at machine&nbsp;3, job&nbsp;2 also 10&nbsp;time units, and job&nbsp;3 again&nbsp;50 time units.
 In other words, machine&nbsp;3 needs to wait at least 30&nbsp;time units before it can commence its work and will remain idle for at least 10&nbsp;time units after processing the last sub job.
-In between, it will need to work for exactly&nbsp;140 time units, the total sum of the running time of all sub-jobs assigned to it.
+In between, it will need to work for exactly&nbsp;140 time units, the total sum of the running time of all operations assigned to it.
 This means that no schedule can complete faster than $30+140+10=180$ time units.
 Thus, [@fig:gantt_demo_optimal_bound] illustrates the optimal solution for the `demo` instance.
 

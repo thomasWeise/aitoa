@@ -33,7 +33,7 @@ As stated in [@sec:jsspExample], our goal is to complete the production jobs as 
 This means that we want to minimize the makespan, the time when the last job finishes.
 Obviously, the smaller this value, the earlier we are done with all jobs, the better is the plan.
 As illustrated in [@fig:gantt_demo_with_makespan], the makespan is the time index of the right-most edge of any of the machine rows/schedules in the Gantt chart.
-In the figure, this happens to be the end time&nbsp;230 of the last sub-job of job&nbsp;0, executed on machine&nbsp;4.
+In the figure, this happens to be the end time&nbsp;230 of the last operation of job&nbsp;0, executed on machine&nbsp;4.
 
 ![The makespan (purple), i.e., the time when the last job is completed, for the example candidate solution illustrated in [@fig:gantt_demo_without_makespan] for the demo instance from [@fig:jssp_demo_instance].](\relative.path{gantt_demo_with_makespan.svgz}){#fig:gantt_demo_with_makespan width=80%}
 

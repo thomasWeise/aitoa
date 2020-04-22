@@ -192,13 +192,13 @@ How can we define a binary search operator for our JSSP representation?
 *One possible* idea would be to create a new encoded solution&nbsp;$\sespel'$ by processing both input points&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$ from front to back and "schedule" their not-yet scheduled job IDs into&nbsp;$\sespel'$ similar to what we do in our representation mapping.
 
 1. Allocate a data structure&nbsp;$\sespel'$ to hold the new point in the search space that we want to sample.
-2. Set the index&nbsp;$i$ where the next sub-job should be stored in&nbsp;$\sespel'$ to $i=0$.
+2. Set the index&nbsp;$i$ where the next operation should be stored in&nbsp;$\sespel'$ to $i=0$.
 3. Repeat
     a. Randomly choose of the input points&nbsp;${\sespel}1$ or&nbsp;${\sespel}2$ with equal probability as source&nbsp;$\sespel$.
-    b. Select the first (at the lowest index) sub-job in&nbsp;$\sespel$ that is not marked yet and store it in variable&nbsp;$J$.
+    b. Select the first (at the lowest index) operation in&nbsp;$\sespel$ that is not marked yet and store it in variable&nbsp;$J$.
     c. Set $\arrayIndex{\sespel'}{i}=J$.
     d. Increase&nbsp;$i$ by one ($i=i+1$).
-    e. If&nbsp;$i=\jsspJobs*\jsspMachines$, then all sub-jobs have been assigned. We exit and returning&nbsp;$\sespel'$.
+    e. If&nbsp;$i=\jsspJobs*\jsspMachines$, then all operations have been assigned. We exit and returning&nbsp;$\sespel'$.
     f. Mark the first unmarked occurrence of&nbsp;$J$ as "already assigned" in ${\sespel}1$.
     g. Mark the first unmarked occurrence of&nbsp;$J$ as "already assigned" in ${\sespel}2$.
 
@@ -209,11 +209,11 @@ This can be implemented efficiently by keeping indices of the first unmarked ele
 As we discussed in [@sec:jsspSearchSpace], our representation mapping processes the elements&nbsp;$\sespel\in\searchSpace$ from the front to the back and assigns the jobs to machines according to the order in which their IDs appear.
 It is a natural idea to design a binary operator that works in a similar way.
 Our `sequence` recombination processes *two* points from the search space&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$ from their beginning to the end.
-At each step randomly picks one of them to extract the next sub-job, which is  is then stored in the output&nbsp;$\sespel'$ and marked as "done" in both&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$.
+At each step randomly picks one of them to extract the next operation, which is  is then stored in the output&nbsp;$\sespel'$ and marked as "done" in both&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$.
 
 If it would, by chance, always choose&nbsp;${\sespel}1$ as source, then it would produce exactly&nbsp;${\sespel}1$ as output.
 If it would always pick&nbsp;${\sespel}2$ as source, then it would also return&nbsp;${\sespel}2$.
-If it would pick&nbsp;${\sespel}1$ for the first half of the times and then always pick&nbsp;${\sespel}2$, it would basically copy the first half of&nbsp;${\sespel}1$ and then assign the rest of the sub-jobs in exactly the order in which they appear in&nbsp;${\sespel}2$.
+If it would pick&nbsp;${\sespel}1$ for the first half of the times and then always pick&nbsp;${\sespel}2$, it would basically copy the first half of&nbsp;${\sespel}1$ and then assign the rest of the operations in exactly the order in which they appear in&nbsp;${\sespel}2$.
 
 ![An example application of our sequence recombination operator to two points&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$ in the search space of the `demo` instance, resulting in a new point $\sespel'$. We mark the selected job IDs with pink and cyan color, while crossing out those IDs which were not chosen because of their received marks in the source points. The corresponding candidate solutions&nbsp;${\solspel}1$, ${\solspel}2$, and&nbsp;$\solspel'$ are illustrated as well.](\relative.path{jssp_sequence_recombination.svgz}){#fig:jssp_sequence_recombination width=90%}
 
@@ -221,15 +221,15 @@ For illustration purposes, one example application of this operator is sketched 
 As input, we chose to points&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$ from the search space for our `demo` instance.
 They encode two different corresponding Gantt charts, ${\solspel}1$ and&nbsp;${\solspel}2$, with makespans of 202 and 182 time units, respectively.
 
-Our operator begins by randomly choosing&nbsp;${\sespel}1$ as the source of the first sub-job for the new point&nbsp;$\sespel'$.
-The first job ID in&nbsp;${\sespel}1$ is&nbsp;2, which is placed as first sub-job into&nbsp;$\sespel'$.
+Our operator begins by randomly choosing&nbsp;${\sespel}1$ as the source of the first operation for the new point&nbsp;$\sespel'$.
+The first job ID in&nbsp;${\sespel}1$ is&nbsp;2, which is placed as first operation into&nbsp;$\sespel'$.
 We also mark the first occurrence of&nbsp;2 in&nbsp;${\sespel}2$, which happens to be at position&nbsp;4, as "already scheduled."
-Then, the operator again randomly picks&nbsp;${\sespel}1$ as source for the next sub-job.
+Then, the operator again randomly picks&nbsp;${\sespel}1$ as source for the next operation.
 The first not-yet marked element in&nbsp;${\sespel}1$ is now at the second&nbsp;0, so it is placed into&nbsp;$\sespel'$ and marked as scheduled in&nbsp;${\sespel}2$, where the fifth element is thus crossed out.
 As next source, the operator, again, chooses&bsnp;${\sespel}1$.
-The first unmarked sub-job in&nbsp;${\sespel}1$ is&nbsp;3 at position&nbsp;3, which is added to&nbsp;$\sespel'$ and leads to the first element of&nbsp;${\sespel}2$ being marked.
-Finally, for picking the next sub-job, ${\sespel}2$ is chosen.
-The first unmarked sub-job there has ID&nbsp;1 and is located at index&nbsp;2.
+The first unmarked operation in&nbsp;${\sespel}1$ is&nbsp;3 at position&nbsp;3, which is added to&nbsp;$\sespel'$ and leads to the first element of&nbsp;${\sespel}2$ being marked.
+Finally, for picking the next operation, ${\sespel}2$ is chosen.
+The first unmarked operation there has ID&nbsp;1 and is located at index&nbsp;2.
 It is inserted at index&nbsp;4 into&nbsp;$\sespel'$.
 It also occurs at index&nbsp;4 in&nbsp;${\sespel}1$, which is thus marked.
 This process is repeated again and again, until&nbsp;$\sespel'$ is constructed completely, at which point all the elements of&nbsp;${\sespel}1$ and&nbsp;${\sespel}2$ are marked.
@@ -380,7 +380,7 @@ We then practical have one point in the search space to which only the unary ope
 Our EA has become a weird hill climber. 
 
 If we would want that, then we would have implemented a hill climber, i.e., a local search, instead.
-In order to enable global exploration and to allow for the binary search operators to work, it makes sense to try to preserve the *diversity* in the population&nbsp;[@S2018TBOPDIEAASORRA].
+In order to enable global exploration and to allow for the binary search operators to work, it makes sense to try to preserve the *diversity* in the population&nbsp;[@S2020TBOPDIEAASORRA].
 
 Now there exist quite a few ideas how to do that&nbsp;[@S2012NIEA; @CLM2013EAEIEAAS; @ST2016DOCAPCASOMFPDIEO] and we also discuss some concepts later in [@sec:prematureConvergence:diversity].
 Many of them are focused on penalizing candidate solutions which are too similar to others in the selection step.

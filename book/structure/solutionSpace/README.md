@@ -27,14 +27,14 @@ Hence, a candidate solution should tell us what to do, i.e., how to process the 
 
 This is basically what Gantt chart&nbsp;[@W2003GCACA; @K2000SORCP] are for, as illustrated in [@fig:gantt_demo_without_makespan].
 A Gantt chart defines what each of our&nbsp;$\jsspMachines$ machines has to do at each point in time.
-The sub-jobs of each job are assigned to time windows on their corresponding machines.
+The operations of each job are assigned to time windows on their corresponding machines.
 
 ![One example candidate solution for the demo instance given in [@fig:jssp_demo_instance]: A Gantt chart assigning a time window to each job on each machine.](\relative.path{gantt_demo_without_makespan.svgz}){#fig:gantt_demo_without_makespan width=80%}
 
 The Gantt chart contains one row for each machine.
 It is to be read from left to right, where the x-axis represents the time units that have passed since the beginning of the job processing.
 Each colored bar in the row of a given machine stands for a job and denotes the time window during which the job is processed.
-The bar representing sub-job&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ is painted in the row of machine&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}$ and its length equals the time requirement&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$.
+The bar representing operation&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ is painted in the row of machine&nbsp;$\jsspOperationMachine{\jsspJobIndex}{\jsspMachineIndex}$ and its length equals the time requirement&nbsp;$\jsspOperationTime{\jsspJobIndex}{\jsspMachineIndex}$.
 
 The chart given in [@fig:gantt_demo_without_makespan], for instance, defines that job&nbsp;0 starts at time unit&nbsp;0 on machine&nbsp;0 and is processed there for ten time units.
 Then the machine idles until the 70th time unit, at which point it begins to process job&nbsp;1 for another ten time units.
@@ -47,7 +47,7 @@ And so on.
 
 If we wanted to create a Java class to represent the complete information from a Gantt diagram, it could look like [@lst:JSSPCandidateSolution].
 Here, for each of the&nbsp;$\jsspMachines$ machines, we create one integer array of length&nbsp;$3\jsspJobs$.
-Such an array stores three numbers for each of the&nbsp;$\jsspJobs$ sub-jobs to be executed on the machine: the job ID, the start time, and the end time.
+Such an array stores three numbers for each of the&nbsp;$\jsspJobs$ operations to be executed on the machine: the job ID, the start time, and the end time.
 
 \repo.listing{lst:JSSPCandidateSolution}{Excerpt from a Java class for representing the data of a candidate solution to a JSSP.}{java}{src/main/java/aitoa/examples/jssp/JSSPCandidateSolution.java}{}{relevant}
 
@@ -55,8 +55,8 @@ Such an array stores three numbers for each of the&nbsp;$\jsspJobs$ sub-jobs to 
 
 Of course, we would not strictly need a class for that, as we could as well use the integer array `int[][]` directly.
 
-Also the third number, i.e., the end time, is not strictly necessary, as it can be computed based on the instance data as $start+\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex'}$ for job&nbsp;$\jsspJobIndex$ on machine&nbsp;$\jsspMachineIndex$ after searching&nbsp;$\jsspMachineIndex'$ such that $\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex'}=\jsspMachineIndex$.
-Another form of representing a solution would be to just map each sub-job to a starting time, leading to $\jsspMachines*\jsspJobs$ integer values per candidate solution&nbsp;[@vH2016DPFRASOSOD].
+Also the third number, i.e., the end time, is not strictly necessary, as it can be computed based on the instance data as $start+\jsspOperationTime{\jsspJobIndex}{\jsspMachineIndex'}$ for job&nbsp;$\jsspJobIndex$ on machine&nbsp;$\jsspMachineIndex$ after searching&nbsp;$\jsspMachineIndex'$ such that $\jsspOperationMachine{\jsspJobIndex}{\jsspMachineIndex'}=\jsspMachineIndex$.
+Another form of representing a solution would be to just map each operation to a starting time, leading to $\jsspMachines*\jsspJobs$ integer values per candidate solution&nbsp;[@vH2016DPFRASOSOD].
 But the presented structure &ndash; illustrated on an example in [@fig:jssp_candidate_solution_structure] &ndash; is handy and easier to understand.
 It allows the human operator to directly see what is going on, to directly tell each machine or worker what to do and when to do it, without needing to look up any additional information from the problem instance data.
 
@@ -91,11 +91,11 @@ However, the fact that we can generate $(\jsspJobs!)^{\jsspMachines}$ possible G
 
 In order to be a feasible solution for a JSSP instance, a Gantt chart must indeed fulfill a couple of *constraints*:
 
-1. all sub-jobs of all jobs must be assigned to their respective machines and properly be completed,
+1. all operations of all jobs must be assigned to their respective machines and properly be completed,
 2. only the jobs and machines specified by the problem instance must occur in the chart,
-3. a sub-job will must be assigned a time window on its corresponding machine which is exactly as long as the sub-job needs on that machine,
-4. the sub-jobs cannot intersect or overlap, each machine can only carry out one job at a time, and
-5. the precedence constraints of the sub-jobs must be honored.
+3. a operation will must be assigned a time window on its corresponding machine which is exactly as long as the operation needs on that machine,
+4. the operations cannot intersect or overlap, each machine can only carry out one job at a time, and
+5. the precedence constraints of the operations must be honored.
 
 While the first four *constraints* are rather trivial, the latter one proofs problematic.
 Imagine a JSSP with&nbsp;$\jsspJobs=2$ jobs and&nbsp;$\jsspMachines=2$ machines.
@@ -116,7 +116,7 @@ Job&nbsp;0 cannot begin on machine&nbsp;1 until it has been passed through machi
 A cyclic blockage has appeared: no job can be executed on any machine if we follow this schedule.
 This is called a deadlock.
 No jobs overlap in the schedule.
-All sub-jobs are assigned to proper machines and receive the right processing times.
+All operations are assigned to proper machines and receive the right processing times.
 Still, the schedule is infeasible, because it cannot be executed or written down without breaking the precedence constraint.
 
 Hence, there are only three out of four possible Gantt charts that work for this problem instance.

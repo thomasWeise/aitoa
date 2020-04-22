@@ -48,7 +48,7 @@ We therefore execute our program 101&nbsp;times and the results are summarized i
 
 What we can find in [@tbl:singleRandomSampleJSSP] is that the makespan of the best solution that any of the 101&nbsp;runs has delivered for each of the four JSSP instances is roughly between 60% and 100% longer than the lower bound.
 The arithmetic mean and median of the solution qualities are even between 10% and 20% worse.
-In the Gantt charts of the median solutions depicted in [@fig:jssp_gantt_1rs_med], we can find big gaps between the sub-jobs.
+In the Gantt charts of the median solutions depicted in [@fig:jssp_gantt_1rs_med], we can find big gaps between the operations.
 
 \relative.input{jssp_1rs_results.md}
 
@@ -117,7 +117,7 @@ Alas, we only have three minutes, so we are still far from this goal.
 In [@fig:jssp_gantt_rs_med], we now again plot the solutions of median quality, i.e., those which are "in the middle" of the results, quality-wise.
 The improved performance becomes visible when comparing [@fig:jssp_gantt_rs_med] with [@fig:jssp_gantt_1rs_med].
 The spacing between the jobs on the machines has significantly reduced.
-Still, the schedules clearly have a lot of unused time, visible as white space between the sub-jobs on the machines.
+Still, the schedules clearly have a lot of unused time, visible as white space between the operations on the machines.
 We are also still relatively far away from the lower bounds of the objective function, so there is lots of room for improvement.
 
 ![The Gantt charts of the median solutions obtained by the&nbsp;`rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_rs_med.svgz}){#fig:jssp_gantt_rs_med width=84%}

@@ -34,7 +34,7 @@ But in this example, we very lucky: our optimization problem was *separable*, i.
 
 For the JSSP problem that we use as example application domain in this book, this is not the case:
 Neither can we schedule each jobs separately without considering the other jobs nor can we consider the machines separately.
-There is also no way in which we could try to find the best time slot for any sub-job without considering the other jobs.
+There is also no way in which we could try to find the best time slot for any operation without considering the other jobs.
 
 ### The Problem: Epistasis
 
@@ -59,7 +59,7 @@ Both effects are sketched in [@fig:pleiotropy_and_epistasis].
 
 As [@fig:epistasis_influence] illustrates, epistasis causes or contributes to the problematic traits we have discussed before&nbsp;[@WCT2012EOPABT; @WZCN2009WIOD].
 First, it reduces the causality because changing the value of one decision variable now has an impact on the meaning of other variables.
-In our representation for the JSSP problem, for instance, changing the order of job IDs at the beginning of an encoded solution can have an impact on the times at which the sub-jobs coming later will be scheduled, even if these themselves were not changed.
+In our representation for the JSSP problem, for instance, changing the order of job IDs at the beginning of an encoded solution can have an impact on the times at which the operations coming later will be scheduled, even if these themselves were not changed.
 
 If two decision variables interact epistatically, this can introduce local optima, i.e., render the problem multi-modal.
 The stronger the interaction is, the more rugged the problem becomes.

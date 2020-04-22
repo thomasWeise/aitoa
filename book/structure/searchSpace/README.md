@@ -58,10 +58,10 @@ While comprehensive overviews about different such search spaces for the JSSP ca
 
 Imagine you would like to construct a Gantt chart as candidate solution for a given JSSP instance.
 How would you do that?
-Well, we know that each of the $\jsspJobs$&nbsp;jobs has $\jsspMachines$&nbsp;sub-jobs, one for each machine.
-We could simply begin by choosing one job and placing its first sub-job on the machine to which it belongs, i.e., write it into the Gantt chart.
-Then we again pick a job, take the first not-yet-scheduled sub-job of this job, and "add" it to the end of the row of its corresponding machine in the Gantt chart.
-Of course, we cannot pick a job whose sub-jobs all have already be assigned.
+Well, we know that each of the $\jsspJobs$&nbsp;jobs has $\jsspMachines$&nbsp;operations, one for each machine.
+We could simply begin by choosing one job and placing its first operation on the machine to which it belongs, i.e., write it into the Gantt chart.
+Then we again pick a job, take the first not-yet-scheduled operation of this job, and "add" it to the end of the row of its corresponding machine in the Gantt chart.
+Of course, we cannot pick a job whose operations all have already be assigned.
 We can continue doing this until all jobs are assigned &ndash; and we will get a valid solution.
 
 This solution is defined by the order in which we chose the jobs.
@@ -70,9 +70,9 @@ If we process such a string from the beginning to the end and step-by-step assig
 
 The encoding and corresponding representation mapping can best be described by an example.
 In the demo instance, we have&nbsp;$\jsspMachines=5$ machines and&nbsp;$\jsspJobs=4$ jobs.
-Each job has&nbsp;$\jsspMachines=5$ sub-jobs that must be distributed to the machines.
-We use a string of length&nbsp;$\jsspMachines*\jsspJobs=20$ denoting the priority of the sub-jobs.
-We *know* the order of the sub-jobs per job as part of the problem instance data&nbsp;$\instance$.
+Each job has&nbsp;$\jsspMachines=5$ operations that must be distributed to the machines.
+We use a string of length&nbsp;$\jsspMachines*\jsspJobs=20$ denoting the priority of the operations.
+We *know* the order of the operations per job as part of the problem instance data&nbsp;$\instance$.
 We therefore do not need to encode it.
 This means that we just include each job's id&nbsp;$\jsspMachines=5$ times in the string.
 This was the original idea: The encoding represents the order in which we assign the $\jsspJobs$&nbsp;jobs, and each job must be picked $\jsspMachines$&nbsp;times.
@@ -88,7 +88,7 @@ The first value is&nbsp;0, which means that job&nbsp;0 is assigned to a machine 
 From the instance data, we know that job&nbsp;0 first must be executed for 10&nbsp;time units on machine&nbsp;0.
 The job is thus inserted on machine&nbsp;0 in the chart.
 Since machine&nbsp;0 is initially idle, it can be placed at time index&nbsp;0.
-We also know that this sub-job can definitely be executed, i.e., won't cause a deadlock, because it is the first sub-job of the job.
+We also know that this operation can definitely be executed, i.e., won't cause a deadlock, because it is the first operation of the job.
 
 The next number in the string is&nbsp;2, so job&nbsp;2 is next.
 This job needs to go for 30 time units to machine&nbsp;2, which also is initially idle.
@@ -98,37 +98,37 @@ Then job&nbsp;1 is next in&nbsp;$\sespel$, and from the instance data we can see
 This machine is idle as well, so the job can start immediately.
 
 We now encounter job&nbsp;0 again in the integer string.
-Since we have already performed the first sub-job of job&nbsp;0, we now would like to schedule its second sub-job.
-According to the instance data, the second sub-job takes place on machine&nbsp;1 and will take 20&nbsp;time units.
-We know that completing the first sub-job took 10&nbsp;time units.
+Since we have already performed the first operation of job&nbsp;0, we now would like to schedule its second operation.
+According to the instance data, the second operation takes place on machine&nbsp;1 and will take 20&nbsp;time units.
+We know that completing the first operation took 10&nbsp;time units.
 We also know that machine&nbsp;1 first has to process job&nbsp;1 for 20&nbsp;time units.
-The earliest possible time at which we can begin with the second sub-job of job&nbsp;0 is thus at time unit&nbsp;20, namely the bigger one of the above two values.
-This means that job&nbsp;0 has to wait for 10&nbsp;time units after completing its first sub-job and then can be processed by machine&nbsp;1.
-No deadlock can occur, as we made sure that the first sub-job of job&nbsp;0 has been scheduled before the second one.
+The earliest possible time at which we can begin with the second operation of job&nbsp;0 is thus at time unit&nbsp;20, namely the bigger one of the above two values.
+This means that job&nbsp;0 has to wait for 10&nbsp;time units after completing its first operation and then can be processed by machine&nbsp;1.
+No deadlock can occur, as we made sure that the first operation of job&nbsp;0 has been scheduled before the second one.
 
 We now encounter job&nbsp;3 in the integer string, and we know that job&nbsp;3 first goes to machine&nbsp;4, which currently is idle.
 It can thus directly be placed on machine&nbsp;4, which it will occupy for 50 time units.
 
 Then we again encounter job&nbsp;1 in the integer string.
-Job&nbsp;1 should, in its second sub-job, go to machine&nbsp;0.
-Its first sub-job to 20 time units on machine&nbsp;1, while machine&nbsp;0 was occupied for 10 time units by job&nbsp;0.
-We can thus start the second sub-job of job&nbsp;1 directly at time index&nbsp;20.
+Job&nbsp;1 should, in its second operation, go to machine&nbsp;0.
+Its first operation to 20 time units on machine&nbsp;1, while machine&nbsp;0 was occupied for 10 time units by job&nbsp;0.
+We can thus start the second operation of job&nbsp;1 directly at time index&nbsp;20.
 
-Further processing of&nbsp;$\solspel$ leads us to job&nbsp;0 again, which means we will need to schedule its third sub-job, which will need 20 time units on machine&nbsp;2.
+Further processing of&nbsp;$\solspel$ leads us to job&nbsp;0 again, which means we will need to schedule its third operation, which will need 20 time units on machine&nbsp;2.
 Machine&nbsp;2 is occupied by job&nbsp;2 from time unit&nbsp;0 to&nbsp;30 and becomes idle thereafter.
-The second sub-job of job&nbsp;0 finishes on time index&nbsp;40 at machine&nbsp;1.
-Hence, we can begin with the third sub-job at time index&nbsp;40 at machine&nbsp;2, which had to idle for 10 time units.
+The second operation of job&nbsp;0 finishes on time index&nbsp;40 at machine&nbsp;1.
+Hence, we can begin with the third operation at time index&nbsp;40 at machine&nbsp;2, which had to idle for 10 time units.
 
 We continue this iterative processing until reaching the end of the string&nbsp;$\sespel$.
 We now have constructed the complete Gantt chart&nbsp;$\solspel$ illustrated in [@fig:jssp_mapping_demo].
-Whenever we assign a sub-job&nbsp;$\jsspJobIndex>0$ of any given job to a machine, then we already had assigned all sub-jobs at smaller indices first.
+Whenever we assign a operation&nbsp;$\jsspJobIndex>0$ of any given job to a machine, then we already had assigned all operations at smaller indices first.
 No deadlock can occur and&nbsp;$\solspel$ must therefore be feasible.
 
 \repo.listing{lst:JSSPRepresentationMapping}{Excerpt from a Java class for implementing the representation mapping.}{java}{src/main/java/aitoa/examples/jssp/JSSPRepresentationMapping.java}{}{relevant}
 
 In [@lst:JSSPRepresentationMapping], we illustrate how such a mapping can be implemented.
 It basically is a function translating an instance of `int[]` to `JSSPCandidateSolution`.
-This is done by keeping track of time that has passed for each machine and each job, as well as by remembering the next sub-job for each job and the position in the schedule of each machine.
+This is done by keeping track of time that has passed for each machine and each job, as well as by remembering the next operation for each job and the position in the schedule of each machine.
 
 #### Advantages of a very simple Encoding
 
@@ -141,15 +141,15 @@ Second, we also have very simple rules for validating a point&nbsp;$\sespel$ in 
 If it contains the numbers&nbsp;$0\dots (\jsspJobs-1)$ each exactly&nbsp;$\jsspMachines$ times, it represents a feasible candidate solution.
 
 Third, the candidate solution corresponding to a valid point from the search space will always be *feasible*&nbsp;[@B1995AGPATJSSWGA].
-The mapping&nbsp;$\repMap$ will ensure that the order of the sub-jobs per job is always observed.
+The mapping&nbsp;$\repMap$ will ensure that the order of the operations per job is always observed.
 We do not need to worry about the issue of deadlocks mentioned in [@sec:solutionSpace:feasibility].
 We know from [@tbl:jsspSolutionSpaceTable], that the vast majority of the possible Gantt charts for a given problem may be infeasible &ndash; and now we do no longer need to worry about that. 
-Our mapping also makes sure of the more trivial constraints, such as that each machine will process at most one job at a time and that all sub-jobs are eventually processed.
+Our mapping also makes sure of the more trivial constraints, such as that each machine will process at most one job at a time and that all operations are eventually processed.
 
 Finally, we also could modify our representation mapping&nbsp;$\repMap$ to adapt to more complicated and constraint versions of the JSSP if need be:
 For example, imagine that it would take a job- and machine-dependent time requirement for carrying a job from one machine to another, then we could facilitate this by changing&nbsp;$\repMap$ so that it adds this time to the starting time of the job.
 If there was a job-dependent setup time for each machine&nbsp;[@ANCK2008ASOSPWSTOC], which could be different if job&nbsp;1 follows job&nbsp;0 instead of job&nbsp;2, then this could be facilitated easily as well.
-If our sub-jobs would be assigned to "machine types" instead of "machines" and there could be more than one machine per machine type, then the representation mapping could assign the sub-jobs to the next machine of their type which becomes idle.
+If our operations would be assigned to "machine types" instead of "machines" and there could be more than one machine per machine type, then the representation mapping could assign the operations to the next machine of their type which becomes idle.
 Our representation also trivially covers the situation where each job may have more than&nbsp;$\jsspMachines$ operations, i.e., where a job may need to cycle back and pass one machine twice.
 It is also suitable to simple scenarios, such as the Flow Shop Problem, where all jobs pass through the machines in the same, pre-determined order&nbsp;[@T199BFBSP; @GJS1976TCOFAJS; @W2013GAFSSPAS].
 

@@ -22,20 +22,20 @@ At each point in time, a machine can either work on exactly one job or do nothin
 There are&nbsp;$\jsspJobs\in\naturalNumbersO$ jobs that we need to schedule to these machines.
 For the sake of simplicity and for agreement between our notation here, the Java source code, and the example instances that we will use, we reference jobs and machines with zero-based indices from&nbsp;$0\dots(\jsspJobs-1)$ and&nbsp;$0\dots(\jsspMachines-1)$, respectively.
 
-Each of the&nbsp;$\jsspJobs$ jobs is composed of&nbsp;$\jsspMachines$ sub-jobs, one for each machine.
+Each of the&nbsp;$\jsspJobs$ jobs is composed of&nbsp;$\jsspMachines$ sub-jobs &ndash; the operations &ndash; one for each machine.
 Each job may need to pass through these machines in a different order.
-The sub-job&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ must be executed on machine $\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}\in 0\dots(\jsspMachines-1)$ and doing so needs&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}\in\naturalNumbersZ$ time units for completion.
+The operation&nbsp;$\jsspMachineIndex$ of job&nbsp;$\jsspJobIndex$ must be executed on machine $\jsspOperationMachine{\jsspJobIndex}{\jsspMachineIndex}\in 0\dots(\jsspMachines-1)$ and doing so needs&nbsp;$\jsspOperationTime{\jsspJobIndex}{\jsspMachineIndex}\in\naturalNumbersZ$ time units for completion.
 
 This definition at first seems strange, but upon closer inspection is quite versatile.
 Assume that we have a factory that produces exactly one product, but different customers may order different quantities.
 Here, we would have JSSP instances where all jobs need to be processed by exactly the same machines in exactly the same sequence.
-In this case&nbsp;$\jsspSubJobMachine{\jsspJobIndex_1}{\jsspMachineIndex}=\jsspSubJobMachine{\jsspJobIndex_2}{\jsspMachineIndex}$ would hold for all jobs&nbsp;$\jsspJobIndex_1$ and&nbsp;$\jsspJobIndex_2$ and all sub-job indices&nbsp;$\jsspMachineIndex$.
+In this case&nbsp;$\jsspOperationMachine{\jsspJobIndex_1}{\jsspMachineIndex}=\jsspOperationMachine{\jsspJobIndex_2}{\jsspMachineIndex}$ would hold for all jobs&nbsp;$\jsspJobIndex_1$ and&nbsp;$\jsspJobIndex_2$ and all operation indices&nbsp;$\jsspMachineIndex$.
 The jobs would pass through all machines in the same order but may have different processing times (due to the different quantities).
 
 We may also have scenarios where customers can order different types of products, say the same liquid soap, but either in bottles or big cannisters.
 Then, different machines may be needed for different orders.
 This is similar to the situation illustrated in [@fig:jssp_sketch], where a certain job&nbsp;$\jsspJobIndex$ does not need to be executed on a machine&nbsp;$\jsspMachineIndex'$.
-We then can simply set the required time&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ to&nbsp;0 for the sub-job&nbsp;$\jsspMachineIndex$ with&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}=\jsspMachineIndex'$.
+We then can simply set the required time&nbsp;$\jsspOperationTime{\jsspJobIndex}{\jsspMachineIndex}$ to&nbsp;0 for the operation&nbsp;$\jsspMachineIndex$ with&nbsp;$\jsspOperationMachine{\jsspJobIndex}{\jsspMachineIndex}=\jsspMachineIndex'$.
 
 In other words, the JSSP instance structure described here already encompasses a wide variety of real-world production situations.
 This means that if we can build an algorithm which can solve this general type of JSSP well, it can also automatically solve the above-mentioned special cases.
@@ -78,14 +78,14 @@ Each problem instance&nbsp;$\instance$ is starts and ends with a line of several
 The next line is a short description or title of the instance.
 In the third line, the number&nbsp;$\jsspJobs$ of jobs is specified, followed by the number&nbsp;$\jsspMachines$ of machines.
 The actual IDs or indexes of machines and jobs are 0-based, similar to array indexes in Java.
-The JSSP instance definition is completed by&nbsp;$\jsspJobs$ lines of text, each of which specifying the sub-jobs of one job&nbsp;$\jsspJobIndex\in0\dots(\jsspJobs-1)$.
-Each sub-job&nbsp;$\jsspMachineIndex$ is specified as a pair of two numbers, the ID&nbsp;$\jsspSubJobMachine{\jsspJobIndex}{\jsspMachineIndex}$ of the machine that is to be used (violet), from the interval&nbsp;$0\dots(\jsspMachines-1)$, followed by the number of time units&nbsp;$\jsspSubJobTime{\jsspJobIndex}{\jsspMachineIndex}$ the job will take on that machine.
-The order of the sub-jobs defines exactly the order in which the job needs to be passed through the machines.
+The JSSP instance definition is completed by&nbsp;$\jsspJobs$ lines of text, each of which specifying the operations of one job&nbsp;$\jsspJobIndex\in0\dots(\jsspJobs-1)$.
+Each operation&nbsp;$\jsspMachineIndex$ is specified as a pair of two numbers, the ID&nbsp;$\jsspOperationMachine{\jsspJobIndex}{\jsspMachineIndex}$ of the machine that is to be used (violet), from the interval&nbsp;$0\dots(\jsspMachines-1)$, followed by the number of time units&nbsp;$\jsspOperationTime{\jsspJobIndex}{\jsspMachineIndex}$ the job will take on that machine.
+The order of the operations defines exactly the order in which the job needs to be passed through the machines.
 Of course, each machine can only process at most one job at a time.
 
 In our demo instance illustrated in [@fig:jssp_demo_instance], this means that we have&nbsp;$\jsspJobs=4$ jobs and&nbsp;$\jsspMachines=5$ machines.
 Job&nbsp;0 first needs to be processed by machine&nbsp;0 for 10&nbsp;time units, it then goes to machine&nbsp;1 for 20&nbsp;time units, then to machine&nbsp;2 for 20&nbsp;time units, then to machine&nbsp;3 for 40&nbsp;time units, and finally to machine&nbsp;4 for 10&nbsp;time units.
-This job will thus take at least&nbsp;100 time units to be completed, if it can be scheduled without any delay or waiting period, i.e., if all of its sub-jobs can directly be processed by their corresponding machines.
+This job will thus take at least&nbsp;100 time units to be completed, if it can be scheduled without any delay or waiting period, i.e., if all of its operations can directly be processed by their corresponding machines.
 Job&nbsp;3 first needs to be processed by machine&nbsp;4 for 50&nbsp;time units, then by machine&nbsp;3 for 30&nbsp;time units, then by machine&nbsp;2 for 15&nbsp;time units, then by machine&nbsp;0 for&nbsp;20 time units, and finally by machine&nbsp;1 for 15&nbsp;time units.
 It would not be allowed to first send Job&nbsp;3 to any machine different from machine&nbsp;4 and after being processed by machine&nbsp;4, it must be processed by machine&nbsp;3 &ndash; althoug it may be possible that it has to wait for some time, if machine&nbsp;3 would already be busy processing another job.
 In the ideal case, job&nbsp;3 could be completed after 130&nbsp;time units.
@@ -96,5 +96,5 @@ This structure of a JSSP instance can be represented by the simple Java class gi
 
 \repo.listing{lst:JSSPInstance}{Excerpt from a Java class for representing the data of a JSSP instance.}{java}{src/main/java/aitoa/examples/jssp/JSSPInstance.java}{}{relevant}
 
-Here, the two-dimensional array&nbsp;`jobs` directly receives the data from sub-job lines in the text files, i.e., each row stands for a job and contains machine IDs and processing times in an alternating sequence.
+Here, the two-dimensional array&nbsp;`jobs` directly receives the data from operation lines in the text files, i.e., each row stands for a job and contains machine IDs and processing times in an alternating sequence.
 The actual source file of the class `JSSPInstance` accompanying our book also contains additional code, e.g., for reading such data from the text file, which we have omitted here as it is unimportant for the understanding of the scenario. 
