@@ -1,18 +1,19 @@
 ## Hill Climbing Revisited {#sec:hillClimbing2}
 
 Until now, we have entirely relied on randomness to produce new points in the search space.
-The results of our nullary, unary, and binary operators are all random.
+Our nullary, unary, and binary operators are all randomized.
 In case of the unary and binary operator, they of course depend on the input points in the search space fed to the operators, but still, the results are unpredictable and random.
 This is, in general, not a bad property.
 In the absence of knowledge about what is best, doing an arbitrary thing might have a better expected outcome than doing a fixed, pre-determined thing.
 
 However, it also has some drawbacks.
 For example, there is no guarantee to not test the same `1swap` move several times in the `hc_1swap` algorithm.
-In our hill climber, we never know whether or when we have tested the complete neighborhood around the current best point&nbsp;$\sespel$ in the search space.
+Also, in our hill climber, we cannot know whether or when we have tested the complete neighborhood around the current best point&nbsp;$\sespel$ in the search space.
 Thus, we also never know whether&nbsp;$\sespel$ is a (local) optimum or not.
 We instead need to guess this and in [@sec:stochasticHillClimbingWithRestarts] we therefore design an algorithm that restarts if it did not encounter an improvement for a certain number&nbsp;$L$ of steps.
 Thus, the restart might be too early, as there may still be undiscovered solutions in the neighborhood of&nbsp;$\sespel$.
-It also might happen too late and we may have already investigated the complete neighborhood several times.
+It also might happen too late:
+We may have already investigated the complete neighborhood several times.
 
 Let us take one step back, to the simple hill climber and the original unary search operator `1swap` for the JSSP from [@sec:hillClimbingJssp1Swap].
 This operator tries to perform a single swap, i.e., exchange the order of two job IDs in a point from the search space.
@@ -20,22 +21,23 @@ We already discussed in [@sec:hillClimbingWithDifferentUnaryOperator] that the s
 
 ### Idea: Enumerating Neighborhoods {#sec:hc2EnumNeighbors}
 
-Instead of randomly sampling elements from this neighborhood, we could simple iteratively and exhaustively enumerate over them.
-As soon as we encounter an improvement, we can stop and accept the better point.
+Instead of randomly sampling elements from this neighborhood, we could enumerate over them completely.
+As soon as we encounter an improvement, we can stop the enumeration and accept the newly discovered better point.
 If we have finished enumerating all possible `1swap` neighbors and none of them corresponds to a candidate solution with better objective value (e.g., a Gantt chart with shorter makespan), we *know* that we have arrived in a local optimum.
-This way, we do no longer need to *guess* if we have converged or not, we know it directly.
-Also, as detailed in [@sec:appendix:jssp:1swapProb], we should be able to find an improving move faster in average, because we will never redundantly sample the same point in the search space again when investigating the neighborhood of the current best solution.
+This way, we do no longer need to *guess* if we have converged or not, we can know it directly.
+Also, as detailed in [@sec:appendix:jssp:1swapProb], we might even find the improving moves faster in average, because we would never try the same move twice when investigating the neighborhood of the current best solution.
 
 Implementing this concept is a little bit more complicated than creating the simple unary operator that just returns one single new point in the search space as a result.
 Instead, such an enumerating unary operator for a black-box metaheuristic may create any number of points.
 Moreover, if one of the new points already maps to a candidate solutions which can improve upon the current best solution, then maybe we wish to terminate the enumeration process at that point.
 
-Such behavior can be realized by following a visitor design pattern.
+Such behavior can be realized by following a *visitor design pattern*.
 An enumerating unary operator will receive a point&nbsp;$\sespel$ in the search space and a call-back function from the optimization process.
 Every time it creates a neighbor&nbsp;$\sespel'$ of&nbsp;$\sespel$, it will invoke the call-back function and pass&nbsp;$\sespel'$ to it.
-If the function returns, say `true`, then the enumeration will be terminated, while it is continued for `false`.
+If the function returns `true`, then the enumeration will be terminated.
+If `false` is returned, it will continue if there are more points in the neighborhood.
 
-The call-back function could internally apply the representation mapping&nbsp;$\repMap$ to&nbsp;$\sespel'$ and compute the objective value&nbsp;$\objf(\solspel')$ of the resulting candidate solution&nbsp;$\solspel'=\repMap(\sespel')$.
+The call-back function provided by the optimization process could internally apply the representation mapping&nbsp;$\repMap$ to&nbsp;$\sespel'$ and compute the objective value&nbsp;$\objf(\solspel')$ of the resulting candidate solution&nbsp;$\solspel'=\repMap(\sespel')$.
 If that solution is better than what we get for&nbsp;$\sespel$, the call-back function could store it and return `true`.
 This would stop the enumeration process and would return the control back to the main loop of the optimization algorithm.
 Otherwise, the call-back function would return `false` and be fed with the next neighbor, until the neighborhood was exhaustively enumerated. 
@@ -51,11 +53,11 @@ The [`test` function](http://docs.oracle.com/javase/8/docs/api/java/util/functio
 It returns `true` when the enumeration should be stopped (maybe because a better solution was discovered) and `false` to continue. 
 `enumerate` itself will return `true` if and only if `test` ever returned `true` and `false` otherwise.
 
-Of course, we cannot implement a neighborhood enumeration for all possible unary operators:
-In the case of the `nswap`, operator, for instance, all other points in the search space could potentially be reached from the current one.
+Of course, we cannot implement a neighborhood enumeration for all possible unary operators in a reasonable way:
+In the case of the `nswap`, operator, for instance, all other points in the search space could potentially be reached from the current one (just with different probabilities).
 Enumerating this neighborhood would include the complete search space and would take way too long.
 Hence, the [`default`](http://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html) implementation of the new method should just create an error.
-It will only be overwritten by operators with a neighborhood sufficiently small for efficient enumeration.
+It should only be overwritten by operators that span neighborhoods which are sufficiently small for efficient enumeration.
 A reasonable limit is neighborhood whose size grows quadratically with the problem scale or at most with the third power of the problem scale.
 
 ### Ingredient: Neighborhood Enumerating `1swap` Operators for the JSSP {#sec:hillClimbingJssp1SwapEnum}
@@ -93,8 +95,10 @@ The order in which it processes the indices is always the same.
 We always check swapping jobs at the lower indices first.
 Swap moves involving two jobs near the end of the arrays&nbsp;$\sespel$ are only checked if all other moves closer to the beginning have been checked.
 This introduces a bias in the way we search.
-We should remember an old concept in metaheuristic optimization:
+
+We again remember the concept mentioned right at the beginning of this chapter:
 If you do not know the best choice out of several options, pick a random one.
+While we can generate all neighbors, the order in which we generate them may be random!
 In other words, we now design an operator `1swapU` which enumerates the same neighborhood as `1swap`, but does so in a random order.
 
 0. Let $S$ be the list of all index pairs&nbsp;$(i,j)$ with $0<i<\jsspMachines*\jsspJobs$ and $0\leq j<i$. It has the length&nbsp;$|S|=(\jsspMachines*\jsspJobs)(\jsspMachines*\jsspJobs-1)/2$.
@@ -116,8 +120,8 @@ In other words, we now design an operator `1swapU` which enumerates the same nei
 
 If this routine completes, then the lines&nbsp;*2a* and&nbsp;*2b* together will have performed a Fisher-Yates shuffle&nbsp;[@FY1948STFBAAMR; @K1969SA].
 By always randomly choosing an index pair&nbsp;$(i,j)$ from the not-yet-chosen ones, it will enumerate the complete `1swap` neighborhood in a uniformly random fashion.
-It should be noted that accessing the elements of&nbsp;$\sespel'$ in a random in comparison to deterministic order might incur some performance loss due to not being very cache-friendly.
-Whether or not it can in turn provide a larger gain in terms of search efficiency remains to be seen.
+This might incur some small performance loss due to not being very cache-friendly.
+However, we will see that it can actually increase the search efficiency.
 We will refer to this algorithm as&nbsp;`1swapU` and implement it in&nbsp;[@lst:JSSPUnaryOperator1SwapU].
 
 \repo.listing{lst:JSSPUnaryOperator1SwapU}{An excerpt of the `1swapU` operator for the JSSP, namely the random-order implementation of the `enumerate` function from the interface `IUnarySearchOpertor`&nbsp;([@lst:IUnarySearchOperatorEnum]).}{java}{src/main/java/aitoa/examples/jssp/JSSPUnaryOperator1SwapU.java}{}{enumerate}
@@ -132,19 +136,21 @@ In this case, we *know* that $\bestSoFar{\obspel}$ is a local optimum.
 Then, we can simply restart at a new, random point.
 The general pattern of this algorithm is given below:
 
-1. Set the overall-best objective value&nbsp;$\obspel_B$ to infinity and the overall-best candidate solution&nbsp;$\solspel_B$ to `NULL`. 
-2. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
+1. Set the best-so-far objective value&nbsp;$\bestSoFar{\obspel}$ to&nbsp;$+\infty$ and the best-so-far candidate solution&nbsp;$\bestSoFar{\solspel}$ to&nbsp;`NULL`. 
+2. Create a random point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ using the nullary search operator.
 3. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
 4. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
-5. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
-6. If $\bestSoFar{\obspel}<\obspel_B$, then set&nbsp;$\obspel_B$ to&nbsp;$\bestSoFar{\obspel}$ and store&nbsp;$\solspel_B=\repMap{\sespel}$.
-7. Repeat until the termination criterion is met:
-    a. For each point&nbsp;$\sespel'$ in the search space neighboring to the current best point&nbsp;$\bestSoFar{\sespel}$ according to the unary search operator do:
+5. If $\obspel<\bestSoFar{\obspel}$, then store&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$ and store&nbsp;$\solspel$ in&nbsp;$\bestSoFar{\solspel}$.
+6. Repeat until the termination criterion is met:
+    a. For each point&nbsp;$\sespel'\in\searchSpace$ neighboring to&nbsp;$\sespel$ according to the unary search operator do:
        i. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
        ii. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
-       iii. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$, $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and stop the enumeration (go back to step&nbsp;*6*).
-    b. If we arrive here, the neighborhood of&nbsp;$\bestSoFar{\obspel}$ did not contain any better solution. Hence, we perform a restart by going back to point&nbsp;2.
-6. Return **best ever encountered** objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B$ to the user.
+       iii. If&nbsp;$\obspel'<\obspel$, then
+            A. Store&nbsp;$\sespel'$&nbsp;in&nbsp;$\sespel$ and store&nbsp;$\obspel'$&nbsp;in&nbsp;$\obspel$.
+            B. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\solspel'$&nbsp;in&nbsp;$\bestSoFar{\solspel}$ and store&nbsp;$\obspel'$&nbsp;in&nbsp;$\bestSoFar{\obspel}$.       
+            C. Stop the enumeration and go back to *step&nbsp;6a*.
+    b. If we arrive here, the neighborhood of&nbsp;$\sespel$ did not contain any better solution. Hence, we perform a restart by going back to *step&nbsp;2*.
+7. Return best encountered objective value&nbsp;$\bestSoFar{\obspel}$ and the best encountered solution&nbsp;$\bestSoFar{solspel}$ to the user.
 
 \repo.listing{lst:HillClimber2WithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts based on neighborhood enumeration.}{java}{src/main/java/aitoa/algorithms/HillClimber2WithRestarts.java}{}{relevant}
 
@@ -153,10 +159,10 @@ Therefore, we rely on the design introduced in [@lst:IUnarySearchOperatorEnum], 
 The idea is that, while our hill climber does not know how to enumerate the neighborhood, the unary operator does, since it defines the neighborhood.
 The resulting code is given in [@lst:HillClimber2WithRestarts].
 
-Different from our original hill climber with restarts introduced in [@sec:stochasticHillClimbingWithRestarts], this new algorithm does not need to count steps until restarts.
+Different from our original hill climber with restarts introduced in [@sec:stochasticHillClimbingWithRestarts], this new algorithm does not need to count steps to know when to restart.
 It therefore also does not need a parameter&nbsp;$L$ determining the number of non-improving FEs after which a restart should be performed.
 Its implementation in [@lst:HillClimber2WithRestarts] is therefore also shorter and simpler than the implementation of the original algorithm variant in [@lst:HillClimberWithRestarts].
-It should be noted that both new hill climbers can only be applied in scenarios where we actually can enumerate the neighborhoods of the current best solutions efficiently.
+It should be noted that the new hill climber can only be applied in scenarios where we actually can enumerate the neighborhoods of the current best solutions efficiently.
 In other words, we pay for a potential gain of search efficiency by a reduction of the types of problems we can process.
 
 ### Results on the JSSP
@@ -190,4 +196,3 @@ Another answer is that we need one parameter less.
 We retain the black-box ability of the algorithm but have zero parameters (except the choice of the unary search operator), as opposed to the EA and SA algorithms which each have three ($\mu$, $\lambda$, $cr$ and temperature schedule, $T_s$, $\epsilon$, respectively).
 
 ![The median of the progress of the algorithms `hc2r_1swap`, `hc2r_1swapU`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_hc2r_log.svgz}){#fig:jssp_progress_hc2r_log width=84%}
- 

@@ -79,16 +79,15 @@ Stochastic Hill Climbing&nbsp;[@RN2002AI; @S2008TADM; @WGOEB] is the simplest im
 It is also sometimes called localized random search&nbsp;[@S2003ITSSAO].
 It proceeds as follows:
 
-1. Create random one point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
+1. Create random one point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ using the nullary search operator.
 2. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
 3. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
-4. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
-5. Repeat until the termination criterion is met:
-    a. Apply the unary search operator to&nbsp;$\bestSoFar{\sespel}$ to get $g=1$ slightly modified copy&nbsp;$\sespel'$ of it.
+4. Repeat until the termination criterion is met:
+    a. Apply the unary search operator to&nbsp;$\sespel$ to get a slightly modified copy&nbsp;$\sespel'$ of it.
     b. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
     c. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
-    d. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$.
-6. Return the best-so-far objective value and the best solution to the user.
+    d. If&nbsp;$\obspel'<\obspel$, then store $\sespel'$&nbsp;in&nbsp;$\sespel$, store $\solspel'$&nbsp;in&nbsp;$\solspel$, and store $\obspel'$&nbsp;in&nbsp;$\obspel$.
+6. Return the best encountered objective value&nbsp;$\obspel$ and the best encountered solution&nbsp;$\solspel$ to the user.
 
 This algorithm is implemented in [@lst:HillClimber] and we will refer to it as&nbsp;`hc`.
 
@@ -149,57 +148,55 @@ There is some variance between the results and most of the "action" takes place 
 Back in [@sec:randomSamplingAlgo] we made use of this situation by simply repeating&nbsp;`1rs` until the computational budget was exhausted, which we called the `rs`&nbsp;algorithm.
 Now the situation is a bit different, however.
 `1rs`&nbsp;creates exactly one solution and is finished, whereas our hill climber does not actually finish.
-It keeps creating modified copies of the current best solution, only that these eventually do not mark improvements anymore.
-The algorithm has converged into a *local optimum*.
+It keeps creating modified copies of the current solution, only that these eventually do not mark improvements anymore.
+Then, the algorithm has converged into a *local optimum*.
 
 \text.block{definition}{localOptimum}{A *local optimum* is a point&nbsp;$\localOptimum{\sespel}$ in the search space which maps to a better candidate solution than any other points in its neighborhood (see \text.ref{neighborhood}).}
 
 \text.block{definition}{prematureConvergence}{An optimization process has prematurely converged if it has not yet discovered the global optimum but can no longer improve its approximation quality.&nbsp;[@WCT2012EOPABT; @WZCN2009WIOD]}
 
-Due to the black-box nature of our basic hill climber algorithm, it is not really possible to know when the complete neighborhood of the current best solution has already been tested.
-Under the black-box assumption, we thus cannot know whether or not the algorithm is trapped in a local optimum and has *prematurely converged*.
+Due to the black-box nature of our basic hill climber algorithm, it is not really possible to know when the complete neighborhood of the current solution has already been tested.
+We thus cannot know whether or not the algorithm is trapped in a local optimum and has *prematurely converged*.
 However, we can try to guess it:
-If there has not been any improvement for a high number&nbsp;$L$ of steps, then the current-best candidate solution is probably a local optimum.
+If there has not been any improvement for a high number&nbsp;$L$ of steps, then the current point&nbsp;$\sespel$ in the search space is probably a local optimum.
 If that happens, we just restart at a new random point in the search space.
-Of course, we will remember the **best ever encountered** candidate solution&nbsp;$\solspel_B$ over all restarts and return it to the user in the end.
+Of course, we will remember the *best-so-far* candidate solution&nbsp;$\bestSoFar{\solspel}$ over all restarts and return it to the user in the end.
 
 #### The Algorithm {#sec:hillClimberWithRestartAlgo}
 
 1. Set counter&nbsp;$C$ of unsuccessful search steps to&nbsp;$0$.
-2. Set the overall-best objective value&nbsp;$\obspel_B$ to&nbsp;$+\infty$ and the overall-best candidate solution&nbsp;$\solspel_B$ to `NULL`. 
-3. Create a random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
+2. Set the best-so-far objective value&nbsp;$\bestSoFar{\obspel}$&nbsp;to&nbsp;$+\infty$ and the best-so-far candidate solution&nbsp;$\bestSoFar{\solspel}$ to&nbsp;`NULL`. 
+3. Create a random point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ using the nullary search operator.
 4. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
 5. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
-6. Store&nbsp;$\sespel$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
-7. If $\bestSoFar{\obspel}<\obspel_B$, then set&nbsp;$\obspel_B$ to&nbsp;$\bestSoFar{\obspel}$ and store&nbsp;$\solspel_B=\repMap{\sespel}$.
-8. Repeat until the termination criterion is met:
-    a. Apply the unary search operator to&nbsp;$\bestSoFar{\sespel}$ to get the slightly modified copy&nbsp;$\sespel'$ of it.
+6. If&nbsp;$\obspel<\bestSoFar{\obspel}$, then store&nbsp;$\obspel$&nbsp;in&nbsp;$\bestSoFar{\obspel}$ and store&nbsp;$\solspel$&nbsp;in&nbsp;$\bestSoFar{\solspel}$.
+7. Repeat until the termination criterion is met:
+    a. Apply the unary search operator to&nbsp;$\sespel$ to get the slightly modified copy&nbsp;$\sespel'$ of it.
     b. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
     c. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
-    d. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then
-        i. store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$,
-        ii. store $\obspel'$ in&nbsp;$\bestSoFar{\obspel}$, and
-        iii. set&nbsp;$C$ to&nbsp;$0$.
-        iv. If $\obspel'<\obspel_B$, then set&nbsp;$\obspel_B$ to&nbsp;$\obspel'$ and store&nbsp;$\solspel_B=\repMap{\sespel'}$.
+    d. If&nbsp;$\obspel'<\obspel$, then
+        i. store&nbsp;$\obspel'$&nbsp;in&nbsp;$\obspel$ and store&nbsp;$\sespel'$&nbsp;in&nbsp;$\sespel$ and
+        ii. set&nbsp;$C$ to&nbsp;$0$.
+        iii. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\obspel'$&nbsp;in&nbsp;$\bestSoFar{\obspel}$ and store&nbsp;$\solspel'$&nbsp;in&nbsp;$\bestSoFar{\solspel}$.
         
-       otherwise
+       otherwise to *step&nbsp;7d*, i.e., if&nbsp;$\obspel'\geq\obspel$, then
       
-        i. increment&nbsp;$C$ by&nbsp;$1$
-        ii. if $C\geq L$ then go back to step&nbsp;3.
-9. Return **best ever encountered** objective value&nbsp;$\obspel_B$ and solution&nbsp;$\solspel_B$ to the user.
+        iv. increment&nbsp;$C$ by&nbsp;$1$.
+        v. If&nbsp;$C\geq L$, then perform a restart by going back to *step&nbsp;3*.
+8. Return best encountered objective value&nbsp;$\bestSoFar{\obspel}$ and the best encountered solution&nbsp;$\bestSoFar{\solspel}$ to the user.
 
 \repo.listing{lst:HillClimberWithRestarts}{An excerpt of the implementation of the Hill Climbing algorithm with restarts, which remembers the best-so-far solution and tries to find better solutions in its neighborhood but restarts if it seems to be trapped in a local optimum.}{java}{src/main/java/aitoa/algorithms/HillClimberWithRestarts.java}{}{relevant}
 
 Now this algorithm &ndash; implemented in [@lst:HillClimberWithRestarts] &ndash; is a bit more elaborate.
 Basically, we embed the original hill climber into a loop.
 This inner hill climber will stop after a certain number&nbsp;$L$ of unsuccessful search steps, which then leads to a new round in the outer loop.
-In combination with the `1swap` operator, we refer to this algorithm as `hcr_L_1swap`, where `L` is to be replaced with the actual value of the parameter&nbsp;$L$.
-
-The problem that we have is that we do not know which value of&nbsp;$L$ is right.
-If we pick it too low, then the algorithm will restart before it actually converges to a local optimum, i.e., stop while it could still improve.
-If we pick it too high, we waste runtime and do fewer restarts than what we could do.
+In combination with the `1swap`&nbsp;operator, we refer to this algorithm as `hcr_L_1swap`, where `L`&nbsp;is to be replaced with the actual value of the parameter&nbsp;$L$.
 
 #### The Right Setup {#sec:hillClimberWithRestartSetup}
+
+We now realize that we do not know which value of&nbsp;$L$ is good.
+If we pick it too low, then the algorithm will restart before it actually converges to a local optimum, i.e., stop while it could still improve.
+If we pick it too high, we waste runtime and do fewer restarts than what we could do.
 
 If we do not know which value for a parameter is reasonable, we can always do an experiment to investigate.
 Since the order of magnitude of the proper value for&nbsp;$L$ is not yet clear, it makes sense to test exponentially increasing numbers.
@@ -209,7 +206,7 @@ In this diagram, the horizontal axis is logarithmically scaled.
 
 From the plot, we can confirm our expectations:
 Small numbers of&nbsp;$L$ perform bad and high numbers of&nbsp;$L$ cannot really improve above the basic hill climber.
-Actually, if we would set $L$ to a number larger than the overall budget, then we would obtain exactly the original hill climber, as it would never perform any restart.
+Actually, if we would set&nbsp;$L$ to a number larger than the overall budget, then we would obtain exactly the original hill climber, as it would never perform any restart.
 For different problem instances, different values of&nbsp;$L$ perform good, but&nbsp;$L\approx2^{14}=16'384$ seems to be a reasonable choice for three of the four instances.
 
 ![The median result quality of the&nbsp;`hcr_1swap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the restart limit parameter&nbsp;$L$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_hcr_1swap_med_over_l.svgz}){#fig:jssp_hcr_1swap_med_over_l width=84%}

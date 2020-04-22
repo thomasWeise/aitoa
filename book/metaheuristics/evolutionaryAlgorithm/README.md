@@ -21,18 +21,18 @@ In each step, it derives&nbsp;$\lambda\in\naturalNumbersO$ new points from them 
 The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm works as follows:
 
 1. $I\in\searchSpace\times\realNumbers$ be a data structure that can store one point&nbsp;$\sespel$ in the search space and one objective value&nbsp;$\obspel$.
-2. Allocate an array&nbsp;$P$ of length&nbsp;$\mu+\lambda$ instances of&nbsp;$I$.
+2. Allocate an array&nbsp;$P$ of length&nbsp;$\mu+\lambda$ of instances of&nbsp;$I$.
 3. For index&nbsp;$i$ ranging from&nbsp;$0$ to&nbsp;$\mu+\lambda-1$ do
-    a. Store a randomly chosen point from the search space in $\elementOf{\arrayIndex{P}{i}}{\sespel}$.
+    a. Create a random point from the search space using the nullary search operator and store it in $\elementOf{\arrayIndex{P}{i}}{\sespel}$.
     b. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
     c. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 4. Repeat until the termination criterion is met:
-    d. Sort the array&nbsp;$P$ according to the objective values such that the records&nbsp;$r$ with better associated objective value&nbsp;$\elementOf{r}{\obspel}$ are located at smaller indices. This means that elements with better objective values come first.
+    d. Sort the array&nbsp;$P$ in ascending order according to the objective values, i.e., such that the records&nbsp;$r$ with better associated objective value&nbsp;$\elementOf{r}{\obspel}$ are located at smaller indices.
     e. Shuffle the first&nbsp;$\mu$ elements of&nbsp;$P$ randomly.
-    f. Set the first source index&nbsp;$p=-1$.
+    f. Set the source index&nbsp;$p=-1$.
     g. For index&nbsp;$i$ ranging from&nbsp;$\mu$ to&nbsp;$\mu+\lambda-1$ do
-        i. Set the source index&nbsp;$p$ to&nbsp;$p=\modulo{(p+1)}{\mu}$, i.e., make sure that every one of the&nbsp;$\mu$ selected points is used approximately the same number of times.
-        ii. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the unary search operator to the point stored at index&nbsp;$p$.
+        i. Set the source index&nbsp;$p$ to&nbsp;$p=\modulo{(p+1)}{\mu}$.
+        ii. Apply unary search operator to the point stored at index&nbsp;$p$ and store result at index&nbsp;$i$, i.e., set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p}}{\sespel})$.
         iii. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
         iv. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 5. Return the candidate solution corresponding to the best record in&nbsp;$P$ (i.e., the best-ever encountered solution) to the user.
@@ -50,7 +50,7 @@ In each generation, the&nbsp;$\mu$ best points in the population&nbsp;$P$ are re
 
 \text.block{definition}{selectionEA}{The *selection* step in an Evolutionary Algorithm picks the set of points in the search space from which new points should be derived. This usually involves choosing a smaller number&nbsp;$\mu\in\naturalNumbersO$ of points from a larger array&nbsp;$P$.&nbsp;[@WGOEB; @BT1995ACOSSUIGA; @CDC1996AOSAAMCA; @BFM1997EA; @M1998GA]}
 
-*Selection* can be done by sorting the array&nbsp;$P$ (*point&nbsp;d*).
+*Selection* can be done by sorting the array&nbsp;$P$ (*point&nbsp;4d*).
 This way, the best&nbsp;$\mu$ solutions end up at the front of the array on the indices from&nbsp;$0$ to&nbsp;$\mu-1$.
 The worse&nbsp;$\lambda$ solutions are at index&nbsp;$\mu$ to&nbsp;$\mu+\lambda-1$.
 These are overwritten by sampling points from the neighborhood of the&nbsp;$\mu$ selected solutions by applying the unary search operator (which, in the context of EAs, is often called *mutation* operator).
@@ -62,15 +62,21 @@ These are overwritten by sampling points from the neighborhood of the&nbsp;$\mu$
 \text.block{definition}{reproductionEA}{The *reproduction* step in an Evolutionary Algorithm uses the selected&nbsp;$\mu\in\naturalNumbersO$ points from the search space to derive&nbsp;$\lambda\in\naturalNumbersO$ new points.}
 
 For each new point to be created during the reproduction step, we apply a search operator to one of the selected&nbsp;$\mu$ points.
-Therefore, the index&nbsp;$p$ identifies the point to be used as source for sampling the next new solution.
+The index&nbsp;$p$ in *steps&nbsp;4f to&nbsp;4g* identifies the point to be used as source for sampling the next new solution.
 By incrementing&nbsp;$p$ before each application of the search operator, we try to make sure that each of the selected points is used approximately equally often to create new solutions.
 Of course, $\mu$ and&nbsp;$\lambda$ can be different (often&nbsp;$\lambda>\mu$), so if we would just keep increasing&nbsp;$p$ for&nbsp;$\lambda$ times, it could exceed&nbsp;$\mu$.
-We thus perform a modulo division with&nbsp;$\mu$, i.e., set&nbsp;$p$ to the remainder of the division with&nbsp;$\mu$, which makes sure that&nbsp;$p$ will be in&nbsp;$0\dots(\mu-1)$.
+We thus perform a modulo division with&nbsp;$\mu$ in *step&nbsp;4gi*, i.e., set&nbsp;$p$ to the remainder of the division with&nbsp;$\mu$, which makes sure that&nbsp;$p$ will be in&nbsp;$0\dots(\mu-1)$.
 
 If $\mu\neq\lambda$, then the best solutions in&nbsp;$P$ tend to be used more often, since they may "survive" selection several times and often be at the front of&nbsp;$P$.
 This means that, in our algorithm, they would be used more often as input to the search operator.
-To make our algorithm more fair, we randomly shuffle the selected&nbsp;$\mu$ points (*point&nbsp;f*).
+To make our algorithm more fair, we randomly shuffle the selected&nbsp;$\mu$ points (*point&nbsp;4e*).
 This does not change the fact that they have been selected.
+
+Since our algorithm will never prefer a worse solution over a better one, it will also never lose the best-so-far solution.
+We therefore can simply pick the best element from the population once the algorithm has converged.
+It should be mentioned that there are selection methods in EAs which might reject the best-so-far solution.
+In this case, we would need to remember it in a special variable like we did in case of the hill climber with restarts.
+Here, we do not consider such methods, as we want to investigate a plain EA.
 
 #### The Right Setup {#sec:eaNoCrSetup}
 
@@ -251,23 +257,23 @@ It denotes the probability that we apply the binary operator (while we will othe
 The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm with recombination works as follows:
 
 1. $I\in\searchSpace\times\realNumbers$ be a data structure that can store one point&nbsp;$\sespel$ in the search space and one objective value&nbsp;$\obspel$.
-2. Allocate an array&nbsp;$P$ of length&nbsp;$\mu+\lambda$ instances of&nbsp;$I$.
+2. Allocate an array&nbsp;$P$ of length&nbsp;$\mu+\lambda$ of instances of&nbsp;$I$.
 3. For index&nbsp;$i$ ranging from&nbsp;$0$ to&nbsp;$\mu+\lambda-1$ do
-    a. Store a randomly chosen point from the search space in $\elementOf{\arrayIndex{P}{i}}{\sespel}$.
+    a. Create a random point from the search space using the nullary search operator and store it in $\elementOf{\arrayIndex{P}{i}}{\sespel}$.
     b. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
     c. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 4. Repeat until the termination criterion is met:
-    d. Sort the array&nbsp;$P$ according to the objective values such that the records&nbsp;$r$ with better associated objective value&nbsp;$\elementOf{r}{\obspel}$ are located at smaller indices. This means that elements with better objective values come first.
+    d. Sort the array&nbsp;$P$ in ascending order according to the objective values, i.e., such that the records&nbsp;$r$ with better associated objective value&nbsp;$\elementOf{r}{\obspel}$ are located at smaller indices.
     e. Shuffle the first&nbsp;$\mu$ elements of&nbsp;$P$ randomly.
-    f. Set the first source index&nbsp;$p=-1$.
+    f. Set the first source index&nbsp;$p1=-1$.
     g. For index&nbsp;$i$ ranging from&nbsp;$\mu$ to&nbsp;$\mu+\lambda-1$ do
-        i. Set the source index&nbsp;$p$ to&nbsp;$p=\modulo{(p+1)}{\mu}$, i.e., make sure that every one of the&nbsp;$\mu$ selected points is used approximately the same number of times.
+        i. Set the first source index&nbsp;$p1$ to&nbsp;$p1=\modulo{(p1+1)}{\mu}$.
         ii. Draw a random number&nbsp;$c$ uniformly distributed in&nbsp;$[0,1)$.
         iii. If&nbsp;$c$ is less than the crossover rate&nbsp;$cr$, then we apply the binary operator:
-             A. Randomly choose another index&nbsp;$p2$ from $0\dots(\mu-1)$ such that&nbsp;$p2\neq p$.
-             B. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_2(\elementOf{\arrayIndex{P}{p}}{\sespel}, \elementOf{\arrayIndex{P}{p2}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the binary search operator to the points stored at index&nbsp;$p$ and&nbsp;$p2$.
-        iv. else, i.e., $c\geq cr$, then we apply the unary operator:
-            C. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the unary search operator to the point stored at index&nbsp;$p$.
+             A. Randomly choose a second index&nbsp;$p2$ from $0\dots(\mu-1)$ such that&nbsp;$p2\neq p1$.
+             B. Apply binary search operator to the points stored at index&nbsp;$p1$ and&nbsp;$p2$ and store result at index&nbsp;$i$, i.e., set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_2(\elementOf{\arrayIndex{P}{p1}}{\sespel}, \elementOf{\arrayIndex{P}{p2}}{\sespel})$.
+        iv. otherwise to *step&nbsp;4giii*, i.e., if&nbsp;$c\geq cr$, then we apply the unary operator:
+            C. Apply unary search operator to the point stored at index&nbsp;$p1$ and store result at index&nbsp;$i$, i.e., set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p1}}{\sespel})$.
         v. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
         vi. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 5. Return the candidate solution corresponding to the best record in&nbsp;$P$ to the user.
@@ -410,24 +416,23 @@ Thus, in the selection step, we may obtain $1\leq u \leq \mu$ elements, where $u
 If $u=1$, we cannot apply the binary operator regardless of the crossover rate&nbsp;$cr$.
 
 1. $I\in\searchSpace\times\realNumbers$ be a data structure that can store one point&nbsp;$\sespel$ in the search space and one objective value&nbsp;$\obspel$.
-2. Allocate an array&nbsp;$P$ of length&nbsp;$\mu+\lambda$ instances of&nbsp;$I$.
+2. Allocate an array&nbsp;$P$ of length&nbsp;$\mu+\lambda$ of instances of&nbsp;$I$.
 3. For index&nbsp;$i$ ranging from&nbsp;$0$ to&nbsp;$\mu+\lambda-1$ do
-    a. Store a randomly chosen point from the search space in $\elementOf{\arrayIndex{P}{i}}{\sespel}$.
+    a. Create a random point from the search space using the nullary search operator and store it in $\elementOf{\arrayIndex{P}{i}}{\sespel}$.
     b. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
     c. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 4. Repeat until the termination criterion is met:
-    d. Sort the array&nbsp;$P$ according to the objective values such that the records&nbsp;$r$ with better associated objective value&nbsp;$\elementOf{r}{\obspel}$ are located at smaller indices. This means that elements with better objective values come first.
-    e. Process&nbsp;$P$ from front to end and delete all records with already-visited objective value. The number of remaining records be&nbsp;$w$. Set the number&nbsp;$u$ of selected records to $u=\min\{w,\mu\}$.     
-    f. Shuffle the **first&nbsp;$u$ elements** of&nbsp;$P$ randomly.
-    g. Set the first source index&nbsp;$p=-1$.
-    h. For index&nbsp;$i$ ranging **from&nbsp;$u$ to**&nbsp;$\mu+\lambda-1$ do
-        i. Set the source index&nbsp;$p$ **to&nbsp;$p=\modulo{(p+1)}{u}$**, i.e., make sure that every one of **the&nbsp;$u$ selected** points is used approximately the same number of times.
+    d. Sort the array&nbsp;$P$ in ascending order according to the objective values, i.e., such that the records&nbsp;$r$ with better associated objective value&nbsp;$\elementOf{r}{\obspel}$ are located at smaller indices.
+    e. Iterate over&nbsp;$P$ from front to end and delete all records with an objective value already seen in this iteration. The number of remaining records be&nbsp;$w$. Set the number&nbsp;$u$ of selected records to $u=\min\{w,\mu\}$.     
+    f. Shuffle the first&nbsp;$u$ elements of&nbsp;$P$ randomly.
+    g. Set the first source index&nbsp;$p1=-1$.
+    h. For index&nbsp;$i$ ranging from&nbsp;$u$ to &nbsp;$\mu+\lambda-1$ do
+        i. Set the first source index&nbsp;$p1$ to&nbsp;$p=\modulo{(p1+1)}{u}$.
         ii. Draw a random number&nbsp;$c$ uniformly distributed in&nbsp;$[0,1)$.
-        iii. **If&nbsp;$u>1$ and**&nbsp;$c$ is less than the crossover rate&nbsp;$cr$, then we apply the binary operator:
-             A. Randomly choose another index&nbsp;$p2$ **from $0\dots(u-1)$ such** that&nbsp;$p2\neq p$.
-             B. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_2(\elementOf{\arrayIndex{P}{p}}{\sespel}, \elementOf{\arrayIndex{P}{p2}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the binary search operator to the points stored at index&nbsp;$p$ and&nbsp;$p2$.
-        iv. else, i.e., $c\geq cr$ **or $u=1$,** we apply the unary operator:
-            C. Set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p}}{\sespel})$, i.e., derive a new point in the search space for the record at index&nbsp;$i$ by applying the unary search operator to the point stored at index&nbsp;$p$.
+        iii. If&nbsp;$u>1$ and&nbsp;$c<cr$, then we apply the binary operator:
+             A. Randomly choose another index&nbsp;$p2$ from $0\dots(u-1)$ such that&nbsp;$p2\neq p1$.
+             B. Apply binary search operator to the points stored at index&nbsp;$p1$ and&nbsp;$p2$ and store result at index&nbsp;$i$, i.e., set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_2(\elementOf{\arrayIndex{P}{p1}}{\sespel}, \elementOf{\arrayIndex{P}{p2}}{\sespel})$.
+        iv. otherwise to *step&nbsp;4hiii, i.e., if&nbsp;$c\geq cr$ or&nbsp;$u=1$, we apply the unary search operator to the point stored at index&nbsp;$p1$ and store result at index&nbsp;$i$, i.e., set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p1}}{\sespel})$.
         v. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
         vi. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 5. Return the candidate solution corresponding to the best record in&nbsp;$P$ to the user.
@@ -436,12 +441,11 @@ If $u=1$, we cannot apply the binary operator regardless of the crossover rate&n
 
 This algorithm, implemented in [@lst:EAWithClearing] differs from the variant in [@sec:evolutionaryAlgorithmWithRecombinationImpl] mainly in *step&nbsp;e*.
 There, the sorted population&nbsp;$P$ is processed from beginning to end.
-Whenever an objective value is found in a record which has already been encountered, the record is removed.
-Since $P$ is sorted, this means that the record at (zero-based) index&nbsp;$k$ is deleted if and only if $k>0$ and $\elementOf{\arrayIndex{P}{k}}{\obspel}=\elementOf{\arrayIndex{P}{k-1}}{\obspel}$.
-As a result, the number&nbsp;$u$ of records with unique objective value may be less than&nbsp;$\mu$ (while always being greater or equal to&nbsp;1).
+Whenever an objective value is found in a record which has already been encountered during this processing step, the record is removed.
+Since&nbsp;$P$ is sorted, this means that the record at (zero-based) index&nbsp;$k$ is deleted if and only if $k>0$ and $\elementOf{\arrayIndex{P}{k}}{\obspel}=\elementOf{\arrayIndex{P}{k-1}}{\obspel}$.
+As a result, the number&nbsp;$u$ of selected records with unique objective value may be less than&nbsp;$\mu$ (while always being greater or equal to&nbsp;1).
 Therefore, we need to adjust the parts of the algorithm where parent solutions are selected for generating offsprings.
 Also, we generate $\mu+\lambda-u$ offspring, to again obtain a total of $\mu+\lambda$ elements.
-All such changes are **emphasized** in the pseudo-code above.  
 
 In the actual implementation in [@lst:EAWithClearing], we do not delete the records but move them to the end of the list, so we can re-use them later.
 We also stop processing&nbsp;$P$ as soon as we have&nbsp;$\mu$ unique records, as it does not really matter whether un-selected records are unique.

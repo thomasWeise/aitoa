@@ -103,27 +103,27 @@ $$ T(\iteration) = \frac{T_s}{\ln{\left(\epsilon(\iteration-1)+e\right)}} $$ {#e
 
 Now that we have the blueprints for temperature schedules, we can completely define our SA algorithm and implement it in [@lst:SimulatedAnnealing]. 
 
-1. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
+1. Create random point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ (using the nullary search operator).
 2. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
 3. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
-4. Store&nbsp;$\solspel$ in&nbsp;$\bestSoFar{\solspel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$.
-5. Set the iteration counter&nbsp;$\iteration$ to $\iteration=1$.
+4. Store&nbsp;$\solspel$ in&nbsp;$\bestSoFar{\solspel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$, which we will use to preserve the best-so-far results.
+5. Set the iteration counter&nbsp;$\iteration$ to&nbsp;$\iteration=1$.
 6. Repeat until the termination criterion is met:
     a. Set&nbsp;$\iteration=\iteration+1$.
     b. Apply the unary search operator to&nbsp;$\sespel$ to get the slightly modified copy&nbsp;$\sespel'$ of it.
     c. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
     d. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
-    e. If&nbsp;$\obspel'\leq \bestSoFar{\obspel}$, then
-       i. Store&nbsp;$\sespel'$ in the variable&nbsp;$\sespel$ and&nbsp;$\obspel'$ in&nbsp;$\obspel$.
-       ii. If&nbsp;$\obspel'\leq \bestSoFar{\obspel}$, then store&nbsp;$\solspel'$ in the variable&nbsp;$\bestSoFar{\solspel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$.
-       iii. Perform next iteration by going to step&nbsp;6.
-    f. Compute the temperature $T$ according to the temperature schedule, i.e., set $T=T(\iteration)$.
-    g. If&nbsp;$T\leq 0$ the perform next iteration by goind to step&nbsp;6.
-    h. Set $\Delta E = \objf(\repMap(\sespel)) - \objf(\repMap(\bestSoFar{\sespel}))$ according to [@eq:simulatedAnnealingDeltaE].
-    i. Compute $P=e^{-\frac{\Delta E}{T}}$ according to [@eq:simulatedAnnealingP].
-    j. Draw a random number $r$ uniformly distributed in $[0,1)$.
-    k. If&nbsp;$k\leq P$, then store&nbsp;$\sespel'$ in the variable&nbsp;$\bestSoFar{\sespel}$ and&nbsp;$\obspel'$ in&nbsp;$\bestSoFar{\obspel}$ and perform next iteration by goind to step&nbsp;6.    
-7. Return best-so-far objective value&nbsp;$\bestSoFar{\obspel}$ and best solution&nbsp;&nbsp;$\bestSoFar{\obspel}$ to the user.
+    e. If&nbsp;$\obspel'\leq\obspel$, then
+       i. Store&nbsp;$\sespel'$&nbsp;in&nbsp;$\sespel$ and store&nbsp;$\obspel'$&nbsp;in&nbsp;$\obspel$.
+       ii. If&nbsp;$\obspel'\leq\bestSoFar{\obspel}$, then store&nbsp;$\solspel'$&nbsp;in&nbsp;$\bestSoFar{\solspel}$ and store&nbsp;$\obspel'$&nbsp;in&nbsp;$\bestSoFar{\obspel}$.
+       iii. Perform next iteration by going to *step&nbsp;6*.
+    f. Compute the temperature&nbsp;$T$ according to the temperature schedule, i.e., set&nbsp;$T=T(\iteration)$.
+    g. If&nbsp;$T\leq 0$ the perform next iteration by going to *step&nbsp;6*.
+    h. Set&nbsp;$\Delta E = \obspel' - \obspel$ (see [@eq:simulatedAnnealingDeltaE]).
+    i. Compute&nbsp;$P=e^{-\frac{\Delta E}{T}}$ (see [@eq:simulatedAnnealingP]).
+    j. Draw a random number&nbsp;$r$ uniformly distributed in&nbsp;$[0,1)$.
+    k. If&nbsp;$r\leq P$, then store&nbsp;$\sespel'$&nbsp;in&nbsp;$\sespel$, store&nbsp;$\obspel'$&nbsp;in&nbsp;$\obspel$, and perform next iteration by going to *step&nbsp;6*.
+7. Return best encountered objective value&nbsp;$\bestSoFar{\obspel}$ and the best encountered solution&nbsp;&nbsp;$\bestSoFar{\obspel}$ to the user.
 
 \repo.listing{lst:SimulatedAnnealing}{An excerpt of the implementation of the Simulated Annealing algorithm.}{java}{src/main/java/aitoa/algorithms/SimulatedAnnealing.java}{}{relevant}
 
@@ -160,8 +160,8 @@ Thus, accepting a solution which is worse by 50 units of makespan, i.e., with $\
 
 How likely should accepting such a value be?
 Unfortunately, we are again stuck at making an arbitrary choice &ndash; but at least we can make a choice from within a well-defined region:
-Probabilities must be in $[0,1]$ and can be understood relatively intuitively, whereas it was a priori unclear in what range reasonable "temperatures" would be located.
-Let us define that the probability&nbsp;$P_{50}$ to accept a candidate solution which is 50&nbsp;makespan units worse than the current one, i.e., $\Delta E = 50$, should be&nbsp;$P_{50}=0.1$ at the beginning of the search.
+Probabilities must be in&nbsp;$[0,1]$ and can be understood relatively intuitively, whereas it was completely unclear in what range reasonable "temperatures" would be located.
+Let us choose that the probability&nbsp;$P_{50}$ to accept a candidate solution that is 50&nbsp;makespan units worse than the current one, i.e., has&nbsp;$\Delta E = 50$, should be&nbsp;$P_{50}=0.1$ at the beginning of the search.
 In other words, there should be a 10% chance to accept such a solution at $\iteration=1$.
 At $\iteration=1$, $T(\iteration)=T_s$ for both temperature schedules.
 We can now solve [@eq:simulatedAnnealingP] for&nbsp;$T_s$:
@@ -174,19 +174,21 @@ T_s=&-\frac{50}{\ln{0.1}}\\
 T_s\approx&21.7
 \end{array} $$
 
-A starting temperature&nbsp;$T_s$ of approximately&nbsp;$T_s=20$ seems therefore suitable in our scenario.
+A starting temperature&nbsp;$T_s$ of approximately&nbsp;$T_s=20$ seems to be suitable in our scenario.
 Of course, we just got there using very simplified and coarse estimates.
-If we would have chosen $P_{50}=0.5$, we would have gotten $T_s\approx 70$ and if we additionally went with the maximum standard deviation&nbsp;137, instead of the median one, we would obtain $T_s\approx200$.
+If we would have chosen&nbsp;$P_{50}=0.5$, we would have gotten&nbsp;$T_s\approx 70$ and if we additionally went with the maximum standard deviation&nbsp;137 instead of the median one, we would obtain&nbsp;$T_s\approx200$.
 But at least we have a first understanding of the range where we will probably find good values for&nbsp;$T_s$.
 
 But what about the&nbsp;$\epsilon$ parameters?
 In order to get an idea for how to set it, we first need to know a proper end temperature&nbsp;$T_e$, i.e., the temperature which should be reached by the end of the run.
+It cannot be&nbsp;0, because while both temperature schedules do approach zero for&nbsp;$\iteration\rightarrow\infty$, they will not actually become&nbsp;0 for any finite number&nbsp;$\iteration$ of iterations.
 
+So we are stuck with the task to pick a suitably small value for&nbsp;$T_e$.
 Maybe here our previous findings from back when we tried to restart the hill climber can come in handy.
 In [@sec:hillClimberWithRestartSetup], we learned that it makes sense to restart the hill climber after $L=16'384$ unsuccessful search steps.
-So maybe a terminal state for our Simulated Annealing could be a scenario where the probability&nbsp;$P_e$ of accepting a candidate solution which is $\Delta E=1$ makespan unit worse than the current one should be $P_e=1/16'384$?
-This choice would mean that the Simulated Annealing algorithm then converges to the `hcr_16384_1swap` algorithm towards the end of the computational budget.
-
+So maybe a terminal state for our Simulated Annealing could be a scenario where the probability&nbsp;$P_e$ of accepting a candidate solution which is $\Delta E=1$&nbsp;makespan unit worse than the current one should be&nbsp;$P_e=1/16'384$?
+This would mean that the chance to accept a candidate solution being marginally worse that the current one would be about as large as making a complete restart in&nbsp;`hcr_16384_1swap`.
+Of course, this is again an almost arbitrary choice, but it at least looks like a reasonable terminal state for our Simulated Annealing algorithm.
 We can now solve [@eq:simulatedAnnealingP] again to get the end temperature&nbsp;$T_e$:
 
 $$ \begin{array}{rl}
@@ -197,13 +199,12 @@ T_e=&-\frac{1}{\ln{(1/16'384)}}\\
 T_e\approx&0.103
 \end{array} $$
  
-In other words, a final temperature of $T_e=0.1$ seems reasonable. 
+We choose a final temperature of&nbsp;$T_e=0.1$. 
 But when should it be reached?
 In [@tbl:jssp_hc1_swap_sa_params], we print the total number of function evaluations (FEs) that our `hc_1swap` algorithm performed on the different problem instances.
-We can find it generated and evaluated between 22&nbsp;million on&nbsp;`swv15` and 71&nbsp;million on&nbsp;`la24` candidate solutions.^[Notice that back in [@tbl:jssp_hc_1swap_results], we printed the median number FEs until the best solution was discovered, not until the algorithm has terminated.]
+We find that it generated and evaluated between 22&nbsp;million on&nbsp;`swv15` and 71&nbsp;million on&nbsp;`la24` candidate solutions.^[Notice that back in [@tbl:jssp_hc_1swap_results], we printed the median number FEs until the best solution was discovered, not until the algorithm has terminated.]
 The overall median is at about 30&nbsp;million FEs within the 3&nbsp;minute computational budget.
-In other words, after about 30&nbsp;million FEs, we should reach approximately $T_e=0.1$.
-
+From this, we can conclude that after about 30&nbsp;million FEs, we should reach approximately&nbsp;$T_e=0.1$.
 We can solve [@eq:sa:temperatureSchedule:exp] for&nbsp;$\epsilon$ to configure the exponential schedule:
 
 $$ \begin{array}{rl}
@@ -216,7 +217,7 @@ T(30'000'000) =& 20 * (1 - \epsilon) ^ {30'000'000 - 1} \\
 \epsilon \approx& 1.776*10^{-7}
 \end{array} $$
 
-We can conclude, for an exponential temperature schedule, settings for&nbsp;$\epsilon$ somewhat between $10^{-7}$ and $2\!\cdot\!10^{-7}$ seem to be a reasonable choice if the start temperature&nbsp;$T_s$ is set to&nbsp;20.
+We can conclude, for an exponential temperature schedule, settings for&nbsp;$\epsilon$ somewhat between $1!\cdot\!10^{-7}$ and $2\!\cdot\!10^{-7}$ seem to be a reasonable choice if the start temperature&nbsp;$T_s$ is set to&nbsp;20.
 
 In [@fig:sa_temperature_schedules], we illustrate the behavior of the exponential temperature schedule for starting temperature&nbsp;$T_s=20$ and the six values $5\!\cdot\!10^{-8}$, $1\!\cdot\!10^{-7}$, $1.5\!\cdot\!10^{-7}$, $2\!\cdot\!10^{-7}$, $4\!\cdot\!10^{-7}$, and&nbsp;$8\!\cdot\!10^{-7}$.
 The sub-figure on top shows how the temperature declines over the performed objective value evaluations.
@@ -232,11 +233,11 @@ The larger&nbsp;$\epsilon$, the earlier and faster does the acceptance probabili
 ![The median result quality of the&nbsp;`sa_exp_20_epsilon_1swap` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the parameter&nbsp;$\epsilon$. The best values of&nbsp;$L$ on each instance are marked with bold symbols.](\relative.path{jssp_sa_1swap_med_over_epsilon.svgz}){#fig:jssp_sa_1swap_med_over_epsilon width=84%}
 
 In [@fig:jssp_sa_1swap_med_over_epsilon], we illustrate the normalized median result quality that can be obtained by Simulated Annealing with starting temperature&nbsp;$T_s=20$, exponential schedule, and `1swap` operator for different values of the parameter&nbsp;$\epsilon$, including those from [@fig:sa_temperature_schedules].
-Interestingly, it turns out that $\epsilon=2$ is the best choice for the instances `abz7`, `swv15`, and `yn4` &nbsp; which is surprisingly close to what we could expect from our calculation.
+Interestingly, it turns out that $\epsilon=2$ is the best choice for the instances `abz7`, `swv15`, and `yn4`, which is quite close to what we could expect from our calculation.
 Smaller values will make the temperature decrease more slowly and lead to too much exploration and too little exploitation, as we already know from [@fig:sa_temperature_schedules].
 They work better on instance `la24`, which is no surprise:
-From [@tbl:jssp_hc1_swap_sa_params], we know that on this instance, we can conduct more than twice as many objective value evaluations than on the others within the three minute budget.
-In other words, on `la24`, we can do enough steps to let the temperature decrease sufficiently even for smaller&nbsp;$\epsilon$.
+From [@tbl:jssp_hc1_swap_sa_params], we know that on this instance, we can conduct more than twice as many objective value evaluations than on the others within the three minute budget:
+On `la24`, we can do enough steps to let the temperature decrease sufficiently even for smaller&nbsp;$\epsilon$.
 
 ### Results on the JSSP {#sec:saResultsOnJSSP}
 
@@ -254,7 +255,7 @@ Only on `la24`, `eac_4_5%_nswap` can win in terms of the best discovered solutio
 Our SA setup also is more reliable than the other algorithms, its standard deviation and only on `la24`, the standard deviation&nbsp;$sd$ of its final result quality is not the lowest.
 
 We know that on `la24`, $\epsilon=2\!\cdot\!10^{-7}$ is not the best choice for SA and smaller values would perform better there.
-Oddly enough, in the experiment, it are the settings $\epsilon=4\!\cdot\!10^{-7}$ and $\epsilon=8\!\cdot\!10^{-7}$, not listed in the table, which also discovered a globally optimal solution on that instance.
+Interestingly, in the experiment, the settings $\epsilon=4\!\cdot\!10^{-7}$ and $\epsilon=8\!\cdot\!10^{-7}$ (not listed in the table) also each discovered a globally optimal solution on that instance.
 
 ![The Gantt charts of the median solutions obtained by the `sa_exp_20_2_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_sa_exp_20_2_1swap_med.svgz}){#fig:jssp_gantt_sa_exp_20_2_1swap_med width=84%}
 
