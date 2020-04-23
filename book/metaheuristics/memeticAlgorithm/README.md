@@ -79,11 +79,11 @@ While a large population size was good for EAs, we need to remember that our bud
 This means that the limit for the total population size $\mu+\lambda$ would be the number of restarts that `hc2r_1swapU` can make within three minutes.
 Any larger size would mean that the first generation would not be completed.
 
-\relative.input{jssp_hc2_convergence.md}
+\relative.input{jssp_hc2_converged.md}
 
-: The median runtime that the neighborhood-enumerating hill climber would consume *without* restarts, i.e., the median time until arriving in a local optimum, as well as how many restarts we could do within our three-minute budget. {#tbl:jssp_hc2_convergence}
+: The median runtime that the neighborhood-enumerating hill climber would consume *without* restarts, i.e., the median time until arriving in a local optimum, as well as how many restarts we could do within our three-minute budget. {#tbl:jssp_hc2_converged}
 
-In [@tbl:jssp_hc2_convergence], we apply `hc2r_1swapU`, but instead of restarting, we terminate the algorithm when it has arrived in a local optimum.
+In [@tbl:jssp_hc2_converged], we apply `hc2r_1swapU`, but instead of restarting, we terminate the algorithm when it has arrived in a local optimum.
 We find that it needs between 47&nbsp;ms (on&nbsp;`la24`) and 1'729&nbsp;ms (on&nbsp;`swv15`) to do so.
 This means that within the 180&nbsp;s, we can refine between 3'830 and 104 individuals with the local search.
 If we want to be able to do several generations of the MA, then $\mu+\lambda \ll 104$.
