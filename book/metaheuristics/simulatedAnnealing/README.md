@@ -113,9 +113,9 @@ Now that we have the blueprints for temperature schedules, we can completely def
     b. Apply the unary search operator to&nbsp;$\sespel$ to get the slightly modified copy&nbsp;$\sespel'$ of it.
     c. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
     d. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
-    e. If&nbsp;$\obspel'\leq\obspel$, then
+    e. If&nbsp;$\obspel'\leq \obspel$, then
        i. Store&nbsp;$\sespel'$&nbsp;in&nbsp;$\sespel$ and store&nbsp;$\obspel'$&nbsp;in&nbsp;$\obspel$.
-       ii. If&nbsp;$\obspel'\leq\bestSoFar{\obspel}$, then store&nbsp;$\solspel'$&nbsp;in&nbsp;$\bestSoFar{\solspel}$ and store&nbsp;$\obspel'$&nbsp;in&nbsp;$\bestSoFar{\obspel}$.
+       ii. If&nbsp;$\obspel'\leq \bestSoFar{\obspel}$, then store&nbsp;$\solspel'$&nbsp;in&nbsp;$\bestSoFar{\solspel}$ and store&nbsp;$\obspel'$&nbsp;in&nbsp;$\bestSoFar{\obspel}$.
        iii. Perform next iteration by going to *step&nbsp;6*.
     f. Compute the temperature&nbsp;$T$ according to the temperature schedule, i.e., set&nbsp;$T=T(\iteration)$.
     g. If&nbsp;$T\leq 0$ the perform next iteration by going to *step&nbsp;6*.
