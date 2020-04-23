@@ -38,7 +38,7 @@ It then takes this point and passes it to the evaluation function of our black-b
 Internally, we implemented this function in such a way that it automatically remembers the best candidate solution it ever has evaluated.
 Thus, we do not need to take care of this in our algorithm, which makes the implementation so short.
 
-\repo.listing{lst:Si\geqngleRandomSample}{An excerpt of the implementation of an algorithm which creates a single random candidate solution.}{java}{src/main/java/aitoa/algorithms/SingleRandomSample.java}{}{relevant}
+\repo.listing{lst:SingleRandomSample}{An excerpt of the implementation of an algorithm which creates a single random candidate solution.}{java}{src/main/java/aitoa/algorithms/SingleRandomSample.java}{}{relevant}
 
 #### Results on the JSSP
 
