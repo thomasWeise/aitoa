@@ -69,9 +69,9 @@ This means that we may likely encounter algorithms that often give us very good 
 Thus, the result distribution might be skewed, too.
 
 However, we can also make an argument for the opposite:
-Let us take the MAX&#8209;SAT problem, an \NPprefix&#8209;hard problem.
+Let us take the MAX&#8209;SAT problem, an $\NPprefix$&#8209;hard problem.
 If we apply a local search algorithm to a set of different MAX&#8209;SAT instances, it may well be that the algorithm requires exponential runtime on 25% of them while solving the others in polynomial time&nbsp;[@HS2000LSAFSAEE]!
-This would mean that if we consider only the median runtime, it would appear that we could solve an \NPprefix&#8209;hard problem in polynomial time, as the median would not be impacted by the worst 25% of the runs&hellip;
+This would mean that if we consider only the median runtime, it would appear that we could solve an $\NPprefix$&#8209;hard problem in polynomial time, as the median would not be impacted by the worst 25% of the runs&hellip;
 In other words, our conclusion would be quite spectacular, but also quite wrong.
 Here, we would have a better chance to pick up that, while having found a cool algorithm, it would be too early to apply for the Turing Award.  
 

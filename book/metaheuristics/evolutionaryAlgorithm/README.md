@@ -96,7 +96,7 @@ Regarding $\mu$ and $\lambda$, we observe the same situation as with the restart
 There is a "sweet spot" somewhere between small and large population sizes.
 For small values of $\mu$, the algorithm may land in a local optimum too quickly, whereas for large values, it may not be able to perform sufficiently many generations to arrive at a good solution.
 The setting $\mu=\lambda=16'384$ seems to work well for instances `abz7`, `la25`, and `yn4`.
-Interestingly, instance `swv15` behaves different: here, a $\mu=\lambda=1024$ works best.
+Interestingly, instance `swv15` behaves different: here, the setting&nbsp;$\mu=\lambda=1024$ works best.
 It is quite common in optimization that different problem instances may require different setups to achieve the best performance &ndash; but here we see it very pronounced
 
 Regarding the choice of the unary search operator:
