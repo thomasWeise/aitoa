@@ -38,7 +38,7 @@ It then takes this point and passes it to the evaluation function of our black-b
 Internally, we implemented this function in such a way that it automatically remembers the best candidate solution it ever has evaluated.
 Thus, we do not need to take care of this in our algorithm, which makes the implementation so short.
 
-\repo.listing{lst:SingleRandomSample}{An excerpt of the implementation of an algorithm which creates a single random candidate solution.}{java}{src/main/java/aitoa/algorithms/SingleRandomSample.java}{}{relevant}
+\repo.listing{lst:Si\geqngleRandomSample}{An excerpt of the implementation of an algorithm which creates a single random candidate solution.}{java}{src/main/java/aitoa/algorithms/SingleRandomSample.java}{}{relevant}
 
 #### Results on the JSSP
 
@@ -81,17 +81,17 @@ In our corresponding Java implementation given in [@lst:RandomSampling], we ther
 
 The algorithm can be described as follows:
 
-1. Set best-so-far objective value to infinity.
-2. Create random point&nbsp;$\sespel$ in search space&nbsp;$\searchSpace$ (using the nullary search operator).
-3. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
-4. Compute objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
-5. If&nbsp;$\obspel$ is better than best-so-far-objective value, then
-    a. Set best-so-far objective value to&nbsp;$\obspel$.
-    b. Store&nbsp;$\solspel$ in a special variable and remember it.
-6. If the termination criterion is not met, return to point&nbsp;1.
-7. Return the best-so-far objective value and the best solution to the user.
+1. Set the best-so-far objective value&nbsp;$\obspel$ to&nbsp;$+\infty$ and the best-so-far candidate solution&nbsp;$\solspel$ to&nbsp;`NULL`. 
+2. Create random point&nbsp;$\sespel'$ in search space&nbsp;$\searchSpace$ by using the nullary search operator.
+3. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
+4. Compute the objective value&nbsp;$\obspel'$ of&nbsp;$\solspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
+5. If&nbsp;$\obspel'$ is better than best-so-far-objective value&nbsp;$\obspel$, i.e., $\obspel'<\obspel$, then
+    a. store&nbsp;$\obspel'$&nbsp;in&nbsp;$\obspel$ and
+    b. store&nbsp;$\solspel'$&nbsp;in&nbsp;$\solspel$.
+6. If the termination criterion is not met, return to *step&nbsp;2*.
+7. Return the best-so-far objective value&nbsp;$\obspel$ and the best solution&nbsp;$\solspel$ to the user.
 
-In actual program code, points&nbsp;3 to&nbsp;5 can again be encapsulate by a wrapper around the objective function.
+In actual program code, *steps&nbsp;3 to&nbsp;5* can again be encapsulate by a wrapper around the objective function.
 This reduces a lot of potential programming mistakes and makes the code much shorter.
 This is what we did with the implementations of the black-box process interface `IBlackBoxProcess` given in [@lst:IBlackBoxProcess].
 

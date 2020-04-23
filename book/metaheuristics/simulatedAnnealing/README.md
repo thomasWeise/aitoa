@@ -103,7 +103,7 @@ $$ T(\iteration) = \frac{T_s}{\ln{\left(\epsilon(\iteration-1)+e\right)}} $$ {#e
 
 Now that we have the blueprints for temperature schedules, we can completely define our SA algorithm and implement it in [@lst:SimulatedAnnealing]. 
 
-1. Create random point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ (using the nullary search operator).
+1. Create random point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ by using the nullary search operator.
 2. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
 3. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
 4. Store&nbsp;$\solspel$ in&nbsp;$\bestSoFar{\solspel}$ and&nbsp;$\obspel$ in&nbsp;$\bestSoFar{\obspel}$, which we will use to preserve the best-so-far results.

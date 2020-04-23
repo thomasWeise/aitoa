@@ -79,7 +79,7 @@ Stochastic Hill Climbing&nbsp;[@RN2002AI; @S2008TADM; @WGOEB] is the simplest im
 It is also sometimes called localized random search&nbsp;[@S2003ITSSAO].
 It proceeds as follows:
 
-1. Create random one point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ using the nullary search operator.
+1. Create one random point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ using the nullary search operator.
 2. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
 3. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
 4. Repeat until the termination criterion is met:
@@ -160,7 +160,7 @@ We thus cannot know whether or not the algorithm is trapped in a local optimum a
 However, we can try to guess it:
 If there has not been any improvement for a high number&nbsp;$L$ of steps, then the current point&nbsp;$\sespel$ in the search space is probably a local optimum.
 If that happens, we just restart at a new random point in the search space.
-Of course, we will remember the *best-so-far* candidate solution&nbsp;$\bestSoFar{\solspel}$ over all restarts and return it to the user in the end.
+Of course, we will remember the *best-so-far* candidate solution in a special variable&nbsp;$\bestSoFar{\solspel}$ over all restarts and return it to the user in the end.
 
 #### The Algorithm {#sec:hillClimberWithRestartAlgo}
 
@@ -179,7 +179,7 @@ Of course, we will remember the *best-so-far* candidate solution&nbsp;$\bestSoFa
         ii. set&nbsp;$C$ to&nbsp;$0$.
         iii. If&nbsp;$\obspel'<\bestSoFar{\obspel}$, then store&nbsp;$\obspel'$&nbsp;in&nbsp;$\bestSoFar{\obspel}$ and store&nbsp;$\solspel'$&nbsp;in&nbsp;$\bestSoFar{\solspel}$.
         
-       otherwise to *step&nbsp;7d*, i.e., if&nbsp;$\obspel'\geq\obspel$, then
+       otherwise to *step&nbsp;7d*, i.e., if&nbsp;$\obspel'\geq \obspel$, then
       
         iv. increment&nbsp;$C$ by&nbsp;$1$.
         v. If&nbsp;$C\geq L$, then perform a restart by going back to *step&nbsp;3*.
