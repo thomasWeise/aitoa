@@ -65,7 +65,7 @@ For each new point to be created during the reproduction step, we apply a search
 The index&nbsp;$p$ in *steps&nbsp;4f to&nbsp;4g* identifies the point to be used as source for sampling the next new solution.
 By incrementing&nbsp;$p$ before each application of the search operator, we try to make sure that each of the selected points is used approximately equally often to create new solutions.
 Of course, $\mu$ and&nbsp;$\lambda$ can be different (often&nbsp;$\lambda>\mu$), so if we would just keep increasing&nbsp;$p$ for&nbsp;$\lambda$ times, it could exceed&nbsp;$\mu$.
-We thus perform a modulo division with&nbsp;$\mu$ in *step&nbsp;4gi*, i.e., set&nbsp;$p$ to the remainder of the division with&nbsp;$\mu$, which makes sure that&nbsp;$p$ will be in&nbsp;$0\dots(\mu-1)$.
+We thus perform a modulo division with&nbsp;$\mu$ in *step&nbsp;4g.i*, i.e., set&nbsp;$p$ to the remainder of the division with&nbsp;$\mu$, which makes sure that&nbsp;$p$ will be in&nbsp;$0\dots(\mu-1)$.
 
 If $\mu\neq\lambda$, then the best solutions in&nbsp;$P$ tend to be used more often, since they may "survive" selection several times and often be at the front of&nbsp;$P$.
 This means that, in our algorithm, they would be used more often as input to the search operator.
@@ -178,7 +178,7 @@ The question on which of the two to focus is known as the dilemma of "Exploratio
 To make matters worse, theorists have proofed that there are scenarios where only a small population can perform well, while there are other scenarios where only a large population works well&nbsp;[@W2003ROCFTB].
 In other words, if we apply an EA, we always need to do at least some rudimentary tuning of&nbsp;$\mu$ and&nbsp;$\lambda$.
 
-### Ingredient: Binary Search Operator
+### Ingredient: Binary Search Operator {#sec:ea:sequence:crossover}
 
 On one hand, keeping a population of the&nbsp;$\mu>1$ best solutions as starting points for further exploration helps us to avoid premature convergence.
 On the other hand, it also represents more *information*.
@@ -251,7 +251,7 @@ We modify the original EA as follows.
 
 #### The Algorithm (with Recombination) {#sec:evolutionaryAlgorithmWithRecombinationImpl}
 
-We introduce a new paramerter&nbsp;$cr\in[0,1]$, the so-called "crossover rate".
+We introduce a new parameter&nbsp;$cr\in[0,1]$, the so-called "crossover rate".
 It is used whenever we want to derive a new points in the search space from existing ones.
 It denotes the probability that we apply the binary operator (while we will otherwise apply the unary operator, i.e., with probability&nbsp;$1-cr$).
 The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm with recombination works as follows:
@@ -272,7 +272,7 @@ The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm with recombination works a
         iii. If&nbsp;$c$ is less than the crossover rate&nbsp;$cr$, then we apply the binary operator:
              A. Randomly choose a second index&nbsp;$p2$ from $0\dots(\mu-1)$ such that&nbsp;$p2\neq p1$.
              B. Apply binary search operator to the points stored at index&nbsp;$p1$ and&nbsp;$p2$ and store result at index&nbsp;$i$, i.e., set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_2(\elementOf{\arrayIndex{P}{p1}}{\sespel}, \elementOf{\arrayIndex{P}{p2}}{\sespel})$.
-        iv. otherwise to *step&nbsp;4giii*, i.e., if&nbsp;$c\geq cr$, then we apply the unary operator:
+        iv. otherwise to *step&nbsp;4g.iii*, i.e., if&nbsp;$c\geq cr$, then we apply the unary operator:
             C. Apply unary search operator to the point stored at index&nbsp;$p1$ and store result at index&nbsp;$i$, i.e., set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p1}}{\sespel})$.
         v. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
         vi. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
@@ -280,7 +280,7 @@ The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm with recombination works a
 
 \repo.listing{lst:EAwithCrossover}{An excerpt of the implementation of the Evolutionary Algorithm algorithm **with** crossover.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,withcrossover}
 
-This algorithm, implemented in [@lst:EAwithCrossover] only differs from the variant in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo] by choosing whether to use the unary or binary operator to sample new points from the search space (*steps&nbsp;A*, *B*, and&nbsp;*C*).
+This algorithm, implemented in [@lst:EAwithCrossover] only differs from the variant in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo] by choosing whether to use the unary or binary operator to sample new points from the search space (*steps&nbsp;4g.iii.A*, *B*, and&nbsp;*C*).
 If&nbsp;$cr$ is the probability to apply the binary operator and we draw a random number&nbsp;$c$ which is uniformly distributed in&nbsp;$[0,1)$, then the probability that $c<cr$ is exactly&nbsp;$cr$ (see *point&nbsp;iii*).
 
 #### The Right Setup {#sec:eaCrSetup}
@@ -432,14 +432,14 @@ If $u=1$, we cannot apply the binary operator regardless of the crossover rate&n
         iii. If&nbsp;$u>1$ and&nbsp;$c<cr$, then we apply the binary operator:
              A. Randomly choose another index&nbsp;$p2$ from $0\dots(u-1)$ such that&nbsp;$p2\neq p1$.
              B. Apply binary search operator to the points stored at index&nbsp;$p1$ and&nbsp;$p2$ and store result at index&nbsp;$i$, i.e., set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_2(\elementOf{\arrayIndex{P}{p1}}{\sespel}, \elementOf{\arrayIndex{P}{p2}}{\sespel})$.
-        iv. otherwise to *step&nbsp;4hiii, i.e., if&nbsp;$c\geq cr$ or&nbsp;$u=1$, we apply the unary search operator to the point stored at index&nbsp;$p1$ and store result at index&nbsp;$i$, i.e., set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p1}}{\sespel})$.
+        iv. otherwise to *step&nbsp;4h.iii, i.e., if&nbsp;$c\geq cr$ or&nbsp;$u=1$, we apply the unary search operator to the point stored at index&nbsp;$p1$ and store result at index&nbsp;$i$, i.e., set&nbsp;$\elementOf{\arrayIndex{P}{i}}{\sespel}=\searchOp_1(\elementOf{\arrayIndex{P}{p1}}{\sespel})$.
         v. Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
         vi. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 5. Return the candidate solution corresponding to the best record in&nbsp;$P$ to the user.
 
 \repo.listing{lst:EAWithClearing}{An excerpt of the implementation of the Evolutionary Algorithm algorithm with crossover and clearing.}{java}{src/main/java/aitoa/algorithms/EAWithClearing.java}{}{relevant}
 
-This algorithm, implemented in [@lst:EAWithClearing] differs from the variant in [@sec:evolutionaryAlgorithmWithRecombinationImpl] mainly in *step&nbsp;e*.
+This algorithm, implemented in [@lst:EAWithClearing] differs from the variant in [@sec:evolutionaryAlgorithmWithRecombinationImpl] mainly in *step&nbsp;4e*.
 There, the sorted population&nbsp;$P$ is processed from beginning to end.
 Whenever an objective value is found in a record which has already been encountered during this processing step, the record is removed.
 Since&nbsp;$P$ is sorted, this means that the record at (zero-based) index&nbsp;$k$ is deleted if and only if $k>0$ and $\elementOf{\arrayIndex{P}{k}}{\obspel}=\elementOf{\arrayIndex{P}{k-1}}{\obspel}$.
