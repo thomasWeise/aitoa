@@ -48,7 +48,7 @@ The basic $(\mu+\lambda)$&nbsp;Memetic Algorithm is given below and implemented 
 		   i. If $\arrayIndex{P}{i}$ is already a fully-evaluated solution and a local optimum, continue with the next iteration value of the *loop&nbsp;4b*.
 			 i.  Apply the representation mapping $\solspel=\repMap(\elementOf{\arrayIndex{P}{i}}{\sespel})$ to get the corresponding candidate solution&nbsp;$\solspel$.
        ii Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.       
-       iii. **Local Search:** For each point&nbsp;$\sespel'$ in the search space neighboring to $\elementOf{\arrayIndex{P}{i}}{\sespel}$ according to the unary search operator do:
+       iii. *Local Search:* For each point&nbsp;$\sespel'$ in the search space neighboring to $\elementOf{\arrayIndex{P}{i}}{\sespel}$ according to the unary search operator do:
             A. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
             B. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
             C. If the termination criterion has been met, jump directly to step&nbsp;5.
