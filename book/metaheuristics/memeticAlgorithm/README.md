@@ -106,13 +106,13 @@ Except on `swv15`, it also always has the best mean and median result quality.
 The differences to `eac_4_5%_nswap` are very small and therefore not interesting &ndash; except on `swv15`, where the Memetic Algorithm clearly loses.
 This must be the result of the very low number of individuals that can be refined on `swv15` using the local search within the three minute budget.
 
-![The median of the progress of the&nbsp;`ma_8_1swapU`, `eac_4_5%_nswap`, and `hc2r_1swapU` algorithms over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_ma_log.svgz}){#fig:jssp_progress_ma_log width=84%}
-
 From [@fig:jssp_progress_ma_log], we can see that the `ma_8_1swapU` behaves almost identical to `hc2r_1swapU` during the first approximately ten seconds of the runs.
 This must be the time when the first $\mu+\lambda$ individuals undergo the local search.
 From then on, the algorithm makes better progress than `hc2r_1swapU`.
 It seems that our binary `sequence` operator can combine different good traits of candidate solutions after all!
 The fact that the `ma_8_1swapU` can improve beyond the hill climber means that `sequence` is able to combine two local optima to a new point in the search space, which then can be refined by local search to another local optimum.
+
+![The median of the progress of the&nbsp;`ma_8_1swapU`, `eac_4_5%_nswap`, and `hc2r_1swapU` algorithms over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_ma_log.svgz}){#fig:jssp_progress_ma_log width=84%}
 
 ### Summary
 
