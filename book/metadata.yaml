@@ -10,6 +10,9 @@ lang: en-US
 # reference to associated code repository
 codeRepo: http://github.com/thomasWeise/aitoa-code.git
 
+# website include
+website.include: website.html
+
 # bibliography metadata
 bibliography: bibliography.bib
 csl: http://www.zotero.org/styles/association-for-computing-machinery
