@@ -31,7 +31,7 @@ A basic EDA works roughly as follows:
    c. Select the $\mu$&nbsp;best points from the set of $\lambda$&nbsp;points (with&nbsp;$1<\mu<\lambda$).
    d. Use the set&nbsp;$P_\mu$ of these $\mu$&nbsp;points to build the new model&nbsp;$M_i$.
       This step can also be implemented as model update&nbsp;$U$ and make use of the information in the old model&nbsp;$M_{i-1}$ as well as the problem instance&nbsp;$\instance$, i.e., $M_i=U(P_\mu, M_{i-1}, \instance)$.
-   e. Sample $\lamda$&nbsp;points from&nbsp;$M_i$.
+   e. Sample $\lambda$&nbsp;points from&nbsp;$M_i$.
 5. Return the candidate solution&nbsp;$\bestSoFar{\solspel}$ and its objective value&nbsp;$\bestSoFar{\obspel}$ to the user.
 
 This structure looks different from what we had before, but we can recognize some familiar components.
@@ -111,4 +111,11 @@ If the number of selected individuals falls below this threshold, the algorithm 
 
 A basic EDA can now be implemented as shown in [@lst:EDA].
 In this implementation excerpt, we have omitted the checks to `minimumSamplesNeededForUpdate` some calls to the termination criterion as well as the initialization of variables, to provide more concise and readable code.
+
+### Ingredient: A Stochastic Model for the JSSP Search Space
+
+We now want to apply the EDA to our Job Shop Scheduling Problem.
+Our search space represents solutions for the JSSP as a permutation of a multi-set, where each of the the&nbsp;$\jsspJobs$ jobs occurs exactly&nbsp;$\jsspMachines$ times, once for each machine.
+Unfortunately, this representation does not lend itself for modeling &ndash; we would need a probability distribution over such permutations.
+It should be said that there exist clever solutions&nbsp;[@CUML2015KOMMFSPBP], but for our introductory book, they may be too complex.
 

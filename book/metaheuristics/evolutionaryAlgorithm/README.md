@@ -441,7 +441,7 @@ If $u=1$, we cannot apply the binary operator regardless of the crossover rate&n
 
 \repo.listing{lst:UtilsClearing}{The implementation of the objective-value based clearing routine.}{java}{src/main/java/aitoa/algorithms/Utils.java}{}{qualityClearing}
 
-This algorithm, implemented in [@lst:EAWithClearing] and using the routine given in [@list:UtilsClearing] differs from the variant in [@sec:evolutionaryAlgorithmWithRecombinationImpl] mainly in *step&nbsp;4e*.
+This algorithm, implemented in [@lst:EAWithClearing] and using the routine given in [@lst:UtilsClearing] differs from the variant in [@sec:evolutionaryAlgorithmWithRecombinationImpl] mainly in *step&nbsp;4e*.
 There, the sorted population&nbsp;$P$ is processed from beginning to end.
 Whenever an objective value is found in a record which has already been encountered during this processing step, the record is removed.
 Since&nbsp;$P$ is sorted, this means that the record at (zero-based) index&nbsp;$k$ is deleted if and only if $k>0$ and $\elementOf{\arrayIndex{P}{k}}{\obspel}=\elementOf{\arrayIndex{P}{k-1}}{\obspel}$.
