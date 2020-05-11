@@ -1,4 +1,4 @@
-## Evolutionary Algorithm {#sec:evolutionaryAlgorithm}
+## Evolutionary Algorithms {#sec:evolutionaryAlgorithm}
 
 We now already have one functional, basic optimization method &ndash; the hill climber.
 Different from the random sampling approach, it makes use of some knowledge gathered during the optimization process, namely the best-so-far point in the search space.
@@ -439,7 +439,7 @@ If $u=1$, we cannot apply the binary operator regardless of the crossover rate&n
 
 \repo.listing{lst:EAWithClearing}{An excerpt of the implementation of the Evolutionary Algorithm algorithm with crossover and clearing.}{java}{src/main/java/aitoa/algorithms/EAWithClearing.java}{}{relevant}
 
-\repo.listing{lst:UtilsClearing}{An excerpt of the implementation of the objective-value based clearing routine.}{java}{src/main/java/aitoa/algorithms/Utils.java}{}{qualityClearing}
+\repo.listing{lst:UtilsClearing}{The implementation of the objective-value based clearing routine.}{java}{src/main/java/aitoa/algorithms/Utils.java}{}{qualityClearing}
 
 This algorithm, implemented in [@lst:EAWithClearing] and using the routine given in [@list:UtilsClearing] differs from the variant in [@sec:evolutionaryAlgorithmWithRecombinationImpl] mainly in *step&nbsp;4e*.
 There, the sorted population&nbsp;$P$ is processed from beginning to end.
