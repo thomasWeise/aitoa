@@ -128,7 +128,7 @@ This means our model&nbsp;$M$ consists of $\jsspJobs*\jsspMachines$ vectors, eac
 A&nbsp;$0$ at&nbsp;$\arrayIndexx{M}{k}{\jsspJobIndex}$ means that job&nbsp;$\jsspJobIndex$ never occurred at index&nbsp;$k$ in any of the $\mu$&nbsp;selected points, whereas a value of&nbsp;$\mu$ would mean that all solutions had job&nbsp;$\jsspJobIndex$ at index&nbsp;$k$.
 
 When we sample a new point&nbsp;$\sespel$ from this model, we would process all the indices&nbsp;$k\in0\dots(\jsspJobs*\jsspMachines-1)$.
-The probability of putting a job&nbsp;$\jsspJobIndex\in0\dots \jsspJobs$ at index&nbsp;$k$ into&nbsp;$\sespel$ should be roughly proportional to&nbsp;$\arrayIndexx{M}{k}{\jsspJobIndex}$.
+The probability of putting a job&nbsp;$\jsspJobIndex\in0\dots(\jsspJobs-1)$ at index&nbsp;$k$ into&nbsp;$\sespel$ should be roughly proportional to&nbsp;$\arrayIndexx{M}{k}{\jsspJobIndex}$.
 In other words, if a job&nbsp;$\jsspJobIndex$ occurs often at index&nbsp;$k$ in the $\mu$&nbsp;selected solutions, which we used to build the model&nbsp;$M$, then it should also often occur there in $\lambda$&nbsp;new points we sample from&nbsp;$M$.
 
 While this indeed a na&#239;ve method with shortcomings (which we will discuss later), it should work "in principle". 
