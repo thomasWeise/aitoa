@@ -119,6 +119,8 @@ Our search space represents solutions for the JSSP as a permutation of a multi-s
 Unfortunately, this representation does not lend itself for stochastic modeling &ndash; we would need a probability distribution over such permutations.
 It should be said that there exist clever solutions&nbsp;[@CUML2015KOMMFSPBP], but for our introductory book, they may be too complex.
 
+#### The Na&#239;ve Idea
+
 We will follow a na&#239;ve approach.
 The points in the search space are permutations with repetitions, integer vectors of length&nbsp;$\jsspJobs*\jsspMachines$.
 At each index, there could be any of the $\jsspJobs$&nbsp;jobs.
@@ -130,8 +132,26 @@ A&nbsp;$0$ at&nbsp;$\arrayIndexx{M}{k}{\jsspJobIndex}$ means that job&nbsp;$\jss
 When we sample a new point&nbsp;$\sespel$ from this model, we would process all the indices&nbsp;$k\in0\dots(\jsspJobs*\jsspMachines-1)$.
 The probability of putting a job&nbsp;$\jsspJobIndex\in0\dots(\jsspJobs-1)$ at index&nbsp;$k$ into&nbsp;$\sespel$ should be roughly proportional to&nbsp;$\arrayIndexx{M}{k}{\jsspJobIndex}$.
 In other words, if a job&nbsp;$\jsspJobIndex$ occurs often at index&nbsp;$k$ in the $\mu$&nbsp;selected solutions, which we used to build the model&nbsp;$M$, then it should also often occur there in $\lambda$&nbsp;new points we sample from&nbsp;$M$.
+While this indeed a na&#239;ve method with shortcomings (which we will discuss later), it should work "in principle".
 
-While this indeed a na&#239;ve method with shortcomings (which we will discuss later), it should work "in principle". 
+#### An Example
+ 
 We illustrate the model update and sampling process by using our `demo` instance from [@sec:jsspDemoInstance] in [@fig:jssp_umda_example].
 
 ![An example of how the model update and sampling in our na&#239;ve EDA could look like on the `demo` instance from [@sec:jsspDemoInstance]; we set $\mu=10$ and 1&nbsp;new point&nbsp;$\sespel$ is sampled.](\relative.path{jssp_umda_example.svgz}){#fig:jssp_umda_example width=95%}
+
+The `demo` instance has $\jsspJobs=4$&nbsp;jobs that are processed on $\jsspMachines=5$&nbsp;machines.
+The points in the search space thus have $\jsspMachines*\jsspJobs=20$&nbsp;decision variables.
+We can build the model by considering each of the 20&nbsp;decision variables separately.
+Their indices&nbsp;$k$ range from&nbsp;$0$ to&nbsp;$19$.
+
+Assume that $\mu=10$&nbsp;such points have been selected.
+In the upper part of [@fig:jssp_umda_example], we illustrate these ten points, marking the occurrences of job&nbsp;0 red, of job&nbsp;1 blue, of ob&nbsp;2 green, and leaving those of job&nbsp;3 black for clarity.
+The model derived from the selected points is illustrated in the middle part.
+It has one row for each job and one column for each decision variable index.
+When looking at the first decision variable (index&nbsp;0), we find that job&nbsp;0 occurred twice in the selected points, job&nbsp;1 seven times, job&nbsp;3 once, and job&nbsp;2 never.
+This is shown in the first column of the model.
+The second column of the model stands for the jobs seen at index&nbsp;1.
+Here, job&nbsp;0 was never encountered, job&nbsp;1 and job&nbsp;2 four times, and job&nbsp;3 twice.
+These values are obtained by simply counting how often a given job&nbsp;ID appears at the same index in the $\mu=10$&nbsp;selected solutions.
+The model can be built iteratively in about $\bigO(\mu*\jsspMachines*\jsspJobs)$&nbsp;steps. 
