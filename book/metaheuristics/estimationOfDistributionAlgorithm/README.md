@@ -134,4 +134,4 @@ In other words, if a job&nbsp;$\jsspJobIndex$ occurs often at index&nbsp;$k$ in 
 While this indeed a na&#239;ve method with shortcomings (which we will discuss later), it should work "in principle". 
 We illustrate the model update and sampling process by using our `demo` instance from [@sec:jsspDemoInstance] in [@fig:jssp_umda_example].
 
-![An example of how the model update and sampling in our na&#239;ve EDA could look like on the `demo` instance from [@sec:jsspDemoInstance]; we set $\mu=10$ and 1&nbsp;new point&nbsp;$\sespel$ is sampled.](\relative.path{fig:jssp_umda_example.svgz}){#fig:jssp_umda_example width=95%}
+![An example of how the model update and sampling in our na&#239;ve EDA could look like on the `demo` instance from [@sec:jsspDemoInstance]; we set $\mu=10$ and 1&nbsp;new point&nbsp;$\sespel$ is sampled.](\relative.path{jssp_umda_example.svgz}){#fig:jssp_umda_example width=95%}
