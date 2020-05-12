@@ -67,7 +67,7 @@ These instances are contained in text files available at <http://people.brunel.a
 Of course, if we really want to solve a new type of problem, we will usually use many benchmark problem instances to get a good understand about the performance of our algorithm(s).
 Only for the sake of clarity of presentation, we will here limit ourselves to these above four problems.
 
-#### File Format and `demo` Instance
+#### File Format and `demo` Instance {#sec:jsspDemoInstance}
 
 For the sake of simplicity, we created one additional, smaller instance to describe the format of these files, as illustrated in [@fig:jssp_demo_instance].
 

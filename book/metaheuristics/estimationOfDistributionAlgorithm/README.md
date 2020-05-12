@@ -115,7 +115,23 @@ In this implementation excerpt, we have omitted the checks to `minimumSamplesNee
 ### Ingredient: A Stochastic Model for the JSSP Search Space
 
 We now want to apply the EDA to our Job Shop Scheduling Problem.
-Our search space represents solutions for the JSSP as a permutation of a multi-set, where each of the the&nbsp;$\jsspJobs$ jobs occurs exactly&nbsp;$\jsspMachines$ times, once for each machine.
-Unfortunately, this representation does not lend itself for modeling &ndash; we would need a probability distribution over such permutations.
+Our search space represents solutions for the JSSP as a permutation of a multi-set, where each of the $\jsspJobs$&nbsp;jobs occurs exactly $\jsspMachines$&nbsp;times, once for each machine.
+Unfortunately, this representation does not lend itself for stochastic modeling &ndash; we would need a probability distribution over such permutations.
 It should be said that there exist clever solutions&nbsp;[@CUML2015KOMMFSPBP], but for our introductory book, they may be too complex.
 
+We will follow a na&#239;ve approach.
+The points in the search space are permutations with repetitions, integer vectors of length&nbsp;$\jsspJobs*\jsspMachines$.
+At each index, there could be any of the $\jsspJobs$&nbsp;jobs.
+We want to build a model by using $\mu$&nbsp;such vectors.
+For each index $k\in0\dots(\jsspJobs*\jsspMachines-1)$, we could simply store how often each of the jobs&nbsp;$\jsspJobIndex$ occurred there in the $\mu$&nbsp;permutations in&nbsp;$\arrayIndexx{M}{k}{\jsspJobIndex}$.
+This means our model&nbsp;$M$ consists of $\jsspJobs*\jsspMachines$ vectors, each holding&nbsp;$\jsspJobs$ numbers ranging from&nbsp;$0$ to&nbsp;$\mu$.
+A&nbsp;$0$ at&nbsp;$\arrayIndexx{M}{k}{\jsspJobIndex}$ means that job&nbsp;$\jsspJobIndex$ never occurred at index&nbsp;$k$ in any of the $\mu$&nbsp;selected points, whereas a value of&nbsp;$\mu$ would mean that all solutions had job&nbsp;$\jsspJobIndex$ at index&nbsp;$k$.
+
+When we sample a new point&nbsp;$\sespel$ from this model, we would process all the indices&nbsp;$k\in0\dots(\jsspJobs*\jsspMachines-1)$.
+The probability of putting a job&nbsp;$\jsspJobIndex\in0\dots \jsspJobs$ at index&nbsp;$k$ into&nbsp;$\sespel$ should be roughly proportional to&nbsp;$\arrayIndexx{M}{k}{\jsspJobIndex}$.
+In other words, if a job&nbsp;$\jsspJobIndex$ occurs often at index&nbsp;$k$ in the $\mu$&nbsp;selected solutions, which we used to build the model&nbsp;$M$, then it should also often occur there in $\lambda$&nbsp;new points we sample from&nbsp;$M$.
+
+While this indeed a na&#239;ve method with shortcomings (which we will discuss later), it should work "in principle". 
+We illustrate the model update and sampling process by using our `demo` instance from [@sec:jsspDemoInstance] in [@fig:jssp_umda_example].
+
+![An example of how the model update and sampling in our na&#239;ve EDA could look like on the `demo` instance from [@sec:jsspDemoInstance]; we set $\mu=10$ and 1&nbsp;new point&nbsp;$\sespel$ is sampled.](\relative.path{fig:jssp_umda_example.svgz}){#fig:jssp_umda_example width=95%}
