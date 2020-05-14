@@ -54,6 +54,8 @@ In the Gantt charts of the median solutions depicted in [@fig:jssp_gantt_1rs_med
 
 : The results of the single random sample algorithm&nbsp;`1rs` for each instance $\instance$ in comparison to the lower bound&nbsp;$\lowerBound(\objf)$ of the makespan&nbsp;$\objf$ over 101&nbsp;runs: the *best*, *mean*, and median (*med*) result quality, the standard deviation *sd* of the result quality, as well as the median time&nbsp;*med(t)* and FEs&nbsp;*med(FEs)* until a run was finished. {#tbl:singleRandomSampleJSSP}
 
+![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_1rs_med.svgz}){#fig:jssp_gantt_1rs_med width=84%}
+
 This is completely reasonable.
 After all, we just create a single random solution.
 We can hardly assume that doing all jobs of a JSSP in a random order would be good idea.
@@ -67,8 +69,6 @@ Hence, almost all of our time budget remains unused.
 At the same time, we already know that that there is a 10-20% difference between the best and the median solution quality among the 101&nbsp;random solutions we created.
 The standard deviation&nbsp;$sd$ of the solution quality also is always above 100&nbsp;time units of makespan.
 So why don't we try to make use of this variance and the high speed of solution creation?
-
-![The Gantt charts of the median solutions obtained by the&nbsp;`1rs` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_1rs_med.svgz}){#fig:jssp_gantt_1rs_med width=84%}
 
 ### Random Sampling Algorithm  {#sec:randomSamplingAlgo}
 
