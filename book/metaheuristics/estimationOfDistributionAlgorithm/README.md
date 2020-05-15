@@ -216,7 +216,7 @@ Every time we sample a new point&nbsp;$\sespel$ in the search space&nbsp;$\searc
 But each time, we could hope to obtain results at least somewhat similar but yet slightly different from the $\mu$&nbsp;points that we have selected.
 
 The complexity of the model sampling is $\bigO{\jsspJobs*\jsspMachines*(\jsspJobs+\ln{\jsspJobs})}$:
-For each of the $\jsspJobs*\jsspMachines*$ indices&nbsp;$k$ into the new point&nbsp;$\sespel$, we need to add up the $\jsspJobs$&nbsp;frequencies stored in the model and then draw the random number&nbsp;$R$ (which can be done in \bigO{1}) and find the corresponding job index via binary search (which takes&nbsp;$\bigO{\ln{\jsspJobs}}$).
+For each of the $\jsspJobs*\jsspMachines*$ indices&nbsp;$k$ into the new point&nbsp;$\sespel$, we need to add up the $\jsspJobs$&nbsp;frequencies stored in the model and then draw the random number&nbsp;$R$ (which can be done in&nbsp;$\bigO{1}$) and find the corresponding job index via binary search (which takes&nbsp;$\bigO{\ln{\jsspJobs}}$).
 
 #### Shortcomings and Fix
 
