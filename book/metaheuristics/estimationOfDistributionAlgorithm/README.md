@@ -260,7 +260,7 @@ The situation remains that we cannot perfectly faithfully model and sample the s
 When approaching the end of the sampling of one new point, we are always likely to deviate from the observed job probabilities.
 By randomizing the order in which we visit the indices&nbsp;$k$, which we already do, we try to at least distribute this "unfaithfulness" evenly over the whole length of the solutions in average.
 
-The reader will understand that this chapter is already somewhat complex and we will have to leave it at this n&#239;ve approach.
+The reader will understand that this chapter is already somewhat complex and we will have to leave it at this na&#239;ve approach.
 As stated before, better models and methods exists, e.g., in&nbsp;[@CUML2015KOMMFSPBP].
 The focus of the book, however, is to learn about different algorithms by attacking a problem with them in a more or less ad-hoc way, i.e., by doing what seems to be a reasonable first approach.
 The idea proposed here, to me, seems to be something like that.
@@ -271,7 +271,7 @@ We can now implement our model and we do this in the class `JSSPUMDAModel`.
 The model can be stored in a two-dimensional array of type `long[n*m][n]`.
 Here, we discuss the code for model building and model sampling in [@lst:edaModel:jssp:building; @lst:edaModel:jssp:sampling], respectively.
 
-\repo.listing{lst:edaModel:jssp:building}{The building process of our n&#239;ve model for the JSSP in EDAs.}{java}{src/main/java/aitoa/examples/jssp/JSSPUMDAModel.java}{}{update}
+\repo.listing{lst:edaModel:jssp:building}{The building process of our na&#239;ve model for the JSSP in EDAs.}{java}{src/main/java/aitoa/examples/jssp/JSSPUMDAModel.java}{}{update}
 
 We realize the model building by implementing routine of `IModel.update` (see [@lst:edaModel]) in [@lst:edaModel:jssp:building].
 We first initialize the complete model matrix $M$ to all $1$ values.
@@ -280,7 +280,7 @@ If a job is encountered at an index&nbsp;$k$, we add a value `this.m_base` to th
 While allowing `this.m_base` to be set as a configuration parameter, we use `Integer.MAX_VALUE` by default.
 This means that jobs not encountered at a certain index&nbsp;$k$ in the selected individuals will only be placed there during the sampling process if all other jobs have already been scheduled $\jsspMachines$&nbsp;times.
 
-\repo.listing{lst:edaModel:jssp:sampling}{The sampling process of our n&#239;ve model for the JSSP in EDAs.}{java}{src/main/java/aitoa/examples/jssp/JSSPUMDAModel.java}{}{sampling}
+\repo.listing{lst:edaModel:jssp:sampling}{The sampling process of our na&#239;ve model for the JSSP in EDAs.}{java}{src/main/java/aitoa/examples/jssp/JSSPUMDAModel.java}{}{sampling}
 
 The routine `IModel.sample` is implemented in [@lst:edaModel:jssp:sampling].
 It starts by picking the full set of jobs and permitting $\jsspMachines$&nbsp;occurences for each.
