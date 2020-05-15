@@ -263,4 +263,33 @@ By randomizing the order in which we visit the indices&nbsp;$k$, which we alread
 The reader will understand that this chapter is already somewhat complex and we will have to leave it at this n&#239;ve approach.
 As stated before, better models and methods exists, e.g., in&nbsp;[@CUML2015KOMMFSPBP].
 The focus of the book, however, is to learn about different algorithms by attacking a problem with them in a more or less ad-hoc way, i.e., by doing what seems to be a reasonable first approach.
-The idea proposed here, to me, seems to be something like that.   
+The idea proposed here, to me, seems to be something like that.
+
+#### Implementation
+
+We can now implement our model and we do this in the class `JSSPUMDAModel`.
+The model can be stored in a two-dimensional array of type `long[n*m][n]`.
+Here, we discuss the code for model building and model sampling in [@lst:edaModel:jssp:building; @lst:edaModel:jssp:sampling], respectively.
+
+\repo.listing{lst:edaModel:jssp:building}{The building process of our n&#239;ve model for the JSSP in EDAs.}{java}{src/main/java/aitoa/examples/jssp/JSSPUMDAModel.java}{}{update}
+
+We realize the model building by implementing routine of `IModel.update` (see [@lst:edaModel]) in [@lst:edaModel:jssp:building].
+We first initialize the complete model matrix $M$ to all $1$ values.
+We then process each selected point in the search space from beginning to end.
+If a job is encountered at an index&nbsp;$k$, we add a value `this.m_base` to the corresponding cell of the matrix.
+While allowing `this.m_base` to be set as a configuration parameter, we use `Integer.MAX_VALUE` by default.
+This means that jobs not encountered at a certain index&nbsp;$k$ in the selected individuals will only be placed there during the sampling process if all other jobs have already been scheduled $\jsspMachines$&nbsp;times.
+
+\repo.listing{lst:edaModel:jssp:sampling}{The sampling process of our n&#239;ve model for the JSSP in EDAs.}{java}{src/main/java/aitoa/examples/jssp/JSSPUMDAModel.java}{}{sampling}
+
+The routine `IModel.sample` is implemented in [@lst:edaModel:jssp:sampling].
+It starts by picking the full set of jobs and permitting $\jsspMachines$&nbsp;occurences for each.
+It then shuffles the array of indices.
+Processing this array from front to end then means picking all values for&nbsp;$k$ in a random order.
+For each index&nbsp;$k$, it fills an array `N` with the cumulative sum of the (modified) encounter frequencies of the jobs that are not finished.
+The random number&nbsp;$R$ is then drawn and its location in&nbsp;`N` is determined.
+From this, we know the selected job.
+The job is placed into the new solution and the number of remaining times it can be placed is reduced.
+If the number reaches&nbsp;$0$, the job is removed from the set of selectable jobs.
+This is repeated until the destination point is completed.
+This implements the process discussed in the previous section.
