@@ -156,7 +156,7 @@ Here, job&nbsp;0 was never encountered, job&nbsp;1 and job&nbsp;2 four times, an
 These values are obtained by simply counting how often a given job&nbsp;ID appears at the same index in the $\mu=10$&nbsp;selected solutions.
 The model can be built iteratively in about $\bigO(\mu*\jsspMachines*\jsspJobs)$&nbsp;steps. 
 
-![A clearer illustration of the example for sampling the model in our na&#239;ve EDA one time given in [@fig:jssp_umda_example].](\relative.path{jssp_umda_example.svgz}){#fig:jssp_umda_sampling width=95%}
+![A clearer illustration of the example for sampling the model in our na&#239;ve EDA one time given in [@fig:jssp_umda_example].](\relative.path{jssp_umda_sampling.svgz}){#fig:jssp_umda_sampling width=95%}
 
 An example for sampling one new point in the search space from this model is given in the lower part of [@fig:jssp_umda_example] and illustrated in complete detail in [@fig:jssp_umda_sampling].
 From the model which holds the frequencies of each job for each index&nbsp;$k$, we now want to sample the points of length&nbsp;$\jsspMachines*\jsspJobs$.
@@ -209,3 +209,9 @@ The resulting point&nbsp;$\sespel\in\searchSpace$ is shown at the bottom of [@fi
 Of course, this was just one concrete example.
 Every time we sample a new point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ using our model&nbsp;$M$, the indices&nbsp;$k$ and numbers&nbsp;$R$ would be drawn randomly and probably would be very different.
 But each time, we could hope to obtain results at least somewhat similar but yet slightly different from the $\mu$&nbsp;points that we have selected.
+
+#### Shortcomings
+
+At first glance, it looks as if our approach might be a viable method to build and sample a model for our JSSP scenario.
+But we are unlucky:
+There is a major shortcoming.
