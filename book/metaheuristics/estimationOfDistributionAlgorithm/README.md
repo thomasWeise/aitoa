@@ -154,7 +154,7 @@ This is shown in the first column of the model.
 The second column of the model stands for the jobs seen at index&nbsp;1.
 Here, job&nbsp;0 was never encountered, job&nbsp;1 and job&nbsp;2 four times, and job&nbsp;3 twice.
 These values are obtained by simply counting how often a given job&nbsp;ID appears at the same index in the $\mu=10$&nbsp;selected solutions.
-The model can be built iteratively in about $\bigO(\mu*\jsspMachines*\jsspJobs)$&nbsp;steps. 
+The model can be built iteratively in about $\bigO{\mu*\jsspMachines*\jsspJobs}$&nbsp;steps. 
 
 ![A clearer illustration of the example for sampling the model in our na&#239;ve EDA one time given in [@fig:jssp_umda_example].](\relative.path{jssp_umda_sampling.svgz}){#fig:jssp_umda_sampling width=95%}
 
@@ -162,7 +162,7 @@ An example for sampling one new point in the search space from this model is giv
 From the model which holds the frequencies of each job for each index&nbsp;$k$, we now want to sample the points of length&nbsp;$\jsspMachines*\jsspJobs$.
 In other words, based on the model, we need to decide which job to put at each index.
 The more often a job occurred at a given index in the $\mu$&nbsp;selected points, the more likely we should place it there as well.
-Naturally, we could iterate over all indices from $k=0$ to $k=(\jsspJobs*jsspMachines-1)$ from beginning to end.
+Naturally, we could iterate over all indices from $k=0$ to $k=(\jsspJobs*\jsspMachines-1)$ from beginning to end.
 However, to increase the randomness, we process the indices in a random order.
 
 Initially, the new point is empty.
@@ -177,6 +177,11 @@ We want that the chance to sample job&nbsp;0 at the here should be 0%, the chanc
 This can be done by drawing a random number&nbsp;$R$ uniformly distributed in $0\dots9$.
 If it happens to be&nbsp;0, we pick job&nbsp;1, if it is in $1\dots5$, we pick job&nbsp;2, and if it happens to be in $6\dots9$, we pick job&nbsp;3.
 In our example, $R$ happened to be&nbsp;3, so we set $\arrayIndex{\sespel}{11}=2$.
+
+This can be implemented by writing a cumulative sum of the&nbsp;$\jsspJobs$ frequencies into an array $Q$ of length&nbsp;$\jsspJobs$.
+We would get $Q=(0,1,6,10)$.
+After drawing $R$, we can apply binary search to find the index of the smallest number $r\in Q$ which is larger than $R$.
+Here, since $R=3$, $r=6$ and its zero-based index is $2$, i.e., we chose job&nbsp;2.
 
 In the next step, we randomly choose $k$ from $0\dots 19 \setminus 11$.
 We happen to obtain&nbsp;$k=0$.
@@ -210,8 +215,52 @@ Of course, this was just one concrete example.
 Every time we sample a new point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ using our model&nbsp;$M$, the indices&nbsp;$k$ and numbers&nbsp;$R$ would be drawn randomly and probably would be very different.
 But each time, we could hope to obtain results at least somewhat similar but yet slightly different from the $\mu$&nbsp;points that we have selected.
 
-#### Shortcomings
+The complexity of the model sampling is $\bigO{\jsspJobs*\jsspMachines*(\jsspJobs+\ln{\jsspJobs})}$:
+For each of the $\jsspJobs*\jsspMachines*$ indices&nbsp;$k$ into the new point&nbsp;$\sespel$, we need to add up the $\jsspJobs$&nbsp;frequencies stored in the model and then draw the random number&nbsp;$R$ (which can be done in \bigO{1}) and find the corresponding job index via binary search (which takes&nbsp;$\bigO{\ln{\jsspJobs}}$).
+
+#### Shortcomings and Fix
 
 At first glance, it looks as if our approach might be a viable method to build and sample a model for our JSSP scenario.
 But we are unlucky:
-There is a major shortcoming.
+There is one major shortcoming:
+We might get into a situation where we have to pick a job which should have probability&nbsp;0 in our model, because all other jobs have already been assigned!
+
+Let's take a look at index&nbsp;$k=5$ in [@fig:jssp_umda_example].
+Here, $\arrayIndexx{M}{5}{1}=10$, whereas the measured frequency of all other jobs is zero.
+In other words, our model prescribes that job&nbsp;1 must be placed at index&nbsp;5 into the new point&nbsp;$\sespel$, regardless of whatever other choice we made during the sampling process.
+However, since we proceed randomly, it is entirely possible, however, that index $k=5$ is drawn later during the sampling process and job&nbsp;1 has already been assigned five times.
+
+This situation can always occur if one of the values in&nbsp;$M$ for a given index&nbsp;$k$ is&nbsp;$0$.
+We may always end up in a situation where we cannot finish sampling the new point because of it.
+
+Getting a&nbsp;0 at an index&nbsp;$k$ for a job&nbsp;$\jsspJobIndex$ in the model&nbsp;$M$ also would mean that we *never* place job&nbsp;$\jsspIndex$ again at this index in any future iterations of our algorithm.
+The EDA concept prescribes and alternation between building the model from the $\mu$&nbsp;selected solutions, then sampling a new set of $\lambda$&nbsp;solutions and choosing the $\mu<\lambda$&nbsp;best of them, and then building the model again from these.
+If job&nbsp;$\jsspJobIndex$ is not placed at index&nbsp;$k$ during the sampling process (for whatever reason), then it cannot have a non-zero probability in the next model.
+Thus, it would again not be placed at index&nbsp;$k$ &ndash; and this option would have disappeared forever in the optimization process.
+
+We can combat this problem by changing our model building process a bit.
+When counting, the frequencies of the jobs for a given index&nbsp;$k$ in the $\mu$&nbsp;selected points, we do not start at&nbsp;0 but at&nbsp;1.
+This way, each job will always have non-zero probability.
+Of course, for a small value of&nbsp;$\mu$, this would skew our distributions quite a bit towards randomness.
+The solution is to not add&nbsp;1 for each encounter of a job, but a very large number, say 1'000'000.
+
+At index&nbsp;$k=5$, we would then have $\arrayIndexx{M}{5}{1}=10*1'000'000$ and $\arrayIndexx{M}{5}{\jsspJobIndex}=1$ for&nbsp;$\jsspJobIndex\in\{0,2,3\}$.
+In other words, all jobs have non-zero probability, but if we can place job&nbsp;1 at index&nbsp;$k=5$, then we will most likely do so.
+
+The model sampling does not need to be changed in any way:
+For each index&nbsp;$k$, we first sum up all the $\jsspJobs$&nbsp;numbers in the model and obtain a number&nbsp;$Z$.
+For index&nbsp;$k=5$, we would obtain $Z=1'000'003$.
+Then we sample a random number&nbsp;$R$ uniformly distributed from&nbsp;$0\dotsZ-1$.
+At index&nbsp;5, if $R=0$, we would pick job&nbsp;0.
+If $R\in 1\dots1'000'000$, we would pick job&nbsp;1.
+If $R=1'000'001$, we pick job&nbsp;2 and if $R=1'000'002$, we pick job&nbsp;3.
+The binary search does not take any longer if the numbers we search are larger, so the problem is solved without causing any harm.
+
+The situation remains that we cannot perfectly faithfully model and sample the selected points.
+When approaching the end of the sampling of one new point, we are always likely to deviate from the observed job probabilities.
+By randomizing the order in which we visit the indices&nbsp;$k$, which we already do, we try to at least distribute this "unfaithfulness" evenly over the whole length of the solutions in average.
+
+The reader will understand that this chapter is already somewhat complex and we will have to leave it at this n&#239;ve approach.
+As stated before, better models and methods exists, e.g., in&nbsp;[@CUML2015KOMMFSPBP].
+The focus of the book, however, is to learn about different algorithms by attacking a problem with them in a more or less ad-hoc way, i.e., by doing what seems to be a reasonable first approach.
+The idea proposed here, to me, seems to be something like that.   
