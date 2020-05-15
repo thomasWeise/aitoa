@@ -250,7 +250,7 @@ In other words, all jobs have non-zero probability, but if we can place job&nbsp
 The model sampling does not need to be changed in any way:
 For each index&nbsp;$k$, we first sum up all the $\jsspJobs$&nbsp;numbers in the model and obtain a number&nbsp;$Z$.
 For index&nbsp;$k=5$, we would obtain $Z=1'000'003$.
-Then we sample a random number&nbsp;$R$ uniformly distributed from&nbsp;$0\dotsZ-1$.
+Then we sample a random number&nbsp;$R$ uniformly distributed from&nbsp;$0\dots Z-1$.
 At index&nbsp;5, if $R=0$, we would pick job&nbsp;0.
 If $R\in 1\dots1'000'000$, we would pick job&nbsp;1.
 If $R=1'000'001$, we pick job&nbsp;2 and if $R=1'000'002$, we pick job&nbsp;3.
