@@ -233,7 +233,7 @@ However, since we proceed randomly, it is entirely possible, however, that index
 This situation can always occur if one of the values in&nbsp;$M$ for a given index&nbsp;$k$ is&nbsp;$0$.
 We may always end up in a situation where we cannot finish sampling the new point because of it.
 
-Getting a&nbsp;0 at an index&nbsp;$k$ for a job&nbsp;$\jsspJobIndex$ in the model&nbsp;$M$ also would mean that we *never* place job&nbsp;$\jsspIndex$ again at this index in any future iterations of our algorithm.
+Getting a&nbsp;0 at an index&nbsp;$k$ for a job&nbsp;$\jsspJobIndex$ in the model&nbsp;$M$ also would mean that we *never* place job&nbsp;$\jsspJobIndex$ again at this index in any future iterations of our algorithm.
 The EDA concept prescribes and alternation between building the model from the $\mu$&nbsp;selected solutions, then sampling a new set of $\lambda$&nbsp;solutions and choosing the $\mu<\lambda$&nbsp;best of them, and then building the model again from these.
 If job&nbsp;$\jsspJobIndex$ is not placed at index&nbsp;$k$ during the sampling process (for whatever reason), then it cannot have a non-zero probability in the next model.
 Thus, it would again not be placed at index&nbsp;$k$ &ndash; and this option would have disappeared forever in the optimization process.
