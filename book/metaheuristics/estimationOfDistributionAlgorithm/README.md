@@ -136,9 +136,9 @@ While this indeed a na&#239;ve method with shortcomings (which we will discuss l
 
 #### An Example
  
-We illustrate the model update and sampling process by using our `demo` instance from [@sec:jsspDemoInstance] in [@fig:jssp_umda_example].
+We illustrate the model update and sampling process by using our `demo` instance from [@sec:jsspDemoInstance] in [@fig:jssp_umda_example; @fig:jssp_umda_sampling].
 
-![An example of how the model update and sampling in our na&#239;ve EDA could look like on the `demo` instance from [@sec:jsspDemoInstance]; we set $\mu=10$ and 1&nbsp;new point&nbsp;$\sespel$ is sampled.](\relative.path{jssp_umda_example.svgz}){#fig:jssp_umda_example width=95%}
+![An example of how the model update and sampling in our na&#239;ve EDA could look like on the `demo` instance from [@sec:jsspDemoInstance]; we set $\mu=10$ and 1&nbsp;new point&nbsp;$\sespel$ is sampled. See also [@fig:jssp_umda_sampling].](\relative.path{jssp_umda_example.svgz}){#fig:jssp_umda_example width=95%}
 
 The `demo` instance has $\jsspJobs=4$&nbsp;jobs that are processed on $\jsspMachines=5$&nbsp;machines.
 The points in the search space thus have $\jsspMachines*\jsspJobs=20$&nbsp;decision variables.
@@ -155,3 +155,57 @@ The second column of the model stands for the jobs seen at index&nbsp;1.
 Here, job&nbsp;0 was never encountered, job&nbsp;1 and job&nbsp;2 four times, and job&nbsp;3 twice.
 These values are obtained by simply counting how often a given job&nbsp;ID appears at the same index in the $\mu=10$&nbsp;selected solutions.
 The model can be built iteratively in about $\bigO(\mu*\jsspMachines*\jsspJobs)$&nbsp;steps. 
+
+![A clearer illustration of the example for sampling the model in our na&#239;ve EDA one time given in [@fig:jssp_umda_example].](\relative.path{jssp_umda_example.svgz}){#fig:jssp_umda_sampling width=95%}
+
+An example for sampling one new point in the search space from this model is given in the lower part of [@fig:jssp_umda_example] and illustrated in complete detail in [@fig:jssp_umda_sampling].
+From the model which holds the frequencies of each job for each index&nbsp;$k$, we now want to sample the points of length&nbsp;$\jsspMachines*\jsspJobs$.
+In other words, based on the model, we need to decide which job to put at each index.
+The more often a job occurred at a given index in the $\mu$&nbsp;selected points, the more likely we should place it there as well.
+Naturally, we could iterate over all indices from $k=0$ to $k=(\jsspJobs*jsspMachines-1)$ from beginning to end.
+However, to increase the randomness, we process the indices in a random order.
+
+Initially, the new point is empty.
+In each step of the sampling process, one index&nbsp;$k$ is chosen uniformly at random from the not-yet-processed ones.
+In our example, we first randomly picked&nbsp;$k=11$.
+In the model&nbsp;$M$, we have $\arrayIndexx{M}{11}{0}=0$, because job&nbsp;0 never occurred at index&nbsp;11 in any of the $\mu=10$&nbsp;solutions used for building the model.
+Because job&nbsp;1 was found at $k=11$ exactly once, $\arrayIndex{M}{11}{1}=1$.
+Since job&nbsp;2 was found at $k=11$ 5&nbsp;times, $\arrayIndex{M}{11}{2}=5$.
+And $\arrayIndex{M}{11}{3}=4$ because job&nbsp;3 was found four times at index&nbsp;11 in the selected individuals.
+We find that $(\sum_{\jsspJobIndex=0}^3 \arrayIndex{M}{11}{\jsspJobIndex})=10=\mu$.
+We want that the chance to sample job&nbsp;0 at the here should be 0%, the chance to choose job&nbsp;1 should be 10%, the chance to pick job&nbsp;2 should be 50%, and, finally, job&nbsp;3 should be picked with 40% probability.
+This can be done by drawing a random number&nbsp;$R$ uniformly distributed in $0\dots9$.
+If it happens to be&nbsp;0, we pick job&nbsp;1, if it is in $1\dots5$, we pick job&nbsp;2, and if it happens to be in $6\dots9$, we pick job&nbsp;3.
+In our example, $R$ happened to be&nbsp;3, so we set $\arrayIndex{\sespel}{11}=2$.
+
+In the next step, we randomly choose $k$ from $0\dots 19 \setminus 11$.
+We happen to obtain&nbsp;$k=0$.
+We find $\arrayIndexx{M}{0}{0}=2$, $\arrayIndexx{M}{0}{1}=7$, $\arrayIndexx{M}{0}{2}=0$, and $\arrayIndexx{M}{0}{3}=1$.
+We again draw a random number&nbsp;$R$ from $0\dots 9$, which this time happens to be&nbsp;6.
+A value $R\in\{0,1\}$ would have led to choosing job&nbsp;0, but $R\in 2\dots 8$ leads us to pick job&nbsp;1 for index&nbsp;$k=1$ and we set $\arrayIndex{\sespel}{0}=1$.
+
+The process is repeated an in step&nbsp;3, we randomly choose $k$ from $0\dots 19 \setminus \{11,0\}$.
+We happen to pick&nbsp;$k=7$.
+Only two different jobs were found in the selected individuals, namely nine times job&nbsp;0 and once job&nbsp;2.
+We draw a random number $R$ from $0\dots 9$ again and obtained&nbsp;$R=6$, which leads us to set $\arrayIndex{\sespel}{7}=0$.
+
+We repeat this again and again.
+At step&nbsp;9, we this way chose job&nbsp;2 for the fifth time.
+Since there are $\jsspMachines=5$ machines, this means that job&nbsp;2, placed at indices 11, 2, 12, 3, and now&nbsp;2, is completed and cannot be chosen anymore &ndash; regardless what the model suggests.
+For instance, in step&nbsp;11 (see [@fig:jssp_umda_sampling]), we chose $k=4$.
+Job&nbsp;2 did occur four times at index&nbsp;4 in the selected individuals!
+But since we already assigned it five times, it cannot be chosen here anymore.
+Thus, we cannot use the probabilities 30%, 40%, and 30% for jobs&nbsp;1, 2, and&nbsp;3 as suggested by the model.
+We have to deduce the already completed job&nbsp; and raise the probabilities of jobs&nbsp;1 and&nbsp;3 to 50% each accordingly.
+We can still pick the job exactly as before, but instead using a random number&nbsp;$R$ from $0\dots 9$, we use one from $0\dots 5$ (because $3+3=6$).
+As it turned out randomly to be $R=2$, it falls in the interval $0\dots 2$ where we would choose job&nbsp;1.
+Hence, we set $\arrayIndex{\sespel}{4}=1$.
+
+We continue this process and complete assigning job&nbsp;0 in step&nbsp;17, after which only either job&nbsp;1 or job&nbsp;3 remain as choices.
+Job&nbsp;3 is assigned for the fifth time in step&nbsp;18, after which only job&nbsp;1 remains.
+After twenty steps, the sampling is complete.
+The resulting point&nbsp;$\sespel\in\searchSpace$ is shown at the bottom of [@fig:jssp_umda_example].
+
+Of course, this was just one concrete example.
+Every time we sample a new point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ using our model&nbsp;$M$, the indices&nbsp;$k$ and numbers&nbsp;$R$ would be drawn randomly and probably would be very different.
+But each time, we could hope to obtain results at least somewhat similar but yet slightly different from the $\mu$&nbsp;points that we have selected.
