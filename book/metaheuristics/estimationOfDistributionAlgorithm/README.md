@@ -96,7 +96,7 @@ We can update the model by passing $\mu$&nbsp;samples from the search space `X` 
 The source for these samples can be any `Java` collection (all of which implement `Iterable`).
 In our example in the previous section, the `update` method could iterate over the `double[2]` values provided to it and compute, for both of their dimensions, the means and standard deviations.
 
-Then, we can call `sample` $\lambda$ times to, well, sample the model and generate a new points in the search space.
+Then, we can call `apply` $\lambda$ times to sample the model and generate a new points in the search space.
 This could be implemented for our example by generating the two normally distributed random numbers, one for each dimension, based on the means and standard deviations stored in the model.
 
 It can be seen that this interface is rather general.
@@ -282,7 +282,7 @@ This means that jobs not encountered at a certain index&nbsp;$k$ in the selected
 
 \repo.listing{lst:edaModel:jssp:sampling}{The sampling process of our na&#239;ve model for the JSSP in EDAs.}{java}{src/main/java/aitoa/examples/jssp/JSSPUMDAModel.java}{}{sampling}
 
-The routine `IModel.sample` is implemented in [@lst:edaModel:jssp:sampling].
+The routine `IModel.apply` is implemented in [@lst:edaModel:jssp:sampling].
 It starts by picking the full set of jobs and permitting $\jsspMachines$&nbsp;occurences for each.
 It then shuffles the array of indices.
 Processing this array from front to end then means picking all values for&nbsp;$k$ in a random order.
