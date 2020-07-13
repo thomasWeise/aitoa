@@ -279,7 +279,7 @@ The idea proposed here, to me, seems to be something like that.
 #### Implementation
 
 We can now implement our model and we do this in the class `JSSPUMDAModel`.
-We call it `UMDA` model because it the probability of choosing one value for a given decision variable assigned by the model only depends on the values of only that variable in the solutions used for building the model &ndash; and the first EDA doing something like that was the xxx Marginal Distribution Algorithm (UMDA).  
+We call it `UMDA` model because it the probability of choosing one value for a given decision variable assigned by the model only depends on the values of only that variable in the solutions used for building the model &ndash; and the first EDA doing something like that was the Univariate Marginal Distribution Algorithm (UMDA)&nbsp;[@MP1996FROGTTEODIBP; @MM2002MAOEAFO].  
 The model can be stored in a two-dimensional array of type `long[n*m][n]`.
 Here, we discuss the code for model building and model sampling in [@lst:edaModel:jssp:building; @lst:edaModel:jssp:sampling], respectively.
 
