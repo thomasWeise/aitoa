@@ -336,13 +336,13 @@ For instance the 1'901'332&nbsp;FEs within 93&nbsp;seconds of `umda_3_32768` on 
 On `swv15`, the hill climber converges to its final result within 89&nbsp;seconds, during which it performs 10'783'296&nbsp;FEs, i.e., 12'1000&nbsp;FEs/s.
 Here, `umdac_2+64` is 13&nbsp;times slower and performs 859'250&nbsp;FEs in 94&nbsp;seconds, i.e., 9140&nbsp;FEs/s.
 
-![The median of the progress of the&nbsp;`ea_32768_nswap`, `eac_4+5%_nswap`, `umda_32768`, and&nbsp;`umdac_2+64` algorithms over **time**, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_edac_log.svgz}){#fig:jssp_progress_edac_log width=84%}
-
 Let us therefore compare two perspectives on the progress that EDAs make with what our EAs are doing.
 In [@fig:jssp_progress_edac_log], we plot the progress over (log-scaled) time in milliseconds as we did before.
 This perspective fits to our goal, to obtain good solutions for the JSSP within three minutes.
 The `umda_32768` behaves somewhat similar to the `ea_32768_nswap`, which also creates $\lambda=32768$ new solutions in each generations, but is generally slower and finishes at worse results.
 The gap between `umdac_2+64` and `eac_4+5%_nswap`, which both apply clearing, is much wider.
+
+![The median of the progress of the&nbsp;`ea_32768_nswap`, `eac_4+5%_nswap`, `umda_32768`, and&nbsp;`umdac_2+64` algorithms over **time**, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_edac_log.svgz}){#fig:jssp_progress_edac_log width=84%}
 
 ![The median of the progress of the&nbsp;`ea_32768_nswap`, `eac_4+5%_nswap`, `umda_32768`, and&nbsp;`umdac_2+64` algorithms over **the consumed FEs**, i.e., the current best solution found by each of the&nbsp;101 runs at each point of FE (over a logarithmically scaled time FE). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_edac_fes_log.svgz}){#fig:jssp_progress_edac_fes_log width=84%}
 
@@ -404,7 +404,7 @@ There are at least two aspects that we did not cover here:
 
 One aspect that we did not discuss here is that our model&nbsp;$M$ is actually not *updated* but *overwritten* in each generation.
 Instead, we could also combine the new information&nbsp;$M_{new}$ with the current model&nbsp;$M_{old}$ the model&nbsp;$M$ in.
-The UMDA implementation in&nbsp;[@MP1996FROGTTEODIBP] and the equivalent Population-based Incremental Learning Algorithm (PBIL)&nbsp;[@B1994PBILAMFIGSBFOACL; @BC1995RTGFTSGA], for instance, do this by simply computing $M\leftarrow \delta M_{new} + (1-\delta)M_{old}$, where $\delta\in(0,1]$&nbsp;is a learning rate.
+The UMDA implementation in&nbsp;[@MP1996FROGTTEODIBP] and the equivalent Population-based Incremental Learning Algorithm (PBIL)&nbsp;[@B1994PBILAMFIGSBFOACL; @BC1995RTGFTSGA], for instance, do this by simply setting $M=\delta M_{new} + (1-\delta)M_{old}$, where $\delta\in(0,1]$&nbsp;is a learning rate.
 Another interesting approach to such iterative learning is the Compact Genetic Algorithm (cGA)&nbsp;[@HLG1999TCGA].
 
 The second aspect is that we treated all decision variables as if they were independent in our model.
