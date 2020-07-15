@@ -6,9 +6,9 @@ We tried to somehow "navigate" from one or multiple such points to better points
 EDAs instead look at the bigger picture and try to discover and exploit the structure of the space&nbsp;$\searchSpace$ itself.
 The ask the questions
 "Can we somehow learn which areas in&nbsp;$\searchSpace$ are promising?
-Can we learn how good solutions look like?" 
+Can we learn how good solutions look like?"
 
-### The Algorithm Idea
+### The Algorithm
 
 How do good solutions look like?
 It is unlikely that good (or even optimal) solutions are uniformly distributed over the search space.
@@ -51,7 +51,7 @@ Maybe it is easier to understand how this algorithm works if we look at the simp
 Imagine you are supposed to find the minimum of an objective function&nbsp;$f$ defined over a two-dimensional sub-space space of the real numbers, i.e., $\solutionSpace\subset\realNumbers^2$.
 For the sake of simplicity, let's assume the search and solution space are the same ($\searchSpace=\solutionSpace$) and its two decision variables be&nbsp;$x1$ and&nbsp;$x2$.
 The objective function is illustrated in the top-left corner of [@fig:real_coded_umda_example].
-It has a nice basin with good solutions, but also is a bit rugged.  
+It has a nice basin with good solutions, but also is a bit rugged.
 
 ![An example of how we could apply an EDA to an objective function&nbsp;$f$ defined over a two-dimensional search/solution space. In each iteration $i>1$, 101&nbsp;points are sampled and the best 41&nbsp;are used to derive a model&nbsp;$M$, which is defined as a normal distribution parameterized by the arithmetic means and standard devisions of the selected points along the two axes.](\relative.path{real_coded_umda_example.svgz}){#fig:real_coded_umda_example width=95%}
 
@@ -84,7 +84,7 @@ We could have updated the model in a different way, e.g., combine the previous m
 Also we treated the two dimensions of our search space as independent, which may not be the case in many scenarios.
 And of course, for each search space, we may need to use a completely different type of model.
 
-#### An Implementation
+### The Implementation
 
 What we first need in order to implement EDAs is an interface to represent the new structural component: a model.
 
@@ -93,7 +93,7 @@ What we first need in order to implement EDAs is an interface to represent the n
 [@lst:edaModel] gives an idea how a very general interface for the required new functionality could look like.
 The search space&nbsp;$\searchSpace$ is represented by the generic parameter&nbsp;`X`.
 In our previous example, it could be equivalent the `double[2]`.
-The model used in our example would internally store four `double` values, namely the means and standard deviations along both dimensions. 
+The model used in our example would internally store four `double` values, namely the means and standard deviations along both dimensions.
 
 We can update the model by passing $\mu$&nbsp;samples from the search space `X` to the `update` method.
 The source for these samples can be any `Java` collection (all of which implement `Iterable`).
@@ -108,7 +108,7 @@ In order to cover models that are continuously updated and might need a certain 
 Before beginning an optimization run, the EDA should call the method `initialize` of the model.
 The model should then in an unbiased, initial state.
 Before updating the model, a call to `minimumSamplesNeededForUpdate` returns the minimum number of samples required for a meaningful update.
-If the number of selected individuals falls below this threshold, the algorithm could terminate or restart.  
+If the number of selected individuals falls below this threshold, the algorithm could terminate or restart.
 
 \repo.listing{lst:EDA}{An excerpt of the implementation of the Estimation of Distribution Algorithm.}{java}{src/main/java/aitoa/algorithms/EDA.java}{}{relevant}
 
@@ -120,9 +120,9 @@ In this implementation excerpt, we have omitted the checks to `minimumSamplesNee
 We now want to apply the EDA to our Job Shop Scheduling Problem.
 Our search space represents solutions for the JSSP as a permutation of a multi-set, where each of the $\jsspJobs$&nbsp;jobs occurs exactly $\jsspMachines$&nbsp;times, once for each machine.
 Unfortunately, this representation does not lend itself for stochastic modeling at all &ndash; we need a probability distribution over such permutations.
-It should be said that there exist clever solutions&nbsp;[@CUML2015KOMMFSPBP] for this problem, but for our introductory book, they may be too complex.
+It should be said that there exist clever solutions&nbsp;[@CUML2015KOMMFSPBP] for this problem, but for our introductory book, they may be too complicated.
 
-#### The Na&#239;ve Idea
+#### A First and Na&#239;ve Idea
 
 We will follow a *very* na&#239;ve approach to apply the EDA idea to the JSSP.
 The points in the search space are permutations with repetitions, integer vectors of length&nbsp;$\jsspJobs*\jsspMachines$.
@@ -138,8 +138,8 @@ In other words, if a job&nbsp;$\jsspJobIndex$ occurs often at index&nbsp;$k$ in 
 Of course, we will need to adher to the constraint that no job can occur more then $\jsspMachines$&nbsp;times.
 While this indeed a na&#239;ve method with several shortcomings (which we will discuss later), it should work "in principle".
 
-#### An Example
- 
+#### An Example of the Na&#239;ve Idea {#sec:eda:umda:jssp:example}
+
 We illustrate the idea of this model update and sampling process by using our `demo` instance from [@sec:jsspDemoInstance] in [@fig:jssp_umda_example; @fig:jssp_umda_sampling].
 
 ![An example of how the model update and sampling in our na&#239;ve EDA could look like on the `demo` instance from [@sec:jsspDemoInstance]; we set $\mu=10$ and 1&nbsp;new point&nbsp;$\sespel$ is sampled. See also [@fig:jssp_umda_sampling].](\relative.path{jssp_umda_example.svgz}){#fig:jssp_umda_example width=95%}
@@ -158,7 +158,7 @@ This is shown in the first column of the model.
 The second column of the model stands for the jobs seen at index&nbsp;1.
 Here, job&nbsp;0 was never encountered, job&nbsp;1 and job&nbsp;2 four times, and job&nbsp;3 twice.
 These values are obtained by simply counting how often a given job&nbsp;ID appears at the same index in the $\mu=10$&nbsp;selected solutions.
-The model can be built iteratively in about $\bigO{\mu*\jsspMachines*\jsspJobs}$&nbsp;steps. 
+The model can be built iteratively in about $\bigO{\mu*\jsspMachines*\jsspJobs}$&nbsp;steps.
 
 ![A clearer illustration of the example for sampling the model in our na&#239;ve EDA one time given in [@fig:jssp_umda_example].](\relative.path{jssp_umda_sampling.svgz}){#fig:jssp_umda_sampling width=95%}
 
@@ -219,10 +219,10 @@ Of course, this was just one concrete example.
 Every time we sample a new point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ using our model&nbsp;$M$, the indices&nbsp;$k$ and numbers&nbsp;$R$ would be drawn randomly and probably would be very different.
 But each time, we could hope to obtain results at least somewhat similar but yet slightly different from the $\mu$&nbsp;points that we have selected.
 
-The complexity of the model sampling is $\bigO{\jsspJobs*\jsspMachines*(\jsspJobs+\ln{\jsspJobs})}$:
+The complexity of the model sampling is&nbsp;$\bigO{\jsspJobs*\jsspMachines*(\jsspJobs+\ln{\jsspJobs})}$:
 For each of the $\jsspJobs*\jsspMachines*$ indices&nbsp;$k$ into the new point&nbsp;$\sespel$, we need to add up the $\jsspJobs$&nbsp;frequencies stored in the model and then draw the random number&nbsp;$R$ (which can be done in&nbsp;$\bigO{1}$) and find the corresponding job index via binary search (which takes&nbsp;$\bigO{\ln{\jsspJobs}}$).
 
-#### Shortcomings
+#### Shortcomings of the Na&#239;ve Idea
 
 At first glance, it looks as if our approach might be a viable method to build and sample a model for our JSSP scenario.
 But we are unlucky:
@@ -276,10 +276,10 @@ As stated before, better models and methods exists, e.g., in&nbsp;[@CUML2015KOMM
 The focus of the book, however, is to learn about different algorithms by attacking a problem with them in a more or less ad-hoc way, i.e., by doing what seems to be a reasonable first approach.
 The idea proposed here, to me, seems to be something like that.
 
-#### Implementation
+#### Implementation of the Na&#239;ve Idea
 
 We can now implement our model and we do this in the class `JSSPUMDAModel`.
-We call it `UMDA` model because it the probability of choosing one value for a given decision variable assigned by the model only depends on the values of only that variable in the solutions used for building the model &ndash; and the first EDA doing something like that was the Univariate Marginal Distribution Algorithm (UMDA)&nbsp;[@MP1996FROGTTEODIBP; @MM2002MAOEAFO].  
+We call it `UMDA` model because it the probability of choosing one value for a given decision variable assigned by the model only depends on the values of only that variable in the solutions used for building the model &ndash; and the first EDA doing something like that was the Univariate Marginal Distribution Algorithm (UMDA)&nbsp;[@MP1996FROGTTEODIBP; @MM2002MAOEAFO].
 The model can be stored in a two-dimensional array of type `long[n*m][n]`.
 Here, we discuss the code for model building and model sampling in [@lst:edaModel:jssp:building; @lst:edaModel:jssp:sampling], respectively.
 
@@ -305,3 +305,113 @@ The job is placed into the new solution and the number of remaining times it can
 If the number reaches&nbsp;$0$, the job is removed from the set of selectable jobs.
 This is repeated until the destination point is completed.
 This implements the process discussed in the previous section.
+
+### The Right Setup
+
+We again do a similar setup experiment as we did for the EA in [@sec:eaNoCrSetup] to configure our EDA.
+The setup `umda_3_32768`, which, in each iteration, samples $\lambda=32768$&nbsp;new solutions and uses the $\mu=3$&nbsp;best of them to update the model, seems to yield the best performance in average.
+We also try apply clearing in the objective space discussed in [@sec:eaClearingInObjectiveSpace] in the EDA.
+Clearing removes candidate solutions with duplicate makespan value before the model update.
+This is done by simply applying the routine specified in [@lst:UtilsClearing] before the selection step into our algorithm.
+The implementation of the `EDAWithClearing` thus is almost the same as the basic `EDA` implementation in [@lst:EDA] and both are given in the online repository.
+After another setup experiment, we identify the best setup of our UMDA-EDA with clearing for the JSSP.
+In each iteration, it samples $\lambda=64$&nbsp;new candidate solutions and keeps the $\mu=2$&nbsp;unique best of them.
+We will call this setup `umdac_2+64`.
+
+### Results on the JSSP {#sec:eda:jssp:results}
+
+In [@tbl:jssp_edac_results], we compare the performance on the JSSP of both EDA variants to the best stochastic hill climber with restarts, namely `hcr_65536_nswap`.
+We can find that the UMDA without clearing is generally worse than the hill climber, while the `umdac_2+64` with clearing can perform somewhat better on `abz7` and `yn4`.
+On `swv15`, both algorithms perform particularly badly.
+The performance of our adaptation of the EDA concept towards the JSSP is not very satisfying.
+
+\relative.input{jssp_edac_results.md}
+
+: The results of the EDAs `umda_3_32768` (without clearing) and `umdac_2+64` (with clearing) in comparison to `hcr_65536_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_edac_results}
+
+In [@tbl:jssp_edac_results] we make an interesting observation:
+It seems that the EDAs have a much lower median number of FEs *med(FEs)* until discovering their end result compared to the hill climber, while the time *med(t)* they need for these FEs does not tend to be lower at all.
+The time that our EDA needs to create and evaluate one candidate solution, to perform one objective function evaluation (one&nbsp;FE), is higher compared to the hill climber.
+For instance the 1'901'332&nbsp;FEs within 93&nbsp;seconds of `umda_3_32768` on `abz7` equal roughly 20'450&nbsp;FEs/s, whereas the hill climber `hcr_65536_nswap` can generate 21'189'358&nbsp;candidate solutions within 96&nbsp;seconds, i.e., achieves 220'700&nbsp;FEs/s on the same problem, which is roughly ten times as much.
+On `swv15`, the hill climber converges to its final result within 89&nbsp;seconds, during which it performs 10'783'296&nbsp;FEs, i.e., 12'1000&nbsp;FEs/s.
+Here, `umdac_2+64` is 13&nbsp;times slower and performs 859'250&nbsp;FEs in 94&nbsp;seconds, i.e., 9140&nbsp;FEs/s.
+
+![The median of the progress of the&nbsp;`ea_32768_nswap`, `eac_4+5%_nswap`, `umda_32768`, and&nbsp;`umdac_2+64` algorithms over **time**, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_edac_log.svgz}){#fig:jssp_progress_edac_log width=84%}
+
+Let us therefore compare two perspectives on the progress that EDAs make with what our EAs are doing.
+In [@fig:jssp_progress_edac_log], we plot the progress over (log-scaled) time in milliseconds as we did before.
+This perspective fits to our goal, to obtain good solutions for the JSSP within three minutes.
+The `umda_32768` behaves somewhat similar to the `ea_32768_nswap`, which also creates $\lambda=32768$ new solutions in each generations, but is generally slower and finishes at worse results.
+The gap between `umdac_2+64` and `eac_4+5%_nswap`, which both apply clearing, is much wider.
+
+![The median of the progress of the&nbsp;`ea_32768_nswap`, `eac_4+5%_nswap`, `umda_32768`, and&nbsp;`umdac_2+64` algorithms over **the consumed FEs**, i.e., the current best solution found by each of the&nbsp;101 runs at each point of FE (over a logarithmically scaled time FE). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_edac_fes_log.svgz}){#fig:jssp_progress_edac_fes_log width=84%}
+
+Now we take a look at the same diagrams, but instead of the actual consumed clock time, we use the number of generated solutions as horizontal time axis.
+This basically shows us the progress that the algorithms make per call to the objective function, i.e., per&nbsp;FE.
+This perspective is very useful in many theoretical scenarios and also justified in scenarios where the FEs take a very long time (see later in [@sec:comparing:time:FEs]).
+
+[@fig:jssp_progress_edac_fes_log] shows a very different picture.
+`umda_32768` actually has a better median solution quality than `ea_32768_nswap`, but it stops much earlier and then is overtaken.
+Only on `la24`, the plain EA overtakes the plain EDA before the EDA stops.
+With the exception of instance `swv15`, the gap between `umdac_2+64` and `eac_4+5%_nswap` also becomes smaller.
+
+Of course we cannot really know whether the EDA would eventually reach better solutions than the EA if it perform the same number of FEs.
+We could find this out with more experiments, maybe with runtime limits of 30&nbsp;minutes instead of three.
+We will not do this here, as our scenario has a hard time limit.
+
+What we found out is still interesting:
+Even the trivial, na&#239;ve model for the JSSP seems to "work," despite its shortcomings.
+The biggest problem here seems to be the algorithmic time complexity of the model sampling process.
+The `1swap` or `nswap` operators in the EA copy the original point in the search space&nbsp;$\searchSpace$ and then swap one or multiple jobs.
+To generate a new point in&nbsp;$\searchSpace$, they thus require a number of algorithm steps roughly proportional to&nbsp;$\jsspJobs*\jsspMachines$.
+As discussed at the end of [@sec:eda:umda:jssp:example], our UMDA model needs&nbsp;$\bigO{\jsspJobs*\jsspMachines*(\jsspJobs+\ln{\jsspJobs})}$ steps for this.
+The higher complexity of sampling the search space here clearly shows.
+
+### Summary
+
+In this chapter, we have discussed the concept of Estimation of Distribution Algorithms (EDAs): the idea of learning statistical models of good solutions.
+Models can be probability distributions, which assign higher probability densities to areas where good previously observed solutions were located.
+In each "generation", we can sample $\lambda$&nbsp;points in the search space using this model/distribution and then use the best $\mu$&nbsp;of these samples to update the model.
+What we hopefully gain are two things: better solutions, but also a better model, i.e., an abstract representation of what good solutions look like in general.
+
+This concept lends itself to many domains.
+Already in high school we learned probability distributions over real numbers.
+It is very straightforward to adapt the idea of EDAs to subsets of the $n$-dimensional Euclidean space, which we did as introductory example in [@fig:real_coded_umda_example].
+The concept also sends itself if the our search space are vectors of bits, which is the domain where the original Univariate Marginal Distribution Algorithm (UMDA)&nbsp;[@MP1996FROGTTEODIBP; @MM2002MAOEAFO] was applied.
+
+Unfortunately for the author of the book, probability distributions over permutations are a much harder nut to crack.
+As mentioned before, we tried a very na&#239;ve approach to this with several flaws &ndash; but we got it to work.
+Some of the flaws of our approach could also be fixed:
+The fact that the model does not distinguish between the first and second occurrence of a job ID can be fixed by using unique operation IDs instead of job IDs, i.e., using $\jsspMachines*\jsspJobs$ unique values for each location in the model instead of only $\jsspJobs$ ones.
+I tried this out, but it does not lead to tangibly better results within our three minute budget.
+Most likely because it makes the sampling of new solutions even slower and thus decreases the total number of search steps we can do in total even more&hellip;
+
+And this brings us two unexpected lessons to learn from this section:
+First, algorithmic time complexity does matter.
+Well, every computer scientist knows this.
+Professors do not bother undergraduate students with this topic for fun.
+But here we are reminded that efficiently implementing algorithms is important, also in the field of randomized metaheuristics.
+If we were to invent a very strong optimization approach but would not be able to implement it with low complexity, then it could be infeasible in practice.
+
+The second lesson is that comparing algorithm performance using FEs could yield different results from comparing them based on clock time.
+Both have different advantages which we discuss in detail in [@sec:comparing:time:FEs], but we need to always be clear which one is more important in our scenario.
+In our scenario here, clock time is more important.
+
+So was this all what is to say about EDAs?
+No.
+The EDAs we discussed here are very simple.
+There are at least two aspects that we did not cover here:
+
+One aspect that we did not discuss here is that our model&nbsp;$M$ is actually not *updated* but *overwritten* in each generation.
+Instead, we could also combine the new information&nbsp;$M_{new}$ with the current model&nbsp;$M_{old}$ the model&nbsp;$M$ in.
+The UMDA implementation in&nbsp;[@MP1996FROGTTEODIBP] and the equivalent Population-based Incremental Learning Algorithm (PBIL)&nbsp;[@B1994PBILAMFIGSBFOACL; @BC1995RTGFTSGA], for instance, do this by simply computing $M\leftarrow \delta M_{new} + (1-\delta)M_{old}$, where $\delta\in(0,1]$&nbsp;is a learning rate.
+Another interesting approach to such iterative learning is the Compact Genetic Algorithm (cGA)&nbsp;[@HLG1999TCGA].
+
+The second aspect is that we treated all decision variables as if they were independent in our model.
+This is where the *univariate* in UMDA comes from.
+However, variables are hardly independent in practical problems (see also [@sec:epistasis]).
+For instance, the decision whether I should *next* put job&nbsp;1 on machine&nbsp;2 or job&nbsp;3 in the JSSP will likely depend on which job I assigned to which machine *just now*.
+Such inter-dependencies between decision variables can be represented by *multivariate* distributions.
+Examples for algorithms trying to construct such models are the Bayesian Optimization Algorithm (BOA)&nbsp;[@PGCP1999BTBOA; @PGCP2000LPDEABN] for bit strings.
+The Covariance Matrix Adaptation Evolutionary Strategy (CMA-ES)&nbsp;[@HMK2003RTTCOTDESWCMAC; @AH2005ARCESWIPS] learns the relationship between pairs of variables for continuous problems in the Euclidean space.
+It is basically the state-of-the-art for complicated numerical optimization problems.

@@ -1,4 +1,4 @@
-## Epistasis: One Root of the Evil
+## Epistasis: One Root of the Evil {#sec:epistasis}
 
 Did you notice that we often said and found that optimization problems get the harder, the more decision variables we have?
 Why is that?

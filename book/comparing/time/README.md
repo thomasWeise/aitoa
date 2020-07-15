@@ -4,7 +4,7 @@ Let us investigate the question: "What does good optimization algorithm performa
 As a first approximation, we could state that an optimization algorithm performs well if it can solve the optimization problem to optimality.
 If two optimization algorithms can solve the problem, then we prefer the faster one.
 This brings us to the question what *faster* means.
-If we want to compare algorithms, we need a concept of time. 
+If we want to compare algorithms, we need a concept of time.
 
 ### Clock Time
 
@@ -32,7 +32,7 @@ Measured runtimes reported twenty years ago are basically useless now, unless th
 - Runtime measurements also are measurements based on a given *implementation*, not *algorithm*.
 An algorithm implemented in the `C` programming language may perform very different compared to the very same algorithm implemented in `Java`.
 An algorithm implementation using a hash map to store and retrieve certain objects may perform entirely different from the same algorithm implemented using a sorted list.
-Hence, effort should be invested to create good implementations before measuring their consumed runtime and, very important, the same effort should be invested into all compared algorithms&hellip; 
+Hence, effort should be invested to create good implementations before measuring their consumed runtime and, very important, the same effort should be invested into all compared algorithms&hellip;
 - Runtime measurements are not always very accurate.
 There may be many effects which can mess up our measurements, ranging from other processes being executed on the same system and slowing down our process, delays caused by swapping or paging, to shifts of CPU speeds due to dynamic CPU clocking.
 - Runtime measurements are not very precise.
@@ -43,9 +43,9 @@ For a specific optimization problem, one can clearly specify a simple standardiz
 Before applying the algorithm&nbsp;$\algorithmStyle{A}$ that we actually want to investigate to an instance&nbsp;$\instance$ of the problem, we first apply&nbsp;$\algorithmStyle{B}$ to&nbsp;$\instance$ and measure the time&nbsp;$T[\algorithmStyle{B}|\instance]$ it takes on our machine.
 We then can divide the runtime&nbsp;$T[\algorithmStyle{A}|\instance]$ needed by&nbsp;$\algorithmStyle{A}|\instance$ by&nbsp;$T[\algorithmStyle{B}|\instance]$.
 We can then hope that the resulting, normalized runtime is somewhat comparable across machines.
-Of course, this is a problem-specific approach, it does not solve the other problems with measuring runtime directly, and it likely will still not generalize over different computer architectures or programming languages. 
+Of course, this is a problem-specific approach, it does not solve the other problems with measuring runtime directly, and it likely will still not generalize over different computer architectures or programming languages.
 
-### Consumed Function Evaluations
+### Consumed Function Evaluations {#sec:comparing:time:FEs}
 
 Instead of measuring how many milliseconds our algorithm needs, we often want a more abstract measure.
 Another idea is to count the so-called (objective) *function evaluations* or FEs for short.
@@ -53,19 +53,19 @@ Another idea is to count the so-called (objective) *function evaluations* or FEs
 \text.block{definition}{fes}{The consumed *function evaluations*&nbsp;(FEs) are the number of calls to the objective function issued since the beginning of the optimization process.}
 
 Performing one function evaluation means to take one point from the search space&nbsp;$\sespel\in\searchSpace$, map it to a candidate solution&nbsp;$\solspel\in\solutionSpace$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$ and then computing the quality of&nbsp;$\solspel$ by evaluating the objective function&nbsp;$\objf(\solspel)$.
-Usually, the number of FEs is also equal to the number of search operations applied, which means that each FE includes one application of either a nullary, unary, or binary search operator. 
+Usually, the number of FEs is also equal to the number of search operations applied, which means that each FE includes one application of either a nullary, unary, or binary search operator.
 Counting the FEs instead of measuring time directly has the following *advantages*:
 
 - FEs are completely machine- and implementation-independent and therefore can more easily be compared.
 If we re-implement an algorithm published 50 years ago, it should still consume the same number of FEs.
-- Counting FEs is always accurate and precise, as there cannot be any outside effect or process influencing the measurement (because that would mean that an internal counter variable inside of our process is somehow altered artificially). 
+- Counting FEs is always accurate and precise, as there cannot be any outside effect or process influencing the measurement (because that would mean that an internal counter variable inside of our process is somehow altered artificially).
 - Results in many works are reported based on FEs or in a format from which we can deduce the consumed FEs.
-- If you want to publish your research work, you should probably report the consumed FEs as well. 
+- If you want to publish your research work, you should probably report the consumed FEs as well.
 - In many optimization processes, the steps included in an FE are the most time consuming ones.
 Then, the actual consumed runtime is proportional to the consumed FEs and "performing more FEs" roughly equals to "needing more runtime."
 - Measured FEs are something like an empirical, simplified version of algorithmic time complexity.
 FEs are inherently close to theoretical computer science, roughly equivalent to "algorithm steps," which are the basis for theoretical runtime analysis.
-For example, researchers who are good at Maths can go an derive things like bounds for the "expected number of FEs" to solve a problem for certain problems and certain algorithms.
+For example, researchers who are good at Mathematics can go an derive things like bounds for the "expected number of FEs" to solve a problem for certain problems and certain algorithms.
 Doing this with clock time would neither be possible nor make sense.
 But with FEs, it can sometimes be possible to compare experimental with theoretical results.
 
@@ -76,11 +76,11 @@ But measuring time in function evaluations also has some *disadvantages*, namely
 For instance, an algorithm could necessitate a lengthy pre-processing procedure before sampling even the first point from the search space.
 This would not be visible in the FE counter, because, well, it is not an FE.
 The same holds for the selection step in an Evolutionary Algorithm (realized as sorting in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo]).
-Although this is probably a very fast procedure, it will be outside of what we can measure with FEs. 
+Although this is probably a very fast procedure, it will be outside of what we can measure with FEs.
 - A big problem is that one function evaluation can have extremely different actual time requirements and algorithmic complexity in different algorithms.
 For instance, it is known that in a Traveling Salesman Problem (TSP)&nbsp;[@ABCC2006TTSPACS; @GP2002TTSPAIV] with $n$&nbsp;cities, some algorithms can create an evaluate a new candidate solution from an existing one within a *constant* number of steps, i.e., in&nbsp;$\bigO{1}$, while others need a number of steps growing quadratically with&nbsp;$n$, i.e., are in&nbsp;$\bigO{n^2}$&nbsp;[@WCTLTCMY2014BOAAOSFFTTSP].
-If an algorithm of the former type can achieve the same quality as an algorithm of the latter type, we could consider it as better even if it would need ten times as many FEs.
-Hence, FEs are only fair measurements for comparing two algorithms if they take approximately the same time in both of them.
+We observed this problem in the experiment with our EDA implementation for the JSSP in [@sec:eda:jssp:results].
+FEs are fair time measures only if the algorithms that we compare have roughly the same time complexity per FE.
 - Time measured in FEs is harder to comprehend in the context of parallelization and distribution of algorithms.
 
 There exists an idea to *mitigate* the problem with the different per-FE complexities:
@@ -119,4 +119,3 @@ Measuring the runtime of algorithms solving artificial problems does not make th
 
 That being said, I personally prefer to **measure both FEs and clock time**.
 This way, we are on the safe side.
-
