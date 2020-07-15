@@ -142,8 +142,6 @@ While this indeed a na&#239;ve method with several shortcomings (which we will d
 
 We illustrate the idea of this model update and sampling process by using our `demo` instance from [@sec:jsspDemoInstance] in [@fig:jssp_umda_example; @fig:jssp_umda_sampling].
 
-![An example of how the model update and sampling in our na&#239;ve EDA could look like on the `demo` instance from [@sec:jsspDemoInstance]; we set $\mu=10$ and 1&nbsp;new point&nbsp;$\sespel$ is sampled. See also [@fig:jssp_umda_sampling].](\relative.path{jssp_umda_example.svgz}){#fig:jssp_umda_example width=95%}
-
 The `demo` instance has $\jsspJobs=4$&nbsp;jobs that are processed on $\jsspMachines=5$&nbsp;machines.
 The points in the search space thus have $\jsspMachines*\jsspJobs=20$&nbsp;decision variables.
 We can build the model by considering each of the 20&nbsp;decision variables separately.
@@ -159,6 +157,8 @@ The second column of the model stands for the jobs seen at index&nbsp;1.
 Here, job&nbsp;0 was never encountered, job&nbsp;1 and job&nbsp;2 four times, and job&nbsp;3 twice.
 These values are obtained by simply counting how often a given job&nbsp;ID appears at the same index in the $\mu=10$&nbsp;selected solutions.
 The model can be built iteratively in about $\bigO{\mu*\jsspMachines*\jsspJobs}$&nbsp;steps.
+
+![An example of how the model update and sampling in our na&#239;ve EDA could look like on the `demo` instance from [@sec:jsspDemoInstance]; we set $\mu=10$ and 1&nbsp;new point&nbsp;$\sespel$ is sampled. See also [@fig:jssp_umda_sampling].](\relative.path{jssp_umda_example.svgz}){#fig:jssp_umda_example width=95%}
 
 ![A clearer illustration of the example for sampling the model in our na&#239;ve EDA one time given in [@fig:jssp_umda_example].](\relative.path{jssp_umda_sampling.svgz}){#fig:jssp_umda_sampling width=95%}
 
