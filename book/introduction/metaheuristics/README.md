@@ -54,7 +54,7 @@ Different from exact algorithms, they do not guarantee to find the optimal solut
 Still, they often allow us to get very good solutions for computationally hard problems in short time.
 They may often still discover them (just not always, not guaranteed).
 
-### Good Algorithms within Acceptable Time
+### Good Solutions within Acceptable Time
 
 Saying that we need a good algorithm to solve a given problem is very easy.
 Developing a good algorithm to solve a given problem is not, as any graduate student in the field can probably confirm.
