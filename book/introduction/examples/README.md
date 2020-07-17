@@ -2,11 +2,13 @@
 
 Let us first get a feeling about typical use cases of optimization.
 
+\relative.input{quadratic_assignment/README.md}
 \relative.input{logistic_planning/README.md}
 \relative.input{bin_packing/README.md}
 \relative.input{jssp/README.md}
 
-The three examples we have discussed so far are, actually, quite related.
+### Summary
+The four examples we have discussed so far are, actually, quite related.
 They all fit into the broad areas of operational research, which and smart manufacturing&nbsp;[@DEPBS2012SMMIADDP; @HPO2016DPFI4S].
 The goal of smart manufacturing is to optimize development, production, and logistics in the industry.
 Therefore, computer control is applied to achieve high levels of adaptability in the multi-phase process of creating a product from raw material.

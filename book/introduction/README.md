@@ -13,10 +13,13 @@ If they can do this well, they also offer another important advantage: Solutions
 
 Thus, we already know three reasons why optimization will be a key technology for the next century, which silently does its job behind the scenes:
 
-1. Any form of intelligent production or smart manufacturing needs automated decisions and since these decisions should be *intelligent*, they can only come from a process which involves optimization in one way or another.
-2. In global and local competition in all branches of industry and all service sectors those institutions who can reduce their resource consumption and costs while improving product quality and production efficiency will have the edge -- and one technology for achieving this is better planning via optimization.
+1. Any form of intelligent production or smart manufacturing needs automated decisions.
+   Since these decisions should be *intelligent*, they can only come from a process which involves optimization in one way or another.
+2. In global and local competition in all branches of industry and all service sectors those institutions who can reduce their resource consumption and costs while improving product quality and production efficiency will have the edge.
+   One key technology for achieving this is better planning via optimization.
 3. Our world suffers from both depleting resources and too much pollution.
-   Optimization can "give us more while needing less,", i.e., often inherently leads to more environmentally friendly processes.
+   Optimization can "give us more while needing less."
+   It often inherently leads to more environmentally friendly processes.
 
 But how can algorithms help us to find solutions for hard problems in a variety of different fields?
 What does "variety" even mean?
@@ -24,7 +27,7 @@ How general are these algorithms?
 And how can they help us to make good decisions?
 And how can they help us to save resources?
 
-In this book, we will answer all of these questions.
+In this book, we will try to answer all of these questions.
 We will explore quite a lot of different optimization algorithms.
 We will look at their actual implementations and we will apply them to example problems to see what their strengths and weaknesses are.
 

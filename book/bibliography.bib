@@ -31,6 +31,7 @@
 @string { cim = "{{IEEE} Computational Intelligence Magazine ({CIM})}" }
 @string { cs = "{Complex Systems}" }
 @string { ec = "{Evolutionary Computation}" }
+@string { econ = "{Econometrica}" }
 @string { ejor = "{European Journal of Operational Research ({EJOR})}" }
 @string { genetics = "{Genetics}" }
 @string { ia = "{{IEEE} Access}" }
@@ -60,6 +61,7 @@
 @string { ors = "{{O}perations-{R}esearch-{S}pektrum ({OR} Spectrum)}" }
 @string { sa = "{Scientific American}" }
 @string { scimag = "{Science Magazine}" }
+@string { sr = "{SIAM Review}" }
 @string { tas = "{The American Statistician}" }
 @string { tcs = "{Theoretical Computer Science}" }
 @string { tjocp = "{The Journal of Chemical Physics}" }
@@ -73,7 +75,7 @@
 @string { coop = "{Combinatorial Optimization ({COOP})}" }
 @string { ctms = "{Contributions to Management Science}" }
 @string { dbom = "{Dover Books on Mathematics}" }
-@string { esacwisidmao = "{Estimation, Simulation, and Control {--} Wiley-Interscience Series in Discrete Mathematics and Optimizationn}" }
+@string { esacwisidmao = "{Estimation, Simulation, and Control {--} Wiley-Interscience Series in Discrete Mathematics and Optimization}" }
 @string { gaaec = "{Genetic Algorithms and Evolutionary Computation}"}
 @string { isor = "{International Series in Operations Research \& Management Science ({ISOR})}"}
 @string { lncs = "{Lecture Notes in Computer Science ({LNCS})}" }
@@ -87,6 +89,7 @@
 @string { studfuzz = "{Studies in Fuzziness and Soft Computing ({STUDFUZZ})}" }
 @string { ut = "{Universitext}" }
 @string { wbccss = "{Wadsworth \& Brooks/Cole Computer Science Series}" }
+@string { wsidmao = "{Wiley Series in Discrete Mathematics and Optimization}" }
 
 %% contents
 
@@ -401,6 +404,18 @@
 }
 
 
+@article{BK1957APATLOEA,
+  title = {Assignment Problems and the Location of Economic Activities},
+  author = {Martin Beckmann and Tjalling Charles Koopmans},
+  journal = econ,
+  month = jan,
+  year = {1957},
+  volume = {25},
+  number = {1},
+  pages = {53--76}
+}
+
+
 @inproceedings{BC1995RTGFTSGA,
   author = {Shumeet Baluja and Rich Caruana},
   editor = {Armand Prieditis and Stuart J. Russell},
@@ -411,6 +426,23 @@
   year = {1995},
   doi = {10.1016/b978-1-55860-377-6.50014-1},
   url = {http://www.cs.cornell.edu/~caruana/ml95.ps}
+}
+
+
+@incollection{BCPP1998TQAP,
+  title = {The Quadratic Assignment Problem},
+  author = {Rainer E. Burkard and Eranda {\c{C}}ela and Panos M. Pardalos and Leonidas S. Pitsoulis},
+  booktitle = {Handbook of Combinatorial Optimization},
+  editor = {Panos M. Pardalos and Ding{-}Zhu Du and Ronald Lewis Graham},
+  pages = {1713--1809},
+  year = {1998},
+  volume = {1-3},
+  edition = {1},
+  publisher = {Springer},
+  address = {Boston, {MA}, {USA}},
+  doi = {10.1007/978-1-4613-0303-9_27},
+  isbn = {978-1-4613-7987-4},
+  url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.52.3116&rep=rep1&type=pdf}
 }
 
 
@@ -592,8 +624,8 @@
   isbn = {978-0-471-94059-3},
   month = sep,
   year = {1995},
+  publisher = {John Wiley and Sons Ltd.},
   address = {Chichester, {NY}, {USA}},
-  publisher = {John Wiley \& Sons},
 }
 
 
@@ -1447,7 +1479,7 @@
   year = {1973},
   title = {Nonparametric Statistical Methods},
   address = {New York, USA},
-  publisher = {John Wiley \& Sons},
+  publisher = {John Wiley and Sons Ltd.},
   isbn = {047140635X}
 }
 
@@ -1922,6 +1954,18 @@
 }
 
 
+@book{MT1990KPAACI,
+  title = {Knapsack Problems: Algorithms and Computer Implementations},
+  author = {Silvano Martello and Paolo Toth}, 
+  series = wsidmao, 
+  isbn = {978-0471924203},
+  publisher = {John Wiley and Sons Ltd.},
+  address = {Chichester, {NY}, {USA}},
+  year = {1990},
+  url = {http://www.or.deis.unibo.it/knapsack.html},
+}
+
+
 @article{MW1947OATOWOOTRVISLTTO,
   author = {Henry B. Mann and Donald R. Whitney},
   title = {On a Test of whether One of Two Random Variables is Stochastically Larger than the Other},
@@ -2222,6 +2266,19 @@
 }
 
 
+@article{S1961TBWPAPA,
+  title = {The Backboard Wiring Problem: A Placement Algorithm},
+  author = {Leon Steinberg},
+  journal = sr,
+  volume = {3},
+  number = {1},
+  pages = {37--50},
+  doi = {10.1137/1003003},
+  month = jan,
+  year = {1961},
+}
+
+
 @inproceedings{S1971GOTFFMST,
   author = {J. Shekel},
   title = {Test Functions for Multimodal Search Techniques},
@@ -2325,6 +2382,18 @@
   year = {2020},
   url = {http://arxiv.org/pdf/1801.10087.pdf},
   note = {arXiv:1801.10087v1 [cs.NE] 30~Jan~2018}
+}
+
+@article{SGA1976PCAP,
+  author = {Sartaj Sahni and Teofilo Francisco {Gonzalez Arce}},
+  title = {{P}-Complete Approximation Problems},
+  journal = jacm,
+  volume = {23},
+  number = {3},
+  pages = {555--565},
+  year = {1976},
+  doi = {10.1145/321958.321975},
+  url = {http://sites.cs.ucsb.edu/~teo/cs230.s18/nph.pdf}
 }
 
 

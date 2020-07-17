@@ -7,25 +7,25 @@ Why should you read this book?
 ### Good Solutions within Acceptable Time {#sec:approximationOfTheOptimum}
 
 The first and foremost reason is that they can provide us good solutions within reasonable time.
-
 It is easy to understand that there are some problems which are harder to solve than others.
 Everyone of us already knows this from the mathematics classes in school.
-Of course, the example problems discussed before cannot be attacked as easily as solving a single equation.
+Of course, the example problems discussed before cannot be attacked as easily as solving a single linear equation.
 They require algorithms, they require computer science.
-
-Unfortunately, while we have learned many types of equations that can be solved easily in our mathematics classes, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow exponentially with the number of involved variables in the worst case.
-The number of involved variables here could be the number of cities in a TSP, the number of jobs or machines in a JSSP, or the number of objects to pack in a, well, packing problem.
-A big group of such complicated problems are called $\NPprefix$&#8209;hard&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA].
-Unless some unlikely breakthrough happens&nbsp;[@C1971TCOTPP; @K1972RACP], there will be many such problems that we cannot solve exactly within reasonable time &dash; and all of the example problems discussed so far are among them.
-(And: No, quantum computers are not the answer. Most likely, they cannot solve these problems qualitatively faster either&nbsp;[@A2008TLOQC].) 
 
 ![The growth of different functions in a log-log scaled plot. Exponential functions grow very fast, so that an algorithm which needs&nbsp;$\sim 2^s$ steps to solve an optimization problem of size&nbsp;$s$ quickly becomes infeasible. (compare with [@tbl:jsspSolutionSpaceTable] and [@tbl:jsspSearchSpaceTable])](\relative.path{function_growth.svgz}){#fig:function_growth width=99%}
 
-[@fig:function_growth] illustrates that finding the solutions for problems with such exponential "time complexity" will quickly become infeasible, even for relatively small problem instances.
-Just throwing more computing power at the problems will not solve this fundamental issue.
-Our processing power is limited and parallelization can provide a linear speed-up at best.
-This cannot mitigate the exponentially growing runtime requirements of many optimization problems.
-Unfortunately, the example problems discussed so far are amongst this kind of problem.
+Ever since primary school, we have learned many problems and types of equations that we can solve.
+Unfortunately, theoretical computer science shows that for many problems, the time we need to find the best-possible solution can grow *exponentially* with the number of involved variables in the worst case.
+The number of involved variables here could be the number of cities in a TSP, the number of jobs or machines in a JSSP, or the number of objects to pack in a, well, packing problem.
+A big group of such complicated problems are called $\NPprefix$&#8209;hard&nbsp;[@LLRKS1993SASAAC; @CPW1998AROMSCAAA].
+Unless some unlikely breakthrough happens&nbsp;[@C1971TCOTPP; @K1972RACP], there will be many problems that we cannot always solve exactly within reasonable time.
+Each and every one of the example problems discussed belongs to this type!
+
+As sketched in [@fig:function_growth], the exponential function rises very quickly.
+One idea would be to buy more computers for bigger problems and to simply parallelize the computation.
+Well, parallelization can provide a linear speed-up at best, but we are dealing with problems where the runtime requirements may double every time we add a new decision variable.
+And no: Quantum computers are not the answer.
+Most likely, they cannot even solve these problems qualitatively faster either&nbsp;[@A2008TLOQC].
 
 So what can we do to solve such problems?
 The exponential time requirement occurs if we make *guarantees* about the solution quality, especially about its optimality, over all possible scenarios.
@@ -40,8 +40,9 @@ In [@fig:runtime_quality_tradeoff] we illustrate this idea on the example of the
 The goal of solving the TSP is to find the shortest round trip tour through $n$&nbsp;cities.
 The TSP is $\NPprefix$&#8209;hard&nbsp;[@GJ1979CAIAGTTTONC; @GP2002TTSPAIV].
 Today, it is possible to solve many large instances of this problem to optimality by using sophisticated *exact* algorithms&nbsp;[@CEG2005CWDPIFT; @W2003ROCFTB].
-Yet, finding the *shortest possible tour* for a particular TSP may (still and probably always in the future) simply take way too long, e.g., in the scale of many years.
-Finding just *one tour* is, however, very easy: I can write down the cities in any particular order.
+Yet, finding the *shortest possible tour* for a particular TSP might still take many years if you are unlucky.
+Finding just *one tour* is, however, very easy:
+I can write down the cities in any particular order.
 Of course, I can visit the cities in an arbitrary order.
 That is an entirely valid solution, and I can obtain it basically in 0&nbsp;time.
 This "tour" would probably be very bad, very long, and generally not a good idea.
@@ -69,4 +70,4 @@ Metaheuristics are the answer.
 They are general algorithm concepts into which we can plug problem-specific modules.
 General metaheuristics are usually fairly easy to implement and deliver acceptable results.
 Once a sufficiently well-performing prototype has been obtained, we could go and integrate it into the software ecosystem of the customer.
-We also can try to improve its performance using different ideas &hellip; and years and years of blissful research, if we are lucky enough to find someone paying for it. 
+We also can try to improve its performance using different ideas &hellip; and years and years of blissful research, if we are lucky enough to find someone paying for it.

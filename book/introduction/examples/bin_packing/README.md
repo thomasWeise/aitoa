@@ -22,4 +22,4 @@ We then would like to arrange the images such that we need as few sheets of pape
 
 The three-dimensional variant then corresponds to our moving homes scenario.
 Of course, there are many more different variants &ndash; the objects we want to pack could be circular, rectangular, or have an arbitrary shape.
-We may also have a limited number of containers and thus may not be able to pack all objects, in which case we would like to only package those that give us the most profit (arriving at a task called knapsack problem.   
+We may also have a limited number of containers and thus may not be able to pack all objects, in which case we would like to only package those that give us the most profit (arriving at a task called knapsack problem&nbsp;[@MT1990KPAACI]).

@@ -24,4 +24,4 @@ Customers may be able to order different quantities of the product, so the opera
 This is the so-called Flow Shop Scheduling Problem (FSSP) &ndash; and it has been defined back in 1954&nbsp;[@J1954OTATSPSWSTI]!
 
 Clearly, since the JSSP allows for an *arbitrary* machine order per job, being able to solve the JSSP would also enable us to solve the FSSP, where the machine order is fixed.
-We will introduce the JSSP in detail in [@sec:jsspInstance] and use it as the main example in this book on which we will step-by-step excercise different optimization methods.
+We will introduce the JSSP in detail in [@sec:jsspInstance] and use it as the main example in this book on which we will step-by-step exercise different optimization methods.
