@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-With the book "An Introduction to Optimization Algorithms" we try to develop an accessible and easy-to-read introduction to optimization, optimization algorithms, and, in particular, metaheuristics.
+With the book *"An Introduction to Optimization Algorithms"* we try to develop an accessible and easy-to-read introduction to optimization, optimization algorithms, and, in particular, metaheuristics.
 The goal is to discuss a general framework structure for optimization problems and then approach algorithms from bottom-up, starting with simple approaches and step-by-step moving to more advanced methods.
 These moves are incremental, as problems of the current algorithm are discussed based on real results on a real example application, the Job Shop Scheduling Problem (JSSP).
 
@@ -10,7 +10,7 @@ These moves are incremental, as problems of the current algorithm are discussed 
 
 ### 2.1. The Book
 
-The [book](http://thomasweise.github.io/aitoa/index.html) is available in the following formats:
+The book [*"An Introduction to Optimization Algorithms"*](http://thomasweise.github.io/aitoa/index.html) is available in the following formats:
 
 1. [aitoa.pdf](http://thomasweise.github.io/aitoa/aitoa.pdf), in the [PDF](http://thomasweise.github.io/aitoa/aitoa.pdf) format for reading on the computer and/or printing (but please don't print this, save paper),
 2. [aitoa.html](http://thomasweise.github.io/aitoa/aitoa.html), in the [HTML5](http://thomasweise.github.io/aitoa/aitoa.html) format for reading in the browser on any device,
@@ -20,6 +20,9 @@ The [book](http://thomasweise.github.io/aitoa/index.html) is available in the fo
 ### 2.2. The Algorithm Implementations
 
 Every algorithm that we discuss is implemented in Java&nbsp;1.8 and all accompanying sources codes are provided in the GitHub repository [aitoa-code](http://github.com/thomasWeise/aitoa-code).
+This means that you can run the same experiments that I did, but also do your own experiments and use the code for your own purposes.
+The code provides comprehensive facilities for logging and evaluating experimental results.
+It comes as a Maven project that can be integrated as library into your own software, as discussed [here](http://github.com/thomasWeise/aitoa-code).
 
 ### 2.3. The Slides
 
@@ -37,13 +40,18 @@ A [tar.xz](https://thomasweise.github.io/aitoa-slides/optimization_algorithms.ta
 
 ## 3. Further Tools and Resources
 
-Furthermore, many of the diagrams in this book are generated using an [`R` package](http://github.com/thomasWeise/aitoaEvaluate) which is published in the GitHub Repository [aitoaEvaluate](http://github.com/thomasWeise/aitoaEvaluate).
+Furthermore, many of the diagrams in this book are generated using an [`R` package](http://github.com/thomasWeise/aitoaEvaluate), which is published in the GitHub Repository [aitoaEvaluate](http://github.com/thomasWeise/aitoaEvaluate).
 
 The data from the experiments presented in the book is in the GitHub Repository [aitoa-data](http://github.com/thomasWeise/aitoa-data).
 
+[jsspInstancesAndResults](https://github.com/thomasWeise/jsspInstancesAndResults) is an repository with lots of results from literature on the Job Shop Scheduling Problem (JSSP).
+At the same time, it is also an `R` package.
+You can use it to compare your own JSSP research with the state-of-the-art.
+
 ## 4. License
 
-This book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
+This book [*"An Introduction to Optimization Algorithms"*](http://thomasweise.github.io/aitoa/index.html) is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
+The [slides](https://thomasweise.github.io/aitoa-slides/) of the corresponding course are released under the same license.
 The experiments have been conducted using the Java programs published in repository [thomasWeise/aitoa-code](http://github.com/thomasWeise/aitoa-code), which under the MIT&nbsp;License.
 The results of these experiments are provided in the repository [thomasWeise/aitoa-data](http://github.com/thomasWeise/aitoa-data) are under the CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 license.
 Many of the graphics and diagrams in the book have been created from these data using the MIT-licensed `R` scripts in  [thomasWeise/aitoaEvaluate](http://github.com/thomasWeise/aitoaEvaluate).
