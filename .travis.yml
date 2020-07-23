@@ -35,4 +35,4 @@ deploy:
   
 # trigger the build of aitoa-slides after success
 after_deploy:
-  script: sh trigger-travis.sh thomasWeise aitoa-slides $TRAVIS_ACCESS_TOKEN
+  - sh trigger-travis.sh thomasWeise aitoa-slides $TRAVIS_ACCESS_TOKEN
