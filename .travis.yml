@@ -32,3 +32,9 @@ deploy:
     branch: master
   target-branch: gh-pages
   local-dir: output
+  
+# trigger the build of aitoa-slides after success
+jobs:
+  include:
+    - stage: deploy
+      script: sh trigger-travis.sh thomasWeise aitoa-slides $TRAVIS_ACCESS_TOKEN
