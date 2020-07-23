@@ -2,9 +2,10 @@
 
 ## 1. Introduction
 
-With the book *"An Introduction to Optimization Algorithms"* we try to develop an accessible and easy-to-read introduction to optimization, optimization algorithms, and, in particular, metaheuristics.
-The goal is to discuss a general framework structure for optimization problems and then approach algorithms from bottom-up, starting with simple approaches and step-by-step moving to more advanced methods.
-These moves are incremental, as problems of the current algorithm are discussed based on real results on a real example application, the Job Shop Scheduling Problem (JSSP).
+With the book [*"An Introduction to Optimization Algorithms"*](http://thomasweise.github.io/aitoa/index.html) we try to develop an accessible and easy-to-read introduction to optimization, optimization algorithms, and, in particular, metaheuristics.
+We will do this by first building a general framework structure for optimization problems.
+We then approach the algorithms that have been developed to solve such problems from bottom-up, starting with simple approaches and step-by-step moving to more advanced methods.
+These moves are incremental, as problems of the current algorithm are discussed based on real results on a real example application, the Job Shop Scheduling Problem ([JSSP](https://github.com/thomasWeise/jsspInstancesAndResults)).
 
 ## 2. Resources
 
