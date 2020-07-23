@@ -13,6 +13,7 @@ script:
   baseDir="$(pwd)" &&\
   echo "Base directors is '$baseDir'." &&\
   inputDir="${baseDir}/book" &&\
+  mv "$baseDir/README.md" "$inputDir" &&\
   outputDir="${baseDir}/output" &&\
   echo "Input directory is '$inputDir' and output directory is '$outputDir'." &&\
   mkdir -p "${outputDir}" &&\

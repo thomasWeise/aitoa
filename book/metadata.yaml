@@ -11,7 +11,7 @@ lang: en-US
 codeRepo: http://github.com/thomasWeise/aitoa-code.git
 
 # website include
-website.include: website.html
+website.md: README.md
 
 # bibliography metadata
 bibliography: bibliography.bib
