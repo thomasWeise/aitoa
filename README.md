@@ -30,12 +30,12 @@ It comes as a Maven project that can be integrated as library into your own soft
 The final goal is to use this book as the foundation of a university course "Optimization Algorithms."
 Therefore, I am also trying to create a corresponding set of slides.
 The book is far from being complete, but the slides are even in a much earlier state of development.
-Only the first few topics from the book are touched as of now.
+Only the first few topics from the book are covered as of now.
 
 1. [Introduction](https://thomasweise.github.io/aitoa-slides/01_introduction.pdf)
 2. [Structure](https://thomasweise.github.io/aitoa-slides/02_structure.pdf)
 
-### 2.4. Everything in One Package
+### 2.4. Everything in One Archive
 
 A [tar.xz](https://thomasweise.github.io/aitoa-slides/optimization_algorithms.tar.xz) archive with everything put together, i.e., the book, the source codes, and the slides, can be found [here](https://thomasweise.github.io/aitoa-slides/optimization_algorithms.tar.xz).
 
@@ -49,7 +49,26 @@ The data from the experiments presented in the book is in the GitHub Repository 
 At the same time, it is also an `R` package.
 You can use it to compare your own JSSP research with the state-of-the-art.
 
-## 4. License
+## 4. Ecosystem
+
+Around this book I have created a whole ecosystem of tools that help me by automating many of work involved in its development.
+The goal is to allow an author to fully concentrate on writing her material, while compiling the material to different formats and uploading them to the web should be [automated](https://www.linkedin.com/posts/thomas-weise-3297b139_thomasweisebookbuilder-activity-6593099811547906048-sUqT).
+This tool suite is centered around GitHub and putting all material into a repository, which automatically allows for collaborative working as well.
+
+The `R` package [bookbuildeR](http://github.com/thomasWeise/bookbuildeR) provides the commands wrapping around [pandoc](http://pandoc.org/) and extending [Markdown](http://pandoc.org/MANUAL.html#pandocs-markdown) to automatically build electronic books.
+
+There is a hierarchy of docker containers that forms the infrastructure for the automated builds:
+
+- [docker-bookbuilder](http://github.com/thomasWeise/docker-bookbuilder) is the docker container that can be used to compile an electronic book based on our tool chain. [Here](http://github.com/thomasWeise/docker-bookbuilder) you can find it on GitHub and [here](http://hub.docker.com/r/thomasweise/docker-bookbuilder/) on docker hub.
+- [docker-slidesbuilder](http://github.com/thomasWeise/docker-slidesbuilder) is the docker container that can be used to compile `beamer`-based LaTeX slides to pdf and upload them. [Here](http://github.com/thomasWeise/docker-slidesbuilder) you can find it on GitHub and [here](http://hub.docker.com/r/thomasweise/docker-slidesbuilder/) on docker hub.
+- [docker-pandoc-r](http://github.com/thomasWeise/docker-pandoc-r) is a docker container with a complete pandoc, TeX Live, and R installation. It forms the basis for [docker-bookbuilder](http://github.com/thomasWeise/docker-bookbuilder) and its sources are [here](http://github.com/thomasWeise/docker-pandoc-r) while it is located [here](http://hub.docker.com/r/thomasweise/docker-pandoc-r/) on docker hub.
+- [docker-pandoc-calibre](http://github.com/thomasWeise/docker-pandoc-calibre) is the container which is the basis for [docker-pandoc-r](http://github.com/thomasWeise/docker-pandoc-r). It holds a complete installation of pandoc, [calibre](http://calibre-ebook.com), which is used to convert EPUB3 to AZW3, and TeX Live and its sources are [here](http://github.com/thomasWeise/docker-pandoc-calibre) while it is located [here](http://hub.docker.com/r/thomasweise/docker-pandoc-calibre/).
+- [docker-pandoc](http://github.com/thomasWeise/docker-pandoc) is the container which is the basis for [docker-pandoc-calibre](http://github.com/thomasWeise/docker-pandoc-calibre). It holds a complete installation of pandoc and TeX Live and its sources are [here](http://github.com/thomasWeise/docker-pandoc) while it is located [here](http://hub.docker.com/r/thomasweise/docker-pandoc/).
+- [docker-texlive-thin](http://github.com/thomasWeise/docker-texlive-thin) is the container which is the basis for [docker-pandoc](http://github.com/thomasWeise/docker-pandoc). It holds an installation of TeX Live and its sources are [here](http://github.com/thomasWeise/docker-texlive-thin) while it is located [here](http://hub.docker.com/r/thomasweise/docker-texlive-thin/).
+- The `R` package [utilizeR](http://github.com/thomasWeise/utilizeR) holds some utility methods used by [bookbuildeR](http://github.com/thomasWeise/bookbuildeR). 
+
+
+## 5. License
 
 This book [*"An Introduction to Optimization Algorithms"*](http://thomasweise.github.io/aitoa/index.html) is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
 The [slides](https://thomasweise.github.io/aitoa-slides/) of the corresponding course are released under the same license.
@@ -57,7 +76,7 @@ The experiments have been conducted using the Java programs published in reposit
 The results of these experiments are provided in the repository [thomasWeise/aitoa-data](http://github.com/thomasWeise/aitoa-data) are under the CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 license.
 Many of the graphics and diagrams in the book have been created from these data using the MIT-licensed `R` scripts in  [thomasWeise/aitoaEvaluate](http://github.com/thomasWeise/aitoaEvaluate).
 
-## 5. Contact
+## 6. Contact
 
 If you have any questions or suggestions, please contact
 [Prof. Dr. Thomas Weise](http://iao.hfuu.edu.cn/team/director) of the
