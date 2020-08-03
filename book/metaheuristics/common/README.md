@@ -4,12 +4,12 @@ Before we delve into our first algorithms, let us first take a look on some thin
 
 ### Anytime Algorithms {#sec:anytimeAlgorithm}
 
-\text.block{definition}{anytimeAlgorithm}{An *anytime algorithm* is an algorithm which can produce an approximate result during almost any time of its execution.}
+\text.block{definition}{anytimeAlgorithm}{An *anytime algorithm* is an algorithm which can provide an approximate result during almost any time of its execution.}
 
 All metaheuristics &ndash; and many other optimization and machine learning methods &ndash; are anytime algorithms&nbsp;[@BD1989STDPP2].
 The idea behind anytime algorithms is that they start with (potentially bad) guess about what a good solution would be.
 During their course, they try to improve their approximation quality, by trying to produce better and better candidate solutions.
-At any point in time, we can extract the current best guess about the optimum.
+At any point in time, we can extract the current best guess about the optimum (and stop the optimization process if we want to).
 This fits to the optimization situation that we have discussed in [@sec:terminationCriterion]:
 We often cannot find out whether the best solution we currently have is the globally optimal solution for the given problem instance or not, so we simply continue trying to improve upon it until a *termination criterion* tells us to quit, e.g., until the time is up.
 
@@ -33,7 +33,6 @@ By using such random number generators, we can let an algorithm make random choi
 
 ### Black-Box Optimization {#sec:blackbox}
 
-
 ![The black-box character of many metaheuristics, which can often accept arbitrary search operators, representations, and objective functions.](\relative.path{black_box_metaheuristic.svgz}){#fig:black_box_metaheuristic}
 
 The concept of general metaheuristics, the idea to attack a very wide class of optimization problems with one basic algorithm design, can be realized when following a *black-box* approach.
@@ -49,21 +48,41 @@ Black-box optimization is the highest level of abstraction on which we can work 
 
 ### Putting it Together: A simple API
 
-In our following considerations and discussions of algorithms, we will therefore attempt to define an API for black-box optimization.
-We will fill the abstract interfaces making up the API with simple and clear implementations of algorithms and their adaptation to the JSSP.
+Before, I promised that we will implement all the algorithms discussed in this book.
+If our topic was Machine Learning &ndash; say clustering &ndash; then we would have a lot of specialized algorithms for clearly defined situations.
+The input and output data would usually adhere to some basic, fixed structures.
+If you implement k&#8209;means clustering, for instance, you have real vectors coming in and real vectors going out of your algorithm and that's that.
+However, we have to deal with the black-box concept, meaning that our algorithms will be very variable in terms of the data structures we can feed to them.
 
-We first need to consider what an optimization needs as input.
-Obviously, in the most common case, these are all the items we have discussed in the previous section, ranging from the termination criterion over the search operators and the representation mapping to the objective function.
+This is more challenging, especially when we try to tackle this in an educational setting, where stuff should not be overly complicated.
+So here I present my take on how to handle this situation.
+It is a bit of a primitive and simplistic approach, but it allows us to actually cash in on the promise of metaheuristics:
+We can implement algorithms that can be adapted to a wide range of possible problem domains.
+
+We will now attempt to define a simple API for black-box optimization that combines all of our considerations far.
+The goal is to make the implementation of metaheuristics as simple as possible.
+We do this by clearly dividing between the optimization algorithms for solving a problem on one side and the structural components of the problem on the other side.
+The algorithms that we will implement will be general black-box methods.
+At the same time, we will develop the components that we need to plug into them to solve JSSPs as educational example.
+
+We therefore first need to consider what an optimization process needs as input.
+Obviously, in the most common case, these are all the items we have discussed in the previous section, ranging from the termination criterion over the search operators (which we will discuss later) and the representation mapping to the objective function.
 Let us therefore define an interface that can provide all these components with corresponding "getter methods".
 We call this interface `IBlackBoxProcess<X,Y>` from which an excerpt is given in [@lst:IBlackBoxProcess].
-It is generic, meaning it allows us to provide a search space&nbsp;$\searchSpace$ as type parameter&nbsp;`X` and a solution space&nbsp;$\solutionSpace$ via the type parameter&nbsp;`Y`.
+The interface is *generic*, meaning it allows us to provide a search space&nbsp;$\searchSpace$ as type parameter&nbsp;`X` and a solution space&nbsp;$\solutionSpace$ via the type parameter&nbsp;`Y`.
 
 \repo.listing{lst:IBlackBoxProcess}{A generic interface for representing black-box processes to an optimization algorithm.}{java}{src/main/java/aitoa/structure/IBlackBoxProcess.java}{}{relevant}
 
-If we define such an interface to an optimization algorithm of whatever nature, this also allows us to do one trick:
-We can directly keep track of the state of the search and remember, e.g., the best solution encountered so far or the time passed.
-This can then be used to write logging information to a file and to implement the termination criterion.
-All in all, this interface allows us to
+Actually, such an interface does not need to expose the representation mapping&nbsp;$\repMap$ and objective function&nbsp;$\ofel$ as separate components to an optimization algorithm.
+It is sufficient if the interface directly implements an `evaluate` that takes, as input, an element $\sespel\in\searchSpace$, internally performs the representation mapping&nbsp;$\solspel=\repMap(\sespel)$, then invokes the objective function&nbsp;$\ofel(\solspel)$, and returns its result.
+This `evaluate` method could then even be implemented such that it remembers the best-so-far-solution.
+We then no longer need to keep track of it in the optimization itself.
+
+Of course, we can also implement logging of the search progress inside of `evaluate`, which would make this functionality available to all of our experiments in a transparent fashio.
+Furthermore, we could also keep track of the total number of objective values as well as of the consumed runtime.
+This, in turn, can be used to implement the termination criterion.
+
+All in all, this interface allows us to create transparent implementations that
 
 1. provide a random number generator to the algorithm,
 2. wrap an objective function&nbsp;$\objf$ together with a representation mapping&nbsp;$\repMap$ to allow us to evaluate a point in the search space&nbsp;$\sespel\in\searchSpace$ in a single step, effectively performing&nbsp;$\objf(\repMap(\sespel))$,
@@ -72,7 +91,7 @@ All in all, this interface allows us to
 5. represent a termination criterion based on the above information (e.g., maximum FEs, maximum runtime, reaching a goal objective value), and
 7. log the improvements that the algorithm makes to a text file, so that we can use them to make tables and draw diagrams.
 
-Along with the interface class `IBlackBoxProcess`, we also provide a builder for instantiation.
+Along with the interface class `IBlackBoxProcess`, we also provide a builder for instantiating it.
 The actual implementation behind this interface does not matter here.
 It is clear what it does, and the actual code is simple and not contributing to the understand of the algorithms or processes.
 Thus, you do not need to bother with it, just the assumption that an object implementing `IBlackBoxProcess` has the abilities listed above shall suffice here.

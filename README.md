@@ -7,6 +7,9 @@ We will do this by first building a general framework structure for optimization
 We then approach the algorithms that have been developed to solve such problems from bottom-up, starting with simple approaches and step-by-step moving to more advanced methods.
 These moves are incremental, as problems of the current algorithm are discussed based on real results on a real example application, the Job Shop Scheduling Problem ([JSSP](https://github.com/thomasWeise/jsspInstancesAndResults)).
 
+**If you have any comments or suggestions regarding the book, or if you spotted an error or typo, please feel free to submit an [issue here](https://github.com/thomasWeise/aitoa/issues).**
+Your feedback would help us to improve the book.
+
 ## 2. Resources
 
 ### 2.1. The Book
@@ -18,32 +21,41 @@ The book [*"An Introduction to Optimization Algorithms"*](http://thomasweise.git
 3. [aitoa.epub](http://thomasweise.github.io/aitoa/aitoa.epub), in the [EPUB3](http://thomasweise.github.io/aitoa/aitoa.epub) format for reading on mobile phones or other hand-held devices, and
 4. [aitoa.azw3](http://thomasweise.github.io/aitoa/aitoa.azw3), in the [AZW3](http://thomasweise.github.io/aitoa/aitoa.azw3) format for reading on Kindle and similar devices.
 
+The latter two formats are still a bit experimental, so they might not be beautiful.
+The [html](http://thomasweise.github.io/aitoa/aitoa.html), in the [HTML5](http://thomasweise.github.io/aitoa/aitoa.html) version is fairly large, as it is a single stand-alone file.
+
 ### 2.2. The Algorithm Implementations
 
 Every algorithm that we discuss is implemented in Java&nbsp;1.8 and all accompanying sources codes are provided in the GitHub repository [aitoa-code](http://github.com/thomasWeise/aitoa-code).
 This means that you can run the same experiments that I did, but also do your own experiments and use the code for your own purposes.
 The code provides comprehensive facilities for logging and evaluating experimental results.
-It comes as a Maven project that can be integrated as library into your own software, as discussed [here](http://github.com/thomasWeise/aitoa-code).
+It should be applicable to a wide range of scenarios.
+In particular, we tried to make it suitable for scientific experiments and provide built-in experiment execution, parallelization, distribution, and self-documenting output facilities.
+The code comes as a Maven project that can be integrated as library into your own software, as discussed [here](http://github.com/thomasWeise/aitoa-code).
 
 ### 2.3. The Slides
 
 The final goal is to use this book as the foundation of a university course "Optimization Algorithms."
-Therefore, I am also trying to create a corresponding set of slides.
+Therefore, I am also trying to create a corresponding set of [slides](https://thomasweise.github.io/aitoa-slides/).
 The book is far from being complete, but the slides are even in a much earlier state of development.
 Only the first few topics from the book are covered as of now.
 
 1. [Introduction](https://thomasweise.github.io/aitoa-slides/01_introduction.pdf)
 2. [Structure](https://thomasweise.github.io/aitoa-slides/02_structure.pdf)
 
+The LaTeX source code of the slides is provided in [this repository](http://github.com/thomasWeise/aitoa-slides). 
+
 ### 2.4. Everything in One Archive
 
-A [tar.xz](https://thomasweise.github.io/aitoa-slides/optimization_algorithms.tar.xz) archive with everything put together, i.e., the book, the source codes, and the slides, can be found [here](https://thomasweise.github.io/aitoa-slides/optimization_algorithms.tar.xz).
+A [tar.xz archive](https://thomasweise.github.io/aitoa-slides/optimization_algorithms.tar.xz) with everything put together, i.e., the [book](http://thomasweise.github.io/aitoa/index.html), the [source codes](http://github.com/thomasWeise/aitoa-code), and the [slides](https://thomasweise.github.io/aitoa-slides/), can be found [here](https://thomasweise.github.io/aitoa-slides/optimization_algorithms.tar.xz).
+We package everything as [tar.xz](https://thomasweise.github.io/aitoa-slides/optimization_algorithms.tar.xz) because this format tends to achieve the best compression ratio.
 
 ## 3. Further Tools and Resources
 
 Furthermore, many of the diagrams in this book are generated using an [`R` package](http://github.com/thomasWeise/aitoaEvaluate), which is published in the GitHub Repository [aitoaEvaluate](http://github.com/thomasWeise/aitoaEvaluate).
+You can install and use it in `R` via `devtools::install_github("thomasWeise/aitoaEvaluate")`.
 
-The data from the experiments presented in the book is in the GitHub Repository [aitoa-data](http://github.com/thomasWeise/aitoa-data).
+The data from the experiments presented in the book is presented in the GitHub Repository [aitoa-data](http://github.com/thomasWeise/aitoa-data).
 
 [jsspInstancesAndResults](https://github.com/thomasWeise/jsspInstancesAndResults) is an repository with lots of results from literature on the Job Shop Scheduling Problem (JSSP).
 At the same time, it is also an `R` package.
@@ -67,6 +79,9 @@ There is a hierarchy of docker containers that forms the infrastructure for the 
 - [docker-texlive-thin](http://github.com/thomasWeise/docker-texlive-thin) is the container which is the basis for [docker-pandoc](http://github.com/thomasWeise/docker-pandoc). It holds an installation of TeX Live and its sources are [here](http://github.com/thomasWeise/docker-texlive-thin) while it is located [here](http://hub.docker.com/r/thomasweise/docker-texlive-thin/).
 - The `R` package [utilizeR](http://github.com/thomasWeise/utilizeR) holds some utility methods used by [bookbuildeR](http://github.com/thomasWeise/bookbuildeR). 
 
+Besides these containers, we also have some tools to make our work more efficiently.
+The tool [`ultraSvgz`](https://github.com/thomasWeise/ultraSvgz) combines several existing pieces (such as [`ultraGzip`](http://github.com/thomasWeise/ultraGzip)) of software to compile an `svg` graphic to a very small `svgz`.
+This, in turn, makes it easier to keep the total size of the git repositories with our book and slides small.
 
 ## 5. License
 
