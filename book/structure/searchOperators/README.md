@@ -4,14 +4,14 @@ One of the most important design choices of a metaheuristic optimization algorit
 
 ### Definitions
 
-\text.block{definition}{searchOp}{An $n$-ary *search operator*&nbsp;$\searchOp:\searchSpace^n\mapsto\searchSpace$ is a left-total relation which accepts $n$ points in the search space&nbsp;$\searchSpace$ as input and returns one point in the search space as output.}
+\text.block{definition}{searchOp}{An $k$&#8209;ary *search operator*&nbsp;$\searchOp:\searchSpace^k\mapsto\searchSpace$ is a left-total relation which accepts $k$&nbsp;points in the search space&nbsp;$\searchSpace$ as input and returns one point in the search space as output.}
 
 Special cases of search operators are
 
-- nullary operators ($n=0$, see [@lst:INullarySearchOperator]), which sample a new point from the search space without using any information from an existing points,
-- unary operators ($n=1$, see [@lst:IUnarySearchOperator]), which sample a new point from the search space based on the information of one existing point,
-- binary operators ($n=2$, see [@lst:IBinarySearchOperator]), which sample a new point from the search space by combining information from two existing points, and
-- ternary  operators ($n=3$), which sample a new point from the search space by combining information from three existing points.
+- nullary operators ($k=0$, see [@lst:INullarySearchOperator]), which sample a new point from the search space without using any information from an existing points,
+- unary operators ($k=1$, see [@lst:IUnarySearchOperator]), which sample a new point from the search space based on the information of one existing point,
+- binary operators ($k=2$, see [@lst:IBinarySearchOperator]), which sample a new point from the search space by combining information from two existing points, and
+- ternary  operators ($k=3$), which sample a new point from the search space by combining information from three existing points.
 
 \repo.listing{lst:INullarySearchOperator}{A generic interface for nullary search operators.}{java}{src/main/java/aitoa/structure/INullarySearchOperator.java}{}{relevant}
 
