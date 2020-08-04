@@ -49,12 +49,21 @@ Black-box optimization is the highest level of abstraction on which we can work 
 ### Putting it Together: A simple API
 
 Before, I promised that we will implement all the algorithms discussed in this book.
-If our topic was Machine Learning &ndash; say clustering &ndash; then we would have a lot of specialized algorithms for clearly defined situations.
-The input and output data would usually adhere to some basic, fixed structures.
-If you implement k&#8209;means clustering, for instance, you have real vectors coming in and real vectors going out of your algorithm and that's that.
-However, we have to deal with the black-box concept, meaning that our algorithms will be very variable in terms of the data structures we can feed to them.
 
-This is more challenging, especially when we try to tackle this in an educational setting, where stuff should not be overly complicated.
+If we would be dealing with "classical" algorithms, things would be somewhat easier:
+A classical algorithm has clearly defined input and output data structures.
+Dijkstra's shortest path algorithm&nbsp;[@D1959ANOTPICWG], for instance, gets fed with a graph of weighted edges and a start node and will return the paths of minimum weight to all other nodes (or a specified target node).
+In Machine Learning, the situation is quite similar:
+We would have a lot of specialized algorithms for clearly defined situations.
+The input and output data would usually adhere to some basic, fixed structures.
+If you implement $k$&#8209;means clustering&nbsp;[@F1965CAOMDEVIOC; @HW1979AA1AKMCA], for instance, you have real vectors coming in and $k$~real vectors going out of your algorithm and that's that.
+Deep Learning&nbsp;[@GBC2016DL] basically takes, as input, a set of labeled real vectors (plus a network structure) and, as output, produces the vector of weights for the network.
+However, we have to deal with the black-box concept, meaning that our algorithms will be very variable in terms of the data structures we can feed to them.
+Matter in fact:
+*Any* of the three scenarios above can be modeled as optimization problem.
+*Any* of them can be tackled with (most of) the metaheuristics in this book as well!
+
+This is challenging from a programming perspective, especially when we try to tackle this in an educational setting, where stuff should not be overly complicated.
 So here I present my take on how to handle this situation.
 It is a bit of a primitive and simplistic approach, but it allows us to actually cash in on the promise of metaheuristics:
 We can implement algorithms that can be adapted to a wide range of possible problem domains.
@@ -73,7 +82,7 @@ The interface is *generic*, meaning it allows us to provide a search space&nbsp;
 
 \repo.listing{lst:IBlackBoxProcess}{A generic interface for representing black-box processes to an optimization algorithm.}{java}{src/main/java/aitoa/structure/IBlackBoxProcess.java}{}{relevant}
 
-Actually, such an interface does not need to expose the representation mapping&nbsp;$\repMap$ and objective function&nbsp;$\ofel$ as separate components to an optimization algorithm.
+Actually, such an interface does not need to expose the representation mapping&nbsp;$\repMap$ and objective function&nbsp;$\objf$ as separate components to an optimization algorithm.
 It is sufficient if the interface directly implements an `evaluate` that takes, as input, an element $\sespel\in\searchSpace$, internally performs the representation mapping&nbsp;$\solspel=\repMap(\sespel)$, then invokes the objective function&nbsp;$\ofel(\solspel)$, and returns its result.
 This `evaluate` method could then even be implemented such that it remembers the best-so-far-solution.
 We then no longer need to keep track of it in the optimization itself.
