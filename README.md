@@ -43,6 +43,7 @@ Only the first few topics from the book are covered as of now.
 1. [Introduction](https://thomasweise.github.io/aitoa-slides/01_introduction.pdf)
 2. [Structure](https://thomasweise.github.io/aitoa-slides/02_structure.pdf)
 3. [Metaheuristics](https://thomasweise.github.io/aitoa-slides/03_metaheuristics.pdf)
+4. [Random Sampling](https://thomasweise.github.io/aitoa-slides/04_random_sampling.pdf)
 
 The LaTeX source code of the slides is provided in [this repository](http://github.com/thomasWeise/aitoa-slides). 
 
