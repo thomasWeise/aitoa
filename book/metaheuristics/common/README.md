@@ -83,7 +83,7 @@ The interface is *generic*, meaning it allows us to provide a search space&nbsp;
 \repo.listing{lst:IBlackBoxProcess}{A generic interface for representing black-box processes to an optimization algorithm.}{java}{src/main/java/aitoa/structure/IBlackBoxProcess.java}{}{relevant}
 
 Actually, such an interface does not need to expose the representation mapping&nbsp;$\repMap$ and objective function&nbsp;$\objf$ as separate components to an optimization algorithm.
-It is sufficient if the interface directly implements an `evaluate` that takes, as input, an element $\sespel\in\searchSpace$, internally performs the representation mapping&nbsp;$\solspel=\repMap(\sespel)$, then invokes the objective function&nbsp;$\ofel(\solspel)$, and returns its result.
+It is sufficient if the interface directly implements an `evaluate` that takes, as input, an element $\sespel\in\searchSpace$, internally performs the representation mapping&nbsp;$\solspel=\repMap(\sespel)$, then invokes the objective function&nbsp;$\objf(\solspel)$, and returns its result.
 This `evaluate` method could then even be implemented such that it remembers the best-so-far-solution.
 We then no longer need to keep track of it in the optimization itself.
 
