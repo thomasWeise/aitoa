@@ -173,3 +173,10 @@ Restarting an optimization can be beneficial if the following conditions are met
    A restarted algorithm is still *the same* algorithm.
    It just exploits this variance, i.e., we will get something close to the best result of multiple runs.
    If the different runs deliver bad results anyway, doing multiple runs will not solve the problem.
+
+Above we said that random sampling is not a very efficient algorithm.
+This is true in most reasonable scenarios.
+In problems where information about existing good solutions does not help us in any way to find new good solutions, we cannot really do better than random sampling.
+In most reasonable problems that one may try to solve, however, such information is helpful.
+Random sampling then is also a basic yardstick: 
+An optimization algorithm that does not significantly outperform random sampling is useless.
