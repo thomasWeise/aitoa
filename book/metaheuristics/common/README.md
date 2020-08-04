@@ -95,10 +95,10 @@ All in all, this interface allows us to create transparent implementations that
 
 1. provide a random number generator to the algorithm,
 2. wrap an objective function&nbsp;$\objf$ together with a representation mapping&nbsp;$\repMap$ to allow us to evaluate a point in the search space&nbsp;$\sespel\in\searchSpace$ in a single step, effectively performing&nbsp;$\objf(\repMap(\sespel))$,
-3. keep track of the elapsed runtime and FEs as well as when the last improvement was made by updating said information when necessary during the invocations of the "wrapped" objective,
+3. keep track of the elapsed runtime and FEs as well as when the last improvement was made by updating said information when necessary during the invocations of the "wrapped" objective function,
 4. keep track of the best points in the search space and solution space so far as well as their associated objective value in special variables by updating them whenever the "wrapped" objective function discovers an improvement (taking care of the issue from [@sec:rememberBest] automatically),
 5. represent a termination criterion based on the above information (e.g., maximum FEs, maximum runtime, reaching a goal objective value), and
-7. log the improvements that the algorithm makes to a text file, so that we can use them to make tables and draw diagrams.
+6. log the improvements that the algorithm makes to a text file, so that we can use them to make tables and draw diagrams.
 
 Along with the interface class `IBlackBoxProcess`, we also provide a builder for instantiating it.
 The actual implementation behind this interface does not matter here.
