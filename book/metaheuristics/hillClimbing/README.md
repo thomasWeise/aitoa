@@ -246,12 +246,22 @@ Of course, our way of finding the right value for the restart parameter&nbsp;$L$
 Most likely, the right choice could be determined per instance based on the number&nbsp;$\jsspMachines$ of machines and the number&nbsp;$\jsspJobs$ of jobs.
 But even with such a coarse way of algorithm configuration, we managed to get rather good results. 
 
-### Hill Climbing with a Different Unary Operator {#sec:hillClimbingWithDifferentUnaryOperator}
+#### Drawbacks of the Idea of Restarts
 
 With our restart method, we could significantly improve the results of the hill climber.
-It directly addressed the problem of premature convergence, but it tried to find a remedy for its symptoms, not its cause.
+It directly addressed the problem of premature convergence, but it tried to find a remedy for its symptoms, not for its cause. 
 
-One cause for this problem in our hill climber is the design of unary operator.
+Basically, a restarted algorithm is still the same algorithm &ndash; we just restart it again and again.
+If there are many more local optima than global optima, every restart will probably end again in a local optimum.
+If there are many more ``bad'' local optima than ``good'' local optima, every restart will probably end in a ``bad'' local optimum.
+While restarts improve the chance to find better solutions, they cannot solve the intrinsic shortcomings of an algorithm.
+
+Another problem is: With every restart we throw away all accumulated knowledge and information of the current run.
+Restarts are therefore also somewhat wasteful.
+
+### Hill Climbing with a Different Unary Operator {#sec:hillClimbingWithDifferentUnaryOperator}
+
+One of issues limiting the performance of our restarted hill climber is the design of the unary operator.
 `1swap`&nbsp;will swap two jobs in an encoded solution.
 Since the solutions are encoded as integer arrays of length&nbsp;$\jsspMachines*\jsspJobs$, there are&nbsp;$\jsspMachines*\jsspJobs$ choices to pick the index of the first job to be swapped.
 Since we swap only with *different* jobs and each job appears&nbsp;$\jsspMachines$ times in the encoding, this leaves&nbsp;$\jsspMachines*(\jsspJobs-1)$ choices for the second swap index.
