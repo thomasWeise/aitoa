@@ -83,8 +83,8 @@ Here, we do not consider such methods, as we want to investigate a plain EA.
 After implementing the $(\mu+\lambda)$&nbsp;EA as discussed above, we already have all the ingredients ready to apply to the JSSP.
 We need to decide which values for&nbsp;$\mu$ and&nbsp;$\lambda$ we want to use.
 The configuration of EAs is a whole research area itself.
-The question arises which values for $\mu$ and $\lambda$ are reasonable.
-Without investigating whether this is the best idea, let us set $\mu=\lambda$ here, so we only have two parameters to worry about: $\mu$ and the unary search operator.
+The question arises which values for&nbsp;$\mu$ and&nbsp;$\lambda$ are reasonable.
+Without investigating whether this is the best idea, let us set $\mu=\lambda$ here, so we only have two parameters to worry about: $\mu$&nbsp;and the unary search operator.
 We already have two unary search operators.
 Let us call our algorithms of this type `ea_mu_unary`, where `mu` will stand for the value of&nbsp;$\mu$ and&nbsp;$\lambda$ and `unary` can be either `1swap` or `nswap`.
 We no therefore do a similar experiment as in [@sec:hillClimberWithRestartSetup] in order to find the right parameters. 
@@ -92,12 +92,20 @@ We no therefore do a similar experiment as in [@sec:hillClimberWithRestartSetup]
 ![The median result quality of the&nbsp;`ea_mu_unary` algorithm, divided by the lower bound $\lowerBound(\objf)^{\star}$ from [@tbl:jsspLowerBoundsTable] over different values of the population size parameter&nbsp;$\mu=\lambda$ and the two unary search operators `1swap` and `nswap`. The best values of&nbsp;$\mu$ for each operator and instance are marked with bold symbols.](\relative.path{jssp_ea_nocr_med_over_mu.svgz}){#fig:jssp_ea_nocr_med_over_mu width=84%}
 
 In [@fig:jssp_ea_nocr_med_over_mu], we illustrate this experiment.
-Regarding $\mu$ and $\lambda$, we observe the same situation as with the restarts parameters hill climber.
+Regarding&nbsp;$\mu$ and&nbsp;$\lambda$, we observe the same situation as with the restarts parameters hill climber.
 There is a "sweet spot" somewhere between small and large population sizes.
-For small values of $\mu$, the algorithm may land in a local optimum too quickly, whereas for large values, it may not be able to perform sufficiently many generations to arrive at a good solution.
+For small values of&nbsp;$\mu$, the algorithm may end up in a local optimum, whereas for large values, it may not be able to perform sufficiently many generations to arrive at a good solution.
+Nevertheless, compared to the hill climber with restart and with the exception for instance `swv15`, the EA performs quite stable:
+There are only relatively little differences in result quality for both unary operators and over many scales of&nbsp;$\mu$.
+This generally a nice feature, as we would like to have algorithms that are not too sensitive to parameter settings.
+
 The setting $\mu=\lambda=16'384$ seems to work well for instances `abz7`, `la25`, and `yn4`.
 Interestingly, instance `swv15` behaves different: here, the setting&nbsp;$\mu=\lambda=1024$ works best.
-It is quite common in optimization that different problem instances may require different setups to achieve the best performance &ndash; but here we see it very pronounced
+It is quite common in optimization that different problem instances may require different setups to achieve the best performance.
+Here we see this quite pronounced.
+This is generally a feature that we do not like.
+We would ideally like to have algorithms where a good parameter setting performs well on many instances as opposed to such where each instance requires a totally different setup.
+Luckily, this here only concerns one of our example problem instances.  
 
 Regarding the choice of the unary search operator:
 With the exception of problem `swv15`, both operators provide the same median result quality.

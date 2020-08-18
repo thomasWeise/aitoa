@@ -45,6 +45,7 @@ Only the first few topics from the book are covered as of now.
 3. [Metaheuristics](https://thomasweise.github.io/aitoa-slides/03_metaheuristics.pdf)
 4. [Random Sampling](https://thomasweise.github.io/aitoa-slides/04_random_sampling.pdf)
 5. [Stochastic Hill Climbing](https://thomasweise.github.io/aitoa-slides/05_stochastic_hill_climbing.pdf)
+6. [Evolutionary Algorithm](https://thomasweise.github.io/aitoa-slides/06_evolutionary_algorithm.pdf)
 
 The LaTeX source code of the slides is provided in [this repository](http://github.com/thomasWeise/aitoa-slides). 
 
