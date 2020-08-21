@@ -208,7 +208,7 @@ How can we define a binary search operator for our JSSP representation?
 1. Allocate a data structure&nbsp;$\sespel'$ to hold the new point in the search space that we want to sample.
 2. Set the index&nbsp;$i$ where the next operation should be stored in&nbsp;$\sespel'$ to $i=0$.
 3. Repeat
-    a. Randomly choose of the input points&nbsp;${\sespel}1$ or&nbsp;${\sespel}2$ with equal probability as source&nbsp;$\sespel$.
+    a. Randomly choose one of the input points&nbsp;${\sespel}1$ or&nbsp;${\sespel}2$ with equal probability as source&nbsp;$\sespel$.
     b. Select the first (at the lowest index) operation in&nbsp;$\sespel$ that is not marked yet and store it in variable&nbsp;$J$.
     c. Set $\arrayIndex{\sespel'}{i}=J$.
     d. Increase&nbsp;$i$ by one ($i=i+1$).
