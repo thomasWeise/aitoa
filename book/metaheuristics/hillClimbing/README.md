@@ -261,17 +261,21 @@ Restarts are therefore also somewhat wasteful.
 
 ### Hill Climbing with a Different Unary Operator {#sec:hillClimbingWithDifferentUnaryOperator}
 
+#### Small vs. Large Neighborhoods &ndash; and Uniform vs. Non-Uniform Sampling 
+
 One of issues limiting the performance of our restarted hill climber is the design of the unary operator.
 `1swap`&nbsp;will swap two jobs in an encoded solution.
-Since the solutions are encoded as integer arrays of length&nbsp;$\jsspMachines*\jsspJobs$, there are&nbsp;$\jsspMachines*\jsspJobs$ choices to pick the index of the first job to be swapped.
-Since we swap only with *different* jobs and each job appears&nbsp;$\jsspMachines$ times in the encoding, this leaves&nbsp;$\jsspMachines*(\jsspJobs-1)$ choices for the second swap index.
-We can also ignore equivalent swaps, e.g., exchanging the jobs at indexes $(10,5)$ and $(5,10)$ would result in the same outcome.
-In total, from any given point in the search space, `1swap` may reach&nbsp;$0.5*\jsspMachines*\jsspJobs*\jsspMachines*(\jsspJobs-1)=0.5*\jsspMachines^2(\jsspJobs^2-\jsspJobs)$ different other points.
-Some of these points may still actually encode the same candidate solutions, i.e., identical schedules.
+Since the solutions are encoded as integer arrays of length&nbsp;$\jsspMachines*\jsspJobs$, there are&nbsp;$\jsspMachines*\jsspJobs$ possible choices when picking the index of the first job to be swapped.
+We swap only with *different* jobs and each job appears&nbsp;$\jsspMachines$ times in the encoding.
+This leaves&nbsp;$\jsspMachines*(\jsspJobs-1)$ choices for the second swap index, because we will only use a second index that points to a different job ID.
+If we think about the size of the neighborhood spanned by `1swap`, we can also ignore equivalent swaps:
+Exchanging the jobs at indexes $(10,5)$ and $(5,10)$, for example, would result in the same outcome.
+In total, from any given point in the search space, `1swap` may reach&nbsp;$0.5*(\jsspMachines*\jsspJobs)*[\jsspMachines*(\jsspJobs-1)]=0.5*\jsspMachines^2(\jsspJobs^2-\jsspJobs)$ different other points.
+Some of these points might still actually encode the same candidate solutions, i.e., identical schedules.
 In other words, the neighborhood spanned by our `1swap`&nbsp;operator equals only a tiny fraction of the big search space (remember [@tbl:jsspSearchSpaceTable]).
 
 This has two implications:
-
+      
 1. The chance of premature convergence for a hill climber applying this operator is relatively high, since the neighborhoods are relatively small.
    If the neighborhood spanned by the operator was larger, it would contain more, potentially better solutions.
    Hence, it would take longer for the optimization process to reach a point where no improving move can be discovered anymore.
@@ -281,14 +285,36 @@ This has two implications:
    If the search operator would permit such moves, then even the plain hill climber may discover this better solution.
 
 So let us try to think about how we could define a new unary operator which can access a larger neighborhood.
-Here we first should consider the extreme cases.
+As we should always do, we first consider the extreme cases.
+
 On the one hand, we have `1swap` which samples from a relatively small neighborhood.
+Because the neighborhood is small, the stochastic hill climber will eventually have visited all of the solutions it contains.
+If none of them is better than the current best solution, it will not be able to depart from it.
+
 The other extreme could be to use our nullary operator as unary operator:
 It would return an entirely random point from the search space&nbsp;$\searchSpace$ and ignore its input.
-It would have&nbsp;$\searchSpace$ as the neighborhood and uniformly sample from it, effectively turning the hill climber into random sampling.
+Then, each point&nbsp;$\sespel\in\searchSpace$ would have the whole&nbsp;$\searchSpace$ as the neighborhood.
+Using such a unary operator would turn the hill climber into random sampling (and we do not want that).
+
 From this thought experiment we know that unary operators which indiscriminately sample from very large neighborhoods are probably not very good ideas, as they are "too random."
 They also make less use of the causality of the search space, as they make large steps and their produced outputs are very different from their inputs.
-What we would like is an operator that often creates outputs very similar to its input (like `1swap`), but also from time to time samples points a bit farther away in the search space.
+
+Using an operator that creates larger neighborhoods than `1swap`, which are still smaller than&nbsp;$\searchSpace$ would be one idea.
+For example, we could always swap three jobs instead of two.
+The more jobs we swap in each application, the larger the neighborhood gets.
+Then we will be less likely to get trapped in local optima (as there will be fewer local optima).
+But we will also make less and less use of the causality property, i.e., the solutions we derive from the current best one will be more and more different from it.
+Where should we draw the line?
+How many jobs should we swap?
+
+Well, there is one more aspect of the operators that we did not think about yet.
+An operator does not just span a neighborhood, but it also defines a *probability distribution* over it.
+So far, our `1swap` unary operator samples *uniformly* from the neighborhood of its input.
+In other words, all of the $0.5*\jsspMachines^2(\jsspJobs^2-\jsspJobs)$ new points that it could create in one step have exactly the same probability, the same chance to be chosen.
+
+But we do not need to do it like that.
+We could construct an operator that often creates outputs very similar to its input (like `1swap`), but also, from time to time, samples points a bit farther away in the search space.
+This operator could have a huge neighborhood &ndash; but sample it non-uniformly.
 
 #### Second Unary Search Operator for the JSSP {#sec:jsspUnaryOperator2}
 
