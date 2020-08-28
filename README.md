@@ -22,7 +22,7 @@ The book [*"An Introduction to Optimization Algorithms"*](http://thomasweise.git
 4. [aitoa.azw3](http://thomasweise.github.io/aitoa/aitoa.azw3), in the [AZW3](http://thomasweise.github.io/aitoa/aitoa.azw3) format for reading on Kindle and similar devices.
 
 The latter two formats are still a bit experimental, so they might not be beautiful.
-The [html](http://thomasweise.github.io/aitoa/aitoa.html), in the [HTML5](http://thomasweise.github.io/aitoa/aitoa.html) version is fairly large, as it is a single stand-alone file.
+The [html](http://thomasweise.github.io/aitoa/aitoa.html) version of the book is fairly large, as it is a single stand-alone file.
 
 ### 2.2. The Algorithm Implementations
 
@@ -49,6 +49,7 @@ Only the first few topics from the book are covered as of now.
 7. [Simulated Annealing](https://thomasweise.github.io/aitoa-slides/07_simulated_annealing.pdf)
 
 The LaTeX source code of the slides is provided in [this repository](http://github.com/thomasWeise/aitoa-slides). 
+It also includes all figures as `pdf` and `svg`.
 
 ### 2.4. Everything in One Archive
 
