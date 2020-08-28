@@ -18,15 +18,20 @@ Maybe we can escape from a local optimum without discarding the entirety good so
 
 Simulated Annealing (SA)&nbsp;[@KGV1983OBSA; @C1985TATTTSPAESA; @DPSW1982MCTICO; @P1970AMCMFTASOCTOCOP] is a local search which provides another approach to escape local optima&nbsp;[@WGOEB; @S2003ITSSAO].
 The algorithm is inspired by the idea of simulating the thermodynamic process of *annealing* using statistical mechanics, hence the naming&nbsp;[@MRRTT1953EOSCBFCM].
-Instead of restarting the algorithm when reaching a local optimum, it tries to preserve the parts of the current best solution by permitting search steps towards worsening objective values. 
+Instead of restarting the algorithm when reaching a local optimum, it tries to preserve the parts of the current solution by permitting search steps towards worsening objective values. 
 This algorithm therefore introduces three principles:
 
 1. Worse candidate solutions are sometimes accepted, too.
-2. The probability&nbsp;$P$ of accepting them is decreases with increasing differences&nbsp;$\Delta E$ of their objective values to the current best solution.
+2. The probability&nbsp;$P$ of accepting them is decreases with increasing differences&nbsp;$\Delta E$ of their objective values to the current solution.
 3. The probability also decreases with the number of performed search steps.
 
-This basic idea is realized as follows.
-First, $\Delta E$ be the difference between the objective value of the freshly sampled point&nbsp;$\sespel'$ from the search space and the "current" best point&nbsp;$\sespel$, where $\repMap$ is the representation mapping and $\objf$ the objective function, i.e.
+These three principles are "injected" into the main loop of the hill climber.
+This is realized as follows.
+
+Let us assume that $\sespel\in\searchSpace$&nbsp;is the "current" point that our local search maintains.
+$\sespel'\in\searchSpace$&nbsp;is the "newly sampled" point, i.e., the result of the application of the unary search operator to&nbsp;$\sespel$.
+Then, $\Delta E$ be the difference between the objective value corresponding to&nbsp;$\sespel'$ and&nbsp;$\sespel$.
+In other words, if $\repMap$ is the representation mapping and $\objf$ the objective function, then:
 
 $$ \Delta E = \objf(\repMap(\sespel')) - \objf(\repMap(\sespel)) $$ {#eq:simulatedAnnealingDeltaE}
 
@@ -40,21 +45,23 @@ e^{-\frac{\Delta E}{T}} & \text{if~}\Delta E >0 \land T > 0\\
 0 & \text{otherwise~}(\Delta E > 0 \land T=0)
 \end{array} \right. $$ {#eq:simulatedAnnealingP}
 
-In other words, if the new candidate solution is actually better than the current best one, i.e., $\Delta E <0$, then we will definitely accept it.
-If the new solution is worse ($\Delta E > 0$), the acceptance probability then
+In other words, if the new point&nbsp;$\sespel'$ is actually better (or, at least, not worse) than the current point&nbsp;$\sespel$, i.e., $\Delta E \leq 0$, then we will definitely accept it.
+If the new point&nbsp;$\sespel'$ is worse ($\Delta E > 0$), then the acceptance probability
 
 1. gets smaller the larger $\Delta E$ is and
 2. gets smaller the smaller the so-called "temperature" $T\geq 0$ is.
 
 Both the temperature&nbsp;$T>0$ and the objective value difference&nbsp;$\Delta E>0$ enter [@eq:simulatedAnnealingP] in the exponential term and the two above points follow from $e^{-a}<e^{-b}\forall a>b$.
-We also have $e^{-a}\in[0,1]\forall a>0$, so it can be used as probability value.
+We also have $e^{-a}\in(0,1)\forall a>0$, so it can be used as probability value.
 
-The temperature will be changed automatically such that it decreases and approaches zero with the number&nbsp;$\iteration$ of algorithm iterations, i.e., the performed objective function evaluations.
-The optimization process is initially "hot."
-Then, the search progresses may accept even significantly worse solutions.
-As the process "cools" down, the search tends to accept fewer and fewer worse solutions and more likely such which are only a bit worse.
+The temperature will be changed automatically such that it decreases and approaches zero with a rising number&nbsp;$\iteration$ of algorithm iterations, i.e., the performed objective function evaluations.
+The optimization process is initially "hot" and $T$&nbsp;is high.
+Then, even significantly worse solutions may be accepted
+Over time, the process "cools" down and $T$&nbsp;decreases.
+The search slowly accepts fewer and fewer worse solutions and more likely such which are only a bit worse.
 Eventually, at temperature&nbsp;$T=0$, the algorithm only accepts better solutions. 
-In other words, $T$ is actually a monotonously decreasing function $T(\iteration)$ called the "temperature schedule" and it holds that $\lim_{\iteration\rightarrow\infty} T(\iteration) = 0$.
+In other words, $T$ is actually a monotonously decreasing function $T(\iteration)$ called the "temperature schedule."
+It holds that $\lim_{\iteration\rightarrow\infty} T(\iteration) = 0$.
 
 ### Ingredient: Temperature Schedule
 
@@ -156,7 +163,7 @@ In [@tbl:jssp_hc1_swap_sa_params], we print the standard deviation&nbsp;*sd* of 
 This tells us something about how far the different local optima at which `hc_1swap` can get stuck are apart in terms of objective value.
 The value of&nbsp;*sd* ranges from&nbsp;28 on&nbsp;`abz7` to&nbsp;137 on&nbsp;`swv15`.
 The median standard deviation over all four instances is about&nbsp;50.
-Thus, accepting a solution which is worse by 50 units of makespan, i.e., with $\Delta E\approx 50$, should be possible at the beginning of the optimization process. 
+Thus, accepting a solution which is worse by 50&nbsp;units of makespan, i.e., with $\Delta E\approx 50$, should be possible at the beginning of the optimization process. 
 
 How likely should accepting such a value be?
 Unfortunately, we are again stuck at making an arbitrary choice &ndash; but at least we can make a choice from within a well-defined region:
@@ -164,6 +171,7 @@ Probabilities must be in&nbsp;$[0,1]$ and can be understood relatively intuitive
 Let us choose that the probability&nbsp;$P_{50}$ to accept a candidate solution that is 50&nbsp;makespan units worse than the current one, i.e., has&nbsp;$\Delta E = 50$, should be&nbsp;$P_{50}=0.1$ at the beginning of the search.
 In other words, there should be a 10% chance to accept such a solution at $\iteration=1$.
 At $\iteration=1$, $T(\iteration)=T_s$ for both temperature schedules.
+Of course, at $\iteration=1$ we do not really use the probability formula to decide whether or not to accept a solution, but we can expect that the temperature at $\iteration=2$ would still be very similar to&nbsp;$T_s$ and we are using rough and rounded approximations anyway, so let's not make our life unnecessarily complicated here. 
 We can now solve [@eq:simulatedAnnealingP] for&nbsp;$T_s$:
 
 $$ \begin{array}{rl}
