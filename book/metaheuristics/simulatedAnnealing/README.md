@@ -61,7 +61,7 @@ Over time, the process "cools" down and $T$&nbsp;decreases.
 The search slowly accepts fewer and fewer worse solutions and more likely such which are only a bit worse.
 Eventually, at temperature&nbsp;$T=0$, the algorithm only accepts better solutions. 
 In other words, $T$ is actually a monotonously decreasing function $T(\iteration)$ called the "temperature schedule."
-It holds that $\lim_{\iteration\rightarrow\infty} T(\iteration) = 0$.
+It holds that $\lim_{\iteration\rightarrow+\infty} T(\iteration) = 0$.
 
 ### Ingredient: Temperature Schedule
 
@@ -195,7 +195,7 @@ So we are stuck with the task to pick a suitably small value for&nbsp;$T_e$.
 Maybe here our previous findings from back when we tried to restart the hill climber can come in handy.
 In [@sec:hillClimberWithRestartSetup], we learned that it makes sense to restart the hill climber after $L=16'384$ unsuccessful search steps.
 So maybe a terminal state for our Simulated Annealing could be a scenario where the probability&nbsp;$P_e$ of accepting a candidate solution which is $\Delta E=1$&nbsp;makespan unit worse than the current one should be&nbsp;$P_e=1/16'384$?
-This would mean that the chance to accept a candidate solution being marginally worse that the current one would be about as large as making a complete restart in&nbsp;`hcr_16384_1swap`.
+This would mean that the chance to accept a candidate solution being marginally worse than the current one would be about as large as making a complete restart in&nbsp;`hcr_16384_1swap`.
 Of course, this is again an almost arbitrary choice, but it at least looks like a reasonable terminal state for our Simulated Annealing algorithm.
 We can now solve [@eq:simulatedAnnealingP] again to get the end temperature&nbsp;$T_e$:
 
