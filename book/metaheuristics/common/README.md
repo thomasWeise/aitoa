@@ -39,11 +39,20 @@ The concept of general metaheuristics, the idea to attack a very wide class of o
 If we want to have one algorithm that can be applied to all the examples given in in the introduction, then this can best be done if we hide all details of the problems under the hood of the structural elements introduced in [@sec:structure].
 For a black-box metaheuristic, it does not matter how the objective function&nbsp;$\objf$ works.
 The only thing that matters is that gives a rating of a candidate solution&nbsp;$\solspel\in\solutionSpace$ and that smaller ratings are better.
-For a black-box metaheuristic, it does not matter what exactly the search operators do or even what data structure is used as search space&nbsp;$\searchSpace$.
-It only matters that these operators can be used to get to new points in the search space (which can be mapped to candidate solutions&nbsp;$\solspel$ via a representation mapping&nbsp;$\repMap$ whose nature is also unimportant for the metaheuristic).
-Indeed, even the nature of the candidate solutions&nbsp;$\solspel\in\solutionSpace$ and the solution space&nbsp;$\solutionSpace$ play no big role for black-box optimization methods, as they only work on and explore the search space&nbsp;$\searchSpace$.
+
+There are different degrees of how general black-box metaheuristics can be.
+For the most general algorithms, it does not matter what exactly the search operators do or even what data structure is used as search space&nbsp;$\searchSpace$.
+For them, it only matters that these operators can be used to get to new points in the search space (which can be mapped to candidate solutions&nbsp;$\solspel$ via a representation mapping&nbsp;$\repMap$ whose nature is also unimportant for the metaheuristic).
+Then, even the nature of the candidate solutions&nbsp;$\solspel\in\solutionSpace$ and the solution space&nbsp;$\solutionSpace$ play no big role for black-box optimization methods, as they only work on and explore the search space&nbsp;$\searchSpace$.
+
+Then there are also black-box metaheuristics that demand a special type of search space, e.g., a specific subset of the $n$-dimensional real numbers $($\searchSpace\subset\realNumbers^n$), bit strings of a given length, or permutations of the first $n$&nbsp;natural numbers.
+These algorithms can still be general, as they may make very few assumptions about the nature of the objective function&nbsp;$\objf$ defined over the solution space&nbsp;$\problemSpace$.
+
 The solution space is relevant for the human operator using the algorithm only, the search space is what the algorithm works on.
-Thus, a black-box metaheuristic is a general algorithm into which we can plug search operators, representations, and objective functions as needed by a specific application, as illustrated in [@fig:black_box_metaheuristic].
+Of course, in many cases, $\searchSpace=\solutionSpace$.
+
+Thus, a black-box metaheuristic is a general algorithm into which we can plug representations, objective functions, and often also search operations as needed by a specific application.
+This is illustrated in [@fig:black_box_metaheuristic].
 Black-box optimization is the highest level of abstraction on which we can work when trying to solve complex problems.
 
 ### Putting it Together: A simple API
@@ -64,11 +73,11 @@ Matter in fact:
 *Any* of them can be tackled with (most of) the metaheuristics in this book as well!
 
 This is challenging from a programming perspective, especially when we try to tackle this in an educational setting, where stuff should not be overly complicated.
-So here I present my take on how to handle this situation.
-It is a bit of a primitive and simplistic approach, but it allows us to actually cash in on the promise of metaheuristics:
-We can implement algorithms that can be adapted to a wide range of possible problem domains.
+What we want is to not just implement general algorithms, but also be able to execute them and obtain their results in a convenient fashion.
+Ideally, we do not want to be bothered with too much book keeping or the creation of log files and such and such.
+It should be possible to implement the most general type of black-box methods as well as problem-specific optimization methods and to run them in a uniform environment. 
 
-We will now attempt to define a simple API for black-box optimization that combines all of our considerations far.
+I therefore try to define a simple API for black-box optimization that combines all of our considerations far.
 The goal is to make the implementation of metaheuristics as simple as possible.
 We do this by clearly dividing between the optimization algorithms for solving a problem on one side and the structural components of the problem on the other side.
 The algorithms that we will implement will be general black-box methods.
@@ -76,7 +85,7 @@ At the same time, we will develop the components that we need to plug into them 
 
 We therefore first need to consider what an optimization process needs as input.
 Obviously, in the most common case, these are all the items we have discussed in the previous section, ranging from the termination criterion over the search operators (which we will discuss later) and the representation mapping to the objective function.
-Let us therefore define an interface that can provide all these components with corresponding "getter methods".
+Let us therefore define an interface that can provide all these components with corresponding "getter methods."
 We call this interface `IBlackBoxProcess<X,Y>` from which an excerpt is given in [@lst:IBlackBoxProcess].
 The interface is *generic*, meaning it allows us to provide a search space&nbsp;$\searchSpace$ as type parameter&nbsp;`X` and a solution space&nbsp;$\solutionSpace$ via the type parameter&nbsp;`Y`.
 
@@ -87,8 +96,8 @@ It is sufficient if the interface directly implements an `evaluate` that takes, 
 This `evaluate` method could then even be implemented such that it remembers the best-so-far-solution.
 We then no longer need to keep track of it in the optimization itself.
 
-Of course, we can also implement logging of the search progress inside of `evaluate`, which would make this functionality available to all of our experiments in a transparent fashio.
-Furthermore, we could also keep track of the total number of objective values as well as of the consumed runtime.
+Of course, we can also implement logging of the search progress inside of `evaluate`, which would make this functionality available to all of our experiments in a transparent fashion.
+Furthermore, we could also keep track of the total number of calls to the objective function as well as of the consumed runtime.
 This, in turn, can be used to implement the termination criterion.
 
 All in all, this interface allows us to create transparent implementations that
@@ -105,24 +114,28 @@ The actual implementation behind this interface does not matter here.
 It is clear what it does, and the actual code is simple and not contributing to the understand of the algorithms or processes.
 Thus, you do not need to bother with it, just the assumption that an object implementing `IBlackBoxProcess` has the abilities listed above shall suffice here.
  
-When instantiating this interface by our utility functions, besides the search operators, termination criterion, representation mapping, and objective function, we also need to provide the functionality to instantiate and copy the data structures making up the spaces&nbsp;$\searchSpace$ and $\solutionSpace$.
-If the black-box optimization algorithm does not make any assumption about the Java `class`es corresponding to these spaces, it needs to be provided with some functionality to instantiate.
-For this purpose, we add another easy-to-implement and very simple interface, namely `ISpace`, see [@lst:ISpace].
+When instantiating this interface via the builder, we can provide the termination criterion, representation mapping, and objective function.
+Additionally, we also need to provide the functionality to instantiate and copy the data structures making up the spaces&nbsp;$\searchSpace$ and $\solutionSpace$.
+On one hand, these are needed for the internal book-keeping so that `evaluate` can internally make a copy of the best-so-far elements in&nbsp;$\searchSpace$ and $\solutionSpace$).
+On the other hand, the black-box optimization algorithms that we will implement also must be able to make such copies.
+Since we do not make any assumption about the Java `class`es corresponding to the spaces&nbsp;$\searchSpace$ and&nbsp;$\solutionSpace$, we add another easy-to-implement and very simple interface, namely `ISpace`, see [@lst:ISpace].
+It can be implemented for each problem type and then provides the required functionality.
 
 \repo.listing{lst:ISpace}{A excerpt of the generic interface `ISpace` for representing basic functionality of search and solution spaces needed by [@lst:IBlackBoxProcess].}{java}{src/main/java/aitoa/structure/ISpace.java}{}{relevant}
 
 Equipped with this, defining an interface for black-box metaheuristics becomes easy:
 The optimization algorithms themselves then are implementations of the generic interface `IMetaheuristic<X,Y>` given in [@lst:IMetaheuristic].
-As you can see, this interface only needs a single method, `solve`.
-This method will use the functionality provided by the `IBlackBoxProcess` handed to it as parameter `process` to generate new points in the search space&nbsp;`X` and sending them to the `evaluate` method of `process`.
-This is the core behavior of every basic metaheuristic, and in the rest of this chapter, we will learn how different algorithms realize it.
+As you can see, this interface only really needs a single method, `solve`.
+This method will use the functionality provided by the `IBlackBoxProcess` handed to it as parameter `process`.
+The implemented algorithm can generate new points in the search space&nbsp;`X` and send them to the `evaluate` method of `process`.
+This is the core behavior of every basic metaheuristic and in the rest of this chapter, we will learn how different algorithms realize it.
 
 \repo.listing{lst:IMetaheuristic}{A generic interface of a metaheuristic optimization algorithm.}{java}{src/main/java/aitoa/structure/IMetaheuristic.java}{}{relevant}
 
 Notice that the interface `IMetaheuristic` is, again, generic, allowing us to specify a search space&nbsp;$\searchSpace$ as type parameter&nbsp;`X` and a solution space&nbsp;$\solutionSpace$ via the type parameter&nbsp;`Y`.
 Whether an implementation of this interface is generic too or whether it ties down `X` or `Y` to concrete types will then depend on the algorithms we try to realize.
-A "fully black-box" metaheuristic may be able to deal with any search- and solution space, as long it is provided with the right operators.
-However, we could also implement an algorithm specified to numerical problems where&nbsp;$\searchSpace\subset\realNumbers^n$, by tying down `X` to `double[]` in the algorithm class specification.
+The most general black-box metaheuristics may be able to deal with any search- and solution space, as long they are provided with the right operators.
+Still, we could also implement an algorithm specified to numerical problems where&nbsp;$\searchSpace\subset\realNumbers^n$, by tying down `X` to `double[]` in the algorithm class specification.
 
 ### Example: Job Shop Scheduling
 
