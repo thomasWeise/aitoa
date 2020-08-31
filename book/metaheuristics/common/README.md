@@ -45,7 +45,7 @@ For the most general algorithms, it does not matter what exactly the search oper
 For them, it only matters that these operators can be used to get to new points in the search space (which can be mapped to candidate solutions&nbsp;$\solspel$ via a representation mapping&nbsp;$\repMap$ whose nature is also unimportant for the metaheuristic).
 Then, even the nature of the candidate solutions&nbsp;$\solspel\in\solutionSpace$ and the solution space&nbsp;$\solutionSpace$ play no big role for black-box optimization methods, as they only work on and explore the search space&nbsp;$\searchSpace$.
 
-Then there are also black-box metaheuristics that demand a special type of search space, e.g., a specific subset of the $n$-dimensional real numbers $($\searchSpace\subset\realNumbers^n$), bit strings of a given length, or permutations of the first $n$&nbsp;natural numbers.
+Then there are also black-box metaheuristics that demand a special type of search space, e.g., a specific subset of the $n$-dimensional real numbers ($\searchSpace\subset\realNumbers^n$), bit strings of a given length, or permutations of the first $n$&nbsp;natural numbers.
 These algorithms can still be general, as they may make very few assumptions about the nature of the objective function&nbsp;$\objf$ defined over the solution space&nbsp;$\problemSpace$.
 
 The solution space is relevant for the human operator using the algorithm only, the search space is what the algorithm works on.
