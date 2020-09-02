@@ -264,8 +264,11 @@ Our SA setup also is more reliable than the other algorithms, its standard devia
 
 We know that on `la24`, $\epsilon=2\!\cdot\!10^{-7}$ is not the best choice for SA and smaller values would perform better there.
 Interestingly, in the experiment, the settings $\epsilon=4\!\cdot\!10^{-7}$ and $\epsilon=8\!\cdot\!10^{-7}$ (not listed in the table) also each discovered a globally optimal solution on that instance.
+In [@fig:jssp_gantt_sa_exp_20_8_1swap_la24_best], we illustrate the one found by `sa_exp_20_8_1swap`.
 
 ![The Gantt charts of the median solutions obtained by the `sa_exp_20_2_1swap` algorithm. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_sa_exp_20_2_1swap_med.svgz}){#fig:jssp_gantt_sa_exp_20_2_1swap_med width=84%}
+
+![The Gantt chart of the best solution obtained by the `sa_exp_20_8_1swap` algorithm on `la24`, which happens to be *optimal*. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of the diagram denotes the makespan.](\relative.path{jssp_gantt_sa_exp_20_8_1swap_la24_best.svgz}){#fig:jssp_gantt_sa_exp_20_8_1swap_la24_best width=84%}
 
 ![The median of the progress of the algorithms `sa_exp_20_2_1swap`, `ea_8192_5%_nswap`, `eac_4_5%_nswap`, and `hcr_16384_1swap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_sa_log.svgz}){#fig:jssp_progress_sa_log width=84%}
 
