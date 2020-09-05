@@ -48,6 +48,8 @@ Only the first few topics from the book are covered as of now.
 6. [Evolutionary Algorithm](https://thomasweise.github.io/aitoa-slides/06_evolutionary_algorithm.pdf)
 7. [Simulated Annealing](https://thomasweise.github.io/aitoa-slides/07_simulated_annealing.pdf)
 
+A. [Comparing Optimization Algorithms](https://thomasweise.github.io/aitoa-slides/A_comparing_optimization_algorithms.pdf)
+
 The LaTeX source code of the slides is provided in [this repository](http://github.com/thomasWeise/aitoa-slides). 
 It also includes all figures as `pdf` and `svg`.
 
