@@ -549,6 +549,10 @@ In the $(1+1)$&nbsp;EA as defined here, the new solution&nbsp;$\solspel'$ will a
 #### Results on the JSSP {#sec:opoea:results:jssp}
 
 We can now apply our $(1+1)$&nbsp;EA to the four JSSP instances either using the `1swap` operator (`ea_1+1_1swap`) or the `nswap` operator (`ea_1+1_nswap`).
+Astonishingly, [@tbl:jssp_opoea_results] reveals that it performs *better* than our best EA so far, namely `eac_4_5%_nswap`.
+Both $(1+1)$&nbsp;EA setups also perform much better than our hill climber.
+The log-scaled [@fig:jssp_progress_opoea_log] shows that the two EAs without population have better median solution almost always during the runs.
+And the Gantt charts of the median solutions of `ea_1+1_1swap`, illustrated in [@fig:jssp_gantt_opoea_1swap_med], again appear denser.
 
 \relative.input{jssp_opoea_results.md}
 
@@ -557,11 +561,6 @@ We can now apply our $(1+1)$&nbsp;EA to the four JSSP instances either using the
 ![The Gantt charts of the median solutions obtained by the&nbsp;`ea_1+1_1swap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_opoea_1swap_med.svgz}){#fig:jssp_gantt_opoea_1swap_med width=84%}
 
 ![The median of the progress of the&nbsp;`ea_1+1_1swap` and&nbsp;`ea_1+1_nswap` compared to `eac_4_5%_nswap` and the two hill climbers&nbsp;`hcr_16384_nswap` and&nbsp;`hcr_65536_nswap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_opoea_log.svgz}){#fig:jssp_progress_opoea_log width=84%}
-
-Astonishingly, [@tbl:jssp_opoea_results] reveals that it performs *better* than our best EA so far, namely `eac_4_5%_nswap`.
-Both $(1+1)$&nbsp;EA setups also perform much better than our hill climber.
-The log-scaled [@fig:jssp_progress_opoea_log] shows that the two EAs without population have better median solution almost always during the runs.
-And the Gantt charts of the median solutions of `ea_1+1_1swap`, illustrated in [@fig:jssp_gantt_opoea_1swap_med], again appear denser.
 
 #### Discussion
 
