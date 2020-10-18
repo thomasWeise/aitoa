@@ -576,7 +576,7 @@ First, as we know, our search space&nbsp;$\searchSpace$ is much larger than the 
 If we have an integer string&nbsp;$\sespel_1\in\searchSpace$ representing a Gantt chart&nbsp;$\solspel_1=\repMap(\sespel_1)$, then we can swap two jobs and get a new string&nbsp;$\sespel_2\in\searchSpace$ with&nbsp;$\sespel_2\neq \sespel_2$, but this does not necessarily mean that this new string maps to a different solution.
 It could well be that&nbsp;$\repMap(\sespel_1)=\repMap(\sespel_2)$.
 Then, we have made a *neutral* move.
-Of course, our move could also be neutral if&nbsp;$\repMap(\sespel_1)\neq\repMap(\sespel_2)$ but&nbsp;$\objFun(\repMap(\sespel_1))=\objFun(\repMap(\sespel_2))$ 
+Of course, our move could also be neutral if&nbsp;$\repMap(\sespel_1)\neq\repMap(\sespel_2)$ but&nbsp;$\objf(\repMap(\sespel_1))=\objf(\repMap(\sespel_2))$ 
 Our $(1+1)$&nbsp;EA can drift along a network of points in the search space which all map to solutions with the same makespan.
 This means that the $(1+1)$&nbsp;EA can explore far beyond the neighborhood visible to the hill climber.
 By drifting over the network, it may eventually reach a point which maps to a better solution.
