@@ -4,7 +4,7 @@ An optimization problem and its representation have the property of causality if
 If the resulting changes are large, then causality is weak and the objective function is rugged, which has negative effects on optimization performance.
 However, if the resulting changes are *zero*, this can have a similar negative impact.  
 
-### The Problem: Neutrality
+### The Problem(?): Neutrality {#sec:neutrality:problem}
 
 ![An illustration of problems exhibiting increasing neutrality (from left to right).](\relative.path{increasing_neutrality.svgz}){#fig:increasing_neutrality}
 
@@ -23,6 +23,8 @@ A common idea on how neutrality could be beneficial was the that *neutral networ
 
 The members of a neutral network may have neighborhoods that contain solutions with the same objective value (forming the network), but also solutions with worse and better objective values.
 An optimization process may drift along a neutral network until eventually discovering a better candidate solution, which then would be in a (better) neutral network of its own.
+It seems that the performance of our $(1+1)$&nbsp;EA in [@sec:opoea:results:jssp] was much better than that of our hill climber in [@sec:hc_1swap:jssp:results] because our search space&nbsp;$\searchSpace$ is much larger than the solution space&nbsp;$\solutionSpace$, i.e., $|\searchSpace|\gg|\solutionSpace$ and such networks seem to "naturally" exist in this representation.
+
 The question then arises how we can introduce such a beneficial form of neutrality into the search space and representation mapping, i.e., how we can create such networks intentionally and controlled.
 Indeed, it was shown that random neutrality is not beneficial for optimization&nbsp;[@KW2002OTUOREIMBES].
 Actually, there is no reason why neutral networks should provide a better method for escaping local optima than other methods, such as well-designed search operators (remember [@sec:jsspUnaryOperator2]), even if we could create them&nbsp;[@KW2002OTUOREIMBES].

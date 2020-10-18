@@ -73,7 +73,7 @@ In summary, we can hope that the chance to find a really good solution by iterat
 
 ### Stochastic Hill Climbing Algorithm
 
-#### The Algorithm
+#### The Algorithm {#sec:hillClimbing:nors:algorithm}
 
 Stochastic Hill Climbing&nbsp;[@RN2002AI; @S2008TADM; @WGOEB] is the simplest implementation of local search.
 It is also sometimes called localized random search&nbsp;[@S2003ITSSAO].
@@ -92,6 +92,9 @@ It proceeds as follows:
 This algorithm is implemented in [@lst:HillClimber] and we will refer to it as&nbsp;`hc`.
 
 \repo.listing{lst:HillClimber}{An excerpt of the implementation of the Hill Climbing algorithm, which remembers the best-so-far solution and tries to find better solutions in its neighborhood.}{java}{src/main/java/aitoa/algorithms/HillClimber.java}{}{relevant}
+
+If you are wondering what would happen if we would accept the new solution&nbsp;$\sespel'$ also if $\obspel'=\obspel$, i.e., replace the $\obspel'<\obspel$ with an $\obspel'\leq \obspel$ in *point&nbsp;4.d* of the algorithm definition:
+This algorithm is called $(1+1)$&nbsp;EA and discussed later in [@sec:opoea:impl].
 
 #### Results on the JSSP {#sec:hc_1swap:jssp:results}
 

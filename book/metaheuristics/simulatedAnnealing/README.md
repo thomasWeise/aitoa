@@ -1,9 +1,10 @@
 ## Simulated Annealing {#sec:simulatedAnnealing}
 
-So far, we have only discussed one variant of local search: the hill climbing algorithm.
+So far, we have only discussed two variants of local search: the hill climbing algorithm and the $(1+1)$&nbsp;EA.
 A hill climbing algorithm is likely to get stuck at local optima, which may vary in quality.
 We found that we can utilize this variance of the result quality by restarting the optimization process when it could not improve any more in [@sec:stochasticHillClimbingWithRestarts].
 Such a restart is costly, as it forces the local search to start completely from scratch (while we, of course, remember the best-ever solution in a variable hidden from the algorithm).
+The $(1+1)$&nbsp;EA may additionally utilize drift over solutions of the same quality, but there is no reason to assume that it cannot get stuck in local optima as well. 
 
 Another way to look at this is the following:
 A schedule which is a local optimum probably is somewhat similar to what the globally optimal schedule would look like.
@@ -46,6 +47,8 @@ e^{-\frac{\Delta E}{T}} & \text{if~}\Delta E >0 \land T > 0\\
 \end{array} \right. $$ {#eq:simulatedAnnealingP}
 
 In other words, if the new point&nbsp;$\sespel'$ is actually better (or, at least, not worse) than the current point&nbsp;$\sespel$, i.e., $\Delta E \leq 0$, then we will definitely accept it.
+(This is exactly the acceptance criterion used in the $(1+1)$&nbsp;EA.)
+However, the new solution is not necessarily rejected otherwise:
 If the new point&nbsp;$\sespel'$ is worse ($\Delta E > 0$), then the acceptance probability
 
 1. gets smaller the larger $\Delta E$ is and

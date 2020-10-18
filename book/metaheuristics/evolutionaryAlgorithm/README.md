@@ -37,7 +37,7 @@ The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm works as follows:
         iv. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 5. Return the candidate solution corresponding to the best record in&nbsp;$P$ (i.e., the best-ever encountered solution) to the user.
 
-\repo.listing{lst:EAwithoutCrossover}{An excerpt of the implementation of the Evolutionary Algorithm algorithm **without** crossover.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,withoutcrossover}
+\repo.listing{lst:EAwithoutCrossover}{An excerpt of the implementation of the Evolutionary Algorithm **without** recombination.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,withoutcrossover}
 
 This algorithm is implemented in [@lst:EAwithoutCrossover].
 Basically, it starts out by creating and evaluating&nbsp;$\mu+\lambda$ random candidate solutions (*point&nbsp;3*).
@@ -286,7 +286,7 @@ The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm with recombination works a
         vi. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 5. Return the candidate solution corresponding to the best record in&nbsp;$P$ to the user.
 
-\repo.listing{lst:EAwithCrossover}{An excerpt of the implementation of the Evolutionary Algorithm algorithm **with** crossover.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,withcrossover}
+\repo.listing{lst:EAwithCrossover}{An excerpt of the implementation of the Evolutionary Algorithm **with** crossover.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,withcrossover}
 
 This algorithm, implemented in [@lst:EAwithCrossover] only differs from the variant in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo] by choosing whether to use the unary or binary operator to sample new points from the search space (*steps&nbsp;4g.iii.A*, *B*, and&nbsp;*C*).
 If&nbsp;$cr$ is the probability to apply the binary operator and we draw a random number&nbsp;$c$ which is uniformly distributed in&nbsp;$[0,1)$, then the probability that $c<cr$ is exactly&nbsp;$cr$ (see *point&nbsp;iii*).
@@ -415,7 +415,6 @@ If two good solutions have the same objective value, we will discard one of them
 This way, we will ensure that our population remains diverse.
 No single candidate solution can take over the population.  
 
-
 #### The Algorithm (with Recombination and Clearing)
 
 We can easily extend our $(\mu+\lambda)$&nbsp;EA with recombination from [@sec:evolutionaryAlgorithmWithRecombinationImpl] to remove duplicates of the objective value.
@@ -445,7 +444,7 @@ If $u=1$, we cannot apply the binary operator regardless of the crossover rate&n
         vi. Compute the objective objective value of&nbsp;$\solspel$ and store it at index&nbsp;$i$ as well, i.e., $\elementOf{\arrayIndex{P}{i}}{\obspel}=\objf(\solspel)$.
 5. Return the candidate solution corresponding to the best record in&nbsp;$P$ to the user.
 
-\repo.listing{lst:EAWithClearing}{An excerpt of the implementation of the Evolutionary Algorithm algorithm with crossover and clearing.}{java}{src/main/java/aitoa/algorithms/EAWithClearing.java}{}{relevant}
+\repo.listing{lst:EAWithClearing}{An excerpt of the implementation of the Evolutionary Algorithm algorithm with and clearing.}{java}{src/main/java/aitoa/algorithms/EAWithClearing.java}{}{relevant}
 
 \repo.listing{lst:UtilsClearing}{The implementation of the objective-value based clearing routine.}{java}{src/main/java/aitoa/algorithms/Utils.java}{}{qualityClearing}
 
@@ -475,7 +474,7 @@ If not, then the number&nbsp;$u$ of selected records would always be less than&n
 
 Since this time smaller population sizes may be interesting, we investigate all powers of&nbsp;2 for $\mu=\lambda$ from&nbsp;4 to&nbsp;65'536.
 In [@fig:jssp_eac_med_over_mu], we find that the `eac_mu_5%_nswap` behave entirely different from those of `ea_mu_5%_nswap`.
-If clearing is applied, $\mu=\lambda=4$ seems to be the right choice.
+If clearing is applied, the smallest investigated setting, $\mu=\lambda=4$, seems to be the right choice.
 This setup has the best performance on `abz7` and `swv15`, while being only a tiny bit worse than the best choices on `la24` and `yn4`.
 Larger populations lead to worse results at the end of the computational budget of three minutes.
 
@@ -517,6 +516,74 @@ We can confirm that even the simple and rather crude pruning in the objective sp
 We did not test any sophisticated diversity preservation method.
 We also did not re-evaluate which crossover rate&nbsp;$cr$ and which unary operator (`1swap` or `nswap`) works best in this scenario.
 This means that we might be able to squeeze out more performance, but we will leave it at this.
+The small populations working so well make us curious, however.
+
+### $(1+1)$&nbsp;EA {#sec:opoea}
+
+The $(1+1)$&nbsp;EA is a special case of the $(\mu+\lambda)$&nbsp;EA with $\mu=1$ and $\lambda=1$.
+Since the number of parents is $\mu=1$, it does not apply the binary recombination operator.
+We explicitly discuss it here because it is usually defined slightly differently from what we did in [@sec:evolutionaryAlgorithmWithoutRecombinationAlgo] and implemented as [@lst:EAwithoutCrossover].
+
+#### The Algorithm {#sec:opoea:impl}
+
+The $(1+1)$&nbsp;EA works like a hill climber (see [@sec:hillClimbing]), with the difference that the new solution replaces the current one if it is better *or equally good*, instead of just replacing it if it is better.
+
+1. Create one random point&nbsp;$\sespel$ in the search space&nbsp;$\searchSpace$ using the nullary search operator.
+2. Map the point&nbsp;$\sespel$ to a candidate solution&nbsp;$\solspel$ by applying the representation mapping&nbsp;$\solspel=\repMap(\sespel)$.
+3. Compute the objective value by invoking the objective function&nbsp;$\obspel=\objf(\solspel)$.
+4. Repeat until the termination criterion is met:
+    a. Apply the unary search operator to&nbsp;$\sespel$ to get a slightly modified copy&nbsp;$\sespel'$ of it.
+    b. Map the point&nbsp;$\sespel'$ to a candidate solution&nbsp;$\solspel'$ by applying the representation mapping&nbsp;$\solspel'=\repMap(\sespel')$.
+    c. Compute the objective value&nbsp;$\obspel'$ by invoking the objective function&nbsp;$\obspel'=\objf(\solspel')$.
+    d. If&nbsp;$\obspel'\leq \obspel$, then store $\sespel'$&nbsp;in&nbsp;$\sespel$, store $\solspel'$&nbsp;in&nbsp;$\solspel$, and store $\obspel'$&nbsp;in&nbsp;$\obspel$.
+6. Return the best encountered objective value&nbsp;$\obspel$ and the best encountered solution&nbsp;$\solspel$ to the user.
+
+This algorithm is implemented in [@lst:EA1p1].
+The *only* difference to the hill climber in [@sec:hillClimbing:nors:algorithm] and [@lst:HillClimber] is the $\obspel'\leq \obspel$ in *point&nbsp;4.d* instead of $\obspel'<\obspel$: the new solution does not need to be strictly better to win over the old one, it is sufficient if it is not worse.
+In the $(\mu+\lambda)$&nbsp;EA implementation that we had before, we could also set $\mu=1$ and $\lambda=1$.
+The algorithm would be slightly different from the $(1+1)$&nbsp;EA:
+In the $(1+1)$&nbsp;EA as defined here, the new solution&nbsp;$\solspel'$ will always win against the current solution&nbsp;$\solspel$ if $\obspel'=\obspel$, whereas in our shuffle-and-sort method of the population as implemented in [@lst:EAwithoutCrossover], either one could win with probability&nbsp;$0.5$.
+
+\repo.listing{lst:EA1p1}{An excerpt of the implementation of the $(1+1)$&nbsp;EA.}{java}{src/main/java/aitoa/algorithms/EA1p1.java}{}{relevant}
+
+#### Results on the JSSP {#sec:opoea:results:jssp}
+
+We can now apply our $(1+1)$&nbsp;EA to the four JSSP instances either using the `1swap` operator (`ea_1+1_1swap`) or the `nswap` operator (`ea_1+1_nswap`).
+
+\relative.input{jssp_opoea_results.md}
+
+: The results of the $(1+1)$&nbsp;EA with the `nswap` and the `1swap` operator, in comparison to `eac_4_5%_nswap`. The columns present the problem instance, lower bound, the algorithm, the best, mean, and median result quality, the standard deviation&nbsp;*sd* of the result quality, as well as the median time *med(t)* and FEs *med(FEs)* until the best solution of a run was discovered. The better values are **emphasized**. {#tbl:jssp_opoea_results}
+
+![The Gantt charts of the median solutions obtained by the&nbsp;`ea_1+1_1swap` setup. The x-axes are the time units, the y-axes the machines, and the labels at the center-bottom of each diagram denote the instance name and makespan.](\relative.path{jssp_gantt_opoea_1swap_med.svgz}){#fig:jssp_gantt_opoea_1swap_med width=84%}
+
+![The median of the progress of the&nbsp;`ea_1+1_1swap` and&nbsp;`ea_1+1_nswap` compared to `eac_4_5%_nswap` and the two hill climbers&nbsp;`hcr_16384_nswap` and&nbsp;`hcr_65536_nswap` over time, i.e., the current best solution found by each of the&nbsp;101 runs at each point of time (over a logarithmically scaled time axis). The color of the areas is more intense if more runs fall in a given area.](\relative.path{jssp_progress_opoea_log.svgz}){#fig:jssp_progress_opoea_log width=84%}
+
+Astonishingly, [@tbl:jssp_opoea_results] reveals that it performs *better* than our best EA so far, namely `eac_4_5%_nswap`.
+Both $(1+1)$&nbsp;EA setups also perform much better than our hill climber.
+The log-scaled [@fig:jssp_progress_opoea_log] shows that the two EAs without population have better median solution almost always during the runs.
+And the Gantt charts of the median solutions of `ea_1+1_1swap`, illustrated in [@fig:jssp_gantt_opoea_1swap_med], again appear denser.
+
+#### Discussion
+
+The big advantage of EAs is that their population guards against premature convergence.
+This can bring better end results, but comes at a trade-off of slower convergence&nbsp;[@WWCTL2016GVLSTIOPSOEAP].
+The fact that the EA without population performs best in our experimental setup is annoying for the author.
+It does not mean that this is always the case, though.
+But why is it the case here:
+
+The answer consists, most likely, of two parts:
+First, as we know, our search space&nbsp;$\searchSpace$ is much larger than the solution space&nbsp;$\solutionSpace$, i.e., $|\searchSpace|\gg|\solutionSpace$.
+If we have an integer string&nbsp;$\sespel_1\in\searchSpace$ representing a Gantt chart&nbsp;$\solspel_1=\repMa(\sespel_1)$, then we can swap two jobs and get a new string&nbsp;$\sespel_2\in\searchSpace$ with&nbsp;$\sespel_2\neq \sespel_2$, but this does not necessarily mean that this new string maps to a different solution.
+It could well be that&nbsp;$\repMap(\sespel_1)=\repMap(\sespel_2)$.
+Then, we have made a *neutral* move.
+Of course, our move could also be neutral if&nbsp;$\repMap(\sespel_1)\neq\repMap(\sespel_2)$ but&nbsp;$\objFun(\repMap(\sespel_1))=\objFun(\repMap(\sespel_2))$ 
+Our $(1+1)$&nbsp;EA can drift along a network of points in the search space which all map to solutions with the same makespan.
+This means that the $(1+1)$&nbsp;EA can explore far beyond the neighborhood visible to the hill climber.
+By drifting over the network, it may eventually reach a point which maps to a better solution.
+This reasoning is supported by the fact that our $(1+1)$&nbsp;EA perform much better than the hill climbers. 
+You can find a more detailed discussion on neutrality in [@sec:neutrality:problem].
+
+The second reason is probably that the three minutes of runtime are simply not enough for the EAs with the really big populations to reap the benefit of being resilient against premature convergence.
 
 ### Summary  
 
@@ -530,3 +597,6 @@ If all the elements in the population are very similar, then the binary operator
 From our experiments with the hill climber, we already know premature convergence to a local optimum as something that should be avoided.   
 It therefore makes sense to try adding a method for enforcing diversity as another ingredient into the algorithm.
 Our experiments with a very crude diversity enhancing method &ndash; only allowing one solution per unique objective value in the population &ndash; confirmed that this can lead to better results.
+
+We also found that the strict criterion to only accept solutions which are *strictly better* than the current one, as practiced in our hill climbers&nbsp;[@sec:hillClimbing] may not be a good idea.
+Accepting solutions which are *not worse* than the current one allows for drift in the search space, which can yield better results.

@@ -65,7 +65,7 @@ Dijkstra's shortest path algorithm&nbsp;[@D1959ANOTPICWG], for instance, gets fe
 In Machine Learning, the situation is quite similar:
 We would have a lot of specialized algorithms for clearly defined situations.
 The input and output data would usually adhere to some basic, fixed structures.
-If you implement $k$&#8209;means clustering&nbsp;[@F1965CAOMDEVIOC; @HW1979AA1AKMCA], for instance, you have real vectors coming in and $k$~real vectors going out of your algorithm and that's that.
+If you implement $k$&#8209;means clustering&nbsp;[@F1965CAOMDEVIOC; @HW1979AA1AKMCA], for instance, you have real vectors coming in and $k$&nbsp;real vectors going out of your algorithm and that's that.
 Deep Learning&nbsp;[@GBC2016DL] basically takes, as input, a set of labeled real vectors (plus a network structure) and, as output, produces the vector of weights for the network.
 However, we have to deal with the black-box concept, meaning that our algorithms will be very variable in terms of the data structures we can feed to them.
 Matter in fact:
