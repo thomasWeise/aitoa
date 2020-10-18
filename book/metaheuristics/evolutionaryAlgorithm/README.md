@@ -573,7 +573,7 @@ But why is it the case here:
 
 The answer consists, most likely, of two parts:
 First, as we know, our search space&nbsp;$\searchSpace$ is much larger than the solution space&nbsp;$\solutionSpace$, i.e., $|\searchSpace|\gg|\solutionSpace$.
-If we have an integer string&nbsp;$\sespel_1\in\searchSpace$ representing a Gantt chart&nbsp;$\solspel_1=\repMa(\sespel_1)$, then we can swap two jobs and get a new string&nbsp;$\sespel_2\in\searchSpace$ with&nbsp;$\sespel_2\neq \sespel_2$, but this does not necessarily mean that this new string maps to a different solution.
+If we have an integer string&nbsp;$\sespel_1\in\searchSpace$ representing a Gantt chart&nbsp;$\solspel_1=\repMap(\sespel_1)$, then we can swap two jobs and get a new string&nbsp;$\sespel_2\in\searchSpace$ with&nbsp;$\sespel_2\neq \sespel_2$, but this does not necessarily mean that this new string maps to a different solution.
 It could well be that&nbsp;$\repMap(\sespel_1)=\repMap(\sespel_2)$.
 Then, we have made a *neutral* move.
 Of course, our move could also be neutral if&nbsp;$\repMap(\sespel_1)\neq\repMap(\sespel_2)$ but&nbsp;$\objFun(\repMap(\sespel_1))=\objFun(\repMap(\sespel_2))$ 
