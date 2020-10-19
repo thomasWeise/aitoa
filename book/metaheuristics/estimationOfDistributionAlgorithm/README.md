@@ -8,7 +8,7 @@ The ask the questions
 "Can we somehow learn which areas in&nbsp;$\searchSpace$ are promising?
 Can we learn how good solutions look like?"
 
-### The Algorithm
+### The Algorithm {#sec:eda:basic_algorithm}
 
 How do good solutions look like?
 It is unlikely that good (or even optimal) solutions are uniformly distributed over the search space.
