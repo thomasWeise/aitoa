@@ -28,3 +28,4 @@ We explore them by again using the Job Shop Scheduling Problem (JSSP) from [@sec
 \relative.input{hillClimbing2/README.md}
 \relative.input{memeticAlgorithm/README.md}
 \relative.input{estimationOfDistributionAlgorithm/README.md}
+\relative.input{antColonyOptimization/README.md}
