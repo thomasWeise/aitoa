@@ -81,8 +81,8 @@ Instead of assigning the results directly to the vertices, we use a running sum&
 Thus, the value&nbsp;$\arrayIndex{p}{0}$ is&nbsp;$\arrayIndex{P}{0}$, $\arrayIndex{p}{1}=\arrayIndex{P}{0}+\arrayIndex{P}{1}$, $\arrayIndex{p}{2}=\arrayIndex{P}{0}+\arrayIndex{P}{1}+\arrayIndex{P}{2}$, and so on.
 Finally, we just need to draw a random number&nbsp;$r$ from&nbsp;$[0,ps)$.
 If it is less than&nbsp;$\arrayIndex{p}{0}=\arrayIndex{P}{0}$, then we choose vertex&nbsp;$\arrayIndex{N}{0}$.
-Otherwise, if it is less than&nbsp;$\arrayIndex{p}{1}=\arrayIndex{P}{0}+\arrayIndex{P}{1}$, we pick&nbsp;$&nbsp;$\arrayIndex{N}{1}$.
-Otherwise, if it is less than&nbsp;$\arrayIndex{p}{2}=\arrayIndex{P}{0}+\arrayIndex{P}{1}+\arrayIndex{P}{2}$, we pick&nbsp;$&nbsp;$\arrayIndex{N}{2}$, and so on.
+Otherwise, if it is less than&nbsp;$\arrayIndex{p}{1}=\arrayIndex{P}{0}+\arrayIndex{P}{1}$, we pick&nbsp;$\arrayIndex{N}{1}$.
+Otherwise, if it is less than&nbsp;$\arrayIndex{p}{2}=\arrayIndex{P}{0}+\arrayIndex{P}{1}+\arrayIndex{P}{2}$, we pick&nbsp;$\arrayIndex{N}{2}$, and so on.
 We can speed up finding the right node by doing a binary search.
 (In the case that model or heuristic values can be zero, we need to be careful because we then could have some&nbsp;$\arrayIndex{p}{\kappa}=\arrayIndex{p}{\kappa+1}$ and thus would need to check that we really have the lowest index&nbsp;k$ for which&nbsp;$\arrayIndex{p}{k}>r$.)
 
