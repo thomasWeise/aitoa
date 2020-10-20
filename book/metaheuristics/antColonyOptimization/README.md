@@ -70,10 +70,11 @@ The model sampling then works as follows:
        iii. Draw a random number&nbsp;$r$ uniformly distributed in $[0,ps)$.
        iv. Determine $k$&nbsp;to be the index of the smallest value in&nbsp;$p$ which is greater than&nbsp;$r$. It can be found via binary search (we may need to check for smaller values left-wards if pheromones and heuristic values can be&nbsp;0).
     g. Set&nbsp;$\arrayIndex{\sespel}{i}=\arrayIndex{N}{k}$, i.e., append the vertex to&nbsp;$\sespel$.
+6. Return the completed path&nbsp;$\sespel$.
 
 We implement [@eq:aco:vertex:probability] in *lines&nbsp;5e* and&nbsp;*5f*.
 Obviously, if there is only $v'=1$ node that could be added, then it will have probability&nbsp;1 and we do not need to actually compute the equation.
-If $v'>1$, then we need to compute the product&nbsp;$\arrayIndex{P}{j}$ of the model value&nbsp;$\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}\right)^{\alpha}$ and heuristic value&nbsp;$\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}\right)^{\beta}$ for each vertex.
+If $v'>1$, then we need to compute the product&nbsp;$\arrayIndex{P}{j}$ of the model value&nbsp;$\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}^{\alpha}$ and heuristic value&nbsp;$\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}^{\beta}$ for each vertex.
 The probability for each vertex to be chosen would then be their corresponding result divided by the overall sum of all of these values.
 *Lines&nbsp;5fi$ to&nbsp;*5fiv* show how this can be done efficiently:
 Instead of assigning the results directly to the vertices, we use a running sum&nbsp;$ps$ instead.
