@@ -72,11 +72,11 @@ The model sampling then works as follows:
     g. Set&nbsp;$\arrayIndex{\sespel}{i}=\arrayIndex{N}{k}$, i.e., append the vertex to&nbsp;$\sespel$.
 6. Return the completed path&nbsp;$\sespel$.
 
-We implement [@eq:aco:vertex:probability] in *lines&nbsp;5e* and&nbsp;*5f*.
+We implement [@eq:aco:vertex:probability] in *lines&nbsp;5.e* and&nbsp;*5.f*.
 Obviously, if there is only $v'=1$ node that could be added, then it will have probability&nbsp;1 and we do not need to actually compute the equation.
 If $v'>1$, then we need to compute the product&nbsp;$\arrayIndex{P}{j}$ of the model value&nbsp;$\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}^{\alpha}$ and heuristic value&nbsp;$\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}^{\beta}$ for each vertex.
 The probability for each vertex to be chosen would then be their corresponding result divided by the overall sum of all of these values.
-*Lines&nbsp;5fi$ to&nbsp;*5fiv* show how this can be done efficiently:
+*Lines&nbsp;5.f.i* to&nbsp;*5.f.iv* show how this can be done efficiently:
 Instead of assigning the results directly to the vertices, we use a running sum&nbsp;$ps$ instead.
 Thus, the value&nbsp;$\arrayIndex{p}{0}$ is&nbsp;$\arrayIndex{P}{0}$, $\arrayIndex{p}{1}=\arrayIndex{P}{0}+\arrayIndex{P}{1}$, $\arrayIndex{p}{2}=\arrayIndex{P}{0}+\arrayIndex{P}{1}+\arrayIndex{P}{2}$, and so on.
 Finally, we just need to draw a random number&nbsp;$r$ from&nbsp;$[0,ps)$.
@@ -87,7 +87,7 @@ We can speed up finding the right node by doing a binary search.
 (In the case that model or heuristic values can be zero, we need to be careful because we then could have some&nbsp;$\arrayIndex{p}{\kappa}=\arrayIndex{p}{\kappa+1}$ and thus would need to check that we really have the lowest index&nbsp;k$ for which&nbsp;$\arrayIndex{p}{k}>r$.)
 
 If we need to add all vertexes in&nbsp;$V$, then it is relatively easy to see that this model sampling routine has quadratic complexity:
-For each current vertex we need to look at all other (not-yet-chosen) vertices due to *line&nbsp;5fii*.
+For each current vertex we need to look at all other (not-yet-chosen) vertices due to *line&nbsp;5.f.ii*.
 
 #### Model Update
 
@@ -122,5 +122,11 @@ In the AS, $\mu=\lambda$ and now bounds for the pheromones are given, i.e., $L=0
 In the MMAS in&nbsp;[@SH2000MMAS], the matrix&nbsp;$M$ is initialized with the value&nbsp;$U$, $\alpha=1$, $\beta=2$, $\lambda=v$ (i.e., the number of vertices), $\mu=1$, $Q=1$.
 There, values of&nbsp;$\rho\in[0.7,0.99]$ are investigated and the smaller values lead to slower convergence and more exploration whereas the high $\rho$&nbsp;values increase the search speed but also the chance of premature convergence.
 
-Either way, from [@eq:aco:update], we know that the model update will need at least a quadratic number of algorithm steps and the model itself is also requires quadratic amount of memory.
-Both of these can be problematic for large numbers&nbsp;$v$ of vertices or short time budgets (and the latter is the case in our JSSP scenario).
+Either way, from [@eq:aco:update], we know that the model update will need at least a quadratic number of algorithm steps and the model itself is also requires quadratic amount of memory, i.e., both are at least in&nbsp;$\bigO(v^2)$.
+Both of these can be problematic for large numbers&nbsp;$v$ of vertices or short time budgets.
+
+The actual "size" of the model&nbsp;$M$ and the heuristic information&nbsp;$H$ depends on whether the edges in the graph are directed or not:
+Normally, the size is $v(v-1)$.
+If going from&nbsp;$i$ to&nbsp;$j$ always has exactly the same cost and is equivalent to going from&nbsp;$j$ to&nbsp;$i$, then it is sufficient to maintain one single pheromone for both edges, i.e., $v(v-1)/2$&nbsp;in total.
+A quadratic data structure size begins to become problematic for $v\geq 10'000$ on today's machines.
+In our JSSP scenario, we are far from that, but have already learned in [@sec:eda:jssp:results] that the quadratic runtime of the model sampling is indeed a bottleneck.
