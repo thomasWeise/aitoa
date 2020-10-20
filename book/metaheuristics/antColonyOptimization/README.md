@@ -6,7 +6,7 @@ Ant Colony Optimization (ACO)&nbsp;[@DBS2006ACO; @DMC1996ASOBACOCA; @D1992OLANA;
 2. During the model sampling (i.e., the creation of a path&nbsp;$\sespel$), they make use of additional heuristic information obtained from the problem instance.
 
 You can imagine a graph as a mathematical abstraction that can represent a street map, a computer network, a power network, a network of water pipes, and such and such.
-More formally, graph&nbsp;$G=(V,E)$ is a structure described by a set&nbsp;$V$ of&nbsp;$v$ vertices, which we will here identify by integers IDs, i.e., from $V=0\dotsv_{v-1}\}$.
+More formally, graph&nbsp;$G=(V,E)$ is a structure described by a set&nbsp;$V$ of&nbsp;$v$ vertices, which we will here identify by integers IDs, i.e., $V=0\dots{v-1}\}$.
 $E\subseteq V\times V$ is the set of edges connecting the vertices.
 A path&nbsp;$\sespel$ through the graph&nbsp;$G$ is a sequence&nbsp;$(\arrayIndex{\sespel}{0},\arrayIndex{\sespel}{1},\dots,\arrayIndex{\sespel}{l})$ such that&nbsp;$\arrayIndex{\sespel}{i}\in V$ for $\forall i\in 0\dots(l-1)$.
 The vertexes at index&nbsp;$i$ and&nbsp;$i+1$ in&nbsp;$\sespel$ for&nbsp;$i\in 0\dots{l-2}$ form the edges of the path, i.e., $(\arrayIndex{\sespel}{i},\arrayIndex{\sespel}{i+1})$ are elements of&nbsp;$E$.
