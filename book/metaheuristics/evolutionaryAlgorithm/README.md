@@ -40,7 +40,9 @@ The basic $(\mu+\lambda)$&nbsp;Evolutionary Algorithm works as follows:
 \repo.listing{lst:EAwithoutCrossover}{An excerpt of the implementation of the Evolutionary Algorithm **without** recombination.}{java}{src/main/java/aitoa/algorithms/EA.java}{}{relevant,withoutcrossover}
 
 This algorithm is implemented in [@lst:EAwithoutCrossover].
-Basically, it starts out by creating and evaluating&nbsp;$\mu+\lambda$ random candidate solutions (*point&nbsp;3*).
+There, we make use of instances of the utility class `Record<X>`, which holds one point&nbsp;`x` in the search space along with their corresponding objective values stored in the field&nbsp;`quality`.
+
+Basically, the algorithm starts out by creating and evaluating&nbsp;$\mu+\lambda$ random candidate solutions (*point&nbsp;3*).
 
 \text.block{definition}{generationEA}{Each iteration of the main loop of an Evolutionary Algorithm is called a *generation*.}
 
@@ -410,7 +412,7 @@ We will only investigate one very simple approach:
 Avoiding objective value duplicates&nbsp;[@S2012NIEA; @FHN2007RAOSDM].
 In the rest of this section, we will call this method *clearing*, as it can be viewed as the strictest possible variant of the clearing&nbsp;[@P1996ACPAANMFGA; @P1997AEHCTFS] applied in the objective space.
 
-Put simply, we will ensure that all individuals that "survive" selection have different objective values.
+Put simply, we will ensure that all records that "survive" selection have different objective values.
 If two good solutions have the same objective value, we will discard one of them.
 This way, we will ensure that our population remains diverse.
 No single candidate solution can take over the population.  
@@ -418,7 +420,7 @@ No single candidate solution can take over the population.
 #### The Algorithm (with Recombination and Clearing)
 
 We can easily extend our $(\mu+\lambda)$&nbsp;EA with recombination from [@sec:evolutionaryAlgorithmWithRecombinationImpl] to remove duplicates of the objective value.
-We need to consider that a full population of $\mu+\lambda$ individuals may contain less than $\mu$ different objective values.
+We need to consider that a full population of $\mu+\lambda$ records may contain less than $\mu$ different objective values.
 Thus, in the selection step, we may obtain $1\leq u \leq \mu$ elements, where $u$ can be different in each generation.
 If $u=1$, we cannot apply the binary operator regardless of the crossover rate&nbsp;$cr$.
 

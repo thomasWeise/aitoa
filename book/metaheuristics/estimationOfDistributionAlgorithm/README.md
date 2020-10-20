@@ -95,7 +95,7 @@ The search space&nbsp;$\searchSpace$ is represented by the generic parameter&nbs
 In our previous example, it could be equivalent the `double[2]`.
 The model used in our example would internally store four `double` values, namely the means and standard deviations along both dimensions.
 
-We can update the model by passing $\mu$&nbsp;samples from the search space `X` to the `update` method.
+We can update the model by passing $\mu$&nbsp;samples from the search space `X` to the `update` method in form of the `Record<X>` records we already used in our implementation of EAs.
 The source for these samples can be any `Java` collection (all of which implement `Iterable`).
 In our example in the previous section, the `update` method could iterate over the `double[2]` values provided to it and compute, for both of their dimensions, the means and standard deviations.
 

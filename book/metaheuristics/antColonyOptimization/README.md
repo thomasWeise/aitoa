@@ -30,7 +30,8 @@ In each step, a vertex is added to the path until no nodes can be added anymore 
 The choice which vertex to add is probabilistic.
 It depends on two factors: the model&nbsp;$M$ and the heuristic information&nbsp;$H$.
 
-The model&nbsp;$M$ is a two-dimensional table called "pheromone matrix."
+\text.block{definition}{acoPheromoneMatrix}{The model&nbsp;$M$ used in ACO is a two-dimensional table called *pheromone matrix* and the values stored in it are called&nbsp;*pheromones*.}
+
 Each row&nbsp;$i\in 0\dots(v-1)$ stands for one of the vertices and holds a value&nbsp;$\arrayIndexx{M}{i}{j}$ for each other vertex&nbsp;$j\in 0\dots(v-1)$ with&nbsp;$j\neq i$.
 The higher the value&nbsp;$\arrayIndexx{M}{i}{j}$, the more likely should it be that the edge&nbsp;$(i,j)$ is added to the path, i.e., that vertex&nbsp;$j$ follows after vertex&nbsp;$i$.
 
@@ -72,6 +73,8 @@ The model sampling then works as follows:
     g. Set&nbsp;$\arrayIndex{\sespel}{i}=\arrayIndex{N}{k}$, i.e., append the vertex to&nbsp;$\sespel$.
 6. Return the completed path&nbsp;$\sespel$.
 
+\text.block{definition}{acoAnt}{A completed path&nbsp;$\sespel$ sampled from the model in ACO is called an *ant*.}
+
 We implement [@eq:aco:vertex:probability] in *lines&nbsp;5.e* and&nbsp;*5.f*.
 Obviously, if there is only $v'=1$ node that could be added, then it will have probability&nbsp;1 and we do not need to actually compute the equation.
 If $v'>1$, then we need to compute the product&nbsp;$\arrayIndex{P}{j}$ of the model value&nbsp;$\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}^{\alpha}$ and heuristic value&nbsp;$\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}^{\beta}$ for each vertex.
@@ -95,7 +98,7 @@ In the traditional ACO approach, the model will be sampled&nbsp;$\lambda>0$ time
 Here, we discuss the model update procedure for the first ACO algorithm, the *Ant System* (AS)&nbsp;[@DMC1996ASOBACOCA; @D1992OLANA] and its improved version, the *Max-Min Ant System* (MMAS)&nbsp;[@SH2000MMAS].
 
 Let $\searchSpaceSubset$&nbsp;be the list of the&nbsp;$\mu$ selected paths.
-Then, the model values (called "pheromones") in the matrix&nbsp;$M$ are updated as follows:
+Then, the model values in the matrix&nbsp;$M$ are updated as follows:
 
 $$ \arrayIndexx{M}{i}{j} = \min\{U, \max\{L, (1-\rho)\arrayIndexx{M}{i}{j} + \sum_{\forall \sespel\in \searchSpaceSubset} \arrayIndexx{\tau^{\sespel}}{i}{j} \}\} $$ {#eq:aco:update}
 
