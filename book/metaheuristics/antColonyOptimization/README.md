@@ -42,9 +42,9 @@ Normally, these are all the vertices not yet present in&nbsp;$\sespel$, i.e., $V
 In this case, we can initially set $N=V\setminus \arrayIndex{\sespel}{0}$ and remove every vertex added to&nbsp;$\sespel$ from&nbsp;$N$.
 But there may also be other scenarios, for instance, if we navigate through a graph where some vertexes are not directly connected.  
 Either way, once&nbsp;$N$ has been determined, the choice about which edge to add to&nbsp;$\sespel$ in iteration&nbsp;$i>0$ is made probabilistically.
-Assume that&nbsp;$N$ contains&nbsp;$\nu'$ vertices, then the probability&nbsp;$P(\textnormal{add~}\arrayIndex{N}{j})$ to add vertex&nbsp;$\arrayIndex{N}{j}$ to&nbsp;$\sespel$ is:
+Assume that&nbsp;$N$ contains&nbsp;$\nu'$ vertices, then the probability&nbsp;$P(\text{add~}\arrayIndex{N}{j})$ to add vertex&nbsp;$\arrayIndex{N}{j}$ to&nbsp;$\sespel$ is:
 
-$$ P(\textnormal{add~}\arrayIndex{N}{j}) = \frac{{\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}}^{\alpha}*{\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}}^{\beta}}{\sum_{k=0}^{\nu'-1} {\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{k}}}^{\alpha}*{\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{k}}}^{\beta} } $$ {#eq:aco:vertex:probability}
+$$ P(\text{add~}\arrayIndex{N}{j}) = \frac{{\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}}^{\alpha}*{\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}}^{\beta}}{\sum_{k=0}^{\nu'-1} {\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{k}}}^{\alpha}*{\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{k}}}^{\beta} } $$ {#eq:aco:vertex:probability}
 
 Here, $\alpha>0$ and $\beta>0$ are two configuration parameters which weight the impact of the model&nbsp;$M$ and the heuristic information&nbsp;$H$, respectively.
 The higher the model and heuristic values for the edge from the last-added vertex&nbsp;$\arrayIndex{\sespel}{i}$ to a potential next vertex&nbsp;$\arrayIndex{N}{j}$, the more likely it is selected.
