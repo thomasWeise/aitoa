@@ -25,22 +25,22 @@ We do not require a new overall algorithm structure or new implementation &ndash
 
 #### Model and Model Sampling
 
-The model sampling in ACO works by step-by-step building a path through a graph.
+The model sampling in ACO works by iteratively building a path through a graph.
 In each step, a vertex is added to the path until no nodes can be added anymore and the path&nbsp;$\sespel$ is completed.
-The choice which vertex is added is probabilistic.
+The choice which vertex to add is probabilistic.
 It depends on two factors: the model&nbsp;$M$ and the heuristic information&nbsp;$H$.
 
 The model&nbsp;$M$ is a two-dimensional table called "pheromone matrix."
 Each row&nbsp;$i\in 0\dots(v-1)$ stands for one of the vertices and holds a value&nbsp;$\arrayIndexx{M}{i}{j}$ for each other vertex&nbsp;$j\in 0\dots(v-1)$ with&nbsp;$j\neq i$.
 The higher the value&nbsp;$\arrayIndexx{M}{i}{j}$, the more likely should it be that the edge&nbsp;$(i,j)$ is added to the path, i.e., that vertex&nbsp;$j$ follows after vertex&nbsp;$i$.
 
-Besides the model&nbsp;$M$, ACO also uses one heuristic value&nbsp;$\arrayIndexx{H}{i}{j}$ for each edge.
+Besides the model&nbsp;$M$, ACO also uses one heuristic value&nbsp;$\arrayIndexx{H}{i}{j}$ for each such edge.
 This value reflects a "gain" that can be obtained by adding the edge.
 As in the case of&nbsp;$\arrayIndexx{M}{i}{j}$, larger values of&nbsp;$\arrayIndexx{H}{i}{j}$ make adding the edge&nbsp;$(i,j)$ to the path more likely.
 
 The first vertex at which the path&nbsp;$\sespel$ is started at iteration index&nbsp;$i=0$ is either chosen completely randomly, fixed, or based on some policy.
 In each following step&nbsp;$i>0$ of the model sampling, the algorithm first determines the set&nbsp;$N$ of vertices that can be added.
-Normally, these are all the vertices not yet present in&nbsp;$\sespel$, i.e., $V\setminus \sespel$.
+Often, these are all the vertices not yet present in&nbsp;$\sespel$, i.e., $V\setminus \sespel$.
 In this case, we can initially set $N=V\setminus \arrayIndex{\sespel}{0}$ and iteratively remove every vertex added to&nbsp;$\sespel$ from&nbsp;$N$.
 But there may also be other scenarios, for instance, if we navigate through a graph where not all vertexes are directly connected.  
 Either way, once&nbsp;$N$ has been determined, the choice about which edge to add to&nbsp;$\sespel$ in iteration&nbsp;$i>0$ is made probabilistically.
@@ -62,7 +62,7 @@ The model sampling then works as follows:
     c. The number of vertices in&nbsp;$N$ be&nbsp;$v'$.
     d. If&nbsp;$v'=0$, exit the loop, because the path construction is complete.
     e. If&nbsp;$v'=1$, set $k=0$, because there is only one vertex to choose from.
-    f. else
+    f. else, i.e., if $v'>1$, do:
        i. Set a real variable&nbsp;$ps$ to&nbsp;$0$.
        ii. For $j$ from $0$ to $v'-1$ do:
           A. Set $ps=ps+\left(\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}\right)^{\alpha}*\left(\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}\right)^{\beta}$.
@@ -71,3 +71,19 @@ The model sampling then works as follows:
        iv. Determine $k$&nbsp;to be the index of the smallest value in&nbsp;$p$ which is greater than&nbsp;$r$. It can be found via binary search (we may need to check for smaller values left-wards if pheromones and heuristic values can be&nbsp;0).
     g. Set&nbsp;$\arrayIndex{\sespel}{i}=\arrayIndex{N}{k}$, i.e., append the vertex to&nbsp;$\sespel$.
 
+We implement [@eq:aco:vertex:probability] in *lines&nbsp;5e* and&nbsp;*5f*.
+Obviously, if there is only $v'=1$ node that could be added, then it will have probability&nbsp;1 and we do not need to actually compute the equation.
+If $v'>1$, then we need to compute the product&nbsp;$\arrayIndex{P}{j}$ of the model value&nbsp;$\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}\right)^{\alpha}$ and heuristic value&nbsp;$\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}\right)^{\beta}$ for each vertex.
+The probability for each vertex to be chosen would then be their corresponding result divided by the overall sum of all of these values.
+*Lines&nbsp;5fi$ to&nbsp;*5fiv* show how this can be done efficiently:
+Instead of assigning the results directly to the vertices, we use a running sum&nbsp;$ps$ instead.
+Thus, the value&nbsp;$\arrayIndex{p}{0}$ is&nbsp;$\arrayIndex{P}{0}$, $\arrayIndex{p}{1}=\arrayIndex{P}{0}+\arrayIndex{P}{1}$, $\arrayIndex{p}{2}=\arrayIndex{P}{0}+\arrayIndex{P}{1}+\arrayIndex{P}{2}$, and so on.
+Finally, we just need to draw a random number&nbsp;$r$ from&nbsp;$[0,ps)$.
+If it is less than&nbsp;$\arrayIndex{p}{0}=\arrayIndex{P}{0}$, then we choose vertex&nbsp;$\arrayIndex{N}{0}$.
+Otherwise, if it is less than&nbsp;$\arrayIndex{p}{1}=\arrayIndex{P}{0}+\arrayIndex{P}{1}$, we pick&nbsp;$&nbsp;$\arrayIndex{N}{1}$.
+Otherwise, if it is less than&nbsp;$\arrayIndex{p}{2}=\arrayIndex{P}{0}+\arrayIndex{P}{1}+\arrayIndex{P}{2}$, we pick&nbsp;$&nbsp;$\arrayIndex{N}{2}$, and so on.
+We can speed up finding the right node by doing a binary search.
+(In the case that model or heuristic values can be zero, we need to be careful because we then could have some&nbsp;$\arrayIndex{p}{\kappa}=\arrayIndex{p}{\kappa+1}$ and thus would need to check that we really have the lowest index&nbsp;k$ for which&nbsp;$\arrayIndex{p}{k}>r$.)
+
+If we need to add all vertexes in&nbsp;$V$, then it is relatively easy to see that this model sampling routine has quadratic complexity:
+For each current vertex we need to look at all other (not-yet-chosen) vertices due to *line&nbsp;5fii*.
