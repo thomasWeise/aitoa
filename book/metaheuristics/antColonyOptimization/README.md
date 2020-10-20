@@ -68,7 +68,7 @@ The model sampling then works as follows:
           A. Set $ps=ps+\left(\arrayIndexx{M}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}\right)^{\alpha}*\left(\arrayIndexx{H}{\arrayIndex{\sespel}{i-1}}{\arrayIndex{N}{j}}\right)^{\beta}$.
           B. Set $\arrayIndex{p}{j}=ps$.
        iii. Draw a random number&nbsp;$r$ uniformly distributed in $[0,ps)$.
-       iv. Determine $k$&nbsp;to be the index of the smallest value in&nbsp;$p$ which is greater than&nbsp;$r$. It can be found via binary search (we may need to check for smaller values left-wards if pheromones and heuristic values can be&nbsp;0).
+       iv. Determine $k$&nbsp;to be the index of the smallest value in&nbsp;$p$ which is greater than&nbsp;$r$. It can be found via binary search (we may need to check for smaller values left-wards if model or heuristic values can be&nbsp;0).
     g. Set&nbsp;$\arrayIndex{\sespel}{i}=\arrayIndex{N}{k}$, i.e., append the vertex to&nbsp;$\sespel$.
 6. Return the completed path&nbsp;$\sespel$.
 
@@ -88,3 +88,39 @@ We can speed up finding the right node by doing a binary search.
 
 If we need to add all vertexes in&nbsp;$V$, then it is relatively easy to see that this model sampling routine has quadratic complexity:
 For each current vertex we need to look at all other (not-yet-chosen) vertices due to *line&nbsp;5fii*.
+
+#### Model Update
+
+In the traditional ACO approach, the model will be sampled&nbsp;$\lambda>0$ times in each iteration and&nbsp;$0<\mu\leq \lambda$ of the solutions are used in the model update step.
+Here, we discuss the model update procedure for the first ACO algorithm, the *Ant System* (AS)&nbsp;[@DMC1996ASOBACOCA; @D1992OLANA] and its improved version, the *Max-Min Ant System* (MMAS)&nbsp;[@SH2000MMAS].
+
+Let $\searchSpaceSubset$&nbsp;be the list of the&nbsp;$\mu$ selected paths.
+Then, the model values (called "pheromones") in the matrix&nbsp;$M$ are updated as follows:
+
+$$ \arrayIndexx{M}{i}{j} = \min\{U, \max\{L, (1-\rho)\arrayIndexx{M}{i}{j} + \sum_{\forall \sespel\in \searchSpaceSubset} \arrayIndexx{\tau^{\sespel}}{i}{j} \}\} $$ {#eq:aco:update}
+
+All model values are limited to the real interval&nbsp;$[L,U]$ and&nbsp;$L$ and&nbsp;$U$ are its upper and lower bound, respectively.
+If the pheromone&nbsp;$\arrayIndexx{M}{i}{j}$  on an edge&nbsp;$(i,j)$ would become&nbsp;0, then its probability to be added will also be zero and&nbsp;$j$ will never be added again to any&nbsp;$\sespel$ directly after&nbsp;$i$.
+Since we want to preserve a certain minimum probability, setting a lower limit&nbsp;$L>0$ makes sense.
+If&nbsp;$\arrayIndexx{M}{i}{j}$ gets too large, this can have the opposite effect and then&nbsp;$j$ will always be chosen directly after&nbsp;$i$.
+Thus, the upper limit&nbsp;$U>L$ is introduced.
+ 
+The current model value is reduced by multiplying it with $(1-\rho)$, where $\rho\in[0,1]$&nbsp;is called the "evaporation rate."
+This concept has already been mentioned in our summary on EDAs ([@sec:eda:summary]) and is used in the PBIL&nbsp;[@B1994PBILAMFIGSBFOACL; @BC1995RTGFTSGA] algorithm.
+
+The amount&nbsp;$\arrayIndexx{\tau^{\sespel}}{i}{j}$ added to the model values for each&nbsp;$\sespel\in \searchSpaceSubset$ is:
+
+$$ \arrayIndexx{\tau^{\sespel}}{i}{j} = \left\{\begin{array}{ll}
+Q / \objf(\repMap(\sespel))&\text{if~edge~}(i,j)\text{~appears~in~}\sespel\\
+0&\text{otherwise}
+\end{array}\right. $$
+
+where $Q$&nbsp;is a constant.
+In other words, the pheromone&nbsp;$\arrayIndexx{M}{i}{j}$ of an edge&nbsp;$(i,j)$ increases more if it appears in selected solutions with small objective values.
+
+In the AS, $\mu=\lambda$ and now bounds for the pheromones are given, i.e., $L=0$ and $U=+\infty$.
+In the MMAS in&nbsp;[@SH2000MMAS], the matrix&nbsp;$M$ is initialized with the value&nbsp;$U$, $\alpha=1$, $\beta=2$, $\lambda=v$ (i.e., the number of vertices), $\mu=1$, $Q=1$.
+There, values of&nbsp;$\rho\in[0.7,0.99]$ are investigated and the smaller values lead to slower convergence and more exploration whereas the high $\rho$&nbsp;values increase the search speed but also the chance of premature convergence.
+
+Either way, from [@eq:aco:update], we know that the model update will need at least a quadratic number of algorithm steps and the model itself is also requires quadratic amount of memory.
+Both of these can be problematic for large numbers&nbsp;$v$ of vertices or short time budgets (and the latter is the case in our JSSP scenario).

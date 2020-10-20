@@ -367,7 +367,7 @@ To generate a new point in&nbsp;$\searchSpace$, they thus require a number of al
 As discussed at the end of [@sec:eda:umda:jssp:example], our UMDA model needs&nbsp;$\bigO{\jsspJobs*\jsspMachines*(\jsspJobs+\ln{\jsspJobs})}$ steps for this.
 The higher complexity of sampling the search space here clearly shows.
 
-### Summary
+### Summary {#sec:eda:summary}
 
 In this chapter, we have discussed the concept of Estimation of Distribution Algorithms (EDAs): the idea of learning statistical models of good solutions.
 Models can be probability distributions, which assign higher probability densities to areas where good previously observed solutions were located.
